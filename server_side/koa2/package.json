@@ -1,7 +1,13 @@
 {
+  "scripts": {
+    "start": "node entry.js"
+  },
   "dependencies": {
     "babel-plugin-transform-async-to-generator": "^6.8.0",
     "babel-register": "^6.11.6",
-    "koa": "^2.0.0-alpha.5"
+    "koa": "^2.0.0-alpha.5",
+    "log4js": "^0.6.38",
+    "mongoose": "^4.5.9",
+    "redis": "^2.6.2"
   }
 }

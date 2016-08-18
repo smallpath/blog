@@ -1,4 +1,6 @@
+const log = require('./utils/log');
 const Koa = require('koa');
+
 const app = new Koa();
 
 app.use(async (ctx, next) => {
@@ -8,11 +10,10 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
-// response
 app.use(ctx => {
   ctx.body = 'Hello Koa';
 });
 
 app.listen(3000);
 
-console.log(`koa2 is running at 3000`);
+log.debug(`koa2 is running at 3000`);
