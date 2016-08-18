@@ -14,6 +14,8 @@ app.use(ctx => {
   ctx.body = 'Hello Koa';
 });
 
+require('./model/mongo');
+
 app.listen(3000);
 
 log.debug(`koa2 is running at 3000`);
