@@ -2,7 +2,9 @@ let config = require('../conf/config');
 let mongoose = require('mongoose');
 let log = require('../utils/log');
 
-mongoose.connect("mongodb://139.129.132.60:27017/test");
+let mongoUrl = '127.0.0.1:27017/koa_rest_mongoose';
+
+mongoose.connect(mongoUrl);
 // mongoose.connect(config.mongoHost,config.mongoDatabase,config.mongoPort);
 
 let db = mongoose.connection;
@@ -16,7 +18,7 @@ let ObjectId = Schema.ObjectId;
 let post = new Schema({
     visits: { type: Number, default: 0 },
     // 0 为文章，1 为页面
-    type: { type: ObjectId, default: 0 },
+    type: { type: String, default: 0 },
     //0 为草稿，1 为已经发布
     status: { type: Number, default: 0 },
     title: String,
