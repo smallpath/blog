@@ -18,7 +18,7 @@ let ObjectId = Schema.ObjectId;
 let post = new Schema({
     visits: { type: Number, default: 0 },
     // 0 为文章，1 为页面
-    type: { type: String, default: 0 },
+    type: { type: String, default: '' },
     //0 为草稿，1 为已经发布
     status: { type: Number, default: 0 },
     title: String,
@@ -27,8 +27,8 @@ let post = new Schema({
     content: { type: String },
     //1 为允许， 0 为不允许
     allowComment: { type: Number, default: 1 },
-    createdAt: Date,
-    updatedAt: Date,
+    createdAt: { type: Number, default: 0 },
+    updatedAt: { type: Number, default: 0 },
     //1 为公开，0 为不公开
     isPublic: { type: Number, default: 1 },
     commentNum: Number,
@@ -67,19 +67,19 @@ let user = new Schema({
     displayName: String,
     password: String,
     email: String,
-    createdAt: Date,
+    createdAt: {type: Number, default: 0 },
     createdIP: String,
     lastLoginTime: Date,
     lastLoginIP: String,
 });
 
-post = mongoose.model('post',post),
-category = mongoose.model('category',category),
-option = mongoose.model('option',option),
-postCategory = mongoose.model('postCategory',postCategory),
-postTag = mongoose.model('postTag',postTag),
-tag = mongoose.model('tag',tag),
-user = mongoose.model('user',user);
+post = mongoose.model('post', post),
+category = mongoose.model('category', category),
+option = mongoose.model('option', option),
+postCategory = mongoose.model('postCategory', postCategory),
+postTag = mongoose.model('postTag', postTag),
+tag = mongoose.model('tag', tag),
+user = mongoose.model('user', user);
 
 
 module.exports = {
