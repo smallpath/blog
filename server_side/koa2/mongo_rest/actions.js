@@ -72,7 +72,6 @@ module.exports = function generateActions(model) {
     updateById: async function(next) {
       await next;
       var error, result;
-      console.log(this.params.id, this.request.body, typeof this.request.body)
       try {
         result = await model.findByIdAndUpdate(this.params.id, this.request.body, {new: true}).exec();
         return this.body = result;
