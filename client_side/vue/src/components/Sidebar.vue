@@ -48,13 +48,14 @@ export default {
 <style>
     @import '../assets/res/css/all.css';
     @import '../assets/res/css/article.css';
+    @import '../assets/res/css/base.css';
     @import '../assets/res/css/comment.css';
     @import '../assets/res/css/footer.css';
     @import '../assets/res/css/header.css';
     @import '../assets/res/css/highlight.css';
-    @import '../assets/res/css/pagination.css';
-    @import '../assets/res/css/responsive.css';
-    @import '../assets/res/css/search.css';
     @import '../assets/res/css/icon.css';
+    @import '../assets/res/css/pagination.css';
+    @import '../assets/res/css/search.css';
     @import '../assets/res/css/sidebar.css';
+    @import '../assets/res/css/responsive.css';
 </style>

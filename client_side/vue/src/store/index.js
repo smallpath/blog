@@ -10,7 +10,7 @@ export default store
 store.fetchAbout = (vue) => {
   return vue.$http.get(aboutAPI).then((response) => {
     console.log('Response Ok')
-    return response.body.content;
+    return response.body;
   }, (err) => {
     console.log('Response Error')
     console.log(err)

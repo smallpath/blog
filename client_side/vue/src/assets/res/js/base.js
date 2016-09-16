@@ -1,2 +1,214 @@
 /* eslint-disable */
-(function (e, t) { var n = function (e) { return document.getElementById(e) }, r = function (e) { e = e || document; var t = e.defaultView || e.parentWindow, n = e.compatMode, r = e.documentElement, i = t.innerHeight || 0, s = t.innerWidth || 0, o = t.pageXOffset || 0, u = t.pageYOffset || 0, a = r.scrollWidth, f = r.scrollHeight; return n != "CSS1Compat" && (r = e.body, a = r.scrollWidth, f = r.scrollHeight), n && (s = r.clientWidth, i = r.clientHeight), a = Math.max(a, s), f = Math.max(f, i), o = Math.max(o, e.documentElement.scrollLeft, e.body.scrollLeft), u = Math.max(u, e.documentElement.scrollTop, e.body.scrollTop), { width: s, height: i, scrollWidth: a, scrollHeight: f, scrollX: o, scrollY: u } }, i = function (e) { var t = e.ownerDocument, n = r(t), i = n.scrollX, s = n.scrollY, o = e.getBoundingClientRect(), u = [o.left, o.top], a, f, l; if (s || i) u[0] += i, u[1] += s; return u }, s = function (e) { var t = i(e), n = t[0], r = t[1], s = e.offsetWidth, o = e.offsetHeight; return { width: s, height: o, left: n, top: r, bottom: r + o, right: n + s } }, o = function () { var e = n("comments"); if (!e) return; var t = function () { var t = e.getAttribute("data-type"); t === "disqus" ? u() : t === "duoshuo" && a() }; if (location.hash.indexOf("#comments") > -1) t(); else var i = setInterval(function () { var n = r(), o = n.scrollY + n.height, u = s(e).top; Math.abs(u - o) < 1e3 && (t(), clearInterval(i)) }, 300) }, u = function () { var e = n("disqus_thread"); if (!e) return; window.disqus_config = function () { this.page.url = e.getAttribute("data-url"), this.page.identifier = e.getAttribute("data-identifier") }; var r = t.createElement("script"); r.src = "//" + e.getAttribute("data-name") + ".disqus.com/embed.js", r.setAttribute("data-timestamp", +(new Date)), (t.head || t.body).appendChild(r) }, a = function () { var e = n("ds_thread"); if (!e) return; window.duoshuoQuery = { short_name: e.getAttribute("data-name") }; var r = document.createElement("script"); r.src = "//static.duoshuo.com/embed.js", (t.head || t.body).appendChild(r) }; window.addEventListener("load", function () { o() }); var f = { isMob: function () { var e = navigator.userAgent.toLowerCase(), t = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"], n = !1; for (var r = 0; r < t.length; r++)e.indexOf(t[r].toLowerCase()) > -1 && (n = !0); return n } () }; f.isMob ? document.documentElement.className += " mob" : document.documentElement.className += " pc"; var l = { $sidebar: document.querySelector("#sidebar"), $main: document.querySelector("#main"), $sidebar_mask: document.querySelector("#sidebar-mask"), $body: document.body, $btn_side: document.querySelector("#header .btn-bar"), $article: document.querySelectorAll(".mob #page-index article") }; l.bindEvent = function () { var e = this, t = "side", n = "click", r = "click"; f.isMob && (n = "touchstart", r = "touchend"), this.$btn_side.addEventListener(r, function () { e.$body.className.indexOf(t) > -1 ? (e.$body.className = e.$body.className.replace(t, ""), e.$sidebar_mask.style.display = "none") : (e.$body.className += " " + t, e.$sidebar_mask.style.display = "block") }, !1), this.$sidebar_mask.addEventListener(n, function (n) { e.$body.className = e.$body.className.replace(t, ""), e.$sidebar_mask.style.display = "none", n.preventDefault() }, !1), window.addEventListener("resize", function () { e.$body.className = e.$body.className.replace(t, ""), e.$sidebar_mask.style.display = "none" }, !1) }, l.bindEvent() })(window, document)
+(function(win, doc){
+  var getById = function(el){
+    return document.getElementById(el);
+  };
+
+  //from qwrap
+  var getDocRect = function(doc) {
+    doc = doc || document;
+    var win = doc.defaultView || doc.parentWindow,
+      mode = doc.compatMode,
+      root = doc.documentElement,
+      h = win.innerHeight || 0,
+      w = win.innerWidth || 0,
+      scrollX = win.pageXOffset || 0,
+      scrollY = win.pageYOffset || 0,
+      scrollW = root.scrollWidth,
+      scrollH = root.scrollHeight;
+    if (mode != 'CSS1Compat') { // Quirks
+      root = doc.body;
+      scrollW = root.scrollWidth;
+      scrollH = root.scrollHeight;
+    }
+    if (mode) { // IE, Gecko
+      w = root.clientWidth;
+      h = root.clientHeight;
+    }
+    scrollW = Math.max(scrollW, w);
+    scrollH = Math.max(scrollH, h);
+    scrollX = Math.max(scrollX, doc.documentElement.scrollLeft, doc.body.scrollLeft);
+    scrollY = Math.max(scrollY, doc.documentElement.scrollTop, doc.body.scrollTop);
+    return {
+      width: w,
+      height: h,
+      scrollWidth: scrollW,
+      scrollHeight: scrollH,
+      scrollX: scrollX,
+      scrollY: scrollY
+    };
+  };
+
+  var getXY = function(node) {
+    var doc = node.ownerDocument,
+      docRect = getDocRect(doc),
+      scrollLeft = docRect.scrollX,
+      scrollTop = docRect.scrollY,
+      box = node.getBoundingClientRect(),
+      xy = [box.left, box.top],
+      mode,
+      off1,
+      off2;
+    if (scrollTop || scrollLeft) {
+      xy[0] += scrollLeft;
+      xy[1] += scrollTop;
+    }
+    return xy;
+  };
+
+  var getRect = function(el){
+    var p = getXY(el);
+    var x = p[0];
+    var y = p[1];
+    var w = el.offsetWidth;
+    var h = el.offsetHeight;
+    return {
+      'width': w,
+      'height': h,
+      'left': x,
+      'top': y,
+      'bottom': y + h,
+      'right': x + w
+    };
+  };
+
+  /**
+   * load comment
+   * @return {[type]} [description]
+   */
+  var loadComment = function(){
+    var comments = getById('comments');
+    if(!comments){
+      return;
+    }
+    var load = function(){
+      var dataType = comments.getAttribute('data-type');
+      if(dataType === 'disqus'){
+        loadDisqusComment();
+      }else if(dataType === 'duoshuo'){
+        loadDuoshuoComment();
+      }
+    }
+    if(location.hash.indexOf('#comments') > -1){
+      load();
+    }else {
+      var timer = setInterval(function(){
+        var docRect = getDocRect();
+        var currentTop = docRect.scrollY + docRect.height;
+        var elTop = getRect(comments).top;
+        if(Math.abs(elTop - currentTop) < 1000){
+          load();
+          clearInterval(timer);
+        }
+      }, 300)
+    }
+  };
+  /**
+   * load disqus comment
+   * @return {[type]} [description]
+   */
+  var loadDisqusComment = function(){
+    var disqus_thread = getById('disqus_thread');
+    if(!disqus_thread){
+      return;
+    }
+    window.disqus_config = function(){
+      this.page.url = disqus_thread.getAttribute('data-url');
+      this.page.identifier = disqus_thread.getAttribute('data-identifier');
+    }
+    var s = doc.createElement('script');
+    s.src = '//' + disqus_thread.getAttribute('data-name') + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (doc.head || doc.body).appendChild(s);
+  };
+
+  var loadDuoshuoComment = function(){
+    var disqus_thread = getById('ds_thread');
+    if(!disqus_thread){
+      return;
+    }
+    window.duoshuoQuery = {short_name: disqus_thread.getAttribute('data-name')};
+    var s = document.createElement('script');
+    s.src = '//static.duoshuo.com/embed.js';
+    (doc.head || doc.body).appendChild(s);
+  };
+
+  window.addEventListener('load', function(){
+    loadComment();
+  });
+
+
+
+
+
+  var utils = {
+    isMob : (function(){
+      var ua = navigator.userAgent.toLowerCase();
+      var agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+      var result = false;
+      for( var i = 0 ; i < agents.length; i++ ){
+        if( ua.indexOf( agents[i].toLowerCase() ) > -1){
+          result = true;
+        }
+      }
+      return result;
+    })()
+  }
+
+
+  if( utils.isMob ){
+    document.documentElement.className += ' mob';
+  }else{
+    document.documentElement.className += ' pc';
+  }
+
+
+  var Dom = {
+    $sidebar : document.querySelector('#sidebar'),
+    $main : document.querySelector('#main'),
+    $sidebar_mask : document.querySelector('#sidebar-mask'),
+    $body : document.body,
+    $btn_side : document.querySelector('#header .btn-bar'),
+    $article : document.querySelectorAll('.mob #page-index article')
+  };
+
+  Dom.bindEvent = function(){
+
+    var _this = this,
+      body_class_name = 'side',
+      eventFirst = 'click',
+      eventSecond = 'click';
+
+    if( utils.isMob ){
+      eventFirst = 'touchstart';
+      eventSecond = 'touchend';
+    }
+
+    this.$btn_side.addEventListener( eventSecond ,function(){
+
+      if( _this.$body.className.indexOf( body_class_name ) > -1 ){
+        _this.$body.className = _this.$body.className.replace( body_class_name , '');
+        _this.$sidebar_mask.style.display = 'none';
+      }else{
+        _this.$body.className += (' ' + body_class_name);
+        _this.$sidebar_mask.style.display = 'block';
+      }
+
+    },false);
+
+    this.$sidebar_mask.addEventListener( eventFirst , function( e ){
+      _this.$body.className = _this.$body.className.replace( body_class_name , '');
+      _this.$sidebar_mask.style.display = 'none';
+      e.preventDefault();
+    },false);
+
+
+    window.addEventListener('resize',function(){
+      _this.$body.className = _this.$body.className.replace( body_class_name , '');
+      _this.$sidebar_mask.style.display = 'none';
+    },false);
+  }
+
+  Dom.bindEvent();
+
+})(window, document);
