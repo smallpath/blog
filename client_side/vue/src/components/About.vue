@@ -1,6 +1,9 @@
 <template>
     <div id='main'>
-        {{{ html }}}
+        <article class="post page">
+            {{{ html }}}
+        </article>
+        <my-footer></my-footer>
     </div>
 </template>
 

@@ -11,10 +11,12 @@ import Hello from './components/Hello'
 import About from './components/About'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
+import Footer from './components/Footer'
 
 Vue.component('sidebar',Sidebar);
 Vue.component('about',About);
 Vue.component('my-header',Header);
+Vue.component('my-footer',Footer);
 
 let router = new VueRouter()
 
