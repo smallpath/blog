@@ -1,0 +1,101 @@
+#sidebar {
+    background-color: #202020;
+    height: 100%;
+    left: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    position: fixed;
+    top: 0;
+    width: 250px;
+    z-index: 1
+}
+
+#sidebar-mask {
+    background-color: rgba(255, 255, 255, 0);
+    bottom: 0;
+    display: none;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 999
+}
+
+#sidebar li,
+#sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+#sidebar .profile {
+    padding-top: 40px;
+    padding-bottom: 10px
+}
+
+#sidebar .buttons {
+    margin: 0 0 20px
+}
+
+#sidebar .profile a,
+#sidebar .profile img {
+    border-radius: 70px;
+    height: 140px;
+    overflow: hidden;
+    width: 140px
+}
+
+#sidebar .profile a {
+    display: block;
+    margin: 0 auto
+}
+
+#sidebar .profile span {
+    color: #999;
+    display: block;
+    font-size: 18px;
+    padding: 10px 0;
+    text-align: center
+}
+
+#sidebar .buttons li {
+    display: block;
+    font-size: 16px;
+    height: 45px;
+    line-height: 45px;
+    width: 100%
+}
+
+#sidebar .buttons li a {
+    color: #999;
+    display: block;
+    padding-left: 25px;
+    text-decoration: none;
+    -webkit-transition: color .2s cubic-bezier(.4, .01, .165, .99);
+    transition: color .2s cubic-bezier(.4, .01, .165, .99)
+}
+
+#sidebar .buttons li a i,
+#sidebar .buttons li a span {
+    display: inline-block;
+    vertical-align: middle
+}
+
+#sidebar .buttons li a i {
+    font-size: 20px;
+    height: 45px;
+    line-height: 45px;
+    margin-right: 20px;
+    text-align: center;
+    width: 25px
+}
+
+#sidebar .buttons li a:hover {
+    color: rgba(153, 153, 153, .8)
+}
+
+#sidebar .buttons li a.inline {
+    display: inline-block;
+    width: 40px
+}
