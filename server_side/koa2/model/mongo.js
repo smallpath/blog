@@ -16,20 +16,16 @@ let Schema = mongoose.Schema;
 let ObjectId = Schema.ObjectId;
 
 let post = new Schema({
-    visits: { type: Number, default: 0 },
-    // 0 为文章，1 为页面
     type: { type: String, default: '' },
-    //0 为草稿，1 为已经发布
     status: { type: Number, default: 0 },
     title: String,
     pathName: { type: String, default: '' },
     summary: { type: String },
+    markdownContent: { type: String },
     content: { type: String },
-    //1 为允许， 0 为不允许
     allowComment: { type: Number, default: 1 },
-    createdAt: { type: Number, default: 0 },
-    updatedAt: { type: Number, default: 0 },
-    //1 为公开，0 为不公开
+    createdAt: {type: String, default: '' },
+    updatedAt: {type: String, default: '' },
     isPublic: { type: Number, default: 1 },
     commentNum: Number,
     options: String,
@@ -67,7 +63,7 @@ let user = new Schema({
     displayName: String,
     password: String,
     email: String,
-    createdAt: {type: Number, default: 0 },
+    createdAt: {type: String, default: '' },
     createdIP: String,
     lastLoginTime: Date,
     lastLoginIP: String,

@@ -6,14 +6,19 @@
             <ul class=buttons>
                 <li>
                     <a href="/" title="首页"> <i class="iconfont icon-home"></i> <span>首页</span></a>
-                    <li>
-                        <a href="/archives/" title="归档"> <i class="iconfont icon-archive"></i> <span>归档</span></a>
-                        <li>
-                            <a href="/tags/" title="标签"> <i class="iconfont icon-tags"></i> <span>标签</span></a>
-                            <li>
-                                <a v-link="{name:'about'}" title="关于"> <i class="iconfont icon-user"></i> <span>关于</span></a>
-                                <li>
-                                    <a href="/links/" title="友情链接"> <i class="iconfont icon-link"></i> <span>友链</span></a>
+                </li>
+                <li>
+                    <a href="/archives/" title="归档"> <i class="iconfont icon-archive"></i> <span>归档</span></a>
+                </li>
+                <li>
+                    <a href="/tags/" title="标签"> <i class="iconfont icon-tags"></i> <span>标签</span></a>
+                </li>
+                <li>
+                    <a v-link="{name:'about'}" title="关于"> <i class="iconfont icon-user"></i> <span>关于</span></a>
+                </li>
+                <li>
+                    <a href="/links/" title="友情链接"> <i class="iconfont icon-link"></i> <span>友链</span></a>
+                </li>
             </ul>
             <ul class=buttons>
                 <li>
@@ -27,6 +32,8 @@
 
 <script>
 /* eslint-disable */
+// import '../assets/res/js/base.js'
+
 export default {
   data () {
     return {

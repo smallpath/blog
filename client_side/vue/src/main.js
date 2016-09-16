@@ -7,20 +7,25 @@ Vue.use(VueRouter)
 Vue.use(VueResource)
 
 import App from './App'
+import Hello from './components/Hello'
+import About from './components/About'
+import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 
 Vue.component('sidebar',Sidebar);
+Vue.component('about',About);
+Vue.component('my-header',Header);
 
 let router = new VueRouter()
 
 router.map({
     '/about': {
         name:'about',
-        component: App
+        component: About
     },
     '/': {
         name:'sidebar',
-        component: App
+        component: Hello
     },
 })
 
