@@ -1,2 +1,2 @@
 # Blog
-A blog using MongoDB/Redis/Mysql,Vue and Express
+A blog using Koa2, Vue and MongoDB
