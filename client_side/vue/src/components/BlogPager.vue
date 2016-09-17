@@ -1,12 +1,7 @@
 <template>
     <div id='main'>
         <section id="page-index">
-            <li v-for="item in items">
-                {{item.title}}
-            </li>
-            <!--<template v-for="item in items">
-                <blog-summary :article={item} ></blog-summary>
-            <template>-->
+            <blog-summary v-for="item in items" :article="item" ></blog-summary>
         </section>
         <my-footer></my-footer>
     </div>
