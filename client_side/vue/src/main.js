@@ -14,6 +14,7 @@ import BlogSummary from './components/home/BlogSummary'
 import BlogPager from './components/home/BlogPager'
 import Pagination from './components/home/Pagination'
 import Archive from './components/home/Archive'
+import Tag from './components/home/Tag'
 
 Vue.component('sidebar',Sidebar);
 Vue.component('about',About);
@@ -23,6 +24,7 @@ Vue.component('blog-summary',BlogSummary);
 Vue.component('blog-pager',BlogPager);
 Vue.component('pagination',Pagination);
 Vue.component('archive',Archive);
+Vue.component('blog-tag',Tag);
 
 let router = new VueRouter()
 
@@ -34,6 +36,10 @@ router.map({
     '/archive': {
         name: 'archive',
         component: Archive
+    },
+    '/tag': {
+        name: 'tag',
+        component: Tag,
     },
     '/about': {
         name:'about',

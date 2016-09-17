@@ -11,7 +11,7 @@
                     <a v-link="{name:'archive'}" title="归档"> <i class="iconfont icon-archive"></i> <span>归档</span></a>
                 </li>
                 <li>
-                    <a href="/tags/" title="标签"> <i class="iconfont icon-tags"></i> <span>标签</span></a>
+                    <a v-link="{name:'tag'}"  title="标签"> <i class="iconfont icon-tags"></i> <span>标签</span></a>
                 </li>
                 <li>
                     <a v-link="{name:'about'}" title="关于"> <i class="iconfont icon-user"></i> <span>关于</span></a>
