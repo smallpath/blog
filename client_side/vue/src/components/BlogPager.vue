@@ -13,11 +13,11 @@
 import store from '../store/index'
 
 export default {
-    data (...args) {
+    data () {
         return {
-            items: store.fetchBlogByPage(this,0).then(items=>{this.items=items;window.scrollTo(0, 0)}) ,
+            items: [] ,
             page: 1,
-            totalPage: store.fetchBlogCount(this).then(totalPage=>this.totalPage=totalPage),
+            totalPage: 1,
         }
     },
     watch: {
@@ -30,6 +30,10 @@ export default {
             store.fetchBlogByPage(this,this.page -1 ).then(items=>{this.items=items;window.scrollTo(0, 0)})
         }
     },
+    ready () {
+        store.fetchBlogByPage(this,0).then(items=>{this.items=items;window.scrollTo(0, 0)});
+        store.fetchBlogCount(this).then(totalPage=>this.totalPage=totalPage);
+    }
 
 }
 </script>
