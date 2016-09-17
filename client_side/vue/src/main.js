@@ -6,15 +6,13 @@ import VueResource from 'vue-resource'
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
-import App from './App'
-import Hello from './components/Hello'
-import About from './components/About'
-import Header from './components/Header'
-import Sidebar from './components/Sidebar'
-import Footer from './components/Footer'
-import BlogSummary from './components/BlogSummary'
-import BlogPager from './components/BlogPager'
-import Pagination from './components/Pagination'
+import About from './components/home/About'
+import Header from './components/home/Header'
+import Sidebar from './components/home/Sidebar'
+import Footer from './components/home/Footer'
+import BlogSummary from './components/home/BlogSummary'
+import BlogPager from './components/home/BlogPager'
+import Pagination from './components/home/Pagination'
 
 Vue.component('sidebar',Sidebar);
 Vue.component('about',About);

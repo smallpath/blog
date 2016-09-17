@@ -16,9 +16,9 @@
                 <li>
                     <a v-link="{name:'about'}" title="关于"> <i class="iconfont icon-user"></i> <span>关于</span></a>
                 </li>
-                <li>
+                <!--<li>
                     <a href="/links/" title="友情链接"> <i class="iconfont icon-link"></i> <span>友链</span></a>
-                </li>
+                </li>-->
             </ul>
             <ul class=buttons>
                 <li>
@@ -44,18 +44,18 @@ export default {
   }
 }
 </script>
-
+ 
 <style>
-    @import '../assets/res/css/all.css';
-    @import '../assets/res/css/article.css';
-    @import '../assets/res/css/base.css';
-    @import '../assets/res/css/comment.css';
-    @import '../assets/res/css/footer.css';
-    @import '../assets/res/css/header.css';
-    @import '../assets/res/css/highlight.css';
-    @import '../assets/res/css/icon.css';
-    @import '../assets/res/css/pagination.css';
-    @import '../assets/res/css/search.css';
-    @import '../assets/res/css/sidebar.css';
-    @import '../assets/res/css/responsive.css';
+    @import '../../assets/res/css/all.css';
+    @import '../../assets/res/css/article.css';
+    @import '../../assets/res/css/base.css';
+    @import '../../assets/res/css/comment.css';
+    @import '../../assets/res/css/footer.css';
+    @import '../../assets/res/css/header.css';
+    @import '../../assets/res/css/highlight.css';
+    @import '../../assets/res/css/icon.css';
+    @import '../../assets/res/css/pagination.css';
+    @import '../../assets/res/css/search.css';
+    @import '../../assets/res/css/sidebar.css';
+    @import '../../assets/res/css/responsive.css';
 </style>
