@@ -5,7 +5,7 @@
                 <a href="/"> <img v-bind:src="logoPath" alt="Smallpath的小站"> </a> <span>Smallpath的小站</span></div>
             <ul class=buttons>
                 <li>
-                    <a href="/" title="首页"> <i class="iconfont icon-home"></i> <span>首页</span></a>
+                    <a v-link="{name:'main', params:{ page: 1}}" title="首页"> <i class="iconfont icon-home"></i> <span>首页</span></a>
                 </li>
                 <li>
                     <a href="/archives/" title="归档"> <i class="iconfont icon-archive"></i> <span>归档</span></a>

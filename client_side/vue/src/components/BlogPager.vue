@@ -2,6 +2,7 @@
     <div id='main'>
         <section id="page-index">
             <blog-summary v-for="item in items" :article="item" ></blog-summary>
+            <pagination :next=2 :prev=1></pagination>
         </section>
         <my-footer></my-footer>
     </div>

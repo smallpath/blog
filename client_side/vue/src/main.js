@@ -14,6 +14,7 @@ import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
 import BlogSummary from './components/BlogSummary'
 import BlogPager from './components/BlogPager'
+import Pagination from './components/Pagination'
 
 Vue.component('sidebar',Sidebar);
 Vue.component('about',About);
@@ -21,6 +22,7 @@ Vue.component('my-header',Header);
 Vue.component('my-footer',Footer);
 Vue.component('blog-summary',BlogSummary);
 Vue.component('blog-pager',BlogPager);
+Vue.component('pagination',Pagination);
 
 let router = new VueRouter()
 
@@ -31,7 +33,10 @@ router.map({
     },
     '/': {
         name:'main',
-        component: BlogPager
+        component: BlogPager,
+        params: {
+            page: 1,
+        }
     },
 })
 
