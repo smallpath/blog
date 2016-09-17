@@ -20,8 +20,12 @@ store.fetchAbout = (vue) => {
 }
 
 store.fetchBlogByPage = (vue, page = 0, perPage = 10) => {
-  let api = `${blogAPI}?limit=${perPage}&skip=${page*perPage}`
-  return vue.$http.get(blogAPI).then((response) => {
+  if (isNaN(page))
+    page = 0
+
+  let api = `${blogAPI}?limit=${perPage}&skip=${page*perPage}`;
+
+  return vue.$http.get(api).then((response) => {
     console.log('Response Ok')
     console.log(response.body);
     return response.body;

@@ -18,8 +18,8 @@
 export default {
   props: {
       article: {
-          type: Object,  // 必須是字符串
-          required: true // 必須設定該 prop
+          type: Object,  
+          required: true 
       }
   },
 
