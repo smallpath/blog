@@ -19,7 +19,11 @@ module.exports = function generateActions(model) {
         var builder = model.find(conditions);
         ['limit', 'skip', 'sort'].forEach(function(key){
           if (query[key]) {
-            builder[key](query[key]);
+            let arg = query[key];
+            if (key == 'limit' || key == 'skip'){
+              arg = parseInt(arg);
+            }
+            builder[key](arg);
           }
         })
         result = await builder.exec();
