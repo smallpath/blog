@@ -50,3 +50,17 @@ store.fetchBlogByPage = (vue, page = 0, perPage = 10) => {
     console.log(err)
   })
 }
+
+store.fetchAllBlog = (vue, page = 0, perPage = 10) => {
+
+  return vue.$http.get(blogAPI,{
+    params: {
+      type: "0",
+      sort: "1"
+    }
+  }).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
+}
