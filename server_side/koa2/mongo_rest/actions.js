@@ -17,13 +17,16 @@ module.exports = function generateActions(model) {
           conditions = JSON.parse(query.conditions);
         }
         var builder = model.find(conditions);
-        ['limit', 'skip', 'sort'].forEach(function(key){
+        ['limit', 'skip', 'sort', 'count'].forEach(function(key){
           if (query[key]) {
             let arg = query[key];
             if (key == 'limit' || key == 'skip'){
               arg = parseInt(arg);
             }
-            builder[key](arg);
+            if (key != 'count')
+              builder[key](arg);
+            else
+              builder[key]();
           }
         })
         result = await builder.exec();

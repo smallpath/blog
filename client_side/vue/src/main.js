@@ -34,9 +34,6 @@ router.map({
     '/': {
         name:'main',
         component: BlogPager,
-        params: {
-            page: 1,
-        }
     },
 })
 

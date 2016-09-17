@@ -11,8 +11,24 @@ export default store
 
 store.fetchAbout = (vue) => {
   return vue.$http.get(aboutAPI).then((response) => {
-    console.log('Response Ok')
+    // console.log('Response Ok')
     return response.body;
+  }, (err) => {
+    // console.log('Response Error')
+    console.log(err)
+  })
+}
+
+store.fetchBlogCount = (vue, page = 0, perPage = 10) => {
+
+  let api = `/proxyPrefix/api/post?count=1`;
+
+  return vue.$http.get(api).then((response) => {
+    // console.log('Response Ok')
+    // console.log(response.body);
+    let totalPage = Math.ceil(parseInt(response.body)/perPage);
+    // console.log(totalPage);
+    return totalPage;
   }, (err) => {
     console.log('Response Error')
     console.log(err)
@@ -26,11 +42,11 @@ store.fetchBlogByPage = (vue, page = 0, perPage = 10) => {
   let api = `${blogAPI}?limit=${perPage}&skip=${page*perPage}`;
 
   return vue.$http.get(api).then((response) => {
-    console.log('Response Ok')
-    console.log(response.body);
+    // console.log('Response Ok')
+    // console.log(response.body);
     return response.body;
   }, (err) => {
-    console.log('Response Error')
+    // console.log('Response Error')
     console.log(err)
   })
 }

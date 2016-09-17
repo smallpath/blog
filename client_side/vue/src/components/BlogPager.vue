@@ -2,7 +2,7 @@
     <div id='main'>
         <section id="page-index">
             <blog-summary v-for="item in items" :article="item" ></blog-summary>
-            <pagination :page.sync="page" :has-prev=false :has-next=true ></pagination>
+            <pagination :page.sync="page" :total-page="totalPage" ></pagination>
         </section>
         <my-footer></my-footer>
     </div>
@@ -17,6 +17,7 @@ export default {
         return {
             items: store.fetchBlogByPage(this,0).then(items=>{this.items=items;window.scrollTo(0, 0)}) ,
             page: 1,
+            totalPage: store.fetchBlogCount(this).then(totalPage=>this.totalPage=totalPage),
         }
     },
     watch: {

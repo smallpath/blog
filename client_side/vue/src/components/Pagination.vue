@@ -1,7 +1,7 @@
 <template>
     <nav class="pagination">
-        <a v-if="hasPrev" @click="prev()" class="prev">&laquo; 上一页</a>
-        <a v-if="hasNext" @click="next()" class="next">下一页 &raquo;</a>
+        <a v-if="page > 1" @click="prev()" class="prev">&laquo; 上一页</a>
+        <a v-if="page < totalPage" @click="next()" class="next">下一页 &raquo;</a>
         <div class=center>
             <a href="/archives.html">博客归档</a>
         </div>
@@ -12,8 +12,7 @@
 /* eslint-disable */
 export default {
     props: {
-        hasPrev: Boolean,
-        hasNext: Boolean,
+        totalPage: Number,
         page: Number,
     },
 
@@ -24,10 +23,8 @@ export default {
     },
 
     methods: {
-        jump(num){
-            this.page = num;
-        },
         prev(){
+            console.log(this.page);
             this.page--;
         },
         next(){
