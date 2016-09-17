@@ -23,9 +23,7 @@ store.fetchBlogCount = (vue, page = 0, perPage = 10) => {
 
   return vue.$http.get(blogAPI,{
     params: {
-      conditions: {
-        type: 0
-      },
+      type: "0",
       count: 1,
     }
   }).then((response) => {
@@ -40,11 +38,10 @@ store.fetchBlogByPage = (vue, page = 0, perPage = 10) => {
 
   return vue.$http.get(blogAPI,{
     params: {
-      conditions: {
-        type: 0
-      },
+      type: "0",
       limit: perPage,
       skip: page*perPage,
+      sort: "1"
     }
   }).then((response) => {
     console.log(response.body[0].title);
