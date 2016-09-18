@@ -5,6 +5,8 @@ const blogAPI = `/proxyPrefix/api/post`;
 
 const tagAPI = `/proxyPrefix/api/tag`;
 
+const postTagAPI = `/proxyPrefix/api/postTag`;
+
 const aboutAPI = `/proxyPrefix/api/post/57dbe47c2993f70dc6d6b12c`
 
 const store = new EventEmitter()
@@ -70,6 +72,14 @@ store.fetchAllBlog = (vue) => {
 
 store.fetchTags = (vue) => {
   return vue.$http.get(tagAPI).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
+}
+
+store.fetchPostTags = (vue) => {
+  return vue.$http.get(postTagAPI).then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)
