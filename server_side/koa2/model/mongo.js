@@ -69,6 +69,34 @@ let user = new Schema({
     lastLoginIP: String,
 });
 
+post.methods.next = async function() {
+  var model = this.model("post");
+  let quote;
+  try{
+    quote = await model.findOne().where('_id').gt(this._id).sort({_id: 1 }).exec();
+  }catch(err){console.log(err)}
+
+    if (quote) {
+        return quote;
+    } else {
+        return {};
+    }
+};
+
+post.methods.prev = async function() {
+  var model = this.model("post");
+  let quote;
+  try{
+    quote = await model.findOne().where('_id').lt(this._id).sort({_id: -1 }).exec();
+  }catch(err){console.log(err)}
+
+    if (quote) {
+        return quote;
+    } else {
+        return {};
+    }
+};
+
 post = mongoose.model('post', post),
 category = mongoose.model('category', category),
 option = mongoose.model('option', option),

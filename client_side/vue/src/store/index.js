@@ -48,6 +48,18 @@ store.fetchBlogByPage = (vue, page = 0, perPage = 10) => {
   })
 }
 
+
+store.fetchPostByPathName = (vue, pathName) => {
+  return vue.$resource('/proxyPrefix/api/post/{?keys,values}').get({
+    keys:['pathName'],
+    values:[pathName],
+  }).then((response) => {
+    return response.body[0];
+  }, (err) => {
+    console.log(err)
+  })
+}
+
 store.fetchAllBlog = (vue) => {
   return vue.$resource(blogAPI+'/{?keys,values,sort,hh}').get({
     keys: ['type'],
@@ -77,14 +89,4 @@ store.fetchPostTags = (vue) => {
   })
 }
 
-store.fetchPostByPathName = (vue, pathName) => {
-  return vue.$resource('/proxyPrefix/api/post/{?keys,values}').get({
-    keys:['pathName'],
-    values:[pathName],
-  }).then((response) => {
-    return response.body[0];
-  }, (err) => {
-    console.log(err)
-  })
 
-}

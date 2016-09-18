@@ -12,16 +12,19 @@
                     {{{ article.content }}}
                 </div>
 
-                <p>本文链接：<a href="http://smallpath.me/post/react-native-bugfix.html">http://smallpath.me/post/react-native-bugfix.html</a></p>
+                <p>本文链接：<a href="/post/{{article.pathName}}">/post/{{article.pathName}}</a></p>
                 <p>-- <acronym title="End of File">EOF</acronym> --</p>
                 <div class="post-info">
-                    <p> 发表于 <i>2016-09-10 17:03:51</i> ，添加在分类
-                    <a href="/cate/Node.js" data-cate="Node.js"> <code class=notebook>Node.js</code></a> 下 ，并被添加「
-                    <a href="/tags/Javascript" data-tag="Javascript"> <code class=notebook>Javascript</code></a>
-                    <a href="/tags/Node.js" data-tag="Node.js"> <code class=notebook>Node.js</code></a> 」标签 ，最后修改于 <i>2016-09-15 00:33:37</i></p>
+                    <p> 发表于 <i>{{article.createdAt}}</i> ，<!--添加在分类-->
+                    <!--<a href="/cate/Node.js" data-cate="Node.js"> <code class=notebook>Node.js</code></a> 下 ，并被添加「-->
+                    <!--<a href="/tags/Javascript" data-tag="Javascript"> <code class=notebook>Javascript</code></a>-->
+                    <!--<a href="/tags/Node.js" data-tag="Node.js"> <code class=notebook>Node.js</code></a> 」标签 ，-->最后修改于 <i>{{article.updatedAt}}</i></p>
                 </div>
             </article>
-            <nav class=pagination> <a href="/post/react-native-opti.html" class=prev>&laquo; React Native性能优化</a> </nav>
+            <nav class=pagination> 
+                <a v-if="typeof prev.pathName !== 'undefined'" v-link="{name:'post', params: {pathName: prev.pathName }}" class="prev">&laquo; {pathName: prev.title }</a> 
+                <a v-if="typeof next.pathName !== 'undefined'" v-link="{name:'post', params: {pathName: next.pathName }}" class="next">&laquo; {pathName: next.title }</a> 
+            </nav>
                 <!--<div id=comments data-type="disqus"
                     data-thread-key="52822fe6e34f28d1b05b315e0302e4bb" data-url="http://smallpath.me/post/react-native-bugfix.html">
                     <h1 class=title>Comments</h1>
@@ -41,6 +44,10 @@ export default {
     data () {
         return {
             article: {} ,
+            cates: [],
+            tags: [],
+            prev: {},
+            next: {},
         }
     },
     watch: {
@@ -48,11 +55,16 @@ export default {
     },
   route: {
     data (obj) {
-
           let pathName = obj.to.params.pathName;
           store.fetchPostByPathName(this, pathName).then(article=>{this.article= article;window.scrollTo(0, 0)});
+          store.fetchPostByPathName
+
         return {
-            article: {},
+            article: {} ,
+            cates: [],
+            tags: [],
+            prev: {},
+            next: {},
         }
 
       } 

@@ -6,7 +6,7 @@
                 <h3>{{ $key }} ({{item.length}})</h3>
                 <ul>
                     <li v-for="subItem in item"> 
-                        <a href="/post/{{subItem.pathName}}.html" title="{{subItem.title}}">{{subItem.title}}</a>&nbsp;
+                        <a v-link="{name: 'post', params: { pathName:subItem.pathName  }}" title="{{subItem.title}}">{{subItem.title}}</a>&nbsp;
                         <span class=date>{{ subItem.createdAt.split(' ')[0] }}</span>
                     </li>
                 </ul>
