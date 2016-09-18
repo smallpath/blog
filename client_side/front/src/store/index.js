@@ -36,7 +36,6 @@ store.fetchBlogByID = (vue, id, page = 0 ) => {
 store.fetchBlogCount = (vue, queryJSON, page = 0 ) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  console.log(keys,values);
   return vue.$resource(blogAPI+'/{?keys,values,count}').get({
       keys ,
       values,
@@ -52,7 +51,6 @@ store.fetchBlogCount = (vue, queryJSON, page = 0 ) => {
 store.fetchBlogByPage = (vue, queryJSON, page = 0) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  console.log(keys,values);
   return vue.$resource(blogAPI+'/{?keys,values,limit,skip,sort}').get({
       keys ,
       values,
@@ -118,6 +116,20 @@ store.fetchTags = (vue) => {
     console.log(err)
   })
 }
+
+store.fetchTagsByPostID = (vue, queryJSON) => {
+  let keys = Object.keys(queryJSON);
+  let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
+  return vue.$resource(postTagAPI+'{?keys,values}').get({
+      keys,
+      values,
+  }).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
+}
+
 
 store.fetchPostTags = (vue) => {
   return vue.$http.get(postTagAPI).then((response) => {

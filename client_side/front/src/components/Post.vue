@@ -16,9 +16,9 @@
                 <p>-- <acronym title="End of File">EOF</acronym> --</p>
                 <div class="post-info">
                     <p> 发表于 <i>{{article.createdAt}}</i> ，<!--添加在分类-->
-                    <!--<a href="/cate/Node.js" data-cate="Node.js"> <code class=notebook>Node.js</code></a> 下 ，并被添加「-->
-                    <!--<a href="/tags/Javascript" data-tag="Javascript"> <code class=notebook>Javascript</code></a>-->
-                    <!--<a href="/tags/Node.js" data-tag="Node.js"> <code class=notebook>Node.js</code></a> 」标签 ，-->最后修改于 <i>{{article.updatedAt}}</i></p>
+                    <!--<a href="/cate/Node.js" data-cate="Node.js"> <code class=notebook>Node.js</code></a> 下 ，--><template v-if="tags.length != 0">并被添加「
+                    <a v-for="tag in tags" v-link="{name:'tagPager', params: { tagName: tag.name }}" data-tag="{{tag.name}}"> <code class="notebook">{{tag.name}}</code></a> 」标签 ，</template>最后修改于 
+                    <i>{{article.updatedAt}}</i></p>
                 </div>
             </article>
             <nav class=pagination> 
@@ -65,6 +65,22 @@ export default {
                 store.fetchNextPostByPathName(this,article._id).then(post=>{
                     this.next = post;
                 });
+                store.fetchTagsByPostID(this,{ postID: article._id }).then(postTags=>{
+                    console.log(postTags)
+                    store.fetchTags(this).then(tags=>{
+                        let obj = {};
+                        tags.forEach(value=>{
+                            obj[value._id] = value;
+                        });
+                        console.log(postTags)
+                        console.log(obj)
+                        postTags.forEach(value=>{
+                            this.tags.push(obj[value.tagID]);
+                        })
+                    })
+                    //this.tags = tags;
+                });
+
         });
 
         return {
