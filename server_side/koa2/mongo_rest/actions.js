@@ -34,7 +34,6 @@ module.exports = function generateActions(model) {
               arg = parseInt(arg);
             }
             if (key == 'sort') {
-              // hack statement to fix vue-resource problem
               arg = { "_id": "desc" };
             }
             if (key != 'count')
@@ -43,6 +42,8 @@ module.exports = function generateActions(model) {
               builder[key]();
           }
         })
+
+        result = await builder.exec();
         return this.body = result;
       } catch (_error) {
         error = _error;

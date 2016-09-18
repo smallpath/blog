@@ -22,8 +22,8 @@
                 </div>
             </article>
             <nav class=pagination> 
-                <a v-if="typeof prev.pathName !== 'undefined'" v-link="{name:'post', params: {pathName: prev.pathName }}" class="prev">&laquo; {pathName: prev.title }</a> 
-                <a v-if="typeof next.pathName !== 'undefined'" v-link="{name:'post', params: {pathName: next.pathName }}" class="next">&laquo; {pathName: next.title }</a> 
+                <a v-if="typeof prev.pathName !== 'undefined'" v-link="{name:'post', params: {pathName: prev.pathName }}" class="prev">&laquo; {{prev.title }}</a> 
+                <a v-if="typeof next.pathName !== 'undefined'" v-link="{name:'post', params: {pathName: next.pathName }}" class="next">&laquo; {{next.title }}</a> 
             </nav>
                 <!--<div id=comments data-type="disqus"
                     data-thread-key="52822fe6e34f28d1b05b315e0302e4bb" data-url="http://smallpath.me/post/react-native-bugfix.html">
@@ -56,8 +56,16 @@ export default {
   route: {
     data (obj) {
           let pathName = obj.to.params.pathName;
-          store.fetchPostByPathName(this, pathName).then(article=>{this.article= article;window.scrollTo(0, 0)});
-          store.fetchPostByPathName
+          store.fetchPostByPathName(this, pathName).then(article=>{
+                this.article= article;
+                window.scrollTo(0, 0);
+                store.fetchPrevPostByPathName(this,article._id).then(post=>{
+                    this.prev = post;
+                });
+                store.fetchNextPostByPathName(this,article._id).then(post=>{
+                    this.next = post;
+                });
+        });
 
         return {
             article: {} ,

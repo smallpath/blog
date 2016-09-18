@@ -60,8 +60,28 @@ store.fetchPostByPathName = (vue, pathName) => {
   })
 }
 
+store.fetchPrevPostByPathName = (vue, id) => {
+  let api = blogAPI + '/' + id + '?prev=1';
+  return vue.$http.get(api).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
+}
+
+store.fetchNextPostByPathName = (vue, id) => {
+  let api = blogAPI + '/' + id + '?next=1';
+  return vue.$http.get(api).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
+}
+
+
+
 store.fetchAllBlog = (vue) => {
-  return vue.$resource(blogAPI+'/{?keys,values,sort,hh}').get({
+  return vue.$resource(blogAPI+'/{?keys,values,sort}').get({
     keys: ['type'],
     values: ['0'],
     sort: "1",
