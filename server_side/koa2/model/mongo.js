@@ -44,13 +44,13 @@ let option = new Schema({
 });
 
 let postCategory = new Schema({
-    postID: Number,
-    categoryID: Number,
+    postID: String,
+    categoryID: String,
 });
 
 let postTag = new Schema({
-    postID: Number,
-    tagID: Number,
+    postID: String,
+    tagID: String,
 });
 
 let tag = new Schema({
@@ -65,7 +65,7 @@ let user = new Schema({
     email: String,
     createdAt: {type: String, default: '' },
     createdIP: String,
-    lastLoginTime: Date,
+    lastLoginTime: String,
     lastLoginIP: String,
 });
 

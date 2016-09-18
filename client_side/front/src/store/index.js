@@ -11,6 +11,8 @@ const aboutAPI = `/proxyPrefix/api/post/57dbe47c2993f70dc6d6b12c`
 
 const store = new EventEmitter()
 
+const perPage = 10;
+
 export default store
 
 store.fetchAbout = (vue) => {
@@ -21,10 +23,23 @@ store.fetchAbout = (vue) => {
   })
 }
 
-store.fetchBlogCount = (vue, page = 0, perPage = 10) => {
+store.fetchBlogByID = (vue, id, page = 0 ) => {
+  return vue.$resource(blogAPI+'/{id}').get({
+      id
+  }).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
+}
+
+store.fetchBlogCount = (vue, queryJSON, page = 0 ) => {
+  let keys = Object.keys(queryJSON);
+  let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
+  console.log(keys,values);
   return vue.$resource(blogAPI+'/{?keys,values,count}').get({
-      keys: ['type'],
-      values: ['0'],
+      keys ,
+      values,
       count: 1,
   }).then((response) => {
     let totalPage = Math.ceil(parseInt(response.body)/perPage);
@@ -34,10 +49,13 @@ store.fetchBlogCount = (vue, page = 0, perPage = 10) => {
   })
 }
  
-store.fetchBlogByPage = (vue, page = 0, perPage = 10) => {
+store.fetchBlogByPage = (vue, queryJSON, page = 0) => {
+  let keys = Object.keys(queryJSON);
+  let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
+  console.log(keys,values);
   return vue.$resource(blogAPI+'/{?keys,values,limit,skip,sort}').get({
-      keys: ['type'],
-      values: ['0'],
+      keys ,
+      values,
       limit: perPage,
       skip: page*perPage,
       sort: "1"
