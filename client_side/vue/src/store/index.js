@@ -15,21 +15,17 @@ export default store
 
 store.fetchAbout = (vue) => {
   return vue.$http.get(aboutAPI).then((response) => {
-    // console.log('Response Ok')
     return response.body;
   }, (err) => {
-    // console.log('Response Error')
     console.log(err)
   })
 }
 
 store.fetchBlogCount = (vue, page = 0, perPage = 10) => {
-
-  return vue.$http.get(blogAPI,{
-    params: {
-      type: "0",
+  return vue.$resource(blogAPI+'/{?keys,values,count}').get({
+      keys: ['type'],
+      values: ['0'],
       count: 1,
-    }
   }).then((response) => {
     let totalPage = Math.ceil(parseInt(response.body)/perPage);
     return totalPage;
@@ -39,16 +35,13 @@ store.fetchBlogCount = (vue, page = 0, perPage = 10) => {
 }
  
 store.fetchBlogByPage = (vue, page = 0, perPage = 10) => {
-
-  return vue.$http.get(blogAPI,{
-    params: {
-      type: "0",
+  return vue.$resource(blogAPI+'/{?keys,values,limit,skip,sort}').get({
+      keys: ['type'],
+      values: ['0'],
       limit: perPage,
       skip: page*perPage,
       sort: "1"
-    }
   }).then((response) => {
-    console.log(response.body[0].title);
     return response.body;
   }, (err) => {
     console.log(err)
@@ -56,12 +49,10 @@ store.fetchBlogByPage = (vue, page = 0, perPage = 10) => {
 }
 
 store.fetchAllBlog = (vue) => {
-
-  return vue.$http.get(blogAPI,{
-    params: {
-      type: "0",
-      sort: "1"
-    }
+  return vue.$resource(blogAPI+'/{?keys,values,sort,hh}').get({
+    keys: ['type'],
+    values: ['0'],
+    sort: "1",
   }).then((response) => {
     return response.body;
   }, (err) => {
@@ -84,4 +75,16 @@ store.fetchPostTags = (vue) => {
   }, (err) => {
     console.log(err)
   })
+}
+
+store.fetchPostByPathName = (vue, pathName) => {
+  return vue.$resource('/proxyPrefix/api/post/{?keys,values}').get({
+    keys:['pathName'],
+    values:[pathName],
+  }).then((response) => {
+    return response.body[0];
+  }, (err) => {
+    console.log(err)
+  })
+
 }

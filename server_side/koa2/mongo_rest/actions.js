@@ -16,8 +16,16 @@ module.exports = function generateActions(model) {
         if (query.conditions) {
           conditions = JSON.parse(query.conditions);
         }
-        if (typeof query.type != 'undefined'){
-          conditions.type = query.type;
+        console.log(query)
+        if (query.keys && query.values){
+          if (Array.isArray(query.keys) === true){
+            query.keys.forEach((value,index)=>{
+              if (typeof query.values[index] != 'undefined')
+                conditions[value] = query.values[index];
+            })
+          }else{
+            conditions[query.keys] = query.values;
+          }
         }
         var builder = model.find(conditions);
         ['limit', 'skip', 'sort', 'count'].forEach(function(key){
