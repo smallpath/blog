@@ -4,7 +4,7 @@
             <h1 class=title>{{title}}</h1>
             <div class="entry-content">
                 <section> 
-                    <a v-for="item in items" href="/tags/{{item.name}}" data-tag="{{ item.name }}">{{item.name}}({{item.count}})</a> 
+                    <a v-for="item in items" href="javascrpit:avoid(0)" data-tag="{{ item.name }}">{{item.name}}({{item.count}})</a> 
                 </section>
             </div>
         </article>
