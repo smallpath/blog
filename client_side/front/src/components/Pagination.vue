@@ -24,11 +24,9 @@ export default {
 
     methods: {
         prev(){
-            console.log(this.page);
             this.page--;
         },
         next(){
-            console.log(this.page);
             this.page++;
         },
     }
