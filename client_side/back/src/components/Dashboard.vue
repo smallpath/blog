@@ -1,6 +1,6 @@
 <template>
     <div class="fk-content-wrap">
-        <!--<BreadCrumb {...this.props} />-->
+        <top :current-route="currentRoute"></top> 
         <div class="manage-container">
             <p v-if="needUpdate" class="bg-info" style={{padding: 15, color: '#337ab7'}}>
                 Firekylin {{needUpdate}} 已经发布，请立即<a href="http://firekylin.org/release/latest.tar.gz" style={{textDecoration:
@@ -69,11 +69,18 @@
 
 <script>
 /* eslint-disable */
+import Top from './Top';
+
 export default {
+
+  components: {
+    Top,
+  },
   props:{
     shouldTipShow: Boolean,
     type: String,
     text: String,
+    currentRoute: String,
   },
   data () {
     return {

@@ -6,7 +6,7 @@
     </template>
     <template v-else>
       <sidebar :current-route.sync="currentRoute"></sidebar>
-      <dashboard v-if=" currentRoute.indexOf('/dashboard') > -1 "></dashboard>
+      <dashboard :current-route="currentRoute"  v-if=" currentRoute.indexOf('/dashboard') > -1 "></dashboard>
       <tip :should-tip-show="shouldTipShow" :type="'success'" :text="'wsssssw'"></tip>
     </template>
     <router-view></router-view>

@@ -81,10 +81,8 @@ export default {
   methods: {
     isActive(routeUrl){
       return this.currentRoute.indexOf(routeUrl) > -1;
-      return routeUrl == this.currentRoute;//this.context.router.isActive(routeUrl);
     },
     getHeight(route, routeUrl){
-      console.log(route.url, this.currentRoute , this.isActive(route.url))
       let height = 49*( this.isActive(route.url) ? route.children.length : 0);
       return height+'px';
     },
