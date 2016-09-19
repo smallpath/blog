@@ -78,6 +78,11 @@ export default {
   computed: {
 
   },
+  // watch: {
+  //   currentRoute(val,oldVal){
+  //     console.log(val);
+  //   }
+  // },
   methods: {
     isActive(routeUrl){
       return this.currentRoute.indexOf(routeUrl) > -1;
