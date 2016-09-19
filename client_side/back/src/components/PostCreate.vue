@@ -10,62 +10,7 @@
                         <div class="pathname"><span>https://smallpath.me/post/</span>
                             <div class="form-group"><input name="pathname" value="" class="form-control" type="text"></div><span>.html</span></div>
                         <div class="form-group">
-                            <div class="md-panel">
-                                <div class="md-menubar">
-                                    <ul class="md-modebar">
-                                        <li class="tb-btn pull-right">
-                                            <a class="" title="预览模式"><i class="glyphicon glyphicon-eye-open" ></i></a>
-                                        </li><span> </span>
-                                        <li class="tb-btn pull-right">
-                                            <a class="" title="分屏模式"><i class="glyphicon glyphicon-adjust" ></i></a>
-                                        </li><span> </span>
-                                        <li class="tb-btn pull-right">
-                                            <a class="active" title="编辑模式"><i class="glyphicon glyphicon-pencil" ></i></a>
-                                        </li><span> </span>
-                                        <li class="tb-btn spliter pull-right"></li>
-                                        <li class="tb-btn pull-right"><a title="全屏模式"><i class="glyphicon glyphicon-fullscreen" ></i></a></li>
-                                        <span> </span>
-                                    </ul>
-                                    <ul class="md-toolbar clearfix">
-                                        <li class="tb-btn">
-                                            <a title="加粗(Ctrl + B)"><i class="glyphicon glyphicon-bold" ></i></a>
-                                        </li>
-                                        <li class="tb-btn">
-                                            <a title="斜体(Ctrl + I)"><i class="glyphicon glyphicon-italic" ></i></a>
-                                        </li>
-                                        <li class="tb-btn spliter"></li>
-                                        <li class="tb-btn">
-                                            <a title="链接(Ctrl + L)"><i class="glyphicon glyphicon-link" ></i></a>
-                                        </li>
-                                        <li class="tb-btn">
-                                            <a title="引用(Ctrl + Q)"><i class="glyphicon glyphicon-comment" ></i></a>
-                                        </li>
-                                        <li class="tb-btn">
-                                            <a title="代码段(Ctrl + K)"><i class="glyphicon glyphicon-console" ></i></a>
-                                        </li>
-                                        <li class="tb-btn">
-                                            <a title="图片(Ctrl + G)"><i class="glyphicon glyphicon-picture" ></i></a>
-                                        </li>
-                                        <li class="tb-btn spliter"></li>
-                                        <li class="tb-btn">
-                                            <a title="有序列表(Ctrl + O)"><i class="glyphicon glyphicon-list-alt" ></i></a>
-                                        </li>
-                                        <li class="tb-btn">
-                                            <a title="无序列表(Ctrl + U)"><i class="glyphicon glyphicon-list" ></i></a>
-                                        </li>
-                                        <li class="tb-btn">
-                                            <a title="标题(Ctrl + H)"><i class="glyphicon glyphicon-header" ></i></a>
-                                        </li>
-                                        <li class="tb-btn spliter"></li>
-                                        <li class="tb-btn">
-                                            <a title="插入 more 标签(Ctrl + M)"><i class="glyphicon glyphicon-pushpin" ></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="md-editor expand"><textarea name="content"></textarea></div>
-                                <div class="md-preview markdown shrink"></div>
-                                <div class="md-spliter"></div>
-                            </div>
+                            <markdown-editor></markdown-editor>
                             <p style="line-height:30px;"><span>文章使用 markdown 格式，格式说明请见</span><a href="https://guides.github.com/features/mastering-markdown/"
                                     target="_blank">这里</a></p>
                         </div>
@@ -76,89 +21,7 @@
                         <div style="margin-bottom:15px;"><label>发布日期</label>
                             <div>
                                 <div class="rdt "><input class="form-control" value="" type="text">
-                                    <div class="rdtPicker">
-                                        <div class="rdtDays">
-                                            <table>
-                                                <thead>
-                                                    <tr>
-                                                        <th class="rdtPrev"><button type="button">‹</button></th>
-                                                        <th class="rdtSwitch" colspan="5" data-value="8">九月 2016</th>
-                                                        <th class="rdtNext"><button type="button">›</button></th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="dow">一</th>
-                                                        <th class="dow">二</th>
-                                                        <th class="dow">三</th>
-                                                        <th class="dow">四</th>
-                                                        <th class="dow">五</th>
-                                                        <th class="dow">六</th>
-                                                        <th class="dow">日</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td data-value="29" class="rdtDay rdtOld">29</td>
-                                                        <td data-value="30" class="rdtDay rdtOld">30</td>
-                                                        <td data-value="31" class="rdtDay rdtOld">31</td>
-                                                        <td data-value="1" class="rdtDay">1</td>
-                                                        <td data-value="2" class="rdtDay">2</td>
-                                                        <td data-value="3" class="rdtDay">3</td>
-                                                        <td data-value="4" class="rdtDay">4</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td data-value="5" class="rdtDay">5</td>
-                                                        <td data-value="6" class="rdtDay">6</td>
-                                                        <td data-value="7" class="rdtDay">7</td>
-                                                        <td data-value="8" class="rdtDay">8</td>
-                                                        <td data-value="9" class="rdtDay">9</td>
-                                                        <td data-value="10" class="rdtDay">10</td>
-                                                        <td data-value="11" class="rdtDay">11</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td data-value="12" class="rdtDay">12</td>
-                                                        <td data-value="13" class="rdtDay">13</td>
-                                                        <td data-value="14" class="rdtDay">14</td>
-                                                        <td data-value="15" class="rdtDay">15</td>
-                                                        <td data-value="16" class="rdtDay">16</td>
-                                                        <td data-value="17" class="rdtDay">17</td>
-                                                        <td data-value="18" class="rdtDay">18</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td data-value="19" class="rdtDay rdtToday">19</td>
-                                                        <td data-value="20" class="rdtDay">20</td>
-                                                        <td data-value="21" class="rdtDay">21</td>
-                                                        <td data-value="22" class="rdtDay">22</td>
-                                                        <td data-value="23" class="rdtDay">23</td>
-                                                        <td data-value="24" class="rdtDay">24</td>
-                                                        <td data-value="25" class="rdtDay">25</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td data-value="26" class="rdtDay">26</td>
-                                                        <td data-value="27" class="rdtDay">27</td>
-                                                        <td data-value="28" class="rdtDay">28</td>
-                                                        <td data-value="29" class="rdtDay">29</td>
-                                                        <td data-value="30" class="rdtDay">30</td>
-                                                        <td data-value="1" class="rdtDay rdtNew">1</td>
-                                                        <td data-value="2" class="rdtDay rdtNew">2</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td data-value="3" class="rdtDay rdtNew">3</td>
-                                                        <td data-value="4" class="rdtDay rdtNew">4</td>
-                                                        <td data-value="5" class="rdtDay rdtNew">5</td>
-                                                        <td data-value="6" class="rdtDay rdtNew">6</td>
-                                                        <td data-value="7" class="rdtDay rdtNew">7</td>
-                                                        <td data-value="8" class="rdtDay rdtNew">8</td>
-                                                        <td data-value="9" class="rdtDay rdtNew">9</td>
-                                                    </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="7" class="rdtTimeToggle">00:00:00</td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                    </div>
+                                    <datepicker></datepicker>
                                 </div>
                             </div>
                         </div>
@@ -200,11 +63,16 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
+import MarkdownEditor from './editor/index';
+import Datepicker from 'vue-datepicker'
+import moment from 'moment';
 
 export default {
 
   components: {
     Top,
+    MarkdownEditor,
+    Datepicker,
   },
   props:{
     shouldTipShow: Boolean,
@@ -214,9 +82,60 @@ export default {
   },
   data () {
     return {
-
+      starttime: '',
+      endtime: '2016-01-19',
+      testTime: '',
+      multiTime: '',
+      option: {
+        type: 'day',
+        week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+        month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        format: 'YYYY-MM-DD',
+        placeholder: 'when?',
+        inputStyle: {
+          'display': 'inline-block',
+          'padding': '6px',
+          'line-height': '22px',
+          'font-size': '16px',
+          'border': '2px solid #fff',
+          'box-shadow': '0 1px 3px 0 rgba(0, 0, 0, 0.2)',
+          'border-radius': '2px',
+          'color': '#5F5F5F'
+        },
+        color: {
+          header: '#ccc',
+          headerText: '#f00'
+        },
+        buttons: {
+          ok: 'Ok',
+          cancel: 'Cancel'
+        },
+        overlayOpacity: 0.5, // 0.5 as default
+        dismissible: true // as true as default
+      },
+      timeoption: {
+        type: 'min',
+        week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+        month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        format: 'YYYY-MM-DD HH:mm'
+      },
+      multiOption: {
+        type: 'multi-day',
+        week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+        month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        format:"YYYY-MM-DD HH:mm"
+      },
+      limit: [{
+        type: 'weekday',
+        available: [1, 2, 3, 4, 5]
+      },
+      {
+        type: 'fromto',
+        from: '2016-02-01',
+        to: '2016-02-20'
+      }]
     }
-  }
+  },
 }
 </script>
 
