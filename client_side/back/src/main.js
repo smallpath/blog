@@ -93,8 +93,8 @@ router.map({
           }
         }
     },
-    '/options': {
-        name:'post', 
+    '/option': {
+        name:'option', 
         component: App,
         subRoutes: {
           '/general': {

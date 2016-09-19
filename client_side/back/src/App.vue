@@ -14,6 +14,10 @@
       <cate-list :current-route="currentRoute"  v-if=" currentRoute == '/cate/list' "></cate-list>
       <cate-create  :current-route="currentRoute"  v-if=" currentRoute == '/cate/create' "></cate-create>
       <user-edit  :current-route="currentRoute"  v-if=" currentRoute == '/user/edit_pwd' "></user-edit>
+      <user-list  :current-route="currentRoute"  v-if=" currentRoute == '/user/list' "></user-list>
+      <option-general  :current-route="currentRoute"  v-if=" currentRoute == '/option/general' "></option-general>
+      <option-comment  :current-route="currentRoute"  v-if=" currentRoute == '/option/comment' "></option-comment>
+      <option-analytic  :current-route="currentRoute"  v-if=" currentRoute == '/option/analytic' "></option-analytic>
       <tip :should-tip-show="shouldTipShow" :type="'success'" :text="'wsssssw'"></tip>
     </template>
     <router-view></router-view>
@@ -33,6 +37,10 @@ import CateList from './components/CateList';
 import TagCreate from './components/TagCreate';
 import CateCreate from './components/CateCreate';
 import UserEdit from './components/UserEdit';
+import UserList from './components/UserList';
+import OptionGeneral from './components/OptionGeneral';
+import OptionComment from './components/OptionComment';
+import OptionAnalytic from './components/OptionAnalytic';
 
 export default {
 
@@ -48,6 +56,10 @@ export default {
     TagCreate,
     CateCreate,
     UserEdit,
+    UserList,
+    OptionGeneral,
+    OptionComment,
+    OptionAnalytic,
   },
 
   data () {

@@ -62,10 +62,10 @@ export default {
           {url: '/user/list', title: '用户设置'},
           {url: '/user/edit_pwd', title: '修改密码'},
         ]},
-        {url: '/options', icon: 'setting', title: '系统设置', type: 1, children: [
-          {url: '/options/general', title: '基本设置'},
-          {url: '/options/comment', title: '评论设置'},
-          {url: '/options/analytic', title: '统计代码'},
+        {url: '/option', icon: 'setting', title: '系统设置', type: 1, children: [
+          {url: '/option/general', title: '基本设置'},
+          {url: '/option/comment', title: '评论设置'},
+          {url: '/option/analytic', title: '统计代码'},
         ]}
       ],
 
