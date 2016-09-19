@@ -8,6 +8,9 @@
       <sidebar :current-route.sync="currentRoute"></sidebar>
       <dashboard :current-route="currentRoute"  v-if=" currentRoute.indexOf('/dashboard') > -1 "></dashboard>
       <post-list :current-route="currentRoute"  v-if=" currentRoute == '/post/list' "></post-list>
+      <page-list :current-route="currentRoute"  v-if=" currentRoute == '/page/list' "></page-list>
+      <cate-list :current-route="currentRoute"  v-if=" currentRoute == '/cate/list' "></cate-list>
+      <tag-list  :current-route="currentRoute"  v-if=" currentRoute == '/tag/list' "></tag-list>
       <tip :should-tip-show="shouldTipShow" :type="'success'" :text="'wsssssw'"></tip>
     </template>
     <router-view></router-view>
@@ -21,6 +24,9 @@ import Tip from './components/Tip'
 import Sidebar from './components/Sidebar'
 import Dashboard from './components/Dashboard';
 import PostList from './components/PostList';
+import PageList from './components/PageList';
+import TagList from './components/TagList';
+import CateList from './components/CateList';
 
 export default {
 
@@ -30,6 +36,9 @@ export default {
     Sidebar,
     Dashboard,
     PostList,
+    PageList,
+    TagList,
+    CateList,
   },
 
   data () {
