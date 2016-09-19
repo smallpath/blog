@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="shouldTipShow == true" class="fk-alert alert alert-' + type">{{text}}</div>
+    <div v-if="shouldTipShow == true" class="fk-alert alert alert-{{type}}">{{text}}</div>
     <div v-else></div>
   </div>
 </template>

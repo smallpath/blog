@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 Vue.use(VueResource)
 
 import App from './App'
+import Login from './components/Login'
 
 let router = new VueRouter()
 
@@ -24,13 +25,13 @@ router.map({
         component: App,
         subRoutes: {
           '/list': {
-            component: App
+            component: Login
           },
           '/create': {
-            component: App
+            component: Login
           },
           '/edit/:id': {
-            component: App
+            component: Login
           }
         }
     },
@@ -39,13 +40,13 @@ router.map({
         component: App,
         subRoutes: {
           '/list': {
-            component: App
+            component: Login
           },
           '/create': {
-            component: App
+            component: Login
           },
           '/edit/:id': {
-            component: App
+            component: Login
           }
         }
     },
@@ -54,16 +55,16 @@ router.map({
         component: App,
         subRoutes: {
           '/list': {
-            component: App
+            component: Login
           },
           '/create': {
-            component: App
+            component: Login
           },
           '/edit_pwd': {
-            component: App
+            component: Login
           },
           '/edit/:id': {
-            component: App
+            component: Login
           }
         }
     },
@@ -72,13 +73,13 @@ router.map({
         component: App,
         subRoutes: {
           '/list': {
-            component: App
+            component: Login
           },
           '/create': {
-            component: App
+            component: Login
           },
           '/edit/:id': {
-            component: App
+            component: Login
           }
         }
     },
@@ -87,13 +88,13 @@ router.map({
         component: App,
         subRoutes: {
           '/list': {
-            component: App
+            component: Login
           },
           '/create': {
-            component: App
+            component: Login
           },
           '/edit/:id': {
-            component: App
+            component: Login
           }
         }
     },
@@ -102,19 +103,19 @@ router.map({
         component: App,
         subRoutes: {
           '/general': {
-            component: App
+            component: Login
           },
           '/two_factor_auth': {
-            component: App
+            component: Login
           },
           '/comment': {
-            component: App
+            component: Login
           },
           '/analytic': {
-            component: App
+            component: Login
           },
           '/import': {
-            component: App
+            component: Login
           }
         }
     },
