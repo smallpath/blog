@@ -9,8 +9,11 @@
       <dashboard :current-route="currentRoute"  v-if=" currentRoute.indexOf('/dashboard') > -1 "></dashboard>
       <post-list :current-route="currentRoute"  v-if=" currentRoute == '/post/list' "></post-list>
       <page-list :current-route="currentRoute"  v-if=" currentRoute == '/page/list' "></page-list>
-      <cate-list :current-route="currentRoute"  v-if=" currentRoute == '/cate/list' "></cate-list>
       <tag-list  :current-route="currentRoute"  v-if=" currentRoute == '/tag/list' "></tag-list>
+      <tag-create  :current-route="currentRoute"  v-if=" currentRoute == '/tag/create' "></tag-create>
+      <cate-list :current-route="currentRoute"  v-if=" currentRoute == '/cate/list' "></cate-list>
+      <cate-create  :current-route="currentRoute"  v-if=" currentRoute == '/cate/create' "></cate-create>
+      <user-edit  :current-route="currentRoute"  v-if=" currentRoute == '/user/edit_pwd' "></user-edit>
       <tip :should-tip-show="shouldTipShow" :type="'success'" :text="'wsssssw'"></tip>
     </template>
     <router-view></router-view>
@@ -27,6 +30,9 @@ import PostList from './components/PostList';
 import PageList from './components/PageList';
 import TagList from './components/TagList';
 import CateList from './components/CateList';
+import TagCreate from './components/TagCreate';
+import CateCreate from './components/CateCreate';
+import UserEdit from './components/UserEdit';
 
 export default {
 
@@ -39,6 +45,9 @@ export default {
     PageList,
     TagList,
     CateList,
+    TagCreate,
+    CateCreate,
+    UserEdit,
   },
 
   data () {

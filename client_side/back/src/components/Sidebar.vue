@@ -59,17 +59,13 @@ export default {
           {url: '/tag/create', title: '添加标签'}
         ]},
         {url: '/user', icon: 'user', title: '用户管理', type: 1, children: [
-          {url: '/user/list', title: '用户列表'},
-          {url: '/user/create', title: '添加用户'},
+          {url: '/user/list', title: '用户设置'},
           {url: '/user/edit_pwd', title: '修改密码'},
         ]},
         {url: '/options', icon: 'setting', title: '系统设置', type: 1, children: [
           {url: '/options/general', title: '基本设置'},
-          {url: '/options/two_factor_auth', title: '两步验证'},
           {url: '/options/comment', title: '评论设置'},
           {url: '/options/analytic', title: '统计代码'},
-          {url: '/options/push', title: '推送设置'},
-          {url: '/options/import', title: '导入数据'}
         ]}
       ],
 

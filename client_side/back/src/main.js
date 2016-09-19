@@ -58,15 +58,9 @@ router.map({
           '/list': {
             component: Login
           },
-          '/create': {
-            component: Login
-          },
           '/edit_pwd': {
             component: Login
           },
-          '/edit/:id': {
-            component: Login
-          }
         }
     },
     '/cate': {
@@ -106,18 +100,12 @@ router.map({
           '/general': {
             component: Login
           },
-          '/two_factor_auth': {
-            component: Login
-          },
           '/comment': {
             component: Login
           },
           '/analytic': {
             component: Login
           },
-          '/import': {
-            component: Login
-          }
         }
     },
     
