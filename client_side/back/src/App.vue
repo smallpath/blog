@@ -5,7 +5,8 @@
       <login></login>
     </template>
     <template v-else>
-      <sidebar :current-route.sync="'/dashboard'"></sidebar>
+      <sidebar :current-route.sync="currentRoute"></sidebar>
+      <dashboard v-if=" currentRoute.indexOf('/dashboard') > -1 "></dashboard>
       <tip :should-tip-show="shouldTipShow" :type="'success'" :text="'wsssssw'"></tip>
     </template>
     <router-view></router-view>
@@ -17,20 +18,23 @@
 import Login from './components/Login'
 import Tip from './components/Tip'
 import Sidebar from './components/Sidebar'
+import Dashboard from './components/Dashboard';
 
 export default {
 
   components: {
     Login,
     Tip,
-    Sidebar
+    Sidebar,
+    Dashboard,
   },
 
   data () {
     return {
       isLogin: true,
       shouldTipShow: false,
-      SystemInfo: {}
+      SystemInfo: {},
+      currentRoute: '/dashboard'
     }
   }
 

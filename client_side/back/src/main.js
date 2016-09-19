@@ -7,7 +7,8 @@ Vue.use(VueRouter)
 Vue.use(VueResource)
 
 import App from './App'
-import Login from './components/Login'
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 
 let router = new VueRouter()
 
