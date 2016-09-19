@@ -8,7 +8,9 @@
       <sidebar :current-route.sync="currentRoute"></sidebar>
       <dashboard :current-route="currentRoute"  v-if=" currentRoute.indexOf('/dashboard') > -1 "></dashboard>
       <post-list :current-route="currentRoute"  v-if=" currentRoute == '/post/list' "></post-list>
+      <post-create :current-route="currentRoute"  v-if=" currentRoute == '/post/create' "></post-create>
       <page-list :current-route="currentRoute"  v-if=" currentRoute == '/page/list' "></page-list>
+      <page-create :current-route="currentRoute"  v-if=" currentRoute == '/page/create' "></page-create>
       <tag-list  :current-route="currentRoute"  v-if=" currentRoute == '/tag/list' "></tag-list>
       <tag-create  :current-route="currentRoute"  v-if=" currentRoute == '/tag/create' "></tag-create>
       <cate-list :current-route="currentRoute"  v-if=" currentRoute == '/cate/list' "></cate-list>
@@ -31,7 +33,9 @@ import Tip from './components/Tip'
 import Sidebar from './components/Sidebar'
 import Dashboard from './components/Dashboard';
 import PostList from './components/PostList';
+import PostCreate from './components/PostCreate';
 import PageList from './components/PageList';
+import PageCreate from './components/PageCreate';
 import TagList from './components/TagList';
 import CateList from './components/CateList';
 import TagCreate from './components/TagCreate';
@@ -50,7 +54,9 @@ export default {
     Sidebar,
     Dashboard,
     PostList,
+    PostCreate,
     PageList,
+    PageCreate,
     TagList,
     CateList,
     TagCreate,
