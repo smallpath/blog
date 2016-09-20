@@ -1,5 +1,5 @@
 # Koa2 server_side
-The server side for our blog written by Koa2
+博客的提供RESTful API的后端
 
 ## Prerequiste
 Node.js > 4.0.0

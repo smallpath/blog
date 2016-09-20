@@ -1,9 +1,0 @@
-node_modules/*
-
-play.bat
-
-npm-debug.log
-
-# OSX
-#
-.DS_Store
