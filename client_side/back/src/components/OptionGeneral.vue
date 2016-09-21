@@ -6,7 +6,7 @@
         <div class="form-group"><label>站点名称</label>
           <div class="form-group"><input name="title" v-model="title" class="form-control form-control" type="text"></div>
         </div>
-        <div class="form-group"><label>LOGO 地址</label><img src="/static/upload/201605/logo.png?m=1474296766757" alt="logo" style="display:block;margin-bottom:10px;"
+        <div class="form-group"><label>LOGO 地址</label><img src="{{site_url}}/static/upload/201605/logo.png?m=1474296766757" alt="logo" style="display:block;margin-bottom:10px;"
             height="140px" width="140px">
           <div class="form-group"><input name="logo_url" v-model="logo_url" class="form-control form-control" type="text"></div>
           <p class="help-block"><span>尺寸最好为 140x140px。</span><button type="button" class="btn btn-default"><span ></span><span >上传</span></button>
@@ -18,7 +18,7 @@
         <div class="form-group"><label>网站地址</label>
           <div class="form-group"><input name="site_url" v-model="site_url" class="form-control form-control" type="text"></div>
         </div>
-        <div class="form-group"><label>Favicon 地址</label><img src="/favicon.ico?m=1474296766757" alt="logo" style="display:block;margin-bottom:10px;max-width:128px;max-height:128px;">
+        <div class="form-group"><label>Favicon 地址</label><img src="{{site_url}}/favicon.ico?m=1474296766757" alt="logo" style="display:block;margin-bottom:10px;max-width:128px;max-height:128px;">
           <div class="form-group"><input name="favicon_url" v-model="favicon_url" class="form-control form-control" type="text"></div>
           <p class="help-block"><span>尺寸最好为 128x128px。</span><button type="button" class="btn btn-default"><span></span><span >上传</span></button>
             <input style="display:none;" accept="image/x-icon" type="file"></p>
