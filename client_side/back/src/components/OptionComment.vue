@@ -27,6 +27,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
+import store from '../store/index';
 
 export default {
 
@@ -43,6 +44,27 @@ export default {
     return {
 
     }
+  },
+  methods: {
+    getOption(){
+      store.fetchOption(this).then(result=>{
+        let obj = {};
+        result.forEach(value=>{
+          obj[value.key] = value;
+        })
+        this.option = obj;
+        this.analyze_code = obj['analyze_code'].value;
+      })
+    },
+    submit(){
+      store.patchOption(this,this.option['analyze_code']._id,{ value : this.analyze_code }).then(result=>{
+        
+      })
+
+    }
+  },
+  ready () {
+    this.getOption();
   }
 }
 </script>

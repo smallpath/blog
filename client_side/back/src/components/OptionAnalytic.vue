@@ -45,8 +45,8 @@ export default {
       })
     },
     submit(){
-      store.putOption(this,this.option['analyze_code']._id,{ value : this.analyze_code }).then(result=>{
-        console.log(result);
+      store.patchOption(this,this.option['analyze_code']._id,{ value : this.analyze_code }).then(result=>{
+
       })
 
     }

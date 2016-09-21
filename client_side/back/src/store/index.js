@@ -53,7 +53,7 @@ store.fetchOption = (vue) => {
     })
 }
 
-store.putOption = (vue,id, json) => {
+store.patchOption = (vue,id, json) => {
   return vue.$http.patch(`${root}/option/${id}`,json)
     .then((response) => {
         return response.body;
