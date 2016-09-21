@@ -44,6 +44,24 @@ store.newCate = (vue, name) => {
   })
 }
 
+store.fetchOption = (vue) => {
+  return vue.$http.get(`${root}/option`)
+    .then((response) => {
+        return response.body;
+    }, (err) => {
+        console.log(err)
+    })
+}
+
+store.putOption = (vue,id, json) => {
+  return vue.$http.patch(`${root}/option/${id}`,json)
+    .then((response) => {
+        return response.body;
+    }, (err) => {
+        console.log(err)
+    })
+}
+
 store.fetchBlogByID = (vue, id, page = 0 ) => {
   return vue.$resource(blogAPI+'/{id}').get({
       id
