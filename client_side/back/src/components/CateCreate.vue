@@ -3,9 +3,9 @@
         <top :current-route="currentRoute"></top> 
         <div class="manage-container">
           <form
-            model={this.state.tagInfo}
+            model={tagInfo}
             class="tag-create clearfix"
-            onValidSubmit={this.handleValidSubmit.bind(this)}
+            onsubmit="return false"
           >
             <div class="form-group">
                 <label class="control-label col-xs-1">类型名称</label>
@@ -15,7 +15,7 @@
                         class="form-control"
                         type="text"
                         label="标签名称"
-                        value={{this.state.tagInfo.name}}
+                        v-model="name"
                         validate="required"
                     />
                 </div>  
@@ -28,13 +28,12 @@
                         type="text"
                         label="缩略名"
                         class="form-control"
-                        value={{this.state.tagInfo.name}}
                         validate="required"
                     />
                 </div>  
             </div>
             <div class="form-group col-xs-12">
-              <button type="submit" {...props} class="btn btn-primary">{{ submitting ? '提交中...' : '提交'}}</button>
+              <button type="submit" @click="submitCate" class="btn btn-primary">{{ isSubmitting ? '提交中...' : '提交'}}</button>
             </div>
           </form>
         </div>
@@ -44,6 +43,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
+import store from '../store/index';
 
 export default {
 
@@ -58,7 +58,17 @@ export default {
   },
   data () {
     return {
-
+      name: '',
+      isSubmitting: false,
+    }
+  },
+  methods: {
+    submitCate() {
+      this.isSubmitting = true;
+      store.newTag(this, this.name).then(body=>{
+        console.log('cateCreate',body);
+        this.isSubmitting = false;
+      })
     }
   }
 }
