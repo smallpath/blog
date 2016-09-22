@@ -164,6 +164,16 @@ store.fetchBlogByID = (vue, id, page = 0 ) => {
   })
 }
 
+store.deleteBlogByID = (vue, id, page = 0 ) => {
+  return vue.$resource(blogAPI+'/{id}').delete({
+      id
+  }).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
+}
+
 store.fetchBlogCount = (vue, queryJSON, page = 0 ) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);

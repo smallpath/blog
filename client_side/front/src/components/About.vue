@@ -17,8 +17,8 @@ import store from '../store/index'
 export default {
   data () {
     return {
-      html: store.fetchAbout(this).then(html=>{
-          this.html = html;
+      html: store.fetchPage(this,{ title: '关于' }).then(html=>{
+          this.html = html[0];
       })
     }
   },

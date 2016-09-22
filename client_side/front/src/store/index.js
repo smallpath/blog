@@ -7,7 +7,7 @@ const tagAPI = `/proxyPrefix/api/tag`;
 
 const postTagAPI = `/proxyPrefix/api/postTag`;
 
-const aboutAPI = `/proxyPrefix/api/post/57dbe47c2993f70dc6d6b12c`
+const aboutAPI = `/proxyPrefix/api/post?title=关于`
 
 const store = new EventEmitter()
 
@@ -15,8 +15,13 @@ const perPage = 10;
 
 export default store
 
-store.fetchAbout = (vue) => {
-  return vue.$http.get(aboutAPI).then((response) => {
+store.fetchPage = (vue, queryJSON) => {
+  let keys = Object.keys(queryJSON);
+  let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
+  return vue.$resource(blogAPI+'{?keys,values}').get({
+      keys,
+      values,
+  }).then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)

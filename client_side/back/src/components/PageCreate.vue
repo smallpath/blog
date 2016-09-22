@@ -1,7 +1,7 @@
 <template>
     <div class="fk-content-wrap">
         <div class="manage-container">
-            <form action="#" class="post-create clearfix">
+            <form onsubmit="return false" class="post-create clearfix">
                 <div class="row">
                     <div class="col-xs-9">
                         <div class="form-group"><label class="control-label"><span >撰写文章</span></label>
@@ -16,7 +16,7 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="button-group"><button type="submit" class="btn btn-default">保存草稿</button>
-                            <span> </span><button type="submit" class="btn btn-primary">发布文章</button></div>
+                            <span> </span><button type="submit" @click="submit" class="btn btn-primary">发布文章</button></div>
                         <div style="margin-bottom:15px;"><label>发布日期</label>
                             <div>
                                 <div class="rdt "><input class="form-control" value="" type="text">
@@ -42,7 +42,7 @@
                         <div class="form-group"><label class="control-label">公开度</label>
                             <div class="col-xs-12 is-public-radiogroup">
                                 <div class="">
-                                    <div class="radio"><label class=""><input value="1" label="公开" checked="" name="is_public" class=""  type="radio"><span >公开</span></label></div>
+                                    <div class="radio"><label class=""><input value="1" label="公开" v-model="page.isPublic" name="is_public" class=""  type="radio"><span >公开</span></label></div>
                                 </div>
                                 <div class="">
                                     <div class="radio"><label class=""><input value="0" label="不公开" name="is_public" class=""  type="radio"><span >不公开</span></label></div>
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="form-group"><label class="control-label">权限控制</label>
-                            <div><label><input name="allow_comment" checked=""  type="checkbox"><span >允许评论</span></label></div>
+                            <div><label><input name="allow_comment" v-model="page.allowComment" type="checkbox"><span >允许评论</span></label></div>
                         </div>
                     </div>
                 </div>
@@ -65,6 +65,7 @@ import Top from './Top';
 import MarkdownEditor from './editor/index';
 import Datepicker from 'vue-datepicker'
 import moment from 'moment';
+import store from '../store/index';
 
 export default {
 
@@ -132,9 +133,50 @@ export default {
         type: 'fromto',
         from: '2016-02-01',
         to: '2016-02-20'
-      }]
+      }],
+
+      id: '',
+      page: { 
+          updatedAt: '',
+          createdAt: '',
+          allowComment: 1,
+          pathName: '',
+          type: '',
+          title: '',
+          isPublic: '1',
+          markdownContent: '',
+      },
     }
   },
+  route: {
+    data({ to }){
+      if (typeof to.params.id == 'undefined'){
+        return;
+      }
+
+      this.id = to.params.id;
+
+      store.fetchBlogByID(this, this.id).then(result=>{
+        this.page = result;
+      })
+    }
+
+  },
+  methods: {
+    submit() {
+      this.isSubmitting = true;
+      if (this.id == '')
+        store.newpage(this, this.name).then(body=>{
+          console.log('pageCreate',body);
+          this.isSubmitting = false;
+        })
+      else
+        store.patchpage(this, this.id ,this.page).then(body=>{
+          console.log('pagePatched',body);
+          this.isSubmitting = false;
+        })
+    }
+  }
 }
 </script>
 

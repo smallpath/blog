@@ -65,6 +65,7 @@ import Top from './Top';
 import MarkdownEditor from './editor/index';
 import Datepicker from 'vue-datepicker'
 import moment from 'moment';
+import store from '../store/index';
 
 export default {
 
