@@ -5,6 +5,8 @@
       <login></login> 
     </template>
     <template v-else>
+      <sidebar :current-route.sync="currentRoute"></sidebar>
+      <top :current-route="currentRoute"></top> 
       <!--<sidebar :current-route.sync="currentRoute"></sidebar>
       <dashboard :current-route="currentRoute"  v-if=" currentRoute.indexOf('/dashboard') > -1 "></dashboard>
       <post-list :current-route.sync="currentRoute"  v-if=" currentRoute == '/post/list' "></post-list>
@@ -21,7 +23,7 @@
       <option-analytic  :current-route="currentRoute"  v-if=" currentRoute == '/option/analytic' "></option-analytic>
       <tip :should-tip-show="shouldTipShow" :type="'success'" :text="'wsssssw'"></tip>-->
     </template>
-    <router-view></router-view>
+    <router-view :current-route.sync="currentRoute"></router-view>
   </div>
 </template>
 
@@ -29,6 +31,7 @@
 /* eslint-disable */
 import Login from './components/Login'
 import Tip from './components/Tip'
+import Top from './components/Top'
 import Sidebar from './components/Sidebar'
 import Dashboard from './components/Dashboard';
 import PostList from './components/PostList';
@@ -49,6 +52,7 @@ export default {
   components: {
     Login,
     Tip,
+    Top,
     Sidebar,
     Dashboard,
     PostList,

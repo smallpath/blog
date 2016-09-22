@@ -1,6 +1,5 @@
 <template>
     <div class="fk-content-wrap">
-        <top :current-route="currentRoute"></top> 
         <div class="manage-container">
             <p v-if="needUpdate" class="bg-info" style={{padding: 15, color: '#337ab7'}}>
                 Firekylin {{needUpdate}} 已经发布，请立即<a href="http://firekylin.org/release/latest.tar.gz" style={{textDecoration:

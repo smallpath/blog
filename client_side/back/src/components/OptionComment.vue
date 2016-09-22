@@ -1,6 +1,5 @@
 <template>
   <div class="fk-content-wrap">
-    <top :current-route="currentRoute"></top>
     <div class="manage-container">
       <form onsubmit="return false" class="clearfix options-comment">
         <div class="form-group"><label>评论类型</label>

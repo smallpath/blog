@@ -2,18 +2,14 @@
     <div class="fk-header clearfix">
         <div class="pull-left">
             <ol class="breadcrumb">
-                <li>
-                    <a v-link="{path:'/dashboard' }">首页</Link>
-                </li>
-                <template v-if="routes == '/dashboard'" v-for="item in routes">
-                    <li v-if="item.url === this.props.location.pathname" class="active">一级title</li>
-                    <li v-else>
-                        <a v-link="{path:item.children ? item.children[0].url :item.url }" >二级title</Link>
+                <template v-for="item in routes">
+                    <li class="{{item.url == this.props.location.pathName ? 'active': ''}}">
+                        <a v-link="{path:item.children ? item.children[0].url :item.url }" >{{ item == '/dashboard'? "首页": item }}</Link>
                     </li>
                 </template>
             </ol>
         </div>
-        <ul class="nav navbar-nav navbar-right userinfo" ref="userinfo">
+        <ul class="nav navbar-nav navbar-right userinfo">
             <li class={this.getUserClass()}>
             <a onClick={this.toggleUser.bind(this)} class="dropdown-toggle" data-toggle="dropdown">
                 {SysConfig.userInfo.name} <b class="caret"></b>
@@ -40,10 +36,9 @@ export default {
   },
   computed: {
       routes () {
-        //   let arr = this.currentRoute.split('/');
-        //   arr = arr.filter(value=>{return value!=''});
-        //   console.log(this.currentRoute);
-        //   return arr;
+          let arr = this.currentRoute.split('/');
+          arr = arr.filter(value=>{return value!=''});
+          return arr;
       }
   },
   data () {

@@ -1,6 +1,5 @@
 <template>
   <div class="fk-content-wrap">
-    <top :current-route="currentRoute"></top>
     <div class="manage-container" >
       <h3 style="margin-bottom:20px;">网站统计代码</h3>
       <form onsubmit="return false" class="clearfix options-general">

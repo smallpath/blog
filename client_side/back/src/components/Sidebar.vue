@@ -8,15 +8,15 @@
       <ul class="mod-bar" style={{marginTop: 10}}>
         <input type="hidden" id="hide_values" val="0" />
           <li v-for="route in routes">
-            <a v-if="route.children" v-link="{ path: route.children[0].url }" class="{{getClassName(route.icon, route.url)}}">
+            <a v-if="route.children" v-link="{ path: route.children[0].url }" @click="go(route.children[0].url)" class="{{getClassName(route.icon, route.url)}}">
               <span>{{route.title}}</span>
             </a>
-            <a v-else v-link="{ path: route.url }"class="{{getClassName(route.icon, route.url)}}">
+            <a v-else v-link="{ path: route.url }" @click="go(route.url)" class="{{getClassName(route.icon, route.url)}}">
               <span>{{route.title}}</span>
             </a>
             <ul v-if="route.children" :style="{ 'height': getHeight(route)  }">
                 <li v-for="child in route.children">
-                  <a v-link="{ path: child.url }"  class="{{getSubLinkClassName(child.url)}}">
+                  <a v-link="{ path: child.url }" @click="go(child.url)"  class="{{getSubLinkClassName(child.url)}}">
                     <span>{{child.title}}</span>
                   </a>
                 </li>
@@ -35,6 +35,7 @@ export default {
     shouldTipShow: Boolean,
     type: String,
     text: String,
+    currentRoute: String,
   },
   data () {
     return {
@@ -74,9 +75,8 @@ export default {
   },
   route: {
     data({ to }){
-      console.log(to);
       return {
-        
+
       };
     }
   },
@@ -101,6 +101,9 @@ export default {
         active: this.isActive(routeUrl)
       })
     },
+    go(routeUrl){
+      this.currentRoute = routeUrl;
+    }
   }
 
 }

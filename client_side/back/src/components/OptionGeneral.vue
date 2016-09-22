@@ -1,6 +1,5 @@
 <template>
   <div class="fk-content-wrap">
-    <top :current-route="currentRoute"></top>
     <div class="manage-container">
       <form onsubmit="return false" class="clearfix options-general">
         <div class="form-group"><label>站点名称</label>
