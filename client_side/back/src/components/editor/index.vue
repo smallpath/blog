@@ -51,7 +51,7 @@
                 </li>
             </ul>
         </div>
-        <div class="md-editor expand"><textarea name="content"></textarea></div>
+        <div class="md-editor expand"><textarea name="content" v-model="content"></textarea></div>
         <div class="md-preview markdown shrink"></div>
         <div class="md-spliter"></div>
     </div>
@@ -63,7 +63,7 @@ export default {
   props:{
     shouldTipShow: Boolean,
     type: String,
-    text: String,
+    content: String,
   },
   data () {
     return {

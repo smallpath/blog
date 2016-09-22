@@ -166,12 +166,12 @@ export default {
     submit() {
       this.isSubmitting = true;
       if (this.id == '')
-        store.newpage(this, this.name).then(body=>{
+        store.newPage(this, this.name).then(body=>{
           console.log('pageCreate',body);
           this.isSubmitting = false;
         })
       else
-        store.patchpage(this, this.id ,this.page).then(body=>{
+        store.patchPage(this, this.id ,this.page).then(body=>{
           console.log('pagePatched',body);
           this.isSubmitting = false;
         })

@@ -11,6 +11,8 @@ const aboutAPI = `/proxyPrefix/api/post/57dbe47c2993f70dc6d6b12c`
 
 const root = `/proxyPrefix/api`;
 
+const postCateAPI = `/proxyPrefix/api/postCategory`;
+
 const store = new EventEmitter()
 
 const perPage = 10;
@@ -274,6 +276,14 @@ store.fetchTagsByPostID = (vue, queryJSON) => {
 
 store.fetchPostTags = (vue) => {
   return vue.$http.get(postTagAPI).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
+}
+
+store.fetchPostCate = (vue) => {
+  return vue.$http.get(postCateAPI).then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)
