@@ -3,9 +3,8 @@
         <top :current-route="currentRoute"></top> 
         <div class="manage-container">
           <form
-            model={this.state.tagInfo}
             class="user-create clearfix"
-            onValidSubmit={this.handleValidSubmit.bind(this)}
+            onsubmit="return false"
           >
           <div class="pull-left">
             <div class="form-group">
@@ -14,9 +13,8 @@
                     name="username"
                     class="form-control"
                     type="text"
-                    label="标签名称"
+                    v-model="user.name"
                     placeholder="4到20个字符"
-                    value={{this.state.tagInfo.name}}
                     validate="required"
                 />
                 <p className="help-block">登录时所用的名称，不能重复。</p>
@@ -27,9 +25,8 @@
                     name="email"
                     class="form-control"
                     type="text"
-                    label="标签名称"
+                    v-model="user.email"
                     placeholder="4到20个字符"
-                    value={{this.state.tagInfo.name}}
                     validate="required"
                 />
                 <p className="help-block">用户主要联系方式，不能重复。</p>
@@ -40,8 +37,7 @@
                     name="password"
                     class="form-control"
                     type="password"
-                    label="标签名称"
-                    value={{this.state.tagInfo.name}}
+                    v-model="user.password"
                     validate="required"
                 />
                 <p className="help-block">建议使用特殊字符与字母、数字的混编方式，增加安全性。</p>
@@ -52,12 +48,11 @@
                     name="repassword"
                     class="form-control"
                     type="password"
-                    label="标签名称"
-                    value={{this.state.tagInfo.name}}
+                    v-model="repassword"
                     validate="required"
                 />
-                <button type="submit" {...props} class="btn btn-primary">{{ submitting ? '提交中...' : '提交'}}</button>
             </div>
+            <button type="submit" @click="submit" class="btn btn-primary">{{ submitting ? '提交中...' : '提交'}}</button>
           </div>
           <div class="pull-left">
             <div class="form-group">
@@ -66,27 +61,12 @@
                     name="display_name"
                     class="form-control"
                     type="text"
-                    label="标签名称"
                     placeholder="显示名称"
-                    value={{this.state.tagInfo.name}}
+                    v-model="user.displayName"
                     validate="required"
                 />
                 <p className="help-block">登录时所用的名称，不能重复。</p>
             </div>
-            <div class="form-group">
-                <label>用户名</label>
-                <input
-                    name="username"
-                    class="form-control"
-                    type="password"
-                    label="标签名称"
-                    placeholder="4到20个字符"
-                    value={{this.state.tagInfo.name}}
-                    validate="required"
-                />
-                <p className="help-block">登录时所用的名称，不能重复。</p>
-            </div>
-            
           </div>
           </form>
         </div>
@@ -96,6 +76,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
+import store from '../store/index';
 
 export default {
 
@@ -110,8 +91,29 @@ export default {
   },
   data () {
     return {
+        user: {},
+        repassword: '',
+    }
+  },
+  methods: {
+    getUser(){
+      store.fetchUser(this).then(result=>{
+        this.user = result[0];
+      })
+    },
+    submit(){
+
+        if(this.user.password != this.repassword)
+            return;
+
+      store.patchUser(this,this.user._id,this.user).then(result=>{
+
+      })
 
     }
+  },
+  ready () {
+    this.getUser();
   }
 }
 </script>
