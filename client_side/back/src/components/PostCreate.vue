@@ -140,8 +140,10 @@ export default {
       shouldPathDisabled: false,
       cates: [],
       postCate: [],
+      postCateBackup: [],
       tags: [],
       postTags: [],
+      postTagsBackup: [],
       allowComment: true,
       isPublic: '1',
       post: { 
@@ -184,12 +186,14 @@ export default {
             let obj = {};
             result = result.filter(value=>value.postID == this.id);
             this.postTags = result.map(value=>value.tagID);
+            this.postTagsBackup = this.postTags.slice(0);
         })
 
         store.fetchPostCate(this).then(result=>{
             let obj = {};
             result = result.filter(value=>value.postID == this.id);
             this.postCate = result.map(value=>value.categoryID);
+            this.postCateBackup = this.postTags.slice(0);
         })
 
       });
@@ -248,7 +252,32 @@ export default {
 
       }
 
-    }
+      //先删除已经存在的
+        this.postTagsBackup.forEach(value=>{
+            store.deletePostTags(this, value);
+        })
+        
+        this.postCateBackup.forEach(value=>{
+            store.deletePostCates(this, value);
+        })
+        //再添加现在有的
+        this.postTags.forEach(value=>{
+            store.addPostTags(this,{
+                postID: this.id,
+                tagID: value ,
+            });
+        });
+
+        this.postCate.forEach(value=>{
+            
+            store.addPostCates(this,{
+                postID: this.id,
+                categoryID: value ,
+            });
+        });
+
+    },
+    
   },
   ready(){
 

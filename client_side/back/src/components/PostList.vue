@@ -101,7 +101,30 @@ export default {
     deleteBlogByID(id){
         store.deleteBlogByID(this, id).then(result=>{
             this.posts = this.posts.filter(value=>value._id !== id);
+        });
+
+        console.log(id);
+
+
+        store.fetchPostTagsByID(this, {
+            postID: id,
+        }).then(tags=>{
+            tags.forEach(value=>{
+                store.deleteTagsByPostID(this,value._id);
+            })
+
         })
+
+        store.fetchPostCateByID(this, {
+            postID: id,
+        }).then(tags=>{
+            tags.forEach(value=>{
+                store.deleteCateByPostID(this,value._id)
+            })
+
+        })
+
+
     },
   },
   ready () {
