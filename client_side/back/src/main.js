@@ -28,101 +28,109 @@ Vue.component('sidebar', Sidebar);
 
 let router = new VueRouter()
 
+router.redirect({
+  '/': '/dashboard'
+})
+
 router.map({
-    '/': {
-        name:'main', 
-        component: App
-    },
-    '/dashboard': {
-        name:'dashboard', 
-        component: App
-    },
-    '/post': {
-        name:'post', 
-        component: App,
-        subRoutes: {
-          '/list': {
-            component: PostList
-          },
-          '/create': {
-            component: PostCreate
-          },
-          '/edit/:id': {
-            component: PostCreate
-          }
-        }
-    },
-    '/page': {
-        name:'page', 
-        component: App,
-        subRoutes: {
-          '/list': {
-            component: PageList
-          },
-          '/create': {
-            component: PageCreate
-          },
-          '/edit/:id': {
-            component: PageCreate
-          }
-        }
-    },
-    '/user': {
-        name:'user', 
-        component: App,
-        subRoutes: {
-          '/list': {
-            component: UserList
-          },
-        }
-    },
-    '/cate': {
-        name:'cate', 
-        component: App,
-        subRoutes: {
-          '/list': {
-            component: CateList
-          },
-          '/create': {
-            component: CateCreate
-          },
-          '/edit/:id': {
-            component: CateCreate
-          }
-        }
-    },
-    '/tag': {
-        name:'tag', 
-        component: App,
-        subRoutes: {
-          '/list': {
-            component: TagList
-          },
-          '/create': {
-            component: TagCreate
-          },
-          '/edit/:id': {
-            name: 'editTag',
-            component: TagCreate
-          }
-        }
-    },
-    '/option': {
-        name:'option', 
-        component: App,
-        subRoutes: {
-          '/general': {
-            component: OptionGeneral
-          },
-          '/comment': {
-            component: OptionComment
-          },
-          '/analytic': {
-            component: OptionAnalytic
-          },
-        }
-    },
-    
+  '/': {
+    component: App,
+    subRoutes: {
+      '/dashboard': {
+        name: 'dashboard',
+        component: Dashboard
+      },
+    }
+  },
+  '/post': {
+    name: 'post',
+    component: App,
+    subRoutes: {
+      '/list': {
+        component: PostList
+      },
+      '/create': {
+        component: PostCreate
+      },
+      '/edit/:id': {
+        name: 'editPost',
+        component: PostCreate
+      }
+    }
+  },
+  '/page': {
+    name: 'page',
+    component: App,
+    subRoutes: {
+      '/list': {
+        component: PageList
+      },
+      '/create': {
+        component: PageCreate
+      },
+      '/edit/:id': {
+        name: 'editPage',
+        component: PageCreate
+      }
+    }
+  },
+  '/user': {
+    name: 'user',
+    component: App,
+    subRoutes: {
+      '/list': {
+        component: UserList
+      },
+    }
+  },
+  '/cate': {
+    name: 'cate',
+    component: App,
+    subRoutes: {
+      '/list': {
+        component: CateList
+      },
+      '/create': {
+        component: CateCreate
+      },
+      '/edit/:id': {
+        name: 'editCate',
+        component: CateCreate
+      }
+    }
+  },
+  '/tag': {
+    name: 'tag',
+    component: App,
+    subRoutes: {
+      '/list': {
+        component: TagList
+      },
+      '/create': {
+        component: TagCreate
+      },
+      '/edit/:id': {
+        name: 'editTag',
+        component: TagCreate
+      }
+    }
+  },
+  '/option': {
+    name: 'option',
+    component: App,
+    subRoutes: {
+      '/general': {
+        component: OptionGeneral
+      },
+      '/comment': {
+        component: OptionComment
+      },
+      '/analytic': {
+        component: OptionAnalytic
+      },
+    }
+  },
+
 })
 
 router.beforeEach(function () {
@@ -131,7 +139,7 @@ router.beforeEach(function () {
 
 
 router.redirect({
-  '*': '/'
+  '*': '/dashboard'
 })
 
 router.start(Vue.extend({}), 'body')

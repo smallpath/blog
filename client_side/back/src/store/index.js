@@ -35,7 +35,7 @@ store.newCate = (vue, name) => {
   if (typeof name == 'undefined' || name==""){
       return;
   }
-  return vue.$http.post(`${root}/cate`,{
+  return vue.$http.post(`${root}/category`,{
     name,   
   }).then((response) => {
     return response.body;
@@ -109,6 +109,43 @@ store.patchTag = (vue,id, json) => {
 
 store.deleteTag = (vue, id) => {
   return vue.$http.delete(`${root}/tag/${id}`)
+    .then((response) => {
+        return response.body;
+    }, (err) => {
+        console.log(err)
+    })
+}
+
+
+store.fetchCate= (vue) => {
+  return vue.$http.get(`${root}/category`)
+    .then((response) => {
+        return response.body;
+    }, (err) => {
+        console.log(err)
+    })
+}
+
+store.fetchCateById = (vue, id) => {
+  return vue.$http.get(`${root}/category/${id}`)
+    .then((response) => {
+        return response.body;
+    }, (err) => {
+        console.log(err)
+    })
+}
+
+store.patchCate = (vue,id, json) => {
+  return vue.$http.patch(`${root}/category/${id}`,json)
+    .then((response) => {
+        return response.body;
+    }, (err) => {
+        console.log(err)
+    })
+}
+
+store.deleteCate = (vue, id) => {
+  return vue.$http.delete(`${root}/category/${id}`)
     .then((response) => {
         return response.body;
     }, (err) => {

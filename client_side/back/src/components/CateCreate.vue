@@ -58,16 +58,38 @@ export default {
   data () {
     return {
       name: '',
+      id: '',
       isSubmitting: false,
     }
+  },
+  route: {
+    data({ to }){
+      if (typeof to.params.id == 'undefined'){
+        return;
+      }
+
+      this.id = to.params.id;
+
+      store.fetchCateById(this, this.id).then(result=>{
+        this.name = result.name;
+      })
+    }
+
   },
   methods: {
     submitCate() {
       this.isSubmitting = true;
-      store.newTag(this, this.name).then(body=>{
-        console.log('cateCreate',body);
-        this.isSubmitting = false;
-      })
+
+      if (this.id == '')
+        store.newCate(this, this.name).then(body=>{
+          console.log('cateCreate',body);
+          this.isSubmitting = false;
+        })
+      else
+        store.patchCate(this, this.id ,{ name: this.name }).then(body=>{
+          console.log('catePatched',body);
+          this.isSubmitting = false;
+        })
     }
   }
 }

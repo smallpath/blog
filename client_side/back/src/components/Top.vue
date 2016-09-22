@@ -3,8 +3,8 @@
         <div class="pull-left">
             <ol class="breadcrumb">
                 <template v-for="item in routes">
-                    <li class="{{item.url == this.props.location.pathName ? 'active': ''}}">
-                        <a v-link="{path:item.children ? item.children[0].url :item.url }" >{{ item == '/dashboard'? "首页": item }}</Link>
+                    <li class="{{true ? 'active': ''}}">
+                        <a v-link="{ path:item.children ? item.children[0].url :item.url }" >{{ item == '/dashboard'? "首页": item }}</Link>
                     </li>
                 </template>
             </ol>

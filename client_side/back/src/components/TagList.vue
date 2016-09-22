@@ -102,16 +102,6 @@ export default {
         this.tags = result;
       })
     },
-    submit(){
-
-        if(this.user.password != this.repassword)
-            return;
-
-        store.patchUser(this,this.user._id,this.user).then(result=>{
-
-        })
-
-    },
     deleteTag(id){
         store.deleteTag(this, id).then(result=>{
             console.log(result)
