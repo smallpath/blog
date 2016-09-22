@@ -54,7 +54,7 @@ router.map({
       },
       '/edit/:id': {
         name: 'editPost',
-        component: PostCreate
+        component: PostCreate,
       }
     }
   },

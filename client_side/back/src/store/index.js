@@ -290,4 +290,20 @@ store.fetchPostCate = (vue) => {
   })
 }
 
+store.newBlog = (vue, json) =>{
+  return vue.$http.post(blogAPI,json).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
+}
+
+store.patchBlog = (vue, id, json) =>{
+  return vue.$http.patch(`${blogAPI}/${id}`,json).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
+}
+
 
