@@ -15,7 +15,6 @@
       <tag-create  :current-route="currentRoute"  v-if=" currentRoute == '/tag/create' "></tag-create>
       <cate-list :current-route="currentRoute"  v-if=" currentRoute == '/cate/list' "></cate-list>
       <cate-create  :current-route="currentRoute"  v-if=" currentRoute == '/cate/create' "></cate-create>
-      <user-edit  :current-route="currentRoute"  v-if=" currentRoute == '/user/edit_pwd' "></user-edit>
       <user-list  :current-route="currentRoute"  v-if=" currentRoute == '/user/list' "></user-list>
       <option-general  :current-route="currentRoute"  v-if=" currentRoute == '/option/general' "></option-general>
       <option-comment  :current-route="currentRoute"  v-if=" currentRoute == '/option/comment' "></option-comment>
@@ -40,7 +39,6 @@ import TagList from './components/TagList';
 import CateList from './components/CateList';
 import TagCreate from './components/TagCreate';
 import CateCreate from './components/CateCreate';
-import UserEdit from './components/UserEdit';
 import UserList from './components/UserList';
 import OptionGeneral from './components/OptionGeneral';
 import OptionComment from './components/OptionComment';
@@ -61,7 +59,6 @@ export default {
     CateList,
     TagCreate,
     CateCreate,
-    UserEdit,
     UserList,
     OptionGeneral,
     OptionComment,

@@ -60,7 +60,6 @@ export default {
         ]},
         {url: '/user', icon: 'user', title: '用户管理', type: 1, children: [
           {url: '/user/list', title: '用户设置'},
-          {url: '/user/edit_pwd', title: '修改密码'},
         ]},
         {url: '/option', icon: 'setting', title: '系统设置', type: 1, children: [
           {url: '/option/general', title: '基本设置'},

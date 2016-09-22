@@ -80,6 +80,25 @@ store.patchUser = (vue,id, json) => {
     })
 }
 
+store.fetchTag = (vue) => {
+  return vue.$http.get(`${root}/tag`)
+    .then((response) => {
+        return response.body;
+    }, (err) => {
+        console.log(err)
+    })
+}
+
+
+store.deleteTag = (vue, id) => {
+  return vue.$http.delete(`${root}/tag/${id}`)
+    .then((response) => {
+        return response.body;
+    }, (err) => {
+        console.log(err)
+    })
+}
+
 
 store.fetchBlogByID = (vue, id, page = 0 ) => {
   return vue.$resource(blogAPI+'/{id}').get({

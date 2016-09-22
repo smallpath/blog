@@ -58,9 +58,6 @@ router.map({
           '/list': {
             component: Login
           },
-          '/edit_pwd': {
-            component: Login
-          },
         }
     },
     '/cate': {
