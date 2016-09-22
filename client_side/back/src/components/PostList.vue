@@ -103,9 +103,6 @@ export default {
             this.posts = this.posts.filter(value=>value._id !== id);
         });
 
-        console.log(id);
-
-
         store.fetchPostTagsByID(this, {
             postID: id,
         }).then(tags=>{

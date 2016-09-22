@@ -184,16 +184,17 @@ export default {
 
         store.fetchPostTags(this).then(result=>{
             let obj = {};
+            this.postTagsBackup = result.filter(value=>value.postID == this.id).map(value=>value._id)
             result = result.filter(value=>value.postID == this.id);
             this.postTags = result.map(value=>value.tagID);
-            this.postTagsBackup = this.postTags.slice(0);
         })
 
         store.fetchPostCate(this).then(result=>{
             let obj = {};
+            this.postCateBackup = result.filter(value=>value.postID == this.id).map(value=>value._id)
             result = result.filter(value=>value.postID == this.id);
+
             this.postCate = result.map(value=>value.categoryID);
-            this.postCateBackup = this.postTags.slice(0);
         })
 
       });
@@ -229,6 +230,7 @@ export default {
         store.newBlog(this, newPost).then(body=>{
           console.log('postCreate',body);
           this.isSubmitting = false;
+          this.deletePostAndTag(body._id);
         });
 
 
@@ -247,23 +249,32 @@ export default {
         store.patchBlog(this, this.id ,this.post).then(body=>{
           console.log('postPatched',body);
           this.isSubmitting = false;
+          this.deletePostAndTag(body._id);
         })
 
 
       }
 
-      //先删除已经存在的
+
+    },
+    deletePostAndTag(id){
+
+        
         this.postTagsBackup.forEach(value=>{
-            store.deletePostTags(this, value);
+            store.deletePostTags(this, value)
         })
+
+
+        console.log(this.postCateBackup)
         
         this.postCateBackup.forEach(value=>{
-            store.deletePostCates(this, value);
+            store.deletePostCates(this, value)
         })
-        //再添加现在有的
+
+
         this.postTags.forEach(value=>{
             store.addPostTags(this,{
-                postID: this.id,
+                postID: id,
                 tagID: value ,
             });
         });
@@ -271,11 +282,10 @@ export default {
         this.postCate.forEach(value=>{
             
             store.addPostCates(this,{
-                postID: this.id,
+                postID: id,
                 categoryID: value ,
             });
         });
-
     },
     
   },

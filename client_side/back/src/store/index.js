@@ -334,7 +334,7 @@ store.fetchPostCateByID = (vue, queryJSON) => {
 
 store.deletePostTags = (vue, id) => {
   return vue.$http.delete(`${postTagAPI}/${id}`).then((response) => {
-    return response.body;
+    return response;
   }, (err) => {
     console.log(err)
   })
@@ -350,7 +350,7 @@ store.addPostTags = (vue, json) => {
 
 store.deletePostCates = (vue, id) => {
   return vue.$http.delete(`${postCateAPI}/${id}`).then((response) => {
-    return response.body;
+    return response;
   }, (err) => {
     console.log(err)
   })
