@@ -8,15 +8,15 @@
       <ul class="mod-bar" style={{marginTop: 10}}>
         <input type="hidden" id="hide_values" val="0" />
           <li v-for="route in routes">
-            <a v-if="route.children" v-link="{ path: route.children[0].url }"  @click="open(route.children && route.children[0].url || route.url)" class="{{getClassName(route.icon, route.url)}}">
+            <a v-if="route.children" v-link="{ path: route.children[0].url }" class="{{getClassName(route.icon, route.url)}}">
               <span>{{route.title}}</span>
             </a>
-            <a v-else v-link="{ path: route.url }" @click="open(route.children && route.children[0].url || route.url)" class="{{getClassName(route.icon, route.url)}}">
+            <a v-else v-link="{ path: route.url }"class="{{getClassName(route.icon, route.url)}}">
               <span>{{route.title}}</span>
             </a>
             <ul v-if="route.children" :style="{ 'height': getHeight(route)  }">
                 <li v-for="child in route.children">
-                  <a v-link="{ path: child.url }" @click="open(child.url)" class="{{getSubLinkClassName(child.url)}}">
+                  <a v-link="{ path: child.url }"  class="{{getSubLinkClassName(child.url)}}">
                     <span>{{child.title}}</span>
                   </a>
                 </li>
@@ -35,7 +35,6 @@ export default {
     shouldTipShow: Boolean,
     type: String,
     text: String,
-    currentRoute: String,
   },
   data () {
     return {
@@ -71,13 +70,16 @@ export default {
     }
   },
   computed: {
-
+    
   },
-  // watch: {
-  //   currentRoute(val,oldVal){
-  //     console.log(val);
-  //   }
-  // },
+  route: {
+    data({ to }){
+      console.log(to);
+      return {
+        
+      };
+    }
+  },
   methods: {
     isActive(routeUrl){
       return this.currentRoute.indexOf(routeUrl) > -1;
@@ -98,9 +100,6 @@ export default {
       return classnames({
         active: this.isActive(routeUrl)
       })
-    },
-    open(routeUrl){
-      this.currentRoute = routeUrl;
     },
   }
 

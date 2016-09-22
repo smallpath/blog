@@ -40,10 +40,10 @@ export default {
   },
   computed: {
       routes () {
-          let arr = this.currentRoute.split('/');
-          arr = arr.filter(value=>{return value!=''});
-          console.log(this.currentRoute);
-          return arr;
+        //   let arr = this.currentRoute.split('/');
+        //   arr = arr.filter(value=>{return value!=''});
+        //   console.log(this.currentRoute);
+        //   return arr;
       }
   },
   data () {

@@ -5,21 +5,21 @@
       <login></login> 
     </template>
     <template v-else>
-      <sidebar :current-route.sync="currentRoute"></sidebar>
+      <!--<sidebar :current-route.sync="currentRoute"></sidebar>
       <dashboard :current-route="currentRoute"  v-if=" currentRoute.indexOf('/dashboard') > -1 "></dashboard>
-      <post-list :current-route="currentRoute"  v-if=" currentRoute == '/post/list' "></post-list>
+      <post-list :current-route.sync="currentRoute"  v-if=" currentRoute == '/post/list' "></post-list>
       <post-create :current-route="currentRoute"  v-if=" currentRoute == '/post/create' "></post-create>
-      <page-list :current-route="currentRoute"  v-if=" currentRoute == '/page/list' "></page-list>
+      <page-list :current-route.sync="currentRoute"  v-if=" currentRoute == '/page/list' "></page-list>
       <page-create :current-route="currentRoute"  v-if=" currentRoute == '/page/create' "></page-create>
-      <tag-list  :current-route="currentRoute"  v-if=" currentRoute == '/tag/list' "></tag-list>
-      <tag-create  :current-route="currentRoute"  v-if=" currentRoute == '/tag/create' "></tag-create>
-      <cate-list :current-route="currentRoute"  v-if=" currentRoute == '/cate/list' "></cate-list>
-      <cate-create  :current-route="currentRoute"  v-if=" currentRoute == '/cate/create' "></cate-create>
+      <tag-list  :current-route.sync="currentRoute"  v-if=" currentRoute == '/tag/list' "></tag-list>
+      <tag-create  :current-route="currentRoute"  v-if=" currentRoute.indexOf('/tag/create') > -1 "></tag-create>
+      <cate-list :current-route.sync="currentRoute"  v-if=" currentRoute == '/cate/list' "></cate-list>
+      <cate-create  :current-route="currentRoute"  v-if=" currentRoute.indexOf('/cate/create') > -1 "></cate-create>
       <user-list  :current-route="currentRoute"  v-if=" currentRoute == '/user/list' "></user-list>
       <option-general  :current-route="currentRoute"  v-if=" currentRoute == '/option/general' "></option-general>
       <option-comment  :current-route="currentRoute"  v-if=" currentRoute == '/option/comment' "></option-comment>
       <option-analytic  :current-route="currentRoute"  v-if=" currentRoute == '/option/analytic' "></option-analytic>
-      <tip :should-tip-show="shouldTipShow" :type="'success'" :text="'wsssssw'"></tip>
+      <tip :should-tip-show="shouldTipShow" :type="'success'" :text="'wsssssw'"></tip>-->
     </template>
     <router-view></router-view>
   </div>

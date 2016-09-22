@@ -89,6 +89,23 @@ store.fetchTag = (vue) => {
     })
 }
 
+store.fetchTagById = (vue, id) => {
+  return vue.$http.get(`${root}/tag/${id}`)
+    .then((response) => {
+        return response.body;
+    }, (err) => {
+        console.log(err)
+    })
+}
+
+store.patchTag = (vue,id, json) => {
+  return vue.$http.patch(`${root}/tag/${id}`,json)
+    .then((response) => {
+        return response.body;
+    }, (err) => {
+        console.log(err)
+    })
+}
 
 store.deleteTag = (vue, id) => {
   return vue.$http.delete(`${root}/tag/${id}`)

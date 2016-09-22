@@ -4,14 +4,8 @@
         <div class="manage-container">
             <div class="fk-search">
                 <input type="text" class="fk-search-input" placeholder="请输入关键字" />
-                <i class="fk-search-btn icon-search" ></i>
+                <i class="fk-search-btn icon-search"></i>
             </div>
-            <Tabs activeKey={this.state.key} onSelect={this.handleSelect.bind(this)}>
-                <Tab eventKey={4} title="全　部"></Tab>
-                <Tab eventKey={3} title="已发布"></Tab>
-                <Tab eventKey={1} title="审核中"></Tab>
-                <Tab eventKey={2} title="已拒绝"></Tab>
-            </Tabs>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -30,7 +24,7 @@
                     </tr>
                     <tr v-else v-for="tag in tags">
                         <td>
-                            <a v-link="{ path: '/tag/edit' }" title={{tag.name}}>{{tag.name}}</Link>
+                            <a v-link='{ name: "editTag", params: { id: tag._id} }' title={{tag.name}}>{{tag.name}}</Link>
                             <a v-if="tag.status == 3" href={/post/${tag.pathname}.html} target="_blank">
                                 <span class="glyphicon glyphicon-link" style={{fontSize: 12, marginLeft: 5, color: '#AAA'}}></span>
                             </a>
@@ -42,13 +36,13 @@
                             0
                         </td>
                         <td>
-                            <Link v-if="showEditAndDel" to={`/post/edit/${post.id}`} title={post.title}>
-                            <button v-if="showEditAndDel" type="button" class="btn btn-primary btn-xs">
-                                <span v-if="showEditAndDel" class="glyphicon glyphicon-edit"></span><span>编辑</span>
-                            </button>
-                            </Link>
+                            <a v-link='{ name: "editTag", params: { id: tag._id} }'>
+                                <button v-if="showEditAndDel" type="button" class="btn btn-primary btn-xs">
+                                    <span v-if="showEditAndDel" class="glyphicon glyphicon-edit"></span><span>编辑</span>
+                                </button>
+                            </a>
                             <span v-if="showEditAndDel"> </span>
-                            <button v-if="showEditAndDel" type="button" @click="deleteTag(tag.name)" class="btn btn-danger btn-xs">
+                            <button v-if="showEditAndDel" type="button" @click="deleteTag(tag._id)" class="btn btn-danger btn-xs">
                                 <span v-if="showEditAndDel" class="glyphicon glyphicon-trash"></span><span>删除</span>
                             </button>
                         </td>
@@ -106,7 +100,6 @@ export default {
     getTag(){
       store.fetchTag(this).then(result=>{
         this.tags = result;
-        console.log(this.tags);
       })
     },
     submit(){
@@ -114,16 +107,17 @@ export default {
         if(this.user.password != this.repassword)
             return;
 
-      store.patchUser(this,this.user._id,this.user).then(result=>{
+        store.patchUser(this,this.user._id,this.user).then(result=>{
 
-      })
+        })
 
     },
-    deleteTag(name){
-        store.deleteTag(this, name).then(result=>{
-            this.tags = this.tags.filter(value=>value.name !== name);
+    deleteTag(id){
+        store.deleteTag(this, id).then(result=>{
+            console.log(result)
+            this.tags = this.tags.filter(value=>value._id !== id);
         })
-    }
+    },
   },
   ready () {
     this.getTag();

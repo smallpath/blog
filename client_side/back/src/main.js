@@ -9,6 +9,22 @@ Vue.use(VueResource)
 import App from './App'
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import Tip from './components/Tip'
+import Sidebar from './components/Sidebar'
+import PostList from './components/PostList';
+import PostCreate from './components/PostCreate';
+import PageList from './components/PageList';
+import PageCreate from './components/PageCreate';
+import TagList from './components/TagList';
+import CateList from './components/CateList';
+import TagCreate from './components/TagCreate';
+import CateCreate from './components/CateCreate';
+import UserList from './components/UserList';
+import OptionGeneral from './components/OptionGeneral';
+import OptionComment from './components/OptionComment';
+import OptionAnalytic from './components/OptionAnalytic';
+
+Vue.component('sidebar', Sidebar);
 
 let router = new VueRouter()
 
@@ -26,13 +42,13 @@ router.map({
         component: App,
         subRoutes: {
           '/list': {
-            component: Login
+            component: PostList
           },
           '/create': {
-            component: Login
+            component: PostCreate
           },
           '/edit/:id': {
-            component: Login
+            component: PostCreate
           }
         }
     },
@@ -41,13 +57,13 @@ router.map({
         component: App,
         subRoutes: {
           '/list': {
-            component: Login
+            component: PageList
           },
           '/create': {
-            component: Login
+            component: PageCreate
           },
           '/edit/:id': {
-            component: Login
+            component: PageCreate
           }
         }
     },
@@ -56,7 +72,7 @@ router.map({
         component: App,
         subRoutes: {
           '/list': {
-            component: Login
+            component: UserList
           },
         }
     },
@@ -65,13 +81,13 @@ router.map({
         component: App,
         subRoutes: {
           '/list': {
-            component: Login
+            component: CateList
           },
           '/create': {
-            component: Login
+            component: CateCreate
           },
           '/edit/:id': {
-            component: Login
+            component: CateCreate
           }
         }
     },
@@ -80,13 +96,14 @@ router.map({
         component: App,
         subRoutes: {
           '/list': {
-            component: Login
+            component: TagList
           },
           '/create': {
-            component: Login
+            component: TagCreate
           },
           '/edit/:id': {
-            component: Login
+            name: 'editTag',
+            component: TagCreate
           }
         }
     },
@@ -95,13 +112,13 @@ router.map({
         component: App,
         subRoutes: {
           '/general': {
-            component: Login
+            component: OptionGeneral
           },
           '/comment': {
-            component: Login
+            component: OptionComment
           },
           '/analytic': {
-            component: Login
+            component: OptionAnalytic
           },
         }
     },
