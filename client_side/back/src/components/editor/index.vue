@@ -51,7 +51,7 @@
                 </li>
             </ul>
         </div>
-        <div class="md-editor expand"><textarea name="content" v-model="content"></textarea></div>
+        <div class="md-editor expand"><textarea name="content" v-model="content" @change="getNodeFromMarkdown"></textarea></div>
         <div class="md-preview markdown shrink"></div>
         <div class="md-spliter"></div>
     </div>
@@ -59,6 +59,8 @@
 
 <script>
 /* eslint-disable */
+import marked from 'marked'
+
 export default {
   props:{
     shouldTipShow: Boolean,
@@ -67,8 +69,13 @@ export default {
   },
   data () {
     return {
-
+        result: '',
     }
+  },
+  methods: {
+      getNodeFromMarkdown(){
+          this.result = marked(this.content);
+      }
   }
 }
 </script>

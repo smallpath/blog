@@ -11,7 +11,6 @@
                             <div class="form-group">
                                 <input :disabled="shouldPathDisabled" name="pathname" v-model="post.pathName" class="form-control" type="text">
                             </div>
-                            <span>.html</span>
                         </div>
                         <div class="form-group">
                             <markdown-editor :content.sync="post.markdownContent"></markdown-editor>
@@ -74,6 +73,7 @@
 import Top from './Top';
 import MarkdownEditor from './editor/index';
 import Datepicker from 'vue-datepicker'
+import marked from 'marked'
 import moment from 'moment';
 import store from '../store/index';
 
@@ -217,10 +217,10 @@ export default {
             updatedAt: time,
             createdAt: time,
             status: 3,
-            pathName: this.post.status,
-            summary: 'gg',
+            pathName: this.post.pathName,
+            summary: marked(this.post.markdownContent.split('<!--more-->')[0].replace(/<[>]*>/g, '')),
             markdownContent: this.post.markdownContent,
-            content: 'gg',
+            content: marked(this.post.markdownContent),
             allowComment: this.allowComment == true? '1' : '0',
             isPublic: this.isPublic == '1' ? 1: 0,
             commentNum: 0,
@@ -239,9 +239,9 @@ export default {
 
         this.post = Object.assign({}, this.post, {
             updatedAt: time,
-            summary: 'gg',
+            summary: marked(this.post.markdownContent.split('<!--more-->')[0].replace(/<[>]*>/g, '')),
             markdownContent: this.post.markdownContent,
-            content: 'gg',
+            content: marked(this.post.markdownContent),
             allowComment: this.allowComment == true? '1' : '0',
             isPublic: this.isPublic == '1' ? 1: 0,
         });
@@ -264,8 +264,6 @@ export default {
             store.deletePostTags(this, value)
         })
 
-
-        console.log(this.postCateBackup)
         
         this.postCateBackup.forEach(value=>{
             store.deletePostCates(this, value)

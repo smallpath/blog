@@ -104,7 +104,6 @@ export default {
     },
     deleteTag(id){
         store.deleteTag(this, id).then(result=>{
-            console.log(result)
             this.tags = this.tags.filter(value=>value._id !== id);
         })
     },

@@ -103,7 +103,6 @@ export default {
     },
     deleteCate(id){
         store.deleteCate(this, id).then(result=>{
-            console.log(result)
             this.cates = this.cates.filter(value=>value._id !== id);
         })
     },
