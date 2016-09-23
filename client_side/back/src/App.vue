@@ -36,6 +36,9 @@ export default {
       currentRoute: '/dashboard'
     }
   },
+  ready(){
+    
+  }
 
 }
 </script>

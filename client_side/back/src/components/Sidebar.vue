@@ -103,7 +103,7 @@ export default {
       })
     },
     go(routeUrl){
-      this.currentRoute = routeUrl;
+      // this.currentRoute = routeUrl;
     }
   }
 

@@ -29,6 +29,7 @@ Vue.component('sidebar', Sidebar);
 let router = new VueRouter({
   history: true,
   saveScrollPosition: true,
+  transitionOnLoad: true,
 })
 
 router.redirect({
@@ -143,12 +144,29 @@ router.map({
 })
 
 router.beforeEach(function () {
-  window.scrollTo(0, 0)
+  // window.scrollTo(0, 0)
 })
 
+router.afterEach(function (transition) {
+  if (transition.to.router._children[0] && typeof transition.to.router._children[0].currentRoute !='undefined'){
+    
+    let arr = transition.to.path.split('/').filter(value=>value!='').filter((value,index)=>index<2).map(value=>{
+      if(value=='edit')
+        value='create';
+      return value;
+    });
+    transition.to.router._children[0].currentRoute = '/'+arr.join('/');
+  }
+})
 
 router.redirect({
   '*': '/dashboard'
 })
 
-router.start(Vue.extend({}), 'body')
+router.start(Vue.extend({
+  data(){
+    return {
+      currentRoute: '/', 
+    }
+  }
+}), 'body')

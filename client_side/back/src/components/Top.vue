@@ -2,12 +2,13 @@
     <div class="fk-header clearfix" style='z-index: 1;'>
         <div class="pull-left">
             <ol class="breadcrumb">
-                <!--<li class="{{ true ? 'active': ''}}" v-if="routes[0] != ['dashboard']">
+                <li class="{{ true ? 'active': ''}}" v-if="routes[0] != ['dashboard']">
                     <a v-link="{ name: 'dashboard' }" @click='goToUrl("/dashboard", false)'>首页</a>
-                </li>-->
+                </li>
                 <template v-for="route in routes">
                     <li class="{{ true ? 'active': ''}}">
-                        <a v-link="{ path: ($index == 0) ? '/' + route :'/' +  routes.join('/') }" >{{ route == 'dashboard'? "首页": route }}</a>
+                        <a v-link="{ path: ($index == 0) ? '/' + route :'/' +  routes.join('/') }"
+                            @click="goURL(routes, $index)" >{{ route == 'dashboard'? "首页": route }}</a>
                     </li>
                 </template>
             </ol>
@@ -53,7 +54,16 @@ export default {
     goToUrl(url, shouldToggle){
         if (shouldToggle)
             this.toggleUser();
-        this.currentRoute = url;
+        // this.currentRoute = url;
+    },
+    goURL(routes, $index){
+
+        // if($index == 1)
+        //     return;
+
+        // let path = routes[0] == 'option' ? '/option/general' : 
+        //             routes[0] == 'dashboard' ? '/dashboard' : '/' + routes[0] + '/list'; 
+        // this.currentRoute = path
     },
 
     toggleUser(){
