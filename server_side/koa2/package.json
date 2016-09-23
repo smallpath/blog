@@ -5,6 +5,8 @@
   "dependencies": {
     "babel-plugin-transform-async-to-generator": "^6.8.0",
     "babel-register": "^6.11.6",
+    "bluebird": "^3.4.6",
+    "jsonwebtoken": "^7.1.9",
     "koa": "^2.0.0-alpha.5",
     "koa-bodyparser": "^3.2.0",
     "koa-router": "^5.4.0",

@@ -2,6 +2,8 @@ let config = require('../conf/config');
 let mongoose = require('mongoose');
 let log = require('../utils/log');
 
+mongoose.Promise = require('bluebird');
+
 let mongoUrl = '127.0.0.1:27017/koa_rest_mongoose';
 
 mongoose.connect(mongoUrl);
@@ -10,7 +12,7 @@ mongoose.connect(mongoUrl);
 let db = mongoose.connection;
 
 db.on('error', log.error.bind(log, "connect error:"));
-db.once('open', callback => console.log('MongoDB opened!'));
+db.once('open', callback => console.log('MongoDB is ready!'));
 
 let Schema = mongoose.Schema;
 let ObjectId = Schema.ObjectId;
@@ -107,7 +109,6 @@ user = mongoose.model('user', user);
 
 
 module.exports = {
-    db,
     post,
     category,
     option,

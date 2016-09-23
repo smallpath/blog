@@ -1,26 +1,25 @@
-/**
- * lib - routes
- * @authors luoyjx (yjk99@qq.com)
- * @date    2016-08-29 23:24:16
- */
 
-var bodyParser = require('koa-bodyparser');
 
-module.exports = function generateRoutes(app, router, modelName, actions, prefix) {
-  if ( prefix == null ) {
-    prefix = '';
+module.exports = function generateRoutes(app, router, modelName, actions, prefix, permission) {
+
+  if (modelName != 'user') {
+
+    router.get(prefix + ("/" + modelName), actions.findAll);
+    router.get(prefix + ("/" + modelName + "/:id"), actions.findById);
+
+  } else {
+
+    router.get(prefix + ("/" + modelName), permission, actions.findAll);
+    router.get(prefix + ("/" + modelName + "/:id"), permission, actions.findById);
+    
   }
 
-  app.use(bodyParser());
-
-  router.get(prefix + ("/" + modelName), actions.findAll);
-  router.get(prefix + ("/" + modelName + "/:id"), actions.findById);
-  router.post(prefix + ("/" + modelName), actions.create);
-  router.post(prefix + ("/" + modelName + "/:id"), actions.updateById);
-  router.del(prefix + ("/" + modelName + "/:id"), actions.deleteById);
-  router.put(prefix + ("/" + modelName), actions.create);
-  router.put(prefix + ("/" + modelName + "/:id"), actions.replaceById);
-  router.patch(prefix + ("/" + modelName + "/:id"), actions.updateById);
+  router.post(prefix + ("/" + modelName), permission, actions.create);
+  router.post(prefix + ("/" + modelName + "/:id"), permission, actions.updateById);
+  router.del(prefix + ("/" + modelName + "/:id"), permission, actions.deleteById);
+  router.put(prefix + ("/" + modelName), permission, actions.create);
+  router.put(prefix + ("/" + modelName + "/:id"), permission, actions.replaceById);
+  router.patch(prefix + ("/" + modelName + "/:id"), permission, actions.updateById);
 
   app.use(router.routes());
 }
