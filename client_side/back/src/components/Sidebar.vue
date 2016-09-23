@@ -5,7 +5,7 @@
           <h1><a href="/">{{title}}</a></h1>
         </div>
       </div>
-      <ul class="mod-bar" style={{marginTop: 10}}>
+      <ul class="mod-bar" style="marginTop: 10">
         <input type="hidden" id="hide_values" val="0" />
           <li v-for="route in routes">
             <a v-if="route.children" v-link="{ path: route.children[0].url }" @click="go(route.children[0].url)" class="{{getClassName(route.icon, route.url)}}">
@@ -79,6 +79,9 @@ export default {
 
       };
     }
+  },
+  ready(){
+    this.currentRoute = this.$route.path;
   },
   methods: {
     isActive(routeUrl){

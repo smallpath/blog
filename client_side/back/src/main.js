@@ -26,10 +26,19 @@ import OptionAnalytic from './components/OptionAnalytic';
 
 Vue.component('sidebar', Sidebar);
 
-let router = new VueRouter()
+let router = new VueRouter({
+  history: true,
+  saveScrollPosition: true,
+})
 
 router.redirect({
-  '/': '/dashboard'
+  '/': '/dashboard',
+  '/post': '/post/list',
+  '/page': '/page/list',
+  '/tag': '/tag/list',
+  '/cate': '/cate/list',
+  '/user': '/user/list',
+  '/option': '/option/general'
 })
 
 router.map({

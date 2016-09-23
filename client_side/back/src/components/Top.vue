@@ -1,22 +1,23 @@
 <template>
-    <div class="fk-header clearfix">
+    <div class="fk-header clearfix" style='z-index: 1;'>
         <div class="pull-left">
             <ol class="breadcrumb">
-                <template v-for="item in routes">
-                    <li class="{{true ? 'active': ''}}">
-                        <a v-link="{ path:item.children ? item.children[0].url :item.url }" >{{ item == '/dashboard'? "首页": item }}</Link>
+                <li class="{{ true ? 'active': ''}}" v-if="routes[0] != ['dashboard']"><a v-link="{ path: '/' }" @click='goToUrl("/")'>首页</a></li>
+                <template v-for="route in routes">
+                    <li class="{{ true ? 'active': ''}}">
+                        <a v-link="{ path: ($index == 0) ? '/' + route :'/' +  routes.join('/') }" >{{ route == 'dashboard'? "首页": route }}</a>
                     </li>
                 </template>
             </ol>
         </div>
         <ul class="nav navbar-nav navbar-right userinfo">
-            <li class={this.getUserClass()}>
-            <a onClick={this.toggleUser.bind(this)} class="dropdown-toggle" data-toggle="dropdown">
-                {SysConfig.userInfo.name} <b class="caret"></b>
+            <li :class="getUserClass()">
+            <a @click="toggleUser" class="dropdown-toggle" data-toggle="dropdown">
+                {{'smallpath'}} <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><Link to="/user/edit_pwd">修改密码</Link></li>
-                <li><a href="/admin/user/logout">退出</a></li>
+                <li><a v-link="{ path: '/user/list' }" @click='goToUrl("/user/list")'>修改密码</a></li>
+                <li><a href="/admin/user/logout" @click='toggleUser'>退出</a></li>
             </ul>
             </li>
         </ul>
@@ -43,35 +44,22 @@ export default {
   },
   data () {
     return {
-
+        isOpen: false,
     }
   },
   methods: {
-    componentDidMount(){
-        document.addEventListener('click', this.bindHandleDocumentClick, false);
-    },
-
-    componentWillUnmount(){
-        document.removeEventListener('click', this.bindHandleDocumentClick, false);
-    },
-
-    handleDocumentClick(event){
-        if (!ReactDom.findDOMNode(this.refs.userinfo).contains(event.target)) {
-            this.setState({
-                userOpen: false
-            });
-        }
+    goToUrl(url){
+        this.toggleUser();
+        this.currentRoute = url;
     },
 
     toggleUser(){
-        this.setState({
-            userOpen: !this.state.userOpen
-        })
+        this.isOpen = !this.isOpen;
     },
     getUserClass(){
         return classnames({
             dropdown: true,
-            open: this.state.userOpen || true
+            open: this.isOpen,
         })
     },
   }

@@ -6,7 +6,7 @@
     </template>
     <template v-else>
       <sidebar :current-route.sync="currentRoute"></sidebar>
-      <top :current-route="currentRoute"></top> 
+      <top :current-route.sync="currentRoute"></top> 
       <!--<sidebar :current-route.sync="currentRoute"></sidebar>
       <dashboard :current-route="currentRoute"  v-if=" currentRoute.indexOf('/dashboard') > -1 "></dashboard>
       <post-list :current-route.sync="currentRoute"  v-if=" currentRoute == '/post/list' "></post-list>
