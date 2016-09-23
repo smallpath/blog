@@ -1,6 +1,5 @@
 <template>
     <div class="fk-content-wrap">
-        <top :current-route="currentRoute"></top>
         <div class="manage-container">
             <div class="fk-search">
                 <input type="text" class="fk-search-input" placeholder="请输入关键字" />

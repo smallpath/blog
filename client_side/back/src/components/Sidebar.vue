@@ -70,8 +70,9 @@ export default {
 
     }
   },
-  computed: {
-    
+  ready(){
+    if (this.currentRoute != this.$route.path)
+      this.currentRoute = this.$route.path;
   },
   route: {
     data({ to }){
@@ -79,9 +80,6 @@ export default {
 
       };
     }
-  },
-  ready(){
-    this.currentRoute = this.$route.path;
   },
   methods: {
     isActive(routeUrl){

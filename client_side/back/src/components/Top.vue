@@ -2,7 +2,9 @@
     <div class="fk-header clearfix" style='z-index: 1;'>
         <div class="pull-left">
             <ol class="breadcrumb">
-                <li class="{{ true ? 'active': ''}}" v-if="routes[0] != ['dashboard']"><a v-link="{ path: '/' }" @click='goToUrl("/")'>首页</a></li>
+                <!--<li class="{{ true ? 'active': ''}}" v-if="routes[0] != ['dashboard']">
+                    <a v-link="{ name: 'dashboard' }" @click='goToUrl("/dashboard", false)'>首页</a>
+                </li>-->
                 <template v-for="route in routes">
                     <li class="{{ true ? 'active': ''}}">
                         <a v-link="{ path: ($index == 0) ? '/' + route :'/' +  routes.join('/') }" >{{ route == 'dashboard'? "首页": route }}</a>
@@ -16,7 +18,7 @@
                 {{'smallpath'}} <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a v-link="{ path: '/user/list' }" @click='goToUrl("/user/list")'>修改密码</a></li>
+                <li><a v-link="{ path: '/user/list' }" @click='goToUrl("/user/list", true)'>修改密码</a></li>
                 <li><a href="/admin/user/logout" @click='toggleUser'>退出</a></li>
             </ul>
             </li>
@@ -48,8 +50,9 @@ export default {
     }
   },
   methods: {
-    goToUrl(url){
-        this.toggleUser();
+    goToUrl(url, shouldToggle){
+        if (shouldToggle)
+            this.toggleUser();
         this.currentRoute = url;
     },
 
