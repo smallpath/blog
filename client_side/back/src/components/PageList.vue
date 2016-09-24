@@ -20,7 +20,7 @@
                         <td colSpan="8" class="center">加载中……</td>
                     </tr>
                     <tr v-if="!pages.length">
-                        <td colSpan="8" class="center">暂无文章</td>
+                        <td colSpan="8" class="center">暂无页面</td>
                     </tr>
                     <tr v-else v-for="page in pages">
                         <td> 

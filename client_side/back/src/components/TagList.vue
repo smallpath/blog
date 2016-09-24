@@ -19,7 +19,7 @@
                         <td colSpan="8" class="center">加载中……</td>
                     </tr>
                     <tr v-if="!tags.length">
-                        <td colSpan="8" class="center">暂无文章</td>
+                        <td colSpan="8" class="center">暂无标签</td>
                     </tr>
                     <tr v-else v-for="tag in tags">
                         <td>

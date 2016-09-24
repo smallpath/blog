@@ -12,4 +12,7 @@ module.exports = {
     tokenSecret: 'test',
     tokenExpiresIn: 3600,
 
+    defaultAdminName: 'admin',
+    defaultAdminPassword: 'admin',
+
 }
