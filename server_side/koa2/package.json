@@ -9,7 +9,7 @@
     "jsonwebtoken": "^7.1.9",
     "koa": "^2.0.0-alpha.5",
     "koa-bodyparser": "^3.2.0",
-    "koa-router": "^5.4.0",
+    "koa-router": "^7.0.1",
     "log4js": "^0.6.38",
     "mongoose": "^4.5.9",
     "redis": "^2.6.2"

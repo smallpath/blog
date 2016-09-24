@@ -2,20 +2,22 @@ const redis = require('../model/redis');
 const tokenService = require('../service/token');
 const { user: model } = require('../model/mongo');
 
-exports.login = async function (next) {
+exports.login = async function (ctx, next) {
   var error, result;
 
   let users, user;
 
   try {
-    users = await model.find({ name: this.request.body.name }).exec();
+    users = await model.find({ name: ctx.request.body.name }).exec();
     user = {
       name: users[0].name,
-      password: users[0].password
-    }
+      timestamp: (new Date()).valueOf(),
+    };
+
+    let password = users[0].password;
 
 
-    if (user.password == this.request.body.password) {
+    if (password == ctx.request.body.password) {
 
       let token = tokenService.createToken(user);
 
@@ -23,13 +25,13 @@ exports.login = async function (next) {
         
       });
 
-      return this.body = { 
+      return ctx.body = { 
           status: 'success',  
           token: token 
         };
 
     } else {
-      return this.body = {
+      return ctx.body = {
           status: 'fail', 
           description: 'Get token failed. Check name and password' 
         };
@@ -37,7 +39,7 @@ exports.login = async function (next) {
 
   } catch (_error) {
     error = _error;
-    return this.body = {
+    return ctx.body = {
           status: 'fail', 
           description: error, 
         };
@@ -46,20 +48,20 @@ exports.login = async function (next) {
 };
 
 
-exports.logout = async function (next) {
-  const headers = this.request.headers;
+exports.logout = async function (ctx, next) {
+  const headers = ctx.request.headers;
   let token;
   try {
     token = headers['authorization'];
   } catch (err) {
-    return this.body = {
+    return ctx.body = {
           status: 'fail', 
           description: err 
         };
   }
 
   if (!token) {
-    return this.body = {
+    return ctx.body = {
           status: 'fail', 
           description: 'Token not found'
         };
@@ -68,13 +70,13 @@ exports.logout = async function (next) {
   const result = tokenService.verifyToken(token);
 
   if (result == false) {
-    return this.body = {
+    return ctx.body = {
           status: 'fail', 
           description: 'Token verify failed '
         };
   }else{
     await redis.del('token');
-    return this.body =  {
+    return ctx.body =  {
           status: 'success', 
           description: 'Token deleted'
         };
@@ -82,31 +84,29 @@ exports.logout = async function (next) {
 
 };
 
-exports.permission =  async function (next) {
-
-  const headers = this.request.headers;
-  console.log(headers);
+exports.permission =  async function (ctx, next) {
+  const headers = ctx.request.headers;
   let token;
   try {
     token = headers['authorization'];
   } catch (err) {
-    return this.body = {
+    return ctx.body = {
           status: 'fail', 
           description:err
         };;
   }
 
   if (!token) {
-    return this.body = {
+    return ctx.body = {
           status: 'fail', 
           description: 'Token not found'
-        };;
+        };
+        
   }
 
   const result = tokenService.verifyToken(token);
-
   if (result == false) {
-    return this.body = {
+    return ctx.body = {
           status: 'fail', 
           description: 'Token verify failed '
         };
@@ -117,10 +117,10 @@ exports.permission =  async function (next) {
 
 
   if (reply === token) {
-    await next;
-    return;
+    return next();
   } else {
-    return this.body = {
+
+    return ctx.body = {
           status: 'fail', 
           description: 'Token invalid '
         };

@@ -105,6 +105,16 @@ export default {
         store.deleteTag(this, id).then(result=>{
             this.tags = this.tags.filter(value=>value._id !== id);
         })
+
+        store.fetchPostTagsByID(this, {
+            tagID: id,
+        }).then(tags=>{
+            tags.forEach(value=>{
+                store.deleteTagsByPostID(this,value._id);
+            })
+
+        })
+
     },
   },
   ready () {

@@ -7,12 +7,12 @@
 module.exports = function generateActions(model) {
   return {
 
-    findAll:async function(next) {
-      await next;
+    findAll:async function(ctx, next) {
+      // next();
       var error, result;
       try {
         var conditions = {};
-        var query = this.request.query;
+        var query = ctx.request.query;
         if (query.conditions) {
           conditions = JSON.parse(query.conditions);
         }
@@ -44,20 +44,20 @@ module.exports = function generateActions(model) {
         })
 
         result = await builder.exec();
-        return this.body = result;
+        return ctx.body = result;
       } catch (_error) {
         error = _error;
-        return this.body = error;
+        return ctx.body = error;
       }
     },
 
-    findById: async function(next) {
-      await next;
+    findById: async function(ctx, next) {
+      // await next;
       var error, result;
       try {
-        result = await model.findById(this.params.id).exec();
+        result = await model.findById(ctx.params.id).exec();
 
-        var query = this.request.query;
+        var query = ctx.request.query;
 
         let arr = ['prev','next'];
         for(let i=0; i<arr.length; i++){
@@ -67,62 +67,62 @@ module.exports = function generateActions(model) {
           }
         }
 
-        return this.body = result;
+        return ctx.body = result;
       } catch (_error) {
         error = _error;
-        return this.body = error;
+        return ctx.body = error;
       }
     },
 
-    deleteById: async function(next) {
-      await next;
+    deleteById: async function(ctx, next) {
+      // await next;
       var error, result;
       try {
-        result = await model.findByIdAndRemove(this.params.id).exec();
-        return this.body = result;
+        result = await model.findByIdAndRemove(ctx.params.id).exec();
+        return ctx.body = result;
       } catch (_error) {
         error = _error;
-        return this.body = error;
+        return ctx.body = error;
       }
     },
 
-    replaceById: async function(next) {
-      await next;
+    replaceById: async function(ctx, next) {
+      // await next;
       var error, newDocument, result;
       try {
-        await model.findByIdAndRemove(this.params.id).exec();
-        newDocument = this.request.body;
-        newDocument._id = this.params.id;
+        await model.findByIdAndRemove(ctx.params.id).exec();
+        newDocument = ctx.request.body;
+        newDocument._id = ctx.params.id;
         result = await model.create(newDocument);
-        return this.body = result;
+        return ctx.body = result;
       } catch (_error) {
         error = _error;
-        return this.body = error;
+        return ctx.body = error;
       }
     },
 
-    updateById: async function(next) {
-      await next;
+    updateById: async function(ctx, next) {
+      // await next;
       var error, result;
       try {
-        result = await model.findByIdAndUpdate(this.params.id, this.request.body, {new: true}).exec();
-        return this.body = result;
+        result = await model.findByIdAndUpdate(ctx.params.id, ctx.request.body, {new: true}).exec();
+        return ctx.body = result;
       } catch (_error) {
         error = _error;
-        return this.body = error;
+        return ctx.body = error;
       }
     },
     
-    create: async function(next) {
-      await next;
+    create: async function(ctx, next) {
+      // await next;
       var error, result;
       try {
-        result = await model.create(this.request.body);
-        this.status = 201;
-        return this.body = result;
+        result = await model.create(ctx.request.body);
+        ctx.status = 201;
+        return ctx.body = result;
       } catch (_error) {
         error = _error;
-        return this.body = error;
+        return ctx.body = error;
       }
     }
   };

@@ -8,6 +8,7 @@ Vue.use(VueResource)
 
 Vue.http.interceptors.push((request, next)  => {
 
+
     const token = localStorage.getItem('token')
 
     if ( request.method == 'get' && request.url.indexOf('/proxyPrefix/user') == -1 ){
@@ -17,8 +18,6 @@ Vue.http.interceptors.push((request, next)  => {
     if (token !== null && token !== 'undefined') {
       request.headers.set('authorization', token);
     }
-
-    console.log(request);
 
     next();
 

@@ -40,7 +40,6 @@ export default {
         password: this.password
       };
       store.login(this, json).then(response=>{
-        console.log(response);
         if (response.body.status == 'fail'){
           
         }else if(response.body.status == 'success'){

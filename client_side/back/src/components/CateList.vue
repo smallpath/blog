@@ -105,6 +105,16 @@ export default {
         store.deleteCate(this, id).then(result=>{
             this.cates = this.cates.filter(value=>value._id !== id);
         })
+
+
+        store.fetchPostCateByID(this, {
+            categoryID: id,
+        }).then(tags=>{
+            tags.forEach(value=>{
+                store.deleteCateByPostID(this,value._id)
+            })
+
+        })
     },
   },
   ready () {

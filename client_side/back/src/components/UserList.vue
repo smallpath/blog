@@ -97,7 +97,6 @@ export default {
   methods: {
     getUser(){
       store.fetchUser(this).then(result=>{
-          console.log(result);
         this.user = result[0];
       })
     },
@@ -107,7 +106,7 @@ export default {
             return;
 
       store.patchUser(this,this.user._id,this.user).then(result=>{
-
+          console.log(result);
       })
 
     }
