@@ -51,6 +51,11 @@ export default {
       });
 
     }
+  },
+  ready(){
+    store.fetchOptionByJSON(this, { key: 'title' }).then(result=>{
+      this.title = result[0].value || '';
+    })
   }
 }
 </script>

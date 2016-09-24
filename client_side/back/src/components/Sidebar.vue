@@ -29,6 +29,7 @@
 <script>
 /* eslint-disable */
 import classnames from 'classnames';
+import store from '../store/index';
 
 export default {
   props:{
@@ -39,7 +40,7 @@ export default {
   },
   data () {
     return {
-      title: 'Smallpath的小站',
+      title: '',
       routes: [
         {url: '/dashboard', icon: 'home', title:'概述'},
         {url: '/post', icon: 'topic', title: '文章管理', children: [
@@ -73,6 +74,12 @@ export default {
   ready(){
     if (this.currentRoute != this.$route.path)
       this.currentRoute = this.$route.path;
+
+
+    store.fetchOptionByJSON(this, { key: 'title' }).then(result=>{
+      this.title = result[0].value || '';
+    })
+
   },
   route: {
     data({ to }){

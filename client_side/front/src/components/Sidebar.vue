@@ -2,8 +2,14 @@
     <nav id=sidebar class=behavior_1>
         <div class=wrap>
             <div class=profile>
-                <a href="/"> <img v-bind:src="logoPath" alt="Smallpath的小站"> </a> <span>Smallpath的小站</span></div>
-            <ul class=buttons>
+                <a href="/"> 
+                    <img 
+                        :src="siteInfo.site_url.value +'/' + siteInfo.logo_url.value" 
+                        alt="{{siteInfo.title.value}}">
+                </a> 
+                <span>{{siteInfo.title.value}}</span>
+            </div>
+            <ul class="buttons">
                 <li>
                     <a v-link="{name:'main'}" title="首页"> <i class="iconfont icon-home"></i> <span>首页</span></a>
                 </li>
@@ -20,11 +26,11 @@
                     <a href="/links/" title="友情链接"> <i class="iconfont icon-link"></i> <span>友链</span></a>
                 </li>-->
             </ul>
-            <ul class=buttons>
+            <ul class="buttons">
                 <li>
-                    <a class=inline target=_blank href="https://github.com/Smallpath"> <i class="iconfont icon-github-v" title=GitHub></i></a>
-                    <a class=inline href="/rss.html"> <i class="iconfont icon-rss-v" title=RSS></i></a>
-                    <a class=inline href="/search.html"> <i class="iconfont icon-search" title=Search></i></a>
+                    <a class="inline" target=_blank href="{{siteInfo.github_blog.value}}"> <i class="iconfont icon-github-v" title=GitHub></i></a>
+                    <a class="inline" href="/rss.html"> <i class="iconfont icon-rss-v" title=RSS></i></a>
+                    <a class="inline" href="/search.html"> <i class="iconfont icon-search" title=Search></i></a>
             </ul>
         </div>
     </nav>
@@ -32,16 +38,24 @@
 
 <script>
 /* eslint-disable */
-// import '../assets/res/js/base.js'
+import store from '../store/index';
 
 export default {
   data () {
     return {
-      siteName: 'Smallpath的小站',  
-      prefix: 'https://smallpath.me',
-      logoPath: "https://smallpath.me/static/upload/201605/logo.png",
+        siteInfo: {},
     }
+  },
+  ready (){
+    store.fetchOption(this).then(result=>{
+      let obj = {};
+      result.forEach(value=>{
+          obj[value.key] = value;
+      });
+      this.siteInfo = obj;
+    })
   }
+
 }
 </script>
  

@@ -19,12 +19,12 @@ const perPage = 10;
 
 export default store
 
-store.login = (vue, json) =>{
-  return vue.$http.post(`/proxyPrefix/admin/login`,json);
+store.login = (vue, json) => {
+  return vue.$http.post(`/proxyPrefix/admin/login`, json);
 }
 
-store.logout = (vue, json) =>{
-  return vue.$http.post(`/proxyPrefix/admin/logout`,json);
+store.logout = (vue, json) => {
+  return vue.$http.post(`/proxyPrefix/admin/logout`, json);
 }
 
 
@@ -58,6 +58,19 @@ store.newCate = (vue, name) => {
 store.fetchOption = (vue) => {
   return vue.$http.get(`${root}/option`)
     .then((response) => {
+      return response.body;
+    }, (err) => {
+      console.log(err)
+    })
+}
+
+store.fetchOptionByJSON = (vue, queryJSON) => {
+  let keys = Object.keys(queryJSON);
+  let values = Object.keys(queryJSON).map(value => queryJSON[value]);
+  return vue.$resource(`${root}/option` + '/{?keys,values}').get({
+      keys,
+      values,
+    }).then((response) => {
       return response.body;
     }, (err) => {
       console.log(err)
