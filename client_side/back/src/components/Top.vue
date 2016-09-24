@@ -16,7 +16,7 @@
         <ul class="nav navbar-nav navbar-right userinfo">
             <li :class="getUserClass()">
             <a @click="toggleUser" class="dropdown-toggle" data-toggle="dropdown">
-                {{ name }} <b class="caret"></b>
+                {{ username }} <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
                 <li><a v-link="{ path: '/user/list' }" @click='goToUrl("/user/list", true)'>修改密码</a></li>

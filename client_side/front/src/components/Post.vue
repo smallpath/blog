@@ -15,10 +15,24 @@
                 <p>本文链接：<a href="/post/{{article.pathName}}">/post/{{article.pathName}}</a></p>
                 <p>-- <acronym title="End of File">EOF</acronym> --</p>
                 <div class="post-info">
-                    <p> 发表于 <i>{{article.createdAt}}</i> ，<!--添加在分类-->
-                    <!--<a href="/cate/Node.js" data-cate="Node.js"> <code class=notebook>Node.js</code></a> 下 ，--><template v-if="tags.length != 0">并被添加「
-                    <a v-for="tag in tags" v-link="{name:'tagPager', params: { tagName: tag.name }}" data-tag="{{tag.name}}"> <code class="notebook">{{tag.name}}</code></a> 」标签 ，</template>最后修改于 
-                    <i>{{article.updatedAt}}</i></p>
+                    <p> 发表于 <i>{{article.createdAt}}</i> ，
+                    <template v-if="cates.length != 0">
+                        添加在分类「
+                        <a v-for="cate in cates"  
+                             data-cate="{{ cate.name }}">
+                            <code class="notebook">{{cate.name}}</code>
+                        </a> 」
+                    </template>
+                     下 ，
+                    <template v-if="tags.length != 0">
+                        并被添加「
+                        <a v-for="tag in tags" 
+                            v-link="{name:'tagPager', params: { tagName: tag.name }}" 
+                            data-tag="{{tag.name}}"> 
+                            <code class="notebook">{{tag.name}}</code>
+                        </a> 」标签 ，
+                    </template>
+                        最后修改于 <i>{{article.updatedAt}}</i></p>
                 </div>
             </article>
             <nav class=pagination> 
@@ -66,17 +80,31 @@ export default {
                     this.next = post;
                 });
                 store.fetchTagsByPostID(this,{ postID: article._id }).then(postTags=>{
-                    console.log(postTags)
                     store.fetchTags(this).then(tags=>{
                         let obj = {};
                         tags.forEach(value=>{
                             obj[value._id] = value;
                         });
-                        console.log(postTags)
-                        console.log(obj)
+
                         postTags.forEach(value=>{
                             this.tags.push(obj[value.tagID]);
                         })
+                    })
+                    //this.tags = tags;
+                });
+                store.fetchCatesByPostID(this,{ postID: article._id }).then(postCates=>{
+                    store.fetchCates(this).then(cates=>{
+                        
+                        let obj = {};
+                        cates.forEach(value=>{
+                            obj[value._id] = value;
+                        });
+                        
+                        postCates.forEach(value=>{
+                            this.cates.push(obj[value.categoryID]);
+                        })
+
+                        
                     })
                     //this.tags = tags;
                 });

@@ -5,7 +5,11 @@ const blogAPI = `/proxyPrefix/api/post`;
 
 const tagAPI = `/proxyPrefix/api/tag`;
 
+const categoryAPI = `/proxyPrefix/api/category`;
+
 const postTagAPI = `/proxyPrefix/api/postTag`;
+
+const postCateAPI = `/proxyPrefix/api/postCategory`;
 
 const aboutAPI = `/proxyPrefix/api/post?title=关于`
 
@@ -143,5 +147,29 @@ store.fetchPostTags = (vue) => {
     console.log(err)
   })
 }
+
+
+store.fetchCatesByPostID = (vue, queryJSON) => {
+  let keys = Object.keys(queryJSON);
+  let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
+  return vue.$resource(postCateAPI+'{?keys,values}').get({
+      keys,
+      values,
+  }).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
+}
+
+
+store.fetchCates = (vue) => {
+  return vue.$http.get(categoryAPI).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
+}
+
 
 
