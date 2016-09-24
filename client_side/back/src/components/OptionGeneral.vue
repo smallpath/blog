@@ -33,9 +33,9 @@
           <div class="form-group"><input name="twitter_url" v-model="twitter_url" class="form-control form-control" type="text"></div>
         </div>
         <div class="form-group"><label>网站备案号</label>
-          <div class="form-group"><input name="miitbeian" v-model="miitbeian" class="form-control form-control" " type="text "></div>
+          <div class="form-group"><input name="miitbeian" v-model="miitbeian" class="form-control form-control"  type="text"></div>
     </div>
-    <button type="submit " @click="submit" class="btn btn-primary "">提交</button>
+    <button type="submit " @click="submit" class="btn btn-primary ">提交</button>
       </form>
       </div>
 </template>

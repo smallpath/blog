@@ -1,16 +1,16 @@
 <template>
     <div class="fk-content-wrap">
         <div class="manage-container">
-            <p v-if="needUpdate" class="bg-info" style={{padding: 15, color: '#337ab7'}}>
-                Firekylin {{needUpdate}} 已经发布，请立即<a href="http://firekylin.org/release/latest.tar.gz" style={{textDecoration:
-                    'underline'}}>下载更新</a>！
+            <p v-if="needUpdate" class="bg-info" style="padding: 15, color: '#337ab7'">
+                Firekylin {{needUpdate}} 已经发布，请立即<a href="http://firekylin.org/release/latest.tar.gz" style="textDecoration:
+                    'underline'">下载更新</a>！
             </p>
-            <h3 style={{marginBottom: '30px'}}>网站概要</h3>
+            <h3 style="marginBottom: '30px'">网站概要</h3>
             <!--<p>目前有 {{count.posts}} 篇文章, 并有 {{count.comments} 条关于你的评论在 {{count.cates}} 个分类中. </p>-->
             <p>点击下面的链接快速开始:</p>
             <div class="">
                 <a v-link="{ path: '/post/create' }" to="/post/create">撰写新文章</a>
-                <a v-link="{ path: '/option/general'}" style={{marginLeft: 20}}>系统设置</a>
+                <a v-link="{ path: '/option/general'}" style="marginLeft: 20">系统设置</a>
             </div>
             <hr />
             <div class="row">

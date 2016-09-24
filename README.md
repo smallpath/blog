@@ -2,6 +2,7 @@
 A blog using Koa2, Vue and MongoDB
 
 # TODO
+- [ ] 前台单页开启H5模式
 - [ ] 后台管理单页-图片直传
 - [ ] 文章toc
 - [ ] 部署文档
@@ -9,7 +10,6 @@ A blog using Koa2, Vue and MongoDB
 - [ ] vue 1.0 => vue 2.0
 - [ ] koa2 unstable => koa2 stable 
 - [ ] server side rendering
-
 
 ## client_side/back
 博客的后台管理单页

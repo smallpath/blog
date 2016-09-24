@@ -26,7 +26,7 @@
                         <td>
                             <a v-link='{ name: "editPost", params: { id: post._id} }' title={{post.title}}>{{post.title}}</Link>
                             <a v-if="post.status == 3" href={/post/${post.pathname}.html} target="_blank">
-                                <span class="glyphicon glyphicon-link" style={{fontSize: 12, marginLeft: 5, color: '#AAA'}}></span>
+                                <span class="glyphicon glyphicon-link" style="fontSize: 12, marginLeft: 5, color: '#AAA'"></span>
                             </a>
                         </td>
                         <td>{{ post.status }}</td>
@@ -46,7 +46,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="col-xs-12" style={{textAlign: 'center'}}>
+            <div class="col-xs-12" style="textAlign: 'center'">
                 <!--{this.state.total > 1 ? <Pagination
                 v-if="total"
                 prev

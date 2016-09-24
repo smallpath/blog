@@ -25,7 +25,7 @@
                         <td>
                             <a v-link='{ name: "editTag", params: { id: tag._id} }' title={{tag.name}}>{{tag.name}}</Link>
                             <a v-if="tag.status == 3" href={/post/${tag.pathname}.html} target="_blank">
-                                <span class="glyphicon glyphicon-link" style={{fontSize: 12, marginLeft: 5, color: '#AAA'}}></span>
+                                <span class="glyphicon glyphicon-link" style="fontSize: 12, marginLeft: 5, color: '#AAA'"></span>
                             </a>
                         </td>
                         <td>
@@ -48,7 +48,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="col-xs-12" style={{textAlign: 'center'}}>
+            <div class="col-xs-12" style="textAlign: 'center'">
                 <!--{this.state.total > 1 ? <Pagination
                 v-if="total"
                 prev

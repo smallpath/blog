@@ -12,7 +12,7 @@
           </div>
           <div class="form-group">
             <input type="password" name="password" v-model="password" class="form-control" placeholder="密码"
-              errorHelp={{ required: '请填写密码', isLength: '密码长度为8到30个字符' }} />
+               />
           </div>
           <button type="submit" @click="login" class="btn btn-primary btn-lg btn-block">登录</button>
         </form>
@@ -28,7 +28,7 @@ import store from '../store/index';
 export default {
   data () {
     return {
-      title: 'Smallpath的小站',
+      title: '',
       username: '',
       password: '',
     }
