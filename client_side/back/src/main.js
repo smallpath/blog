@@ -6,8 +6,27 @@ import VueResource from 'vue-resource'
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
+Vue.http.interceptors.push((request, next)  => {
+
+    const token = localStorage.getItem('token')
+
+    if ( request.method == 'get' && request.url.indexOf('/proxyPrefix/user') == -1 ){
+      next();
+    }
+
+    if (token !== null && token !== 'undefined') {
+      request.headers.set('authorization', token);
+    }
+
+    console.log(request);
+
+    next();
+
+});
+
 import App from './App'
 import Login from './components/Login';
+import Logout from './components/Logout';
 import Dashboard from './components/Dashboard';
 import Tip from './components/Tip'
 import Sidebar from './components/Sidebar'
@@ -43,108 +62,149 @@ router.redirect({
 })
 
 router.map({
+  '/admin/login': {
+    component: Login,
+    auth: false,
+  },
+  '/admin/logout': {
+    component: Logout,
+    auth: false,
+  },
   '/': {
     component: App,
+    auth: true,
     subRoutes: {
       '/dashboard': {
         name: 'dashboard',
-        component: Dashboard
+        component: Dashboard,
+        auth: true,
       },
     }
   },
   '/post': {
     name: 'post',
     component: App,
+    auth: true,
     subRoutes: {
       '/list': {
-        component: PostList
+        component: PostList,
+        auth: true,
       },
       '/create': {
-        component: PostCreate
+        component: PostCreate,
+        auth: true,
       },
       '/edit/:id': {
         name: 'editPost',
         component: PostCreate,
+        auth: true,
       }
     }
   },
   '/page': {
     name: 'page',
     component: App,
+    auth: true,
     subRoutes: {
       '/list': {
-        component: PageList
+        component: PageList,
+        auth: true,
       },
       '/create': {
-        component: PageCreate
+        component: PageCreate,
+        auth: true,
       },
       '/edit/:id': {
         name: 'editPage',
-        component: PageCreate
+        component: PageCreate,
+        auth: true,
       }
     }
   },
   '/user': {
     name: 'user',
     component: App,
+    auth: true,
     subRoutes: {
       '/list': {
-        component: UserList
+        component: UserList,
+        auth: true,
       },
     }
   },
   '/cate': {
     name: 'cate',
     component: App,
+    auth: true,
     subRoutes: {
       '/list': {
-        component: CateList
+        component: CateList,
+        auth: true,
       },
       '/create': {
-        component: CateCreate
+        component: CateCreate,
+        auth: true,
       },
       '/edit/:id': {
         name: 'editCate',
-        component: CateCreate
+        component: CateCreate,
+        auth: true,
       }
     }
   },
   '/tag': {
     name: 'tag',
     component: App,
+    auth: true,
     subRoutes: {
       '/list': {
-        component: TagList
+        component: TagList,
+        auth: true,
       },
       '/create': {
-        component: TagCreate
+        component: TagCreate,
+        auth: true,
       },
       '/edit/:id': {
         name: 'editTag',
-        component: TagCreate
+        component: TagCreate,
+        auth: true,
       }
     }
   },
   '/option': {
     name: 'option',
     component: App,
+    auth: true,
     subRoutes: {
       '/general': {
-        component: OptionGeneral
+        component: OptionGeneral,
+        auth: true,
       },
       '/comment': {
-        component: OptionComment
+        component: OptionComment,
+        auth: true,
       },
       '/analytic': {
-        component: OptionAnalytic
+        component: OptionAnalytic,
+        auth: true,
       },
     }
   },
 
 })
 
-router.beforeEach(function () {
-  // window.scrollTo(0, 0)
+router.beforeEach(function (transition) {
+  let authenticated = true;
+  let token = localStorage.getItem('token');
+  if (!token){
+    authenticated = false;
+  }
+  if (transition.to.path != '/admin/login' && transition.to.auth && !authenticated) {
+    transition.redirect('/admin/login')
+  } else {
+    transition.next()
+  }
 })
 
 router.afterEach(function (transition) {
@@ -155,6 +215,7 @@ router.afterEach(function (transition) {
         value='create';
       return value;
     });
+
     transition.to.router._children[0].currentRoute = '/'+arr.join('/');
   }
 })

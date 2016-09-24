@@ -20,7 +20,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li><a v-link="{ path: '/user/list' }" @click='goToUrl("/user/list", true)'>修改密码</a></li>
-                <li><a href="/admin/user/logout" @click='toggleUser'>退出</a></li>
+                <li><a v-link="{ path: '/admin/logout'}" @click='toggleUser'>退出</a></li>
             </ul>
             </li>
         </ul>

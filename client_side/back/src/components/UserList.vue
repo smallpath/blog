@@ -97,6 +97,7 @@ export default {
   methods: {
     getUser(){
       store.fetchUser(this).then(result=>{
+          console.log(result);
         this.user = result[0];
       })
     },

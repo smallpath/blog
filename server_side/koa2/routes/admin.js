@@ -9,7 +9,6 @@ exports.login = async function (next) {
 
   try {
     users = await model.find({ name: this.request.body.name }).exec();
-    console.log(users);
     user = {
       name: users[0].name,
       password: users[0].password
@@ -86,6 +85,7 @@ exports.logout = async function (next) {
 exports.permission =  async function (next) {
 
   const headers = this.request.headers;
+  console.log(headers);
   let token;
   try {
     token = headers['authorization'];

@@ -5,27 +5,51 @@
         <h1 class="text-center">
           <a href="/">{{title}}</a>
         </h1>
-        <Form class="clearfix" onValidSubmit={this.handleValidSubmit.bind(this)} onInvalidSubmit={this.handleInvalidSubmit.bind(this)}>
+        <form class="clearfix" onsubmit="return false">
           <div class="form-group">
-            <input type="text" name="username" ref="username" class="form-control" validate="required,isLength:4:20" placeholder="用户名"
+            <input type="text" name="username" v-model="username" class="form-control" placeholder="用户名"
             />
           </div>
           <div class="form-group">
-            <input type="password" name="password" ref="password" class="form-control" validate="required,isLength:8:30" placeholder="密码"
+            <input type="password" name="password" v-model="password" class="form-control" placeholder="密码"
               errorHelp={{ required: '请填写密码', isLength: '密码长度为8到30个字符' }} />
           </div>
-          <button type="submit" class="btn btn-primary btn-lg btn-block">登录</button>
-        </Form>
+          <button type="submit" @click="login" class="btn btn-primary btn-lg btn-block">登录</button>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+/* eslint-disable */
+import store from '../store/index';
+
 export default {
   data () {
     return {
-      title: 'Smallpath的小站'
+      title: 'Smallpath的小站',
+      username: '',
+      password: '',
+    }
+  },
+  methods: {
+    login(){
+      let json = {
+        name: this.username,
+        password: this.password
+      };
+      store.login(this, json).then(response=>{
+        console.log(response);
+        if (response.body.status == 'fail'){
+          
+        }else if(response.body.status == 'success'){
+          localStorage.setItem('token', response.body.token);
+          this.$router.go({path: '/dashboard' });
+        }
+
+      });
+
     }
   }
 }

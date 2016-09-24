@@ -1,13 +1,7 @@
 <template>
   <div id="app">
-    <template v-if="isLogin == false">
-      <tip :should-tip-show="shouldTipShow" :type="'success'" :text="'wsssssw'"></tip>
-      <login></login> 
-    </template>
-    <template v-else>
       <sidebar :current-route.sync="currentRoute"></sidebar>
       <top :current-route.sync="currentRoute"></top> 
-    </template>
     <router-view :current-route.sync="currentRoute"></router-view>
   </div>
 </template>
@@ -37,7 +31,7 @@ export default {
     }
   },
   ready(){
-    
+
   }
 
 }
