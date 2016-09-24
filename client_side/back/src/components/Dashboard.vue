@@ -9,8 +9,8 @@
             <!--<p>目前有 {{count.posts}} 篇文章, 并有 {{count.comments} 条关于你的评论在 {{count.cates}} 个分类中. </p>-->
             <p>点击下面的链接快速开始:</p>
             <div class="">
-                <Link to="/post/create">撰写新文章</Link>
-                <Link to="/options/general" style={{marginLeft: 20}}>系统设置</Link>
+                <a v-link="{ path: '/post/create' }" to="/post/create">撰写新文章</a>
+                <a v-link="{ path: '/option/general'}" style={{marginLeft: 20}}>系统设置</a>
             </div>
             <hr />
             <div class="row">
@@ -35,29 +35,15 @@
                     </ul>-->
                 </div>
                 <div class="col-md-4">
-                    <h4>关于我们</h4>
+                    <h4>关于博客</h4>
                     <ul>
                         <li>
-                            <label>项目主页：</label>
-                            <a href="http://firekylin.org/" target="_blank">http://firekylin.org/</a>
-                        </li>
-                        <li>
                             <label>项目源码：</label>
-                            <a href="https://github.com/75team/firekylin">https://github.com/75team/firekylin</a>
+                            <a href="https://github.com/Smallpath/Blog">https://github.com/Smallpath/Blog</a>
                         </li>
                         <li>
                             <label>问题反馈：</label>
-                            <a href="https://github.com/75team/firekylin/issues">https://github.com/75team/firekylin/issues</a>
-                        </li>
-                        <li>
-                            <label>团队博客：</label>
-                            <a href="http://www.75team.com/">http://www.75team.com/</a>
-                        </li>
-                        <li>
-                            <label>开发成员：</label>
-                            <a href="https://github.com/welefen">welefen</a>、<a href="https://github.com/lizheming">lizheming</a>、
-                            <a
-                                href="https://github.com/songguangyu">songguangyu</a>、<a href="https://github.com/showzyl">showzyl</a>
+                            <a href="https://github.com/Smallpath/Blog/issues">https://github.com/Smallpath/Blog/issues</a>
                         </li>
                     </ul>
                 </div>
