@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="shouldTipShow == true" class="fk-alert alert alert-{{type}}">{{text}}</div>
+  <div style='z-index: 1;'>
+    <div v-if="shouldTipShow == true" class="fk-alert alert alert-{{tipType}}">{{tipInfo}}</div>
     <div v-else></div>
   </div>
 </template>
@@ -10,8 +10,8 @@
 export default {
   props:{
     shouldTipShow: Boolean,
-    type: String,
-    text: String,
+    tipType: String,
+    tipInfo: String,
   },
   data () {
     return {

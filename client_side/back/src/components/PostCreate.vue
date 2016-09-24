@@ -86,8 +86,8 @@ export default {
   },
   props:{
     shouldTipShow: Boolean,
-    type: String,
-    text: String,
+    tipType: String,
+    tipInfo: String,
     currentRoute: String,
   },
   data () {
@@ -206,6 +206,14 @@ export default {
     submit() {
       this.isSubmitting = true;
       let time = moment().format('YYYY-MM-DD HH:mm:ss').toString();
+      
+      this.tipInfo = "已成功提交";
+      this.tipType = 'success'; 
+      this.shouldTipShow = true;
+      setTimeout(()=>{
+          this.shouldTipShow = false;
+          this.$router.go({ path: this.isPost ? '/post/list' : '/page/list' });
+      }, 2000);
 
 
       if (this.id == ''){
@@ -258,7 +266,6 @@ export default {
 
     },
     deletePostAndTag(id){
-
         
         this.postTagsBackup.forEach(value=>{
             store.deletePostTags(this, value)

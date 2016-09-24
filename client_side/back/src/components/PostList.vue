@@ -82,8 +82,8 @@ export default {
   },
   props:{
     shouldTipShow: Boolean,
-    type: String,
-    text: String,
+    tipType: String,
+    tipInfo: String,
     currentRoute: String,
   },
   data () {
@@ -99,6 +99,13 @@ export default {
       })
     },
     deleteBlogByID(id){
+        this.tipInfo = "删除成功";
+        this.tipType = 'success'; 
+        this.shouldTipShow = true;
+        setTimeout(()=>{
+            this.shouldTipShow = false;
+        }, 2000);
+        
         store.deleteBlogByID(this, id).then(result=>{
             this.posts = this.posts.filter(value=>value._id !== id);
         });

@@ -19,8 +19,8 @@
 export default {
   props:{
     shouldTipShow: Boolean,
-    type: String,
-    text: String,
+    tipType: String,
+    tipInfo: String,
   },
   data () {
     return {

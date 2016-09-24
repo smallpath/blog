@@ -215,8 +215,14 @@ router.afterEach(function (transition) {
       return value;
     });
 
+    if (transition.to.router._children[0].shouldTipShow == true){
+      transition.to.router._children[0].shouldTipShow = false;
+    }
+
     transition.to.router._children[0].currentRoute = '/'+arr.join('/');
   }
+
+
 })
 
 router.redirect({

@@ -84,8 +84,8 @@ export default {
   },
   props:{
     shouldTipShow: Boolean,
-    type: String,
-    text: String,
+    tipType: String,
+    tipInfo: String,
     currentRoute: String,
   },
   data () {
@@ -102,6 +102,13 @@ export default {
       })
     },
     deleteTag(id){
+        this.tipInfo = "删除成功";
+        this.tipType = 'success'; 
+        this.shouldTipShow = true;
+        setTimeout(()=>{
+            this.shouldTipShow = false;
+        }, 2000);
+        
         store.deleteTag(this, id).then(result=>{
             this.tags = this.tags.filter(value=>value._id !== id);
         })
