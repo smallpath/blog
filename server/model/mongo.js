@@ -4,15 +4,19 @@ let log = require('../utils/log');
 
 mongoose.Promise = require('bluebird');
 
-let mongoUrl = '127.0.0.1:27017/koa_rest_mongoose';
+let mongoUrl = '127.0.0.1:27017/blog';
 
 mongoose.connect(mongoUrl);
-// mongoose.connect(config.mongoHost,config.mongoDatabase,config.mongoPort);
 
 let db = mongoose.connection;
 
-db.on('error', log.error.bind(log, "connect error:"));
-db.once('open', callback => console.log('MongoDB is ready!'));
+db.on('error', (err)=>{
+    log.error("connect error:", err);
+});
+
+db.once('open', () => {
+    log.debug('MongoDB is ready!')
+});
 
 let Schema = mongoose.Schema;
 let ObjectId = Schema.ObjectId;

@@ -1,5 +1,6 @@
 const redis = require('redis');
 const bluebird = require("bluebird");
+const log = require('../utils/log');
 
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
@@ -7,11 +8,11 @@ bluebird.promisifyAll(redis.Multi.prototype);
 let client = redis.createClient();
 
 client.on("error", function (err) {
-    console.log("Redis Error " + err);
+    log.error("Redis Error " + err);
 });
 
 client.on('connect', function () {
-    console.log('Redis is ready');
+    log.debug('Redis is ready');
 });
 
 module.exports = client;

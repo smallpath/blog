@@ -1,9 +1,3 @@
-/**
- * lib - actions
- * @authors luoyjx (yjk99@qq.com)
- * @date    2016-08-29 23:30:32
- */
-
 module.exports = function generateActions(model) {
   return {
 
