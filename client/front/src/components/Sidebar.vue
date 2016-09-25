@@ -4,7 +4,7 @@
             <div class=profile>
                 <a href="/"> 
                     <img 
-                        :src="siteInfo.site_url.value +'/' + siteInfo.logo_url.value" 
+                        :src="siteInfo.logo_url.value" 
                         alt="{{siteInfo.title.value}}">
                 </a> 
                 <span>{{siteInfo.title.value}}</span>
