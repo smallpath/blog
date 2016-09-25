@@ -20,9 +20,9 @@ A blog using Koa2, Vue, MongoDB and Redis
 
 ## 前置
 
-- node v6
-- mongoDB
-- redis
+- Node v6
+- MongoDB
+- Redis
 
 ## server
 
@@ -68,9 +68,9 @@ npm run build
 
 ```
 server{
-    listen 80;                                      #如果是https, 则修改80为443
-    server_name *.smallpath.me smallpath.me;
-    root /alidata/www/Blog/client/front/dist;       #将此处路径改为构建出来的dist路径
+    listen 80;                                      #如果是https, 则替换80为443
+    server_name *.smallpath.me smallpath.me;        #替换域名
+    root /alidata/www/Blog/client/front/dist;       #替换路径为构建出来的dist路径
     set $node_port 3000;
 
     index index.js index.html index.htm;
