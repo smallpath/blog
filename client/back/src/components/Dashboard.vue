@@ -55,6 +55,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
+import store from '../store/index';
 
 export default {
 
@@ -71,6 +72,17 @@ export default {
     return {
 
     }
+  },
+  ready(){
+      store.fetchUser(this).then(result=>{
+
+        if (!Array.isArray(result)){
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            this.$router.go({ path:'admin/login' });
+        }
+
+      })
   }
 }
 </script>
