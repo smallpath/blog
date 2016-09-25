@@ -30,12 +30,16 @@ Vue.component('blog-tag',Tag);
 Vue.component('blog-post',Post);
 Vue.component('tag-pager',TagPager);
 
-let router = new VueRouter()
+let router = new VueRouter({
+  history: true,
+  saveScrollPosition: true,
+  transitionOnLoad: true,
+})
 
 router.map({
     '/': {
         name:'main', 
-        component: BlogPager
+        component: BlogPager,
     },
     '/archive': {
         name: 'archive',
