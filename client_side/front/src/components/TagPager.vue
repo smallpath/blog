@@ -48,12 +48,12 @@ export default {
                         })
                     });
                 });
-            // store.fetchBlogByPage(this,{ type: 0 } ,this.page -1 ).then(items=>{this.items=items;window.scrollTo(0, 0)})
+            // store.fetchBlogByPage(this,{ type: 0 } ,this.page -1 ).then(items=>{this.items=items;/*window.scrollTo(0, 0)*/})
             });
         }
     },
     ready () {
-        // store.fetchBlogByPage(this, { type: 0 } ,0).then(items=>{this.items=items;window.scrollTo(0, 0)});
+        // store.fetchBlogByPage(this, { type: 0 } ,0).then(items=>{this.items=items;/*window.scrollTo(0, 0)*/});
         // store.fetchBlogCount(this, { type: 0 } ,).then(totalPage=>this.totalPage=totalPage);
         this.getItems();
     }

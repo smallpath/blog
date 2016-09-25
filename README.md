@@ -1,8 +1,12 @@
 # Blog
 A blog using Koa2, Vue and MongoDB
 
+# Demo
+[https://smallpath.me](https://smallpath.me)
+
 # TODO
-- [ ] 前台单页开启H5模式
+- [x] 前台单页开启H5模式
+- [x] disqus评论
 - [ ] 后台管理单页-图片直传
 - [ ] 文章toc
 - [ ] 部署文档

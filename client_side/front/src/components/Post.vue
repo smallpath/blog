@@ -39,12 +39,12 @@
                 <a v-if="typeof prev.pathName !== 'undefined'" v-link="{name:'post', params: {pathName: prev.pathName }}" class="prev">&laquo; {{prev.title }}</a> 
                 <a v-if="typeof next.pathName !== 'undefined'" v-link="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo;</a> 
             </nav>
-                <!--<div id=comments data-type="disqus"
-                    data-thread-key="52822fe6e34f28d1b05b315e0302e4bb" data-url="http://smallpath.me/post/react-native-bugfix.html">
-                    <h1 class=title>Comments</h1>
-                    <div id=disqus_thread data-url="http://smallpath.me/post/react-native-bugfix.html" data-identifier="52822fe6e34f28d1b05b315e0302e4bb"
-                    data-name="smallpath"> 评论加载中... <br> <br> 注：如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理。 
-                </div>-->
+                <div id="comments" data-type="{{commentType}}"
+                    data-thread-key="{{article.pathName.toString(16)}}" data-url="{{siteURL}}/post/{{article.pathName}}">
+                    <h1 class="title">Comments</h1>
+                    <div id="disqus_thread" data-url="{{siteURL}}/post/{{article.pathName}}" data-identifier="{{article.pathName.toString(16)}}"
+                    data-name="{{commentName}}"> 评论加载中... <br> <br> 注：如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理。 
+                </div>
             </div>
         </div>
     </div>
@@ -62,6 +62,9 @@ export default {
             tags: [],
             prev: {},
             next: {},
+            commentType: '',
+            commentName: '',
+            siteURL: '',
         }
     },
     watch: {
@@ -72,13 +75,34 @@ export default {
           let pathName = obj.to.params.pathName;
           store.fetchPostByPathName(this, pathName).then(article=>{
                 this.article= article;
-                window.scrollTo(0, 0);
+                store.fetchOption(this).then(result=>{
+                    let obj = {};
+                    result.forEach(value=>{
+                        obj[value.key] = value;
+                    });
+                    this.siteInfo = obj;
+
+                    if(this.siteInfo['site_url']){
+                        this.siteURL = this.siteInfo['site_url'].value;
+                    }
+
+                    if(this.siteInfo['comment']){
+                        let value = JSON.parse(this.siteInfo['comment'].value);
+                        let type = value.type, name = value.name;
+                        this.commentType = type;
+                        this.commentName = name;
+                    }
+                })
+
                 store.fetchPrevPostByPathName(this,article._id).then(post=>{
-                    this.prev = post;
+                    if (post.type == '0')
+                        this.prev = post;
                 });
                 store.fetchNextPostByPathName(this,article._id).then(post=>{
-                    this.next = post;
+                    if (post.type == '0')
+                        this.next = post;
                 });
+
                 store.fetchTagsByPostID(this,{ postID: article._id }).then(postTags=>{
                     store.fetchTags(this).then(tags=>{
                         let obj = {};
@@ -90,7 +114,7 @@ export default {
                             this.tags.push(obj[value.tagID]);
                         })
                     })
-                    //this.tags = tags;
+
                 });
                 store.fetchCatesByPostID(this,{ postID: article._id }).then(postCates=>{
                     store.fetchCates(this).then(cates=>{
@@ -106,7 +130,7 @@ export default {
 
                         
                     })
-                    //this.tags = tags;
+
                 });
 
         });
@@ -123,12 +147,11 @@ export default {
     },
     methods: {
         getItems () {
-            //store.fetchBlogByPage(this,this.page -1 ).then(items=>{this.items=items;window.scrollTo(0, 0)})
+
         }
     },
     ready () {
-        // store.fetchBlogByPage(this,0).then(items=>{this.items=items;window.scrollTo(0, 0)});
-        // store.fetchBlogCount(this).then(totalPage=>this.totalPage=totalPage);
+
     }
 
 }
