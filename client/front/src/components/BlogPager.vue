@@ -28,11 +28,12 @@ export default {
                 page = 1;
             }
 
-            store.fetchBlogByPage(this, { type: 0 } , page -1 ).then(items=>{this.items=items;})
-
-            if(transition.from.name != 'post'){
-                window.scrollTo(0, 0)
-            }
+            store.fetchBlogByPage(this, { type: 0 } , page -1 ).then(items=>{
+                this.items=items;
+                if(transition.from.name != 'post'){
+                    window.scrollTo(0, 0)
+                }
+            })
 
             return {
                 page: page,
