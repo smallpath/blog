@@ -41,6 +41,19 @@ store.fetchOption = (vue) => {
     })
 }
 
+store.fetchOptionByJSON = (vue, queryJSON) => {
+  let keys = Object.keys(queryJSON);
+  let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
+  return vue.$resource(`/proxyPrefix/api/option/{?keys,values,count}`).get({
+      keys ,
+      values,
+  }).then((response) => {
+      return response.body;
+    }, (err) => {
+      console.log(err)
+    })
+}
+
 store.fetchBlogByID = (vue, id, page = 0 ) => {
   return vue.$resource(blogAPI+'/{id}').get({
       id
