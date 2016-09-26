@@ -5,13 +5,15 @@ A blog using Koa2, Vue, MongoDB and Redis
 [https://smallpath.me](https://smallpath.me)
 
 # TODO
-- [x] 前台单页开启H5模式
-- [x] disqus评论
-- [ ] 后台管理单页-图片直传
-- [ ] 文章toc
-- [ ] 非技术类文章的分类
+- [x] 前台单页
+  - [x] 开启H5模式
+  - [x] disqus评论
+- [ ] 后台管理单页
+  - [ ] 图片直传
+  - [ ] 文章toc
+  - [ ] 非技术类文章的分类
 - [x] 部署文档
-- [ ] API文档
+- [x] API文档
 - [ ] vue 1.0 => vue 2.0
 - [ ] koa2 unstable => koa2 stable 
 - [ ] server side rendering
@@ -102,3 +104,163 @@ server{
     }
 }
 ```
+
+# 后端RESTful API
+
+## 说明
+
+后端服务器默认开启在3000端口, 如不愿意暴露IP, 可以自行设置nginx代理, 或者直接使用前端两个单页的代理前缀`/proxyPrefix`
+
+例如, demo的API根目录如下:
+
+> https://smallpath.me/proxyPrefix/api/:modelName/:id
+
+其中, `:modelName`为模型名, 总计如下7个模型
+
+```
+post
+category
+option
+postCategory
+postTag
+tag
+user
+```
+
+`:id`为指定的文档ID, 用以对指定文档进行CRUD
+
+## HTTP动词
+
+支持如下五种:
+
+```
+GET     //查询
+POST    //新建
+PUT     //替换
+PATCH   //更新部分
+DELETE  //删除指定ID的文档
+```
+
+有如下两个规定:
+
+- 对所有请求
+  - header中必须将`Content-Type`设置为`application/json`, 需要`body`的则`body`必须是合法JSON格式
+- 对所有回应
+  - header中的`Content-Type`均为`application/json`, 且返回的数据也是JSON格式
+
+## 权限验证
+
+服务器直接允许对`user`模型外的所有模型的GET请求
+
+`user`表的所有请求, 以及其他表的非GET请求, 都必须将header中的`authorization`设置为服务器下发的Token, 服务器验证通过后才会继续执行CRUD操作
+
+### 获得Token
+> POST https://smallpath.me/proxyPrefix/admin/login
+
+`body`格式如下:
+
+```
+{
+	"name": "admin",
+	"password": "testpassword"
+}
+```
+
+成功, 则返回带有`token`字段的JSON数据
+```
+{
+  "status": "success",
+  "token": "tokenExample"
+}
+```
+
+失败, 则返回如下:
+```
+{
+  "status": "fail",
+  "description": "Get token failed. Check name and password"
+}
+```
+
+获取到`token`后, 在上述需要token验证的请求中, 都必须将header中的`authorization`设置为服务器下发的Token, 否则服务器将拒绝执行CRUD操作
+
+### 撤销Token
+> POST https://smallpath.me/proxyPrefix/admin/logout
+
+将`header`中的`authorization`设置为服务器下发的token, 即可撤销此token
+
+### Token说明
+Token有效期为获得后的一小时, 超出时间后请重新请求Token
+
+## 查询 
+
+服务器直接允许对`user`模型外的所有模型的GET请求, 不需要验证Token
+
+### 查询所有文档
+> GET https://smallpath.me/proxyPrefix/api/post
+
+### 查询文档的数量
+> GET https://smallpath.me/proxyPrefix/api/post?count=1
+
+### 查询title字段为'关于'的文档
+> GET https://smallpath.me/proxyPrefix/api/post?conditions={"title":"关于"}
+
+### 查询所有文档并按时间倒叙
+> GET https://smallpath.me/proxyPrefix/api/post?sort=1
+
+### 查询第2页的文档并按时间倒叙
+> GET https://smallpath.me/proxyPrefix/api/post?limit=10&skip=10&sort=1
+
+### 查询指定文档的前一篇文档
+> GET https://smallpath.me/proxyPrefix/api/post/57e7b31fa73182482918b277?prev=1
+
+### 查询指定文档的后一篇文档
+> GET https://smallpath.me/proxyPrefix/api/post/57e7b31fa73182482918b277?next=1
+
+## 新建
+
+需要验证Token
+
+> POST https://smallpath.me/proxyPrefix/api/:modelName
+
+Body中为用来新建文档的JSON数据
+
+每个模型的具体字段, 可以查看该模型的[Schema定义](https://github.com/smallpath/blog/blob/develop/server/model/mongo.js#L24)来获得
+
+## 替换
+
+需要验证Token
+
+> PUT https://smallpath.me/proxyPrefix/api/:modelName/:id
+
+`:id`为查询到的文档的`_id`属性, Body中为用来替换该文档的JSON数据
+
+## 更新
+
+需要验证Token
+
+> PATCH https://smallpath.me/proxyPrefix/api/:modelName/:id
+
+`:id`为查询到的文档的`_id`属性, Body中为用来更新该文档的JSON数据
+
+更新操作请使用`PATCH`而不是`PUT`
+
+## 删除
+
+需要验证Token
+
+> DELETE https://smallpath.me/proxyPrefix/api/:modelName/:id
+
+删除指定ID的文档
+
+## vue-resource说明
+
+vue-resource会将请求的URL进行格式化, 不允许URL中的JSON查询, 比如下面这种:
+
+> GET https://smallpath.me/proxyPrefix/api/post?conditions={"title":"关于"}
+
+在这种情况下, 请使用`keys`和`values`来替代`conditions`查询, 例如:
+
+> GET https://smallpath.me/proxyPrefix/api/post?keys=title&values=关于
+
+
