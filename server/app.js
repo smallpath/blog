@@ -8,6 +8,7 @@ const tokenService = require('./service/token');
 const models = require('./model/mongo');
 const redis = require('./model/redis');
 const config = require('./conf/config');
+const option = require('./conf/option');
 const { login, logout, permission } = require('./routes/admin');
 
 
@@ -36,6 +37,7 @@ Object.keys(models).forEach(value => {
 
 
 (async ()=>{
+  await initOption();
   let count = await models.user.find().count().exec();
   if (count == 0){
 
@@ -66,4 +68,16 @@ Object.keys(models).forEach(value => {
     log.debug(`koa2 is running at 3000`);
   }
 })();
+
+async function initOption () {
+  for (let i=0, len = option.length; i< len ; i++){
+    let key = option[i].key;
+    let value = option[i].value;
+    let count = await models.option.find({ key }).count().exec();
+    if (count == 0){
+      await models.option.create(option[i]);
+      log.info(`Option ${key} created`);
+    }
+  }
+}
 
