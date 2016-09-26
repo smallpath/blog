@@ -90,12 +90,10 @@ export default {
 
       if (this.id == '')
         store.newTag(this, this.name).then(body=>{
-          console.log('tagCreate',body);
           this.isSubmitting = false;
         })
       else
         store.patchTag(this, this.id ,{ name: this.name }).then(body=>{
-          console.log('tagPatched',body);
           this.isSubmitting = false;
         })
     }

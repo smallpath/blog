@@ -90,12 +90,10 @@ export default {
 
       if (this.id == '')
         store.newCate(this, this.name).then(body=>{
-          console.log('cateCreate',body);
           this.isSubmitting = false;
         })
       else
         store.patchCate(this, this.id ,{ name: this.name }).then(body=>{
-          console.log('catePatched',body);
           this.isSubmitting = false;
         })
     }

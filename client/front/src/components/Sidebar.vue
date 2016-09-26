@@ -28,7 +28,7 @@
             </ul>
             <ul class="buttons">
                 <li>
-                    <a class="inline" target=_blank href="{{siteInfo.github_blog.value}}"> <i class="iconfont icon-github-v" title=GitHub></i></a>
+                    <a class="inline" target=_blank :href="'https://'+siteInfo.github_url.value"> <i class="iconfont icon-github-v" title=GitHub></i></a>
                     <a class="inline" href="/rss.html"> <i class="iconfont icon-rss-v" title=RSS></i></a>
                     <a class="inline" href="/search.html"> <i class="iconfont icon-search" title=Search></i></a>
             </ul>
@@ -56,11 +56,6 @@ export default {
 
       if(this.siteInfo['title']){
           document.title = this.siteInfo['title'].value;
-      }
-
-      if(this.siteInfo['comment']){
-          let value = JSON.parse(this.siteInfo['comment'].value);
-          let type = value.type, name = value.name;
       }
     })
   }

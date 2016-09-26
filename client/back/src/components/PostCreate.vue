@@ -7,7 +7,7 @@
                         <div class="form-group"><label class="control-label"><span >撰写文章</span></label>
                             <input name="title" placeholder="标题" label="撰写文章" v-model="post.title" class="form-control" type="text"></div>
                         <div class="pathname">
-                            <span>https://smallpath.me/post/</span>
+                            <span>{{ site_url }}{{ isPost? '/post/' : '/page/' }}</span>
                             <div class="form-group">
                                 <input :disabled="shouldPathDisabled" name="pathname" v-model="post.pathName" class="form-control" type="text">
                             </div>
@@ -146,6 +146,7 @@ export default {
       postTagsBackup: [],
       allowComment: true,
       isPublic: '1',
+      site_url: '',
       post: { 
           updatedAt: '',
           createdAt: '',
@@ -236,7 +237,6 @@ export default {
         }
 
         store.newBlog(this, newPost).then(body=>{
-          console.log('postCreate',body);
           this.isSubmitting = false;
           this.deletePostAndTag(body._id);
         });
@@ -255,7 +255,6 @@ export default {
         });
 
         store.patchBlog(this, this.id ,this.post).then(body=>{
-          console.log('postPatched',body);
           this.isSubmitting = false;
           this.deletePostAndTag(body._id);
         })
@@ -296,9 +295,14 @@ export default {
   },
   ready(){
 
+      store.fetchOptionByJSON(this,{ key: 'site_url' }).then(result=>{
+          if(Array.isArray(result) && result[0])
+            this.site_url = result[0].value;
+      })
+
     if(this.isPost == false)
         return;
-
+    
       store.fetchCate(this).then(result=>{
         this.cates = result;
       })

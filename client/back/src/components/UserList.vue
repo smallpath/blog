@@ -16,7 +16,7 @@
                     placeholder="4到20个字符"
                     validate="required"
                 />
-                <p className="help-block">登录时所用的名称，不能重复。</p>
+                <p className="help-block">登录时所用的名称</p>
             </div>
             <div class="form-group">
                 <label>邮箱</label>
@@ -28,7 +28,7 @@
                     placeholder="4到20个字符"
                     validate="required"
                 />
-                <p className="help-block">用户主要联系方式，不能重复。</p>
+                <p className="help-block">用户主要联系方式</p>
             </div>
             <div class="form-group">
                 <label>密码</label>
@@ -55,7 +55,7 @@
           </div>
           <div class="pull-left">
             <div class="form-group">
-                <label>别名</label>
+                <label>昵称</label>
                 <input
                     name="display_name"
                     class="form-control"
@@ -64,7 +64,7 @@
                     v-model="user.displayName"
                     validate="required"
                 />
-                <p className="help-block">登录时所用的名称，不能重复。</p>
+                <p className="help-block">用户的昵称</p>
             </div>
           </div>
           </form>

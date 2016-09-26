@@ -30,6 +30,7 @@
 <script>
 /* eslint-disable */
 import classnames from 'classnames';
+import store from '../store/index';
 
 export default {
   props:{
@@ -52,7 +53,9 @@ export default {
     }
   },
   ready () {
-      this.username = localStorage.getItem('username') || '';
+      store.fetchUser(this).then(result=>{
+          this.username = result[0].displayName;
+      })
   },
   methods: {
     goToUrl(url, shouldToggle){
