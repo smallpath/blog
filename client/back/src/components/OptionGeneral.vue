@@ -58,7 +58,20 @@ export default {
   },
   data () {
     return {
-      option: {},
+      option: {
+        title: '',
+        logo_url:'',
+        description: '',
+        site_url: '',
+        favicon_url: '',
+        keywords: '',
+        twitter_url: '',
+        github_url: '',
+        github_blog: '',
+        miitbeian: '',
+
+        image_upload: '',
+      },
       title: '',
       logo_url:'',
       description: '',
@@ -92,6 +105,7 @@ export default {
       this.shouldTipShow = true;
       setTimeout(()=>{
           this.shouldTipShow = false;
+          this.getOption();
       }, 2000);
 
       Object.keys(this.option).forEach(name=>{
