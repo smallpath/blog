@@ -2,7 +2,7 @@
     <div id='main'>
         <section id="page-index">
             <blog-summary v-for="item in items" :article="item" ></blog-summary>
-            <pagination :page.sync="page" :total-page="totalPage" ></pagination>
+            <pagination :page="page" :total-page="totalPage" ></pagination>
         </section>
         <my-footer></my-footer>
     </div>
@@ -18,6 +18,18 @@ export default {
             items: [] ,
             page: 1,
             totalPage: 1,
+        }
+    },
+    route:{
+        data({ to }){
+            let query = to.query;
+            let page = (typeof query.page !== 'undefined') ? parseInt(query.page) : 1; 
+            if (page <0 ){
+                page = 1;
+            }
+            return {
+                page: page,
+            }; 
         }
     },
     watch: {
