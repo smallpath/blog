@@ -21,29 +21,19 @@ export default {
         }
     },
     route:{
-        data({ to }){
-            let query = to.query;
+        data(transition){
+            let query = transition.to.query;
             let page = (typeof query.page !== 'undefined') ? parseInt(query.page) : 1; 
             if (page <0 ){
                 page = 1;
             }
+            store.fetchBlogByPage(this, { type: 0 } , page -1 ).then(items=>{this.items=items;window.scrollTo(0, 0)})
             return {
                 page: page,
             }; 
-        }
-    },
-    watch: {
-        page (val, oldVal) {
-            this.getItems();
-        }
-    },
-    methods: {
-        getItems () {
-            store.fetchBlogByPage(this, { type: 0 } , this.page -1 ).then(items=>{this.items=items;/*window.scrollTo(0, 0)*/})
-        }
+        },
     },
     ready () {
-        store.fetchBlogByPage(this, { type: 0 } , 0).then(items=>{this.items=items;/*window.scrollTo(0, 0)*/});
         store.fetchBlogCount(this, { type: 0 }).then(totalPage=>this.totalPage=totalPage);
     }
 
