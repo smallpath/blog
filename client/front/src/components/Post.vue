@@ -40,9 +40,9 @@
                 <a v-if="typeof next.pathName !== 'undefined'" v-link="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo;</a> 
             </nav>
                 <div id="comments" data-type="{{commentType}}"
-                    data-thread-key="{{article.pathName.toString(16)}}" data-url="{{siteURL}}/post/{{article.pathName}}">
+                    data-thread-key="{{article.pathName || ''}}" data-url="{{siteURL}}/post/{{article.pathName}}">
                     <h1 class="title">Comments</h1>
-                    <div id="disqus_thread" data-url="{{siteURL}}/post/{{article.pathName}}" data-identifier="{{article.pathName.toString(16)}}"
+                    <div id="disqus_thread" data-url="{{siteURL}}/post/{{article.pathName}}" data-identifier="{{article.pathName || ''}}"
                     data-name="{{commentName}}"> 评论加载中... <br> <br> 注：如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理。 
                 </div>
             </div>

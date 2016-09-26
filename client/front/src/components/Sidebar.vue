@@ -28,9 +28,9 @@
             </ul>
             <ul class="buttons">
                 <li>
-                    <a class="inline" target=_blank :href="'https://'+siteInfo.github_url.value"> <i class="iconfont icon-github-v" title=GitHub></i></a>
-                    <a class="inline" href="/rss.html"> <i class="iconfont icon-rss-v" title=RSS></i></a>
-                    <a class="inline" href="/search.html"> <i class="iconfont icon-search" title=Search></i></a>
+                    <a class="inline" target=_blank :href="'https://'+siteInfo.github_url.value"><i class="iconfont icon-github-v" title="GitHub"></i></a>
+                    <a class="inline" href="/rss.html"><i class="iconfont icon-rss-v" title="RSS"></i></a>
+                    <a class="inline" href="/search.html"><i class="iconfont icon-search" title="Search"></i></a>
             </ul>
         </div>
     </nav>
@@ -43,7 +43,17 @@ import store from '../store/index';
 export default {
   data () {
     return {
-        siteInfo: {},
+        siteInfo: {
+            github_url: {
+                value: '',
+            },
+            title: {
+                value: '',
+            },
+            logo_url: {
+                value: '',
+            },
+        },
     }
   },
   ready (){
