@@ -8,10 +8,12 @@ A blog using Koa2, Vue, MongoDB and Redis
 - [x] 前台单页
   - [x] 开启H5模式
   - [x] disqus评论
+  - [ ] 侧边栏图片
 - [ ] 后台管理单页
   - [ ] 图片直传
   - [ ] 文章toc
   - [ ] 非技术类文章的分类
+  - [ ] 添加用以升级的模型及接口 
 - [x] 部署文档
 - [x] API文档
 - [ ] vue 1.0 => vue 2.0
