@@ -1,22 +1,25 @@
 # Blog
 Not only blog. Based on Vue, Koa2, MongoDB and Redis
 
+前后端分离的博客系统, 前端SPA + 后端RESTful服务器
+
 # Demo
 [https://smallpath.me](https://smallpath.me)
 
 # TODO
-- [x] 前台单页
+- [ ] 前台单页
   - [x] 开启H5模式
   - [x] disqus评论
   - [ ] 侧边栏图片
 - [ ] 后台管理单页
-  - [ ] 图片直传
+  - [ ] 七牛云图片上传
   - [ ] 文章toc
-  - [ ] 非技术类文章的分类
+  - [ ] 隐私文章分类
   - [x] 添加用以升级的模型及接口 
 - [x] 部署文档
 - [x] API文档
 - [ ] vue 1.0 => vue 2.0
+- [ ] vue-cli 1.0 => vue-cli 2.0
 - [ ] koa2 unstable => koa2 stable 
 - [ ] server side rendering
 
