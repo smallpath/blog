@@ -1,5 +1,5 @@
 # Blog
-A blog using Koa2, Vue, MongoDB and Redis
+Not only blog. Based on Vue, Koa2, MongoDB and Redis
 
 # Demo
 [https://smallpath.me](https://smallpath.me)
@@ -117,7 +117,7 @@ server{
 
 > https://smallpath.me/proxyPrefix/api/:modelName/:id
 
-其中, `:modelName`为模型名, 总计如下7个模型
+其中, `:modelName`为模型名, 总计如下8个模型
 
 ```
 post
@@ -127,6 +127,7 @@ postCategory
 postTag
 tag
 user
+update
 ```
 
 `:id`为指定的文档ID, 用以对指定文档进行CRUD
@@ -184,7 +185,7 @@ DELETE  //删除指定ID的文档
 }
 ```
 
-获取到`token`后, 在上述需要token验证的请求中, 都必须将header中的`authorization`设置为服务器下发的Token, 否则服务器将拒绝执行CRUD操作
+获取到`token`后, 在上述需要token验证的请求中, 请将header中的`authorization`设置为服务器下发的Token, 否则请求将被服务器拒绝
 
 ### 撤销Token
 > POST https://smallpath.me/proxyPrefix/admin/logout
