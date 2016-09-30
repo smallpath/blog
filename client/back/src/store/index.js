@@ -27,6 +27,13 @@ store.logout = (vue, json) => {
   return vue.$http.post(`/proxyPrefix/admin/logout`, json);
 }
 
+store.fetchUpdates = (vue) => {
+  return vue.$http.get(`/proxyPrefix/api/update`);
+}
+
+store.deleteUpdate = (vue, id) => {
+  return vue.$http.delete(`/proxyPrefix/api/update/${id}`);
+}
 
 
 store.newTag = (vue, name) => {
@@ -68,13 +75,13 @@ store.fetchOptionByJSON = (vue, queryJSON) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value => queryJSON[value]);
   return vue.$resource(`${root}/option` + '/{?keys,values}').get({
-      keys,
-      values,
-    }).then((response) => {
-      return response.body;
-    }, (err) => {
-      console.log(err)
-    })
+    keys,
+    values,
+  }).then((response) => {
+    return response.body;
+  }, (err) => {
+    console.log(err)
+  })
 }
 
 store.patchOption = (vue, id, json) => {
