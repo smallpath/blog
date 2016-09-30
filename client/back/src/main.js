@@ -41,6 +41,8 @@ import UserList from './components/UserList';
 import OptionGeneral from './components/OptionGeneral';
 import OptionComment from './components/OptionComment';
 import OptionAnalytic from './components/OptionAnalytic';
+import UpdateCreate from './components/UpdateCreate';
+import UpdateList from './components/UpdateList';
 
 Vue.component('sidebar', Sidebar);
 
@@ -167,6 +169,26 @@ router.map({
       '/edit/:id': {
         name: 'editTag',
         component: TagCreate,
+        auth: true,
+      }
+    }
+  },
+  '/update': {
+    name: 'update',
+    component: App,
+    auth: true,
+    subRoutes: {
+      '/list': {
+        component: UpdateList,
+        auth: true,
+      },
+      '/create': {
+        component: UpdateCreate,
+        auth: true,
+      },
+      '/edit/:id': {
+        name: 'editUpdate',
+        component: UpdateCreate,
         auth: true,
       }
     }
