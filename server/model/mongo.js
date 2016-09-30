@@ -75,6 +75,12 @@ let user = new Schema({
     lastLoginIP: String,
 });
 
+let update = new Schema({
+    name: String,
+    version: String,
+    path: String,
+});
+
 post.methods.next = async function() {
   var model = this.model("post");
   let quote;
@@ -110,6 +116,7 @@ postCategory = mongoose.model('postCategory', postCategory),
 postTag = mongoose.model('postTag', postTag),
 tag = mongoose.model('tag', tag),
 user = mongoose.model('user', user);
+update = mongoose.model('update', update);
 
 
 module.exports = {
@@ -120,4 +127,5 @@ module.exports = {
     postTag,
     tag,
     user,
+    update,
 }
