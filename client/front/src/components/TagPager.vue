@@ -21,6 +21,11 @@ export default {
             totalPage: 1,
         }
     },
+    beforeRouteEnter (to, from, next) {
+        next(vm => {
+            vm.getItems();
+        })
+    },
     methods: {
         getItems () {
             let idArr = [];

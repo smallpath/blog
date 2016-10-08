@@ -68,18 +68,16 @@ export default {
             siteURL: '',
         }
     },
+    beforeRouteEnter (to, from, next) {
+        next(vm => {
+            vm.getPost(to);
+        })
+    },
     watch: {
         '$route': 'getPost'
     },
-  route: {
-    data (obj) {
-
-
-      } 
-    },
     methods: {
         getPost (val, oldVal) {
-            console.log(val);
             let pathName = val.params.pathName;
             store.fetchPostByPathName(this, pathName).then(article=>{
                     this.article= article;
