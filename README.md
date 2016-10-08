@@ -12,14 +12,14 @@ Not only blog. Based on Vue, Koa2, MongoDB and Redis
   - [x] disqus评论
   - [ ] 侧边栏图片
 - [ ] 后台管理单页
+  - [x] 添加用以升级的模型及接口
   - [ ] 七牛云图片上传
   - [ ] 文章toc
-  - [ ] 隐私文章分类
-  - [x] 添加用以升级的模型及接口 
+  - [ ] 隐私文章分类 
 - [x] 部署文档
 - [x] API文档
-- [ ] vue 1.0 => vue 2.0
-- [ ] vue-cli 1.0 => vue-cli 2.0
+- [x] vue 1.0 => vue 2.0
+- [x] vue-router 1.0 => vue-router 2.0
 - [ ] koa2 unstable => koa2 stable 
 - [ ] server side rendering
 
@@ -27,7 +27,7 @@ Not only blog. Based on Vue, Koa2, MongoDB and Redis
 
 ## 前置
 
-- Node v6
+- Node v4
 - MongoDB
 - Redis
 
@@ -143,7 +143,7 @@ update
 GET     //查询
 POST    //新建
 PUT     //替换
-PATCH   //更新部分
+PATCH   //更新部分属性
 DELETE  //删除指定ID的文档
 ```
 
@@ -180,7 +180,7 @@ DELETE  //删除指定ID的文档
 }
 ```
 
-失败, 则返回如下:
+失败, 则返回如下格式的JSON数据:
 ```
 {
   "status": "fail",
@@ -269,4 +269,5 @@ vue-resource会将请求的URL进行格式化, 不允许URL中的JSON查询, 比
 
 > GET https://smallpath.me/proxyPrefix/api/post?keys=title&values=关于
 
+或者使用其他XmlHttpRequest封装库
 
