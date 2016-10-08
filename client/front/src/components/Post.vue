@@ -112,6 +112,7 @@ export default {
                     store.fetchTagsByPostID(this,{ postID: article._id }).then(postTags=>{
                         store.fetchTags(this).then(tags=>{
                             let obj = {};
+                            this.tags = [];
                             tags.forEach(value=>{
                                 obj[value._id] = value;
                             });
@@ -126,6 +127,7 @@ export default {
                         store.fetchCates(this).then(cates=>{
                             
                             let obj = {};
+                            this.cates = [];
                             cates.forEach(value=>{
                                 obj[value._id] = value;
                             });
