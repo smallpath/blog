@@ -8,42 +8,43 @@
                 </div>
                 <h1 class="title">{{ article.title }}</h1>
 
-                <div class="entry-content">
-                    {{{ article.content }}}
+                <div class="entry-content" v-html="article.content">
                 </div>
 
-                <p>本文链接：<a href="/post/{{article.pathName}}">/post/{{article.pathName}}</a></p>
+                <p>本文链接：<a :href="'/post/'+ article.pathName">/post/{{article.pathName}}</a></p>
                 <p>-- <acronym title="End of File">EOF</acronym> --</p>
                 <div class="post-info">
                     <p> 发表于 <i>{{article.createdAt}}</i> ，
                     <template v-if="cates.length != 0">
                         添加在分类「
                         <a v-for="cate in cates"  
-                             data-cate="{{ cate.name }}">
+                             :data-cate="cate.name">
                             <code class="notebook">{{cate.name}}</code>
                         </a> 」
                     </template>
                      下 ，
                     <template v-if="tags.length != 0">
                         并被添加「
-                        <a v-for="tag in tags" 
-                            v-link="{name:'tagPager', params: { tagName: tag.name }}" 
-                            data-tag="{{tag.name}}"> 
+                        <router-link v-for="tag in tags" 
+                            :to="{name:'tagPager', params: { tagName: tag.name }}" 
+                            :data-tag="tag.name"> 
                             <code class="notebook">{{tag.name}}</code>
-                        </a> 」标签 ，
+                        </router-link> 」标签 ，
                     </template>
                         最后修改于 <i>{{article.updatedAt}}</i></p>
                 </div>
             </article>
             <nav class=pagination> 
-                <a v-if="typeof prev.pathName !== 'undefined'" v-link="{name:'post', params: {pathName: prev.pathName }}" class="prev">&laquo; {{prev.title }}</a> 
-                <a v-if="typeof next.pathName !== 'undefined'" v-link="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo;</a> 
+                <router-link v-if="typeof prev.pathName !== 'undefined'" 
+                    :to="{name:'post', params: {pathName: prev.pathName }}" class="prev">&laquo; {{prev.title }}</router-link> 
+                <router-link v-if="typeof next.pathName !== 'undefined'" 
+                    :to="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo;</router-link> 
             </nav>
-                <div id="comments" data-type="{{commentType}}"
-                    data-thread-key="{{article.pathName || ''}}" data-url="{{siteURL}}/post/{{article.pathName}}">
+                <div id="comments" :data-type="commentType"
+                    :data-thread-key="article.pathName" :data-url="siteURL + '/post/' + article.pathName">
                     <h1 class="title">Comments</h1>
-                    <div id="disqus_thread" data-url="{{siteURL}}/post/{{article.pathName}}" data-identifier="{{article.pathName || ''}}"
-                    data-name="{{commentName}}"> 评论加载中... <br> <br> 注：如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理。 
+                    <div id="disqus_thread" :data-url="siteURL +'/post/' + article.pathName" :data-identifier="article.pathName"
+                    :data-name="commentName"> 评论加载中... <br> <br> 注：如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理。 
                 </div>
             </div>
         </div>
@@ -150,7 +151,7 @@ export default {
 
         }
     },
-    ready () {
+    mounted () {
 
     }
 

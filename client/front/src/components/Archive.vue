@@ -2,11 +2,11 @@
     <div id='main'>
         <article class="post archive">
             <h1 class=title>{{title}}</h1>
-            <div class="entry-content" v-for="item in items">
-                <h3>{{ $key }} ({{item.length}})</h3>
+            <div class="entry-content" v-for="(key, item, index) in items">
+                <h3>{{ key }} ({{item.length}})</h3>
                 <ul>
                     <li v-for="subItem in item"> 
-                        <a v-link="{name: 'post', params: { pathName:subItem.pathName  }}" title="{{subItem.title}}">{{subItem.title}}</a>&nbsp;
+                        <router-link :to="{name: 'post', params: { pathName:subItem.pathName  }}" :title="subItem.title">{{subItem.title}}</router-link>&nbsp;
                         <span class=date>{{ subItem.createdAt.split(' ')[0] }}</span>
                     </li>
                 </ul>
@@ -27,7 +27,7 @@ export default {
       items: {},
     }
   },
-  ready () {
+  mounted () {
       store.fetchAllBlog(this).then(items=>{
             
             let result = { };

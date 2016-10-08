@@ -40,7 +40,7 @@ export default {
             }; 
         },
     },
-    ready () {
+    mounted () {
         store.fetchBlogCount(this, { type: 0 }).then(totalPage=>this.totalPage=totalPage);
     }
 
