@@ -18,59 +18,65 @@ import Tag from './components/Tag'
 import Post from './components/Post'
 import TagPager from './components/TagPager'
 
-Vue.component('sidebar',Sidebar);
-Vue.component('about',About);
-Vue.component('my-header',Header);
-Vue.component('my-footer',Footer);
-Vue.component('blog-summary',BlogSummary);
-Vue.component('blog-pager',BlogPager);
-Vue.component('pagination',Pagination);
-Vue.component('archive',Archive);
-Vue.component('blog-tag',Tag);
-Vue.component('blog-post',Post);
-Vue.component('tag-pager',TagPager);
+Vue.component('sidebar', Sidebar);
+Vue.component('about', About);
+Vue.component('my-header', Header);
+Vue.component('my-footer', Footer);
+Vue.component('blog-summary', BlogSummary);
+Vue.component('blog-pager', BlogPager);
+Vue.component('pagination', Pagination);
+Vue.component('archive', Archive);
+Vue.component('blog-tag', Tag);
+Vue.component('blog-post', Post);
+Vue.component('tag-pager', TagPager);
+
+import App from './components/App'
+Vue.component('app', App);
 
 let router = new VueRouter({
-  history: true,
-  saveScrollPosition: true,
-  transitionOnLoad: true,
+    mode: 'history',
+    scrollBehavior: function (to, from, savedPosition) {
+        return savedPosition || { x: 0, y: 0 }
+    },
+    routes: [
+        {
+            path: '/',
+            name: 'main',
+            component: BlogPager,
+        },
+        {
+            path: '/archive',
+            name: 'archive',
+            component: Archive
+        },
+        {
+            path: '/tag',
+            name: 'tag',
+            component: Tag,
+        },
+        {
+            path: '/about',
+            name: 'about',
+            component: About
+        },
+        {
+            path: '/post/:pathName',
+            name: 'post',
+            component: Post
+        },
+        {
+            path: '/tag/:tagName',
+            name: 'tagPager',
+            component: TagPager
+        },
+    ],
 })
 
-router.map({
-    '/': {
-        name:'main', 
-        component: BlogPager,
-    },
-    '/archive': {
-        name: 'archive',
-        component: Archive
-    },
-    '/tag': {
-        name: 'tag',
-        component: Tag,
-    },
-    '/about': {
-        name:'about',
-        component: About
-    },
-    '/post/:pathName': {
-        name:'post',
-        component: Post 
-    },
-    '/tag/:tagName': {
-        name:'tagPager',
-        component: TagPager 
-    },
-})
 
-router.beforeEach(function () {
-  window.scrollTo(0, 0)
-})
+// router.start(Vue.extend({}), '#app')
 
 
-router.redirect({
-  '*': '/'
-})
-
-router.start(Vue.extend({}), '#app')
-
+const app = new Vue({
+    router,
+    render: h => h(App)
+}).$mount('#app')

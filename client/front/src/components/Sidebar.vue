@@ -5,22 +5,22 @@
                 <a href="/"> 
                     <img 
                         :src="siteInfo.logo_url.value" 
-                        alt="{{siteInfo.title.value}}">
+                        :alt="siteInfo.title.value">
                 </a> 
                 <span>{{siteInfo.title.value}}</span>
             </div>
             <ul class="buttons">
                 <li>
-                    <a v-link="{name:'main'}" title="首页"> <i class="iconfont icon-home"></i> <span>首页</span></a>
+                    <router-link :to="{name:'main'}" title="首页"> <i class="iconfont icon-home"></i> <span>首页</span></router-link>
                 </li>
                 <li>
-                    <a v-link="{name:'archive'}" title="归档"> <i class="iconfont icon-archive"></i> <span>归档</span></a>
+                    <router-link :to="{name:'archive'}" title="归档"> <i class="iconfont icon-archive"></i> <span>归档</span></router-link>
                 </li>
                 <li>
-                    <a v-link="{name:'tag'}"  title="标签"> <i class="iconfont icon-tags"></i> <span>标签</span></a>
+                    <router-link :to="{name:'tag'}"  title="标签"> <i class="iconfont icon-tags"></i> <span>标签</span></router-link>
                 </li>
                 <li>
-                    <a v-link="{name:'about'}" title="关于"> <i class="iconfont icon-user"></i> <span>关于</span></a>
+                    <router-link :to="{name:'about'}" title="关于"> <i class="iconfont icon-user"></i> <span>关于</span></router-link>
                 </li>
                 <!--<li>
                     <a href="/links/" title="友情链接"> <i class="iconfont icon-link"></i> <span>友链</span></a>
@@ -56,7 +56,7 @@ export default {
         },
     }
   },
-  ready (){
+  mounted (){
     store.fetchOption(this).then(result=>{
       let obj = {};
       result.forEach(value=>{

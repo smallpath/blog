@@ -4,7 +4,8 @@
             <h1 class=title>{{title}}</h1>
             <div class="entry-content">
                 <section> 
-                    <a v-for="item in items" v-link="{ name: 'tagPager', params:{ tagName: item.name } }" data-tag="{{ item.name }}">{{item.name}}({{item.count}})</a> 
+                    <router-link v-for="item in items" 
+                        :to="{ name: 'tagPager', params:{ tagName: item.name } }" :data-tag="item.name">{{item.name}}({{item.count}})</router-link> 
                 </section>
             </div>
         </article>
@@ -23,7 +24,7 @@ export default {
       items: {},
     }
   },
-  ready () {
+  mounted () {
     //   let 
       store.fetchTags(this).then(items=>{
           store.fetchPostTags(this).then(postTags=>{

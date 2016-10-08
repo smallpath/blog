@@ -1,9 +1,9 @@
 <template>
     <nav class="pagination">
-        <a v-if="page > 1" v-link="{ path:'/?page=' + (page-1) }" class="prev">&laquo; 上一页</a>
-        <a v-if="page < totalPage" v-link="{ path:'/?page=' + (page+1) }" class="next">下一页 &raquo;</a>
+        <router-link v-if="page > 1" :to="{ path:'/?page=' + (page-1) }" class="prev">&laquo; 上一页</router-link>
+        <router-link v-if="page < totalPage" :to="{ path:'/?page=' + (page+1) }" class="next">下一页 &raquo;</router-link>
         <div class=center>
-            <a v-link="{name:'archive'}">博客归档</a>
+            <router-link :to="{name:'archive'}">博客归档</router-link>
         </div>
     </nav>
 </template>
