@@ -69,86 +69,79 @@ export default {
         }
     },
     watch: {
-
+        '$route': 'getPost'
     },
   route: {
     data (obj) {
-          let pathName = obj.to.params.pathName;
-          store.fetchPostByPathName(this, pathName).then(article=>{
-                this.article= article;
-                store.fetchOption(this).then(result=>{
-                    let obj = {};
-                    result.forEach(value=>{
-                        obj[value.key] = value;
-                    });
-                    this.siteInfo = obj;
 
-                    if(this.siteInfo['site_url']){
-                        this.siteURL = this.siteInfo['site_url'].value;
-                    }
-
-                    if(this.siteInfo['comment']){
-                        let value = JSON.parse(this.siteInfo['comment'].value);
-                        let type = value.type, name = value.name;
-                        this.commentType = type;
-                        this.commentName = name;
-                    }
-                })
-
-                store.fetchPrevPostByPathName(this,article._id).then(post=>{
-                    if (post.type == '0')
-                        this.prev = post;
-                });
-                store.fetchNextPostByPathName(this,article._id).then(post=>{
-                    if (post.type == '0')
-                        this.next = post;
-                });
-
-                store.fetchTagsByPostID(this,{ postID: article._id }).then(postTags=>{
-                    store.fetchTags(this).then(tags=>{
-                        let obj = {};
-                        tags.forEach(value=>{
-                            obj[value._id] = value;
-                        });
-
-                        postTags.forEach(value=>{
-                            this.tags.push(obj[value.tagID]);
-                        })
-                    })
-
-                });
-                store.fetchCatesByPostID(this,{ postID: article._id }).then(postCates=>{
-                    store.fetchCates(this).then(cates=>{
-                        
-                        let obj = {};
-                        cates.forEach(value=>{
-                            obj[value._id] = value;
-                        });
-                        
-                        postCates.forEach(value=>{
-                            this.cates.push(obj[value.categoryID]);
-                        })
-
-                        
-                    })
-
-                });
-
-        });
-
-        return {
-            article: {} ,
-            cates: [],
-            tags: [],
-            prev: {},
-            next: {},
-        }
 
       } 
     },
     methods: {
-        getItems () {
+        getPost (val, oldVal) {
+            console.log(val);
+            let pathName = val.params.pathName;
+            store.fetchPostByPathName(this, pathName).then(article=>{
+                    this.article= article;
+                    store.fetchOption(this).then(result=>{
+                        let obj = {};
+                        result.forEach(value=>{
+                            obj[value.key] = value;
+                        });
+                        this.siteInfo = obj;
 
+                        if(this.siteInfo['site_url']){
+                            this.siteURL = this.siteInfo['site_url'].value;
+                        }
+
+                        if(this.siteInfo['comment']){
+                            let value = JSON.parse(this.siteInfo['comment'].value);
+                            let type = value.type, name = value.name;
+                            this.commentType = type;
+                            this.commentName = name;
+                        }
+                    })
+
+                    store.fetchPrevPostByPathName(this,article._id).then(post=>{
+                        if (post.type == '0')
+                            this.prev = post;
+                    });
+                    store.fetchNextPostByPathName(this,article._id).then(post=>{
+                        if (post.type == '0')
+                            this.next = post;
+                    });
+
+                    store.fetchTagsByPostID(this,{ postID: article._id }).then(postTags=>{
+                        store.fetchTags(this).then(tags=>{
+                            let obj = {};
+                            tags.forEach(value=>{
+                                obj[value._id] = value;
+                            });
+
+                            postTags.forEach(value=>{
+                                this.tags.push(obj[value.tagID]);
+                            })
+                        })
+
+                    });
+                    store.fetchCatesByPostID(this,{ postID: article._id }).then(postCates=>{
+                        store.fetchCates(this).then(cates=>{
+                            
+                            let obj = {};
+                            cates.forEach(value=>{
+                                obj[value._id] = value;
+                            });
+                            
+                            postCates.forEach(value=>{
+                                this.cates.push(obj[value.categoryID]);
+                            })
+
+                            
+                        })
+
+                    });
+
+            });
         }
     },
     mounted () {
