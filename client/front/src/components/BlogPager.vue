@@ -20,25 +20,25 @@ export default {
             totalPage: 1,
         }
     },
-    route:{
-        data(transition){
-            let query = transition.to.query;
+    watch: {
+    '$route': 'fetchData'
+    },
+    methods: {
+        fetchData: function() {
+
+            let query = this.$route.query;
             let page = (typeof query.page !== 'undefined') ? parseInt(query.page) : 1; 
             if (page <0 ){
                 page = 1;
             }
 
             store.fetchBlogByPage(this, { type: 0 } , page -1 ).then(items=>{
+                console.log(items);
                 this.items=items;
-                if(transition.from.name != 'post'){
-                    window.scrollTo(0, 0)
-                }
-            })
+            });
 
-            return {
-                page: page,
-            }; 
-        },
+            this.page = page; 
+        }
     },
     mounted () {
         store.fetchBlogCount(this, { type: 0 }).then(totalPage=>this.totalPage=totalPage);
