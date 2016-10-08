@@ -24,8 +24,8 @@ export default {
     '$route': 'fetchData'
     },
     methods: {
-        fetchData: function() {
-
+        fetchData: function(val, oldVal) {
+            console.log('fetchData');
             let query = this.$route.query;
             let page = (typeof query.page !== 'undefined') ? parseInt(query.page) : 1; 
             if (page <0 ){
@@ -33,14 +33,17 @@ export default {
             }
 
             store.fetchBlogByPage(this, { type: 0 } , page -1 ).then(items=>{
-                console.log(items);
                 this.items=items;
+                if (oldVal.query.name && oldVal.query.name!= 'post' ){
+
+                }
             });
 
             this.page = page; 
         }
     },
     mounted () {
+        console.log('mounted');
         store.fetchBlogCount(this, { type: 0 }).then(totalPage=>this.totalPage=totalPage);
     }
 

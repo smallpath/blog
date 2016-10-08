@@ -2,7 +2,7 @@
     <div id='main'>
         <article class="post archive">
             <h1 class=title>{{title}}</h1>
-            <div class="entry-content" v-for="(key, item, index) in items">
+            <div class="entry-content" v-for="(item, key, index) in items">
                 <h3>{{ key }} ({{item.length}})</h3>
                 <ul>
                     <li v-for="subItem in item"> 

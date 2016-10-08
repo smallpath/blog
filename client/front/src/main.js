@@ -80,3 +80,5 @@ const app = new Vue({
     router,
     render: h => h(App)
 }).$mount('#app')
+
+router.push('/?page=1')
