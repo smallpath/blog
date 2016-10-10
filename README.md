@@ -1,5 +1,5 @@
 # Blog
-Not only blog. Based on Vue, Koa2, MongoDB and Redis
+Not only blog. Based on Vue2, Koa2, MongoDB and Redis
 
 前后端分离的博客系统, 前端SPA + 后端RESTful服务器
 
