@@ -72,12 +72,9 @@ let router = new VueRouter({
     ],
 })
 
-
-// router.start(Vue.extend({}), '#app')
-
-
 const app = new Vue({
     router,
     render: h => h(App)
-}).$mount('#app')
+})
 
+export { app, router }
