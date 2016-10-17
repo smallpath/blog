@@ -77,4 +77,6 @@ const app = new Vue({
     render: h => h(App)
 })
 
+// Object.keys(app).map(value=>console.log(value))
+
 export { app, router }

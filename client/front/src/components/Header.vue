@@ -27,7 +27,7 @@ export default {
     }
   },
   mounted (){
-    store.fetchOption(this).then(result=>{
+    store.fetchOption().then(result=>{
       let obj = {};
       result.forEach(value=>{
           obj[value.key] = value;

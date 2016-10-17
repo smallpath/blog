@@ -1,17 +1,31 @@
 /* eslint-disable */
 import { EventEmitter } from 'events'
 
-const blogAPI = `/proxyPrefix/api/post`;
+import vue from 'vue';
+import VueResource from 'vue-resource'
+vue.use(VueResource)
+// vue.http.options.emulateJSON = true;
 
-const tagAPI = `/proxyPrefix/api/tag`;
+const host = typeof location === 'undefined' ? 'localhost:8080' : '';
 
-const categoryAPI = `/proxyPrefix/api/category`;
+const blogAPI = `${host}/proxyPrefix/api/post`;
 
-const postTagAPI = `/proxyPrefix/api/postTag`;
+const tagAPI = `${host}/proxyPrefix/api/tag`;
 
-const postCateAPI = `/proxyPrefix/api/postCategory`;
+const categoryAPI = `${host}/proxyPrefix/api/category`;
 
-const aboutAPI = `/proxyPrefix/api/post?title=关于`
+const postTagAPI = `${host}/proxyPrefix/api/postTag`;
+
+const postCateAPI = `${host}/proxyPrefix/api/postCategory`;
+
+const aboutAPI = `${host}/proxyPrefix/api/post?title=关于`
+
+console.log('begin')
+
+vue.http.get(aboutAPI).then(response=>{
+  console.log(response)
+  console.log('end')
+})
 
 const store = new EventEmitter()
 
@@ -19,10 +33,10 @@ const perPage = 10;
 
 export default store
 
-store.fetchPage = (vue, queryJSON) => {
+store.fetchPage = (queryJSON) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  return vue.$resource(blogAPI+'{?keys,values}').get({
+  return vue.resource(blogAPI+'{?keys,values}').get({
       keys,
       values,
   }).then((response) => {
@@ -32,8 +46,8 @@ store.fetchPage = (vue, queryJSON) => {
   })
 }
 
-store.fetchOption = (vue) => {
-  return vue.$http.get(`/proxyPrefix/api/option`)
+store.fetchOption = () => {
+  return vue.http.get(`/proxyPrefix/api/option`)
     .then((response) => {
       return response.body;
     }, (err) => {
@@ -41,10 +55,10 @@ store.fetchOption = (vue) => {
     })
 }
 
-store.fetchOptionByJSON = (vue, queryJSON) => {
+store.fetchOptionByJSON = (queryJSON) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  return vue.$resource(`/proxyPrefix/api/option/{?keys,values,count}`).get({
+  return vue.resource(`/proxyPrefix/api/option/{?keys,values,count}`).get({
       keys ,
       values,
   }).then((response) => {
@@ -54,8 +68,8 @@ store.fetchOptionByJSON = (vue, queryJSON) => {
     })
 }
 
-store.fetchBlogByID = (vue, id, page = 0 ) => {
-  return vue.$resource(blogAPI+'/{id}').get({
+store.fetchBlogByID = (id, page = 0 ) => {
+  return vue.resource(blogAPI+'/{id}').get({
       id
   }).then((response) => {
     return response.body;
@@ -64,14 +78,23 @@ store.fetchBlogByID = (vue, id, page = 0 ) => {
   })
 }
 
-store.fetchBlogCount = (vue, queryJSON, page = 0 ) => {
+store.fetchBlogCount = (queryJSON, page = 0 ) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  return vue.$resource(blogAPI+'/{?keys,values,count}').get({
+  let temp = vue.resource(blogAPI+'/{?keys,values,count}')
+  console.log(temp.get({
+    keys ,
+      values,
+      count: 1,
+  }).then(()=>{
+    console.log('response ok test')
+  }))
+  return vue.resource(blogAPI+'/{?keys,values,count}').get({
       keys ,
       values,
       count: 1,
   }).then((response) => {
+    console.log('response ok')
     let totalPage = Math.ceil(parseInt(response.body)/perPage);
     return totalPage;
   }, (err) => {
@@ -79,10 +102,10 @@ store.fetchBlogCount = (vue, queryJSON, page = 0 ) => {
   })
 }
  
-store.fetchBlogByPage = (vue, queryJSON, page = 0) => {
+store.fetchBlogByPage = (queryJSON, page = 0) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  return vue.$resource(blogAPI+'/{?keys,values,limit,skip,sort}').get({
+  return vue.resource(blogAPI+'/{?keys,values,limit,skip,sort}').get({
       keys ,
       values,
       limit: perPage,
@@ -96,8 +119,8 @@ store.fetchBlogByPage = (vue, queryJSON, page = 0) => {
 }
 
 
-store.fetchPostByPathName = (vue, pathName) => {
-  return vue.$resource('/proxyPrefix/api/post/{?keys,values}').get({
+store.fetchPostByPathName = (pathName) => {
+  return vue.resource('/proxyPrefix/api/post/{?keys,values}').get({
     keys:['pathName'],
     values:[pathName],
   }).then((response) => {
@@ -107,18 +130,18 @@ store.fetchPostByPathName = (vue, pathName) => {
   })
 }
 
-store.fetchPrevPostByPathName = (vue, id) => {
+store.fetchPrevPostByPathName = (id) => {
   let api = blogAPI + '/' + id + '?prev=1';
-  return vue.$http.get(api).then((response) => {
+  return vue.http.get(api).then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)
   })
 }
 
-store.fetchNextPostByPathName = (vue, id) => {
+store.fetchNextPostByPathName = (id) => {
   let api = blogAPI + '/' + id + '?next=1';
-  return vue.$http.get(api).then((response) => {
+  return vue.http.get(api).then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)
@@ -127,8 +150,8 @@ store.fetchNextPostByPathName = (vue, id) => {
 
 
 
-store.fetchAllBlog = (vue) => {
-  return vue.$resource(blogAPI+'/{?keys,values,sort}').get({
+store.fetchAllBlog = () => {
+  return vue.resource(blogAPI+'/{?keys,values,sort}').get({
     keys: ['type'],
     values: ['0'],
     sort: "1",
@@ -140,18 +163,18 @@ store.fetchAllBlog = (vue) => {
 }
 
 
-store.fetchTags = (vue) => {
-  return vue.$http.get(tagAPI).then((response) => {
+store.fetchTags = () => {
+  return vue.http.get(tagAPI).then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)
   })
 }
 
-store.fetchTagsByPostID = (vue, queryJSON) => {
+store.fetchTagsByPostID = (queryJSON) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  return vue.$resource(postTagAPI+'{?keys,values}').get({
+  return vue.resource(postTagAPI+'{?keys,values}').get({
       keys,
       values,
   }).then((response) => {
@@ -162,8 +185,8 @@ store.fetchTagsByPostID = (vue, queryJSON) => {
 }
 
 
-store.fetchPostTags = (vue) => {
-  return vue.$http.get(postTagAPI).then((response) => {
+store.fetchPostTags = () => {
+  return vue.http.get(postTagAPI).then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)
@@ -171,10 +194,10 @@ store.fetchPostTags = (vue) => {
 }
 
 
-store.fetchCatesByPostID = (vue, queryJSON) => {
+store.fetchCatesByPostID = (queryJSON) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  return vue.$resource(postCateAPI+'{?keys,values}').get({
+  return vue.resource(postCateAPI+'{?keys,values}').get({
       keys,
       values,
   }).then((response) => {
@@ -185,8 +208,8 @@ store.fetchCatesByPostID = (vue, queryJSON) => {
 }
 
 
-store.fetchCates = (vue) => {
-  return vue.$http.get(categoryAPI).then((response) => {
+store.fetchCates = () => {
+  return vue.http.get(categoryAPI).then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)

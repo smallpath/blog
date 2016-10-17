@@ -28,7 +28,7 @@ export default {
     }
   },
   mounted () {
-      store.fetchAllBlog(this).then(items=>{
+      store.fetchAllBlog().then(items=>{
             
             let result = { };
 

@@ -29,20 +29,20 @@ export default {
     methods: {
         getItems () {
             let idArr = [];
-            store.fetchTags(this).then(tags=>{
+            store.fetchTags().then(tags=>{
                 let tagID = '';
                 tags.forEach(value=>{
                     if (value.name == this.$route.params.tagName)
                         tagID = value._id;
                 });
                 
-                store.fetchPostTags(this).then(postTags=>{
+                store.fetchPostTags().then(postTags=>{
                     postTags = postTags.filter((value,index)=>{
                         return value.tagID == tagID;
                     });
 
                     postTags.forEach((value)=>{
-                        store.fetchBlogByID(this,value.postID).then(item=>{
+                        store.fetchBlogByID(value.postID).then(item=>{
                             if(item._id)
                                 this.items.push(item);
                         })

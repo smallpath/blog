@@ -1,8 +1,10 @@
 const path = require('path')
 const webpack = require('webpack')
 const MFS = require('memory-fs')
+const proxyTable = require('../config/index').dev.proxyTable;
 const clientConfig = require('./webpack.client.config')
 const serverConfig = require('./webpack.server.config')
+const proxyMiddleware = require('http-proxy-middleware')
 
 module.exports = function setupDevServer (app, onUpdate) {
   // setup on the fly compilation + hot-reload
@@ -21,6 +23,15 @@ module.exports = function setupDevServer (app, onUpdate) {
     }
   }))
   app.use(require('webpack-hot-middleware')(clientCompiler))
+
+  // proxy api requests
+  Object.keys(proxyTable).forEach(function (context) {
+    var options = proxyTable[context]
+    if (typeof options === 'string') {
+      options = { target: options }
+    }
+    app.use(proxyMiddleware(context, options))
+  })
 
   // watch and update server renderer
   const serverCompiler = webpack(serverConfig)

@@ -20,7 +20,7 @@ export default {
     }
   },
   mounted (){
-    store.fetchOptionByJSON(this, { key: 'title' }).then(result=>{
+    store.fetchOptionByJSON({ key: 'title' }).then(result=>{
       if (Array.isArray(result) && result[0]){
         this.title = result[0].value;
       }

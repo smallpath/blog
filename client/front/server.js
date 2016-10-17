@@ -49,7 +49,7 @@ function createRenderer (bundle) {
 app.use('/dist', express.static(resolve('./dist')))
 app.use(favicon(resolve('./src/assets/logo.png')))
 
-app.get('*', (req, res) => {
+let ssr = (req, res) => {
   if (!renderer) {
     return res.end('waiting for compilation... refresh in a moment.')
   }
@@ -88,7 +88,12 @@ app.get('*', (req, res) => {
     //throw err
     console.log(err);
   })
-})
+}
+
+
+app.get('/', ssr)
+
+app.get('/post/?path', ssr)
 
 const port = process.env.PORT || 8080
 app.listen(port, () => {

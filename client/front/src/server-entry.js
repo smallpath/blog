@@ -18,22 +18,22 @@ export default context => {
   // A preFetch hook dispatches a store action and returns a Promise,
   // which is resolved when the action is complete and store state has been
   // updated.
-  return new Promise((resolve, reject)=>{
-      resolve(app);
-  });
-//   return Promise.all(router.getMatchedComponents().map(component => {
-//     if (component.preFetch) {
-//       return component.preFetch(store)
-//     }
-//   })).then(() => {
-//     isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)
-//     // After all preFetch hooks are resolved, our store is now
-//     // filled with the state needed to render the app.
-//     // Expose the state on the render context, and let the request handler
-//     // inline the state in the HTML response. This allows the client-side
-//     // store to pick-up the server-side state without having to duplicate
-//     // the initial data fetching on the client.
-//     // context.initialState = store.state
-//     return app
-//   })
+  // return new Promise((resolve, reject)=>{
+  //     resolve(app);
+  // });
+  return Promise.all(router.getMatchedComponents().map(function (component) {
+    if (component.preFetch) {
+      return component.preFetch(store)
+    }
+  })).then(() => {
+    isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)
+    // After all preFetch hooks are resolved, our store is now
+    // filled with the state needed to render the app.
+    // Expose the state on the render context, and let the request handler
+    // inline the state in the HTML response. This allows the client-side
+    // store to pick-up the server-side state without having to duplicate
+    // the initial data fetching on the client.
+    // context.initialState = store.state
+    return app
+  })
 }
