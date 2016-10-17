@@ -6,7 +6,7 @@ import VueResource from 'vue-resource'
 vue.use(VueResource)
 // vue.http.options.emulateJSON = true;
 
-const host = typeof location === 'undefined' ? 'localhost:8080' : '';
+const host = typeof location === 'undefined' ? 'http://localhost:8080' : '';
 
 const blogAPI = `${host}/proxyPrefix/api/post`;
 
@@ -19,13 +19,6 @@ const postTagAPI = `${host}/proxyPrefix/api/postTag`;
 const postCateAPI = `${host}/proxyPrefix/api/postCategory`;
 
 const aboutAPI = `${host}/proxyPrefix/api/post?title=关于`
-
-console.log('begin')
-
-vue.http.get(aboutAPI).then(response=>{
-  console.log(response)
-  console.log('end')
-})
 
 const store = new EventEmitter()
 
@@ -82,19 +75,11 @@ store.fetchBlogCount = (queryJSON, page = 0 ) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
   let temp = vue.resource(blogAPI+'/{?keys,values,count}')
-  console.log(temp.get({
-    keys ,
-      values,
-      count: 1,
-  }).then(()=>{
-    console.log('response ok test')
-  }))
   return vue.resource(blogAPI+'/{?keys,values,count}').get({
       keys ,
       values,
       count: 1,
   }).then((response) => {
-    console.log('response ok')
     let totalPage = Math.ceil(parseInt(response.body)/perPage);
     return totalPage;
   }, (err) => {
