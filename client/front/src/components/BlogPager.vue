@@ -12,12 +12,16 @@
 /* eslint-disable */
 import store from '../store/index'
 
+let items = [] ,
+    page=  1,
+    totalPage= 1;
+
 export default {
     data () {
         return {
-            items: [] ,
-            page: 1,
-            totalPage: 1,
+            items ,
+            page,
+            totalPage,
         }
     },
     beforeRouteEnter (to, from, next) {
@@ -26,8 +30,30 @@ export default {
         })
     },
     preFetch (state) {
-        //Object.keys(this).map((value)=>console.log(value))
-        return store.fetchBlogCount({ type: 0 }).then(totalPage=>this.totalPage=totalPage);
+        let fetchDataPromise = new Promise((resolve)=>{
+            let query;
+            try{
+              query = this.$route.query;
+            }catch(err){
+                query = { page: 1 };
+            }
+            let page = (typeof query.page !== 'undefined') ? parseInt(query.page) : 1; 
+            if (page <0 ){
+                page = 1;
+            }
+            console.log(this.data);
+            this.data.page = page; 
+
+            store.fetchBlogByPage({ type: 0 } , page -1 ).then(fetchedItems=>{
+                items= fetchedItems;
+                resolve(items);
+            });
+        })
+        let arr = [
+            store.fetchBlogCount({ type: 0 }).then(fetchedTotalPage=>totalPage=fetchedTotalPage),
+            fetchDataPromise,
+        ];
+        return Promise.all(arr);
     },
     watch: {
     '$route': 'fetchData'
@@ -40,14 +66,11 @@ export default {
                 page = 1;
             }
 
+            this.page = page; 
+
             store.fetchBlogByPage({ type: 0 } , page -1 ).then(items=>{
                 this.items=items;
-                // if (oldVal.query.name && oldVal.query.name!= 'post' ){
-
-                // }
             });
-
-            this.page = page; 
         }
     },
     mounted () {
