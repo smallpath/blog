@@ -26,7 +26,6 @@ export default {
         })
     },
     preFetch (state) {
-        console.log('prefetch in BlogPager')
         //Object.keys(this).map((value)=>console.log(value))
         return store.fetchBlogCount({ type: 0 }).then(totalPage=>this.totalPage=totalPage);
     },
