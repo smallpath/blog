@@ -25,6 +25,11 @@ export default {
             vm.fetchData();
         })
     },
+    preFetch (state) {
+        console.log('prefetch in BlogPager')
+        //Object.keys(this).map((value)=>console.log(value))
+        return store.fetchBlogCount({ type: 0 }).then(totalPage=>this.totalPage=totalPage);
+    },
     watch: {
     '$route': 'fetchData'
     },
@@ -36,7 +41,7 @@ export default {
                 page = 1;
             }
 
-            store.fetchBlogByPage(this, { type: 0 } , page -1 ).then(items=>{
+            store.fetchBlogByPage({ type: 0 } , page -1 ).then(items=>{
                 this.items=items;
                 // if (oldVal.query.name && oldVal.query.name!= 'post' ){
 
@@ -47,7 +52,7 @@ export default {
         }
     },
     mounted () {
-        store.fetchBlogCount(this, { type: 0 }).then(totalPage=>this.totalPage=totalPage);
+        store.fetchBlogCount({ type: 0 }).then(totalPage=>this.totalPage=totalPage);
     }
 
 }

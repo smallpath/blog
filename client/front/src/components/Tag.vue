@@ -26,8 +26,8 @@ export default {
   },
   mounted () {
     //   let 
-      store.fetchTags(this).then(items=>{
-          store.fetchPostTags(this).then(postTags=>{
+      store.fetchTags().then(items=>{
+          store.fetchPostTags().then(postTags=>{
               postTags.forEach(value=>{
                   let tagID = value.tagID;
                   let targetIndex = 0;
