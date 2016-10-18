@@ -10,18 +10,21 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
 - [ ] 前台单页
   - [x] 开启H5模式
   - [x] disqus评论
+  - [x] vue 1.0 => vue 2.0
+  - [ ] server side rendering （开发中）
   - [ ] 侧边栏图片
 - [ ] 后台管理单页
   - [x] 添加用以升级的模型及接口
+  - [ ] vue 1.0 => vue 2.0
+  - [ ] 使用element ui
+  - [ ] 支持schema的增删改查
   - [ ] 七牛云图片上传
   - [ ] 文章toc
   - [ ] 隐私文章分类 
 - [x] 部署文档
 - [x] API文档
-- [x] vue 1.0 => vue 2.0
-- [x] vue-router 1.0 => vue-router 2.0
 - [ ] koa2 unstable => koa2 stable 
-- [ ] server side rendering
+
 
 # 构建与部署
 
@@ -48,6 +51,8 @@ pm2 start entry.js
 ```
 ## client/front
 博客的前台单页
+
+目前正在开发前台单页的ssr，暂时无法使用最新提交构建，如需部署此单页，请使用这个[commit](https://github.com/Smallpath/Blog/tree/43ec05c6192838d2fe2d96add185ad77d6882db4)的文件
 
 ```
 npm install
