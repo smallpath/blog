@@ -5,6 +5,7 @@ const fs = require('fs')
 const path = require('path')
 const resolve = file => path.resolve(__dirname, file)
 const express = require('express')
+const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
 const serialize = require('serialize-javascript')
 
@@ -49,13 +50,19 @@ function createRenderer (bundle) {
 app.use('/dist', express.static(resolve('./dist')))
 app.use(favicon(resolve('./src/assets/logo.png')))
 
+app.use(bodyParser.json())
+
 let ssr = (req, res) => {
   if (!renderer) {
     return res.end('waiting for compilation... refresh in a moment.')
   }
 
   var s = Date.now()
-  const context = { url: req.url }
+  const context = { 
+    path: req.path,
+    query: req.query,
+    params: req.params,
+  }
   const renderStream = renderer.renderToStream(context)
   let firstChunk = true
 
@@ -65,23 +72,22 @@ let ssr = (req, res) => {
     if (firstChunk) {
       // embed initial store state
       if (context.initialState) {
-          console.log('')
-        // res.write(
-        //   `<script>window.__INITIAL_STATE__=${
-        //     serialize(context.initialState, { isJSON: true })
-        //   }</script>`
-        // )
+        res.write(
+          `<script>window.__INITIAL_STATE__=${
+            serialize(context.initialState, { isJSON: true })
+          }</script>`
+        )
       }
       firstChunk = false
     }
 
-    console.log('---------------')
     res.write(chunk)
   })
 
   renderStream.on('end', () => {
     res.end(html.tail)
     console.log(`whole request: ${Date.now() - s}ms`)
+    console.log('---------------')
   })
 
   renderStream.on('error', err => {

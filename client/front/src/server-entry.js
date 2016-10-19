@@ -10,7 +10,7 @@ const isDev = process.env.NODE_ENV !== 'production'
 // return a Promise that resolves to the app instance.
 export default context => {
   // set router's location
-  router.push(context.url)
+  router.push(context.path)
 
   const s = isDev && Date.now()
 
@@ -23,7 +23,7 @@ export default context => {
   // });
   return Promise.all(router.getMatchedComponents().map(function (component) {
     if (component.preFetch) {
-      return component.preFetch(store)
+      return component.preFetch(store,context)
     }
   })).then((arr) => {
     isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)
@@ -33,7 +33,7 @@ export default context => {
     // inline the state in the HTML response. This allows the client-side
     // store to pick-up the server-side state without having to duplicate
     // the initial data fetching on the client.
-    // context.initialState = store.state
+    context.initialState = store.state
     return app
   })
 }

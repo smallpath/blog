@@ -10,47 +10,48 @@
 
 <script>
 /* eslint-disable */
-import store from '../store/index'
-
-let items = [] ,
-    page=  1,
-    totalPage= 1;
+import store from '../store/api'
 
 export default {
     data () {
+        const isInitialRender = !this.$root._isMounted
         return {
-            items ,
-            page,
-            totalPage,
+            items: isInitialRender ? this.$store.getters.items: [],
+            page: 1,
+            totalPage: 1,
         }
     },
-    beforeRouteEnter (to, from, next) {
+    /*beforeRouteEnter (to, from, next) {
         next(vm => {
             vm.fetchData();
         })
-    },
-    preFetch (state) {
+    },*/
+    preFetch (serverStore, { path, query, params}) {
         let fetchDataPromise = new Promise((resolve)=>{
-            let query;
-            try{
-              query = this.$route.query;
-            }catch(err){
-                query = { page: 1 };
+            if (path != '/'){
+                return resolve()
             }
+
+            console.log(path, query, params)
+
             let page = (typeof query.page !== 'undefined') ? parseInt(query.page) : 1; 
-            if (page <0 ){
+            if (page < 0 ){
                 page = 1;
             }
-            console.log(this.data);
-            this.data.page = page; 
 
-            store.fetchBlogByPage({ type: 0 } , page -1 ).then(fetchedItems=>{
-                items= fetchedItems;
+            this.data.page = page; 
+            serverStore.dispatch('FETCH_ITEMS',{
+                queryJSON: { type: 0 },
+                page: page-1
+            }).then(()=>{
+                resolve(page)
+            })
+            /*store.fetchBlogByPage({ type: 0 } , page -1 ).then(fetchedItems=>{
                 resolve(items);
-            });
+            });*/
         })
         let arr = [
-            store.fetchBlogCount({ type: 0 }).then(fetchedTotalPage=>totalPage=fetchedTotalPage),
+            //store.fetchBlogCount({ type: 0 }).then(fetchedTotalPage=>totalPage=fetchedTotalPage),
             fetchDataPromise,
         ];
         return Promise.all(arr);
@@ -68,9 +69,18 @@ export default {
 
             this.page = page; 
 
-            store.fetchBlogByPage({ type: 0 } , page -1 ).then(items=>{
-                this.items=items;
-            });
+            this.$store.dispatch('FETCH_ITEMS',{
+                queryJSON: { type: 0 },
+                page: page-1
+            }).then(()=>{
+
+            })
+
+            console.log('fetchData', page)
+
+            //store.fetchBlogByPage({ type: 0 } , page -1 ).then(items=>{
+            //    this.items=items;
+            //});
         }
     },
     mounted () {
