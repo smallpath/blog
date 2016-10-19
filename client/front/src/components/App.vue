@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="app">
         <sidebar></sidebar>
         <my-header></my-header>
         <keep-alive>
@@ -13,7 +13,9 @@
 /* eslint-disable */
 
 export default {
+  mounted (){
 
+  }
 }
 
 </script>

@@ -1,7 +1,9 @@
 /* eslint-disable */
 import Vue from 'vue'
-import VueRouter from "vue-router";
+import VueRouter from "vue-router"
 import VueResource from 'vue-resource'
+import { sync } from 'vuex-router-sync'
+import store from './store/index'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -72,11 +74,17 @@ let router = new VueRouter({
     ],
 })
 
+sync(store, router)
+
 const app = new Vue({
     router,
-    render: h => h(App)
+    store,
+    ...App,
+    // render: h => h(App)
 })
+
+
 
 // Object.keys(app).map(value=>console.log(value))
 
-export { app, router }
+export { app, router, store }
