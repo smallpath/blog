@@ -97,9 +97,7 @@ let ssr = (req, res) => {
 }
 
 
-app.get('/', ssr)
-
-app.get('/post/?path', ssr)
+app.get('*', ssr)
 
 const port = process.env.PORT || 8080
 app.listen(port, () => {

@@ -79,9 +79,9 @@ export default {
     methods: {
         getPost (val, oldVal) {
             let pathName = val.params.pathName;
-            store.fetchPostByPathName(this, pathName).then(article=>{
+            store.fetchPostByPathName(pathName).then(article=>{
                     this.article= article;
-                    store.fetchOption(this).then(result=>{
+                    store.fetchOption().then(result=>{
                         let obj = {};
                         result.forEach(value=>{
                             obj[value.key] = value;
@@ -100,17 +100,17 @@ export default {
                         }
                     })
 
-                    store.fetchPrevPostByPathName(this,article._id).then(post=>{
+                    store.fetchPrevPostByPathName(rticle._id).then(post=>{
                         if (post.type == '0')
                             this.prev = post;
                     });
-                    store.fetchNextPostByPathName(this,article._id).then(post=>{
+                    store.fetchNextPostByPathName(article._id).then(post=>{
                         if (post.type == '0')
                             this.next = post;
                     });
 
-                    store.fetchTagsByPostID(this,{ postID: article._id }).then(postTags=>{
-                        store.fetchTags(this).then(tags=>{
+                    store.fetchTagsByPostID({ postID: article._id }).then(postTags=>{
+                        store.fetchTags().then(tags=>{
                             let obj = {};
                             this.tags = [];
                             tags.forEach(value=>{
@@ -123,8 +123,8 @@ export default {
                         })
 
                     });
-                    store.fetchCatesByPostID(this,{ postID: article._id }).then(postCates=>{
-                        store.fetchCates(this).then(cates=>{
+                    store.fetchCatesByPostID({ postID: article._id }).then(postCates=>{
+                        store.fetchCates().then(cates=>{
                             
                             let obj = {};
                             this.cates = [];
