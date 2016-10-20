@@ -1,7 +1,11 @@
 <template>
     <div id="app">
-        <sidebar></sidebar>
-        <my-header></my-header>
+        <keep-alive>
+            <router-view name="sidebar"></router-view>
+        </keep-alive>
+        <keep-alive>
+            <router-view name="header"></router-view>
+        </keep-alive>
         <keep-alive>
             <router-view></router-view>
         </keep-alive>

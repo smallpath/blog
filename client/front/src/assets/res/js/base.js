@@ -186,28 +186,38 @@ if (typeof window !== 'undefined'){
         eventSecond = 'touchend';
       }
 
-      this.$btn_side.addEventListener( eventSecond ,function(){
+      try{
 
-        if( _this.$body.className.indexOf( body_class_name ) > -1 ){
+        this.$btn_side.addEventListener( eventSecond ,function(){
+
+          if( _this.$body.className.indexOf( body_class_name ) > -1 ){
+            _this.$body.className = _this.$body.className.replace( body_class_name , '');
+            _this.$sidebar_mask.style.display = 'none';
+          }else{
+            _this.$body.className += (' ' + body_class_name);
+            _this.$sidebar_mask.style.display = 'block';
+          }
+
+        },false);
+
+      }catch(err){}
+
+      try{
+
+        this.$sidebar_mask.addEventListener( eventFirst , function( e ){
           _this.$body.className = _this.$body.className.replace( body_class_name , '');
           _this.$sidebar_mask.style.display = 'none';
-        }else{
-          _this.$body.className += (' ' + body_class_name);
-          _this.$sidebar_mask.style.display = 'block';
-        }
+          e.preventDefault();
+        },false);
 
-      },false);
-
-      this.$sidebar_mask.addEventListener( eventFirst , function( e ){
-        _this.$body.className = _this.$body.className.replace( body_class_name , '');
-        _this.$sidebar_mask.style.display = 'none';
-        e.preventDefault();
-      },false);
+      }catch(err){}
 
 
       window.addEventListener('resize',function(){
+        try{
         _this.$body.className = _this.$body.className.replace( body_class_name , '');
         _this.$sidebar_mask.style.display = 'none';
+        }catch(err){}
       },false);
     }
 
