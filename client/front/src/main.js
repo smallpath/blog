@@ -4,6 +4,7 @@ import VueRouter from "vue-router"
 import VueResource from 'vue-resource'
 import { sync } from 'vuex-router-sync'
 import store from './store/index'
+import './assets/res/js/base'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
