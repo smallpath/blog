@@ -49,22 +49,14 @@ export default {
     }
   },
   preFetch (store, { path, params, query }){
-      return store.dispatch('FETCH_OPTIONS').then(()=>{
-          /*console.log(this.siteInfo)
-          console.log(typeof this.siteInfo['title'])
-                if(this.siteInfo['title'] 
-                    && typeof document !== 'undefined'){
-                    document.title = this.siteInfo['title'].value;
-                }*/
-        });
+      return store.dispatch('FETCH_OPTIONS')
   },
-  mounted (){
+  beforeMount (){
     if (typeof this.siteInfo.title === 'undefined'){
         this.$store.dispatch('FETCH_OPTIONS').then(()=>{
-                if(this.siteInfo['title'] 
-                    && typeof document !== 'undefined'){
-                    document.title = this.siteInfo['title'].value;
-                }
+            if(this.siteInfo['title'] && typeof document !== 'undefined'){
+                document.title = this.siteInfo['title'].value;
+            }
         });
     }else{
         document.title = this.siteInfo['title'].value || 'Blog';

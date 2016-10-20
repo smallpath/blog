@@ -25,7 +25,6 @@ export default {
     }
   },
   mounted () {
-    //   let 
       store.fetchTags().then(items=>{
           store.fetchPostTags().then(postTags=>{
               postTags.forEach(value=>{

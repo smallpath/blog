@@ -17,20 +17,9 @@ export default {
   data () {
     const isInitialRender = !this.$root._isMounted
     return {
-        //siteInfo: isInitialRender ? this.$store.getters.siteInfo : {}
         siteInfo: this.$store.getters.siteInfo
     }
   },
-  mounted (){
-    /*store.fetchOption().then(result=>{
-      let obj = {};
-      result.forEach(value=>{
-          obj[value.key] = value;
-      });
-      this.siteInfo = obj;
-
-    })*/
-  }
 
 }
 </script>
