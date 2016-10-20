@@ -8,6 +8,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     itemsPerPage: 10,
+    totalPage: -1,
     items: [],
     achieves: {},
     blog: {},
@@ -44,15 +45,24 @@ const store = new Vuex.Store({
             }
         });
 
-        console.log('what the fuck')
-
         return Promise.all([first, second]);
       });
     },
 
     FETCH_ITEMS: ({ commit, state }, { queryJSON, page }) => {
       // only fetch items that we don't already have.
-        return api.fetchBlogByPage(queryJSON, page).then(items => commit('SET_ITEMS', { items }))
+        return api.fetchBlogByPage(queryJSON, page).then(items => {
+           commit('SET_ITEMS', { items });
+
+           if (state.totalPage === -1){
+            return api.fetchBlogCount({ type: 0 }).then(totalPage=>{
+              commit('SET_PAGES', { totalPage })
+            })
+           } else {
+             return '';
+           }
+
+        })
     },
 
     FETCH_ACHIEVE: ({ commit, state }) => {
@@ -97,10 +107,11 @@ const store = new Vuex.Store({
 
     SET_ITEMS: (state, { items }) => {
       items.forEach((item, index) => {
-        if (item) {
           Vue.set(state.items, index, item)
-        }
       })
+    },
+    SET_PAGES: (state, { totalPage }) => {
+      Vue.set(state, 'totalPage', totalPage)
     },
 
     SET_ACHIEVE: (state, { sortedItem }) => {

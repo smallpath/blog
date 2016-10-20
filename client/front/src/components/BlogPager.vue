@@ -13,31 +13,21 @@
 import store from '../store/api'
 
 function fetchItems (serverStore, { path, query, params}) {
-    let fetchDataPromise = new Promise((resolve)=>{
-        if (path != '/'){
-            return resolve()
-        }
+    if (path != '/'){
+        return resolve()
+    }
 
-        let page = (typeof query.page !== 'undefined') ? parseInt(query.page) : 1; 
-        if (page < 0 ){
-            page = 1;
-        }
+    let page = (typeof query.page !== 'undefined') ? parseInt(query.page) : 1; 
+    if (page < 0 ){
+        page = 1;
+    }
 
-        serverStore.dispatch('FETCH_ITEMS',{
-            queryJSON: { type: 0 },
-            page: page-1
-        }).then(()=>{
-            resolve(page)
-        })
-        /*store.fetchBlogByPage({ type: 0 } , page -1 ).then(fetchedItems=>{
-            resolve(items);
-        });*/
+    return serverStore.dispatch('FETCH_ITEMS',{
+        queryJSON: { type: 0 },
+        page: page - 1
     })
-    let arr = [
-        //store.fetchBlogCount({ type: 0 }).then(fetchedTotalPage=>totalPage=fetchedTotalPage),
-        fetchDataPromise,
-    ];
-    return Promise.all(arr);
+
+
 }
 
 export default {
@@ -48,6 +38,11 @@ export default {
             items: this.$store.getters.items,
             page: 1,
             totalPage: 1,
+        }
+    },
+    computed:{
+        totalPage() {
+            return this.$store.state.totalPage;
         }
     },
     /*beforeRouteEnter (to, from, next) {
@@ -62,7 +57,7 @@ export default {
     beforeMount () {
         if (this.$root._isMounted){
             fetchItems(this.$store, this.$store.state.route)
-            store.fetchBlogCount({ type: 0 }).then(totalPage=>this.totalPage=totalPage);
+            //store.fetchBlogCount({ type: 0 }).then(totalPage=>this.totalPage=totalPage);
         }
     },
     preFetch: fetchItems,
