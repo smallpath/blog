@@ -9,6 +9,17 @@ const store = new Vuex.Store({
   state: {
     itemsPerPage: 10,
     items: [],
+    siteInfo: {
+      github_url: {
+          value: '',
+      },
+      title: {
+          value: '',
+      },
+      logo_url: {
+          value: '',
+      },
+    }
     // totalPage
   },
 
@@ -19,11 +30,16 @@ const store = new Vuex.Store({
         return api.fetchBlogByPage(queryJSON, page).then(items => commit('SET_ITEMS', { items }))
     },
 
-    FETCH_USER: ({ commit, state }, { id }) => {
-      return state.users[id]
-        ? Promise.resolve(state.users[id])
-        : fetchUser(id).then(user => commit('SET_USER', { user }))
-    }
+    FETCH_OPTIONS: ({ commit, state }) => {
+      return api.fetchOption().then(optionArr=>{
+        let obj = optionArr.reduce((prev,curr)=>{
+          prev[curr.key] = curr;
+          return prev;
+        },{});
+        commit('SET_OPTIONS', { obj });
+      });
+    },
+
   },
 
   mutations: {
@@ -36,8 +52,8 @@ const store = new Vuex.Store({
       })
     },
 
-    SET_USER: (state, { user }) => {
-      Vue.set(state.users, user.id, user)
+    SET_OPTIONS: (state, { obj }) => {
+      Vue.set(state, 'siteInfo', obj);
     }
   },
 
@@ -59,9 +75,13 @@ const store = new Vuex.Store({
     // // items that should be currently displayed.
     // // this Array may not be fully fetched.
      items (state, getters) {
-       const { items, itemsPerPage, lists } = state
+       const { items, itemsPerPage } = state
        return items;
-    }
+    },
+    siteInfo (state, getters) {
+      const { siteInfo } = state
+      return siteInfo;
+    },
   }
 })
 

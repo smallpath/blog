@@ -4,7 +4,6 @@ import VueRouter from "vue-router"
 import VueResource from 'vue-resource'
 import { sync } from 'vuex-router-sync'
 import store from './store/index'
-import './assets/res/js/base'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -45,32 +44,58 @@ let router = new VueRouter({
         {
             path: '/',
             name: 'main',
-            component: BlogPager,
+            components:{
+                default: BlogPager,
+                sidebar: Sidebar,
+                header: Header
+            } 
         },
         {
             path: '/archive',
             name: 'archive',
-            component: Archive
+            components:{
+                default: Archive,
+                sidebar: Sidebar,
+                header: Header
+            } 
+            
         },
         {
             path: '/tag',
             name: 'tag',
             component: Tag,
+            components:{
+                default: Tag,
+                sidebar: Sidebar,
+                header: Header
+            } 
         },
         {
             path: '/about',
             name: 'about',
-            component: About
+            components:{
+                default: About,
+                sidebar: Sidebar,
+                header: Header
+            } 
         },
         {
             path: '/post/:pathName',
             name: 'post',
-            component: Post
+            components:{
+                default: Post,
+                sidebar: Sidebar,
+                header: Header
+            } 
         },
         {
             path: '/tag/:tagName',
             name: 'tagPager',
-            component: TagPager
+            components:{
+                default: TagPager,
+                sidebar: Sidebar,
+                header: Header
+            } 
         },
     ],
 })

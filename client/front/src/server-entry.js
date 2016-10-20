@@ -21,7 +21,7 @@ export default context => {
   // return new Promise((resolve, reject)=>{
   //     resolve(app);
   // });
-  return Promise.all(router.getMatchedComponents().map(function (component) {
+  return Promise.all(router.getMatchedComponents().map(function (component, index) {
     if (component.preFetch) {
       return component.preFetch(store,context)
     }

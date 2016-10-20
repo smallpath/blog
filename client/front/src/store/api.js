@@ -8,6 +8,8 @@ vue.use(VueResource)
 
 const host = typeof location === 'undefined' ? 'http://localhost:8080' : '';
 
+const prefix = `${host}/proxyPrefix/api`;
+
 const blogAPI = `${host}/proxyPrefix/api/post`;
 
 const tagAPI = `${host}/proxyPrefix/api/tag`;
@@ -40,7 +42,7 @@ store.fetchPage = (queryJSON) => {
 }
 
 store.fetchOption = () => {
-  return vue.http.get(`/proxyPrefix/api/option`)
+  return vue.http.get(`${prefix}/option`)
     .then((response) => {
       return response.body;
     }, (err) => {
@@ -51,7 +53,7 @@ store.fetchOption = () => {
 store.fetchOptionByJSON = (queryJSON) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  return vue.resource(`/proxyPrefix/api/option/{?keys,values,count}`).get({
+  return vue.resource(`${prefix}/option/{?keys,values,count}`).get({
       keys ,
       values,
   }).then((response) => {
@@ -90,7 +92,6 @@ store.fetchBlogCount = (queryJSON, page = 0 ) => {
 store.fetchBlogByPage = (queryJSON, page) => {
   let keys = Object.keys(queryJSON);
   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  console.log('store.fetchBlogByPage',page)
   return vue.resource(blogAPI+'/{?keys,values,limit,skip,sort}').get({
       keys ,
       values,
@@ -106,7 +107,7 @@ store.fetchBlogByPage = (queryJSON, page) => {
 
 
 store.fetchPostByPathName = (pathName) => {
-  return vue.resource('/proxyPrefix/api/post/{?keys,values}').get({
+  return vue.resource(`${prefix}/post/{?keys,values}`).get({
     keys:['pathName'],
     values:[pathName],
   }).then((response) => {
