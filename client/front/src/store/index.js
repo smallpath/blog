@@ -9,6 +9,7 @@ const store = new Vuex.Store({
   state: {
     itemsPerPage: 10,
     items: [],
+    achieves: {},
     siteInfo: {
       github_url: {
           value: '',
@@ -28,6 +29,22 @@ const store = new Vuex.Store({
     FETCH_ITEMS: ({ commit, state }, { queryJSON, page }) => {
       // only fetch items that we don't already have.
         return api.fetchBlogByPage(queryJSON, page).then(items => commit('SET_ITEMS', { items }))
+    },
+
+    FETCH_ACHIEVE: ({ commit, state }) => {
+      // only fetch items that we don't already have.
+        return api.fetchAllBlog().then(items => { 
+          let sortedItem = items.reduce((prev,curr)=>{
+              let time = curr.createdAt.slice(0,7).replace("-","年")+"月";
+              if (typeof prev[time] == 'undefined'){
+                  prev[time] = [curr];
+              }else{
+                  prev[time].push(curr);
+              }
+              return prev;
+          },{});
+          commit('SET_ACHIEVE', { sortedItem }) 
+        })
     },
 
     FETCH_OPTIONS: ({ commit, state }) => {
@@ -52,6 +69,10 @@ const store = new Vuex.Store({
       })
     },
 
+    SET_ACHIEVE: (state, { sortedItem }) => {
+      Vue.set(state, 'achieves', sortedItem);
+    },
+
     SET_OPTIONS: (state, { obj }) => {
       Vue.set(state, 'siteInfo', obj);
     }
@@ -74,7 +95,7 @@ const store = new Vuex.Store({
 
     // // items that should be currently displayed.
     // // this Array may not be fully fetched.
-     items (state, getters) {
+    items (state, getters) {
        const { items, itemsPerPage } = state
        return items;
     },
@@ -82,6 +103,10 @@ const store = new Vuex.Store({
       const { siteInfo } = state
       return siteInfo;
     },
+    achieves (state, getters) {
+      const { achieves } = state
+      return achieves;
+    }
   }
 })
 

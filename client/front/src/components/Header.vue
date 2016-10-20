@@ -15,26 +15,21 @@ import store from '../store/api';
 
 export default {
   data () {
+    const isInitialRender = !this.$root._isMounted
     return {
-        siteInfo: {
-          logo_url: {
-            value: '',
-          },
-          title: {
-            value: '',
-          }
-        },
+        //siteInfo: isInitialRender ? this.$store.getters.siteInfo : {}
+        siteInfo: this.$store.getters.siteInfo
     }
   },
   mounted (){
-    store.fetchOption().then(result=>{
+    /*store.fetchOption().then(result=>{
       let obj = {};
       result.forEach(value=>{
           obj[value.key] = value;
       });
       this.siteInfo = obj;
 
-    })
+    })*/
   }
 
 }
