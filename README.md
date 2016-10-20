@@ -10,18 +10,23 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
 - [ ] 前台单页
   - [x] 开启H5模式
   - [x] disqus评论
-  - [x] vue 1.0 => vue 2.0
-  - [ ] server side rendering （开发中）
+  - [x] vue1.0升级至vue2.0
+  - [x] server side rendering
+  - [ ] 使用fetch替换vue-resource (进行中)
   - [ ] 侧边栏图片
 - [ ] 后台管理单页
-  - [x] 添加用以升级的模型及接口
+  - [x] 添加升级模型的管理
   - [ ] vue 1.0 => vue 2.0
   - [ ] 使用element ui
   - [ ] 支持schema的增删改查
   - [ ] 七牛云图片上传
+- [ ] RESTful服务器
   - [ ] 文章toc
-  - [ ] 隐私文章分类 
+  - [ ] 标签及分类移至文章中
+  - [ ] 七牛access_token下发及鉴权
+  - [ ] OAuth1升级至OAuth2
 - [x] 部署文档
+- [ ] server side rendering部署文档
 - [x] API文档
 - [ ] koa2 unstable => koa2 stable 
 
