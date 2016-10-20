@@ -44,7 +44,8 @@ export default {
   data () {
     const isInitialRender = !this.$root._isMounted
     return {
-        siteInfo: isInitialRender ? this.$store.getters.siteInfo : {}
+        //siteInfo: isInitialRender ? this.$store.getters.siteInfo : {}
+        siteInfo: this.$store.getters.siteInfo
     }
   },
   preFetch (store, { path, params, query }){
