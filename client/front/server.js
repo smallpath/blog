@@ -97,6 +97,11 @@ let ssr = (req, res) => {
 }
 
 
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  return next();
+});
+
 app.get('*', ssr)
 
 const port = process.env.PORT || 8080

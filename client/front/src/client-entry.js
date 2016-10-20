@@ -1,5 +1,5 @@
 /* eslint-disable */
-require('es6-promise').polyfill()
+// require('es6-promise').polyfill()
 
 import './assets/res/js/base'
 import { app, store } from './main'

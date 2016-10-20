@@ -34,7 +34,6 @@ export default {
     data () {
         const isInitialRender = !this.$root._isMounted
         return {
-            //items: isInitialRender ? this.$store.getters.items: [],
             items: this.$store.getters.items,
             page: 1,
             totalPage: 1,
@@ -45,19 +44,9 @@ export default {
             return this.$store.state.totalPage;
         }
     },
-    /*beforeRouteEnter (to, from, next) {
-        next(vm => {
-            const isMounted = vm.$root._isMounted;
-            isMounted && fetchItems(vm.$store, {
-                path: vm.$store.state.route.path,
-                query: vm.$store.state.route.query
-            });
-        })
-    },*/
     beforeMount () {
         if (this.$root._isMounted){
             fetchItems(this.$store, this.$store.state.route)
-            //store.fetchBlogCount({ type: 0 }).then(totalPage=>this.totalPage=totalPage);
         }
     },
     preFetch: fetchItems,
@@ -70,7 +59,6 @@ export default {
             if (val.name != 'main')
                 return 
 
-            console.log('fetchData')
             let query = this.$route.query;
             let page = (typeof query.page !== 'undefined') ? parseInt(query.page) : 1; 
             if (page <0 ){
@@ -82,8 +70,6 @@ export default {
             this.$store.dispatch('FETCH_ITEMS',{
                 queryJSON: { type: 0 },
                 page: page-1
-            }).then(()=>{
-
             })
 
         }
