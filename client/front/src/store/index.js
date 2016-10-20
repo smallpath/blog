@@ -10,6 +10,9 @@ const store = new Vuex.Store({
     itemsPerPage: 10,
     items: [],
     achieves: {},
+    blog: {},
+    prev: {},
+    next: {},
     siteInfo: {
       github_url: {
           value: '',
@@ -21,10 +24,31 @@ const store = new Vuex.Store({
           value: '',
       },
     }
-    // totalPage
   },
 
   actions: {
+
+    FETCH_BLOG: ({ commit, state}, { path }) => {
+      return api.fetchPostByPathName(path).then(blog=>{
+
+        commit('SET_BLOG', { blog })
+
+        let first = api.fetchPrevPostByPathName(blog._id).then(post=>{
+            if (post.type == '0'){
+              commit('SET_PREV', { post });
+            }
+        });
+        let second = api.fetchNextPostByPathName(blog._id).then(post=>{
+            if (post.type == '0'){
+              commit('SET_NEXT', { post });
+            }
+        });
+
+        console.log('what the fuck')
+
+        return Promise.all([first, second]);
+      });
+    },
 
     FETCH_ITEMS: ({ commit, state }, { queryJSON, page }) => {
       // only fetch items that we don't already have.
@@ -60,6 +84,16 @@ const store = new Vuex.Store({
   },
 
   mutations: {
+
+    SET_BLOG: (state, { blog }) => {
+      Vue.set(state, 'blog', blog)
+    },
+    SET_PREV: (state, { post }) => {
+      Vue.set(state, 'prev', post)
+    },
+    SET_NEXT: (state, { post }) => {
+      Vue.set(state, 'next', post)
+    },
 
     SET_ITEMS: (state, { items }) => {
       items.forEach((item, index) => {

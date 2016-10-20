@@ -108,8 +108,8 @@ store.fetchBlogByPage = (queryJSON, page) => {
 
 store.fetchPostByPathName = (pathName) => {
   return vue.resource(`${prefix}/post/{?keys,values}`).get({
-    keys:['pathName'],
-    values:[pathName],
+    keys:'pathName',
+    values:pathName,
   }).then((response) => {
     return response.body[0];
   }, (err) => {

@@ -40,7 +40,7 @@
                 <router-link v-if="typeof next.pathName !== 'undefined'" 
                     :to="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo;</router-link> 
             </nav>
-                <div id="comments" :data-type="commentType"
+                <div v-if="commentName !== ''" id="comments" :data-type="commentType"
                     :data-thread-key="article.pathName" :data-url="siteURL + '/post/' + article.pathName">
                     <h1 class="title">Comments</h1>
                     <div id="disqus_thread" :data-url="siteURL +'/post/' + article.pathName" :data-identifier="article.pathName"
@@ -48,105 +48,96 @@
                 </div>
             </div>
         </div>
+        <my-footer></my-footer>
     </div>
 </template>
 
 <script>
 /* eslint-disable */
-import store from '../store/api'
+import api from '../store/api'
+
+function fetchBlog(store, { path, params, query}){
+        path = path.replace(/^\/post\//g,"");
+        return store.dispatch('FETCH_BLOG', { path });
+
+        /*store.fetchTagsByPostID({ postID: article._id }).then(postTags=>{
+            store.fetchTags().then(tags=>{
+                let obj = tags.reduce((prev, curr)=>{
+                    prev[curr._id] = curr;
+                    return prev;
+                },{});
+                this.tags = [];
+
+                postTags.forEach(value=>{
+                    this.tags.push(obj[value.tagID]);
+                })
+            })
+
+        });
+        store.fetchCatesByPostID({ postID: article._id }).then(postCates=>{
+            store.fetchCates().then(cates=>{
+                let obj = cates.reduce((prev, curr)=>{
+                    prev[curr._id] = curr;
+                    return prev;
+                },{});
+                this.cates = [];
+                
+                postCates.forEach(value=>{
+                    this.cates.push(obj[value.categoryID]);
+                })
+
+                
+            })
+
+        });*/
+
+}
 
 export default {
     data () {
         return {
-            article: {} ,
             cates: [],
             tags: [],
-            prev: {},
-            next: {},
-            commentType: '',
-            commentName: '',
-            siteURL: '',
         }
     },
-    beforeRouteEnter (to, from, next) {
-        next(vm => {
-            vm.getPost(to);
-        })
+    computed: {
+        article() {
+            return this.$store.state.blog;
+        },
+        prev() {
+            return this.$store.state.prev;
+        },
+        next() {
+            return this.$store.state.next;
+        },
+        commentType() {
+            return this.$store.state.siteInfo.comment.value.type || 'disqus';
+        },
+        commentName() {
+            return this.$store.state.siteInfo.comment.value.name || '';
+        },
+        siteURL() {
+            return this.$store.state.siteInfo.site_url.value || 'localhost';
+        }
+    },
+    preFetch: fetchBlog,
+    beforeMount () {
+        if (this.$root._isMounted){
+            fetchBlog(this.$store, this.$store.state.route)
+        }
     },
     watch: {
         '$route': 'getPost'
     },
     methods: {
         getPost (val, oldVal) {
-            let pathName = val.params.pathName;
-            store.fetchPostByPathName(pathName).then(article=>{
-                    this.article= article;
-                    store.fetchOption().then(result=>{
-                        let obj = {};
-                        result.forEach(value=>{
-                            obj[value.key] = value;
-                        });
-                        this.siteInfo = obj;
+            if (val.name !== 'post')
+                return;
 
-                        if(this.siteInfo['site_url']){
-                            this.siteURL = this.siteInfo['site_url'].value;
-                        }
-
-                        if(this.siteInfo['comment']){
-                            let value = JSON.parse(this.siteInfo['comment'].value);
-                            let type = value.type, name = value.name;
-                            this.commentType = type;
-                            this.commentName = name;
-                        }
-                    })
-
-                    store.fetchPrevPostByPathName(rticle._id).then(post=>{
-                        if (post.type == '0')
-                            this.prev = post;
-                    });
-                    store.fetchNextPostByPathName(article._id).then(post=>{
-                        if (post.type == '0')
-                            this.next = post;
-                    });
-
-                    store.fetchTagsByPostID({ postID: article._id }).then(postTags=>{
-                        store.fetchTags().then(tags=>{
-                            let obj = {};
-                            this.tags = [];
-                            tags.forEach(value=>{
-                                obj[value._id] = value;
-                            });
-
-                            postTags.forEach(value=>{
-                                this.tags.push(obj[value.tagID]);
-                            })
-                        })
-
-                    });
-                    store.fetchCatesByPostID({ postID: article._id }).then(postCates=>{
-                        store.fetchCates().then(cates=>{
-                            
-                            let obj = {};
-                            this.cates = [];
-                            cates.forEach(value=>{
-                                obj[value._id] = value;
-                            });
-                            
-                            postCates.forEach(value=>{
-                                this.cates.push(obj[value.categoryID]);
-                            })
-
-                            
-                        })
-
-                    });
-
-            });
+            let path = val.params.pathName;
+            this.$store.dispatch('FETCH_BLOG', { path })
         }
     },
-    mounted () {
-
-    }
 
 }
 </script>
