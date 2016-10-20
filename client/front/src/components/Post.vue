@@ -22,7 +22,9 @@
                             <code class="notebook">{{cate.name}}</code>
                         </a> 」
                     </template>
+                    <template v-if="cates.length && tags.length">
                      下 ，
+                    </template>
                     <template v-if="tags.length != 0">
                         并被添加「
                         <router-link v-for="tag in tags" 
