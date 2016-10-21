@@ -6,7 +6,6 @@ import { sync } from 'vuex-router-sync'
 import store from './store/index'
 
 Vue.use(VueRouter)
-Vue.use(VueResource)
 
 import About from './components/About'
 import Header from './components/Header'
