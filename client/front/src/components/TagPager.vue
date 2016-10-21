@@ -29,7 +29,7 @@ export default {
     methods: {
         getItems () {
             let idArr = [];
-            store.fetchTags().then(tags=>{
+            /*store.fetchTags().then(tags=>{
                 let tagID = '';
                 tags.forEach(value=>{
                     if (value.name == this.$route.params.tagName)
@@ -48,8 +48,9 @@ export default {
                         })
                     });
                 });
-            // store.fetchBlogByPage(this,{ type: 0 } ,this.page -1 ).then(items=>{this.items=items;/*window.scrollTo(0, 0)*/})
-            });
+              store.fetchBlogByPage(this,{ type: 0 } ,this.page -1 ).then(items=>{this.items=items;/*window.scrollTo(0, 0)
+              })
+            });*/
         }
     },
     mounted () {

@@ -58,9 +58,9 @@
 /* eslint-disable */
 import api from '../store/api'
 
-function fetchBlog(store, { path, params, query}){
-        path = path.replace(/^\/post\//g,"");
-        return store.dispatch('FETCH_BLOG', { path });
+function fetchBlog(store, { path:pathName, params, query}){
+        pathName = pathName.replace(/^\/post\//g,"");
+        return store.dispatch('FETCH_BLOG', { conditions: { pathName } });
 
         /*store.fetchTagsByPostID({ postID: article._id }).then(postTags=>{
             store.fetchTags().then(tags=>{
@@ -136,8 +136,7 @@ export default {
             if (val.name !== 'post')
                 return;
 
-            let path = val.params.pathName;
-            this.$store.dispatch('FETCH_BLOG', { path })
+            fetchBlog(this.$store, this.$store.state.route)
         }
     },
 

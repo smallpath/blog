@@ -22,11 +22,14 @@ function fetchItems (serverStore, { path, query, params}) {
         page = 1;
     }
 
-    return serverStore.dispatch('FETCH_ITEMS',
-        { type: 0 },
-        { limit: 10 },
-        { skip: (page-1)*10 },
-        { sort: 1 }
+    return serverStore.dispatch('FETCH_ITEMS',{
+            conditions: { 
+                type: 0 
+            },
+            limit: 10,
+            skip: (page - 1) * 10,
+            sort: 1,
+        }
     )
 
 

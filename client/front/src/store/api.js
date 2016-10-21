@@ -25,6 +25,18 @@ const perPage = 10;
 
 export default store
 
+function isObject(obj){
+  return Object.prototype.toString.call(obj).slice(8, -1) === 'Object';
+}
+
+function convertObjectToArray(args){
+  return isObject(args) ? Object.keys(args).map((value,index)=>{
+      let temp = {};
+      temp[value] = args[value];
+      return temp;
+  }) : [];
+}
+
 store.fetchOption = () => {
   return request.get(`${prefix}/option`)
     .then((response) => {
@@ -34,92 +46,21 @@ store.fetchOption = () => {
     })
 }
 
-store.fetchOptionByJSON = (queryJSON) => {
-  let keys = Object.keys(queryJSON);
-  let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  return vue.resource(`${prefix}/option/{?keys,values,count}`).get({
-      keys ,
-      values,
-  }).then((response) => {
-      return response.body;
-    }, (err) => {
-      console.log(err)
-    })
-}
-
-store.fetchBlogByID = (id, page = 0 ) => {
-  return vue.resource(blogAPI+'/{id}').get({
-      id
-  }).then((response) => {
+store.fetchPostByID = (id, conditions, args) => {
+  args = convertObjectToArray(args);
+  return args.reduce((prev, curr)=>{
+    prev = prev.query(curr);
+    return prev;
+  }, request.get(`${blogAPI}/${id}?conditions=${JSON.stringify(conditions)}`))
+  .then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)
   })
 }
 
-store.fetchBlogCount = (queryJSON, page = 0 ) => {
-  let keys = Object.keys(queryJSON);
-  let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  let temp = vue.resource(blogAPI+'/{?keys,values,count}')
-  return vue.resource(blogAPI+'/{?keys,values,count}').get({
-      keys ,
-      values,
-      count: 1,
-  }).then((response) => {
-    let totalPage = Math.ceil(parseInt(response.body)/perPage);
-    return totalPage;
-  }, (err) => {
-    console.log(err)
-  })
-}
- 
-store.fetchBlogByPage = (queryJSON, page) => {
-  let keys = Object.keys(queryJSON);
-  let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  return vue.resource(blogAPI+'/{?keys,values,limit,skip,sort}').get({
-      keys ,
-      values,
-      limit: perPage,
-      skip: page*perPage,
-      sort: "1"
-  }).then((response) => {
-    return response.body;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-
-store.fetchPostByPathName = (pathName) => {
-  return vue.resource(`${prefix}/post/{?keys,values}`).get({
-    keys:'pathName',
-    values:pathName,
-  }).then((response) => {
-    return response.body[0];
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.fetchPrevPostByPathName = (id) => {
-  let api = blogAPI + '/' + id + '?prev=1';
-  return vue.http.get(api).then((response) => {
-    return response.body;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.fetchNextPostByPathName = (id) => {
-  let api = blogAPI + '/' + id + '?next=1';
-  return vue.http.get(api).then((response) => {
-    return response.body;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.fetchPost = (conditions, ...args) => {
+store.fetchPost = (conditions, args) =>{
+  args = convertObjectToArray(args);
   return args.reduce((prev, curr)=>{
     prev = prev.query(curr);
     return prev;
@@ -132,20 +73,7 @@ store.fetchPost = (conditions, ...args) => {
 }
 
 store.fetchTags = () => {
-  return vue.http.get(tagAPI).then((response) => {
-    return response.body;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.fetchTagsByPostID = (queryJSON) => {
-  let keys = Object.keys(queryJSON);
-  let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  return vue.resource(postTagAPI+'{?keys,values}').get({
-      keys,
-      values,
-  }).then((response) => {
+  return request.get(tagAPI).then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)
@@ -154,35 +82,50 @@ store.fetchTagsByPostID = (queryJSON) => {
 
 
 store.fetchPostTags = () => {
-  return vue.http.get(postTagAPI).then((response) => {
+  return request.get(postTagAPI).then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)
   })
 }
 
+// store.fetchTagsByPostID = (queryJSON) => {
+//   let keys = Object.keys(queryJSON);
+//   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
+//   return vue.resource(postTagAPI+'{?keys,values}').get({
+//       keys,
+//       values,
+//   }).then((response) => {
+//     return response.body;
+//   }, (err) => {
+//     console.log(err)
+//   })
+// }
 
-store.fetchCatesByPostID = (queryJSON) => {
-  let keys = Object.keys(queryJSON);
-  let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  return vue.resource(postCateAPI+'{?keys,values}').get({
-      keys,
-      values,
-  }).then((response) => {
-    return response.body;
-  }, (err) => {
-    console.log(err)
-  })
-}
 
 
-store.fetchCates = () => {
-  return vue.http.get(categoryAPI).then((response) => {
-    return response.body;
-  }, (err) => {
-    console.log(err)
-  })
-}
+
+// store.fetchCatesByPostID = (queryJSON) => {
+//   let keys = Object.keys(queryJSON);
+//   let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
+//   return vue.resource(postCateAPI+'{?keys,values}').get({
+//       keys,
+//       values,
+//   }).then((response) => {
+//     return response.body;
+//   }, (err) => {
+//     console.log(err)
+//   })
+// }
+
+
+// store.fetchCates = () => {
+//   return vue.http.get(categoryAPI).then((response) => {
+//     return response.body;
+//   }, (err) => {
+//     console.log(err)
+//   })
+// }
 
 
 
