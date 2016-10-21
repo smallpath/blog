@@ -1,10 +1,7 @@
 /* eslint-disable */
 import { EventEmitter } from 'events'
 
-import vue from 'vue';
-import VueResource from 'vue-resource'
-vue.use(VueResource)
-// vue.http.options.emulateJSON = true;
+import request from 'superagent'
 
 const host = typeof location === 'undefined' ? 'http://localhost:8080' : '';
 
@@ -28,21 +25,8 @@ const perPage = 10;
 
 export default store
 
-store.fetchPage = (queryJSON) => {
-  let keys = Object.keys(queryJSON);
-  let values = Object.keys(queryJSON).map(value=>queryJSON[value]);
-  return vue.resource(blogAPI+'{?keys,values}').get({
-      keys,
-      values,
-  }).then((response) => {
-    return response.body;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
 store.fetchOption = () => {
-  return vue.http.get(`${prefix}/option`)
+  return request.get(`${prefix}/option`)
     .then((response) => {
       return response.body;
     }, (err) => {
@@ -135,20 +119,17 @@ store.fetchNextPostByPathName = (id) => {
   })
 }
 
-
-
-store.fetchAllBlog = () => {
-  return vue.resource(blogAPI+'/{?keys,values,sort}').get({
-    keys: ['type'],
-    values: ['0'],
-    sort: "1",
-  }).then((response) => {
+store.fetchPost = (conditions, ...args) => {
+  return args.reduce((prev, curr)=>{
+    prev = prev.query(curr);
+    return prev;
+  }, request.get(`${blogAPI}/?conditions=${JSON.stringify(conditions)}`))
+  .then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)
   })
 }
-
 
 store.fetchTags = () => {
   return vue.http.get(tagAPI).then((response) => {

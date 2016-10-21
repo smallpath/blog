@@ -49,12 +49,15 @@ const store = new Vuex.Store({
       });
     },
 
-    FETCH_ITEMS: ({ commit, state }, { queryJSON, page }) => {
-        return api.fetchBlogByPage(queryJSON, page).then(items => {
+    FETCH_ITEMS: ({ commit, state }, conditions, ...args) => {
+      console.log(...args)
+      console.log(conditions)
+        return api.fetchPost(conditions, ...args).then(items => {
            commit('SET_ITEMS', { items });
 
            if (state.totalPage === -1){
-            return api.fetchBlogCount({ type: 0 }).then(totalPage=>{
+            return api.fetchPost({ type: 0 }, { count: 1 })
+            .then(totalPage=>{
               commit('SET_PAGES', { totalPage })
             })
            } else {
@@ -64,8 +67,8 @@ const store = new Vuex.Store({
         })
     },
 
-    FETCH_ACHIEVE: ({ commit, state }) => {
-        return api.fetchAllBlog().then(items => { 
+    FETCH_ACHIEVE: ({ commit, state }, conditions, ...args) => {
+        return api.fetchPost(conditions, ...args).then(items => { 
           let sortedItem = items.reduce((prev,curr)=>{
               let time = curr.createdAt.slice(0,7).replace("-","年")+"月";
               if (typeof prev[time] == 'undefined'){
