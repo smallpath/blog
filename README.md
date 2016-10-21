@@ -11,8 +11,10 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [x] 开启H5模式
   - [x] disqus评论
   - [x] vue1.0升级至vue2.0
+  - [x] vuex单向数据流
   - [x] server side rendering
-  - [ ] 使用fetch替换vue-resource (进行中)
+  - [x] 使用fetch替换vue-resource 
+  - [ ] 优化首屏响应时间（进行中）
   - [ ] 侧边栏图片
 - [ ] 后台管理单页
   - [x] 添加升级模型的管理
@@ -21,12 +23,14 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [ ] 支持schema的增删改查
   - [ ] 七牛云图片上传
 - [ ] RESTful服务器
+  - [x] RESTful添加select字段过滤
+  - [ ] 标签及分类移至文章中 (进行中)
   - [ ] 文章toc
-  - [ ] 标签及分类移至文章中
   - [ ] 七牛access_token下发及鉴权
   - [ ] OAuth1升级至OAuth2
 - [x] 部署文档
-- [ ] server side rendering部署文档
+- [ ] 前台单页server side rendering部署文档
+- [ ] 前台单页首屏优化文档
 - [x] API文档
 - [ ] koa2 unstable => koa2 stable 
 
