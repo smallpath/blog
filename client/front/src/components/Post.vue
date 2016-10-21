@@ -60,7 +60,16 @@ import api from '../store/api'
 
 function fetchBlog(store, { path:pathName, params, query}){
         pathName = pathName.replace(/^\/post\//g,"");
-        return store.dispatch('FETCH_BLOG', { conditions: { pathName } });
+        return store.dispatch('FETCH_BLOG', { 
+            conditions: { pathName },
+            select: {
+                title: 1,
+                createdAt: 1,
+                content: 1,
+                updatedAt: 1,
+                commentNum: 1,
+            } 
+        });
 
         /*store.fetchTagsByPostID({ postID: article._id }).then(postTags=>{
             store.fetchTags().then(tags=>{

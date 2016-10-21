@@ -54,14 +54,6 @@ module.exports = function generateActions(model) {
         }
         result = await builder.exec();
 
-        let arr = ['prev','next'];
-        for(let i=0; i<arr.length; i++){
-         let key = arr[i];
-          if(query[key]){
-            result = await result[key]();
-          }
-        }
-
         return ctx.body = result;
       } catch (_error) {
         error = _error;
