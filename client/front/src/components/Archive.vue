@@ -21,7 +21,7 @@
 import api from '../store/api'
 
 function fetchAchieves(store){
-    return store.dispatch('FETCH_ACHIEVE');
+    return store.dispatch('FETCH_ACHIEVE', { type: 0 }, { sort: 1 });
 }
 
 export default {
@@ -45,7 +45,6 @@ export default {
   preFetch: fetchAchieves,
   beforeMount () {
       if (this.$root._isMounted){
-          console.log('fetchAchirenve')
           fetchAchieves(this.$store)
       }
   }

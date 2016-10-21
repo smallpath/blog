@@ -11,12 +11,13 @@
 
 <script>
 /* eslint-disable */
-import store from '../store/api'
+import api from '../store/api'
 
 export default {
   data () {
     return {
-      html: store.fetchPage({ title: '关于' }).then(html=>{
+      html: api.fetchPost({ title: '关于', type: 1 }).then(html=>{
+          console.log(html.length)
           this.html = html[0];
       })
     }
