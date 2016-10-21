@@ -26,6 +26,13 @@ function fetchItems (serverStore, { path, query, params}) {
             conditions: { 
                 type: 0 
             },
+            select: {
+                title: 1,
+                summary: 1,
+                commentNum: 1,
+                createdAt: 1,
+                pathName: 1,
+            },
             limit: 10,
             skip: (page - 1) * 10,
             sort: 1,

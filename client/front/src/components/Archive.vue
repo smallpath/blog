@@ -21,7 +21,15 @@
 import api from '../store/api'
 
 function fetchAchieves(store){
-    return store.dispatch('FETCH_ACHIEVE', { type: 0 }, { sort: 1 });
+    return store.dispatch('FETCH_ACHIEVE', { 
+        conditions: { type: 0 },  
+        select: {
+            title: 1,
+            createdAt: 1,
+            pathName: 1,
+        },
+        sort: 1, 
+    });
 }
 
 export default {

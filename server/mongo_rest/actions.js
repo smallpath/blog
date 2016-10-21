@@ -6,21 +6,17 @@ module.exports = function generateActions(model) {
       var error, result;
       try {
         var conditions = {};
+        var select={};
         var query = ctx.request.query;
         if (query.conditions) {
           conditions = JSON.parse(query.conditions);
         }
-        if (query.keys && query.values){
-          if (Array.isArray(query.keys) === true){
-            query.keys.forEach((value,index)=>{
-              if (typeof query.values[index] != 'undefined')
-                conditions[value] = query.values[index];
-            })
-          }else{
-            conditions[query.keys] = query.values;
-          }
-        }
         var builder = model.find(conditions);
+        if (query.select) {
+          select = JSON.parse(query.select);
+          builder = builder.select(select);
+        }
+        
         ['limit', 'skip', 'sort', 'count'].forEach(function(key){
           if (query[key]) {
             let arg = query[key];
@@ -49,9 +45,14 @@ module.exports = function generateActions(model) {
       // await next;
       var error, result;
       try {
-        result = await model.findById(ctx.params.id).exec();
-
+        var select={};
         var query = ctx.request.query;
+        var builder = model.findById(ctx.params.id);
+        if (query.select) {
+          select = JSON.parse(query.select);
+          builder = builder.select(select);
+        }
+        result = await builder.exec();
 
         let arr = ['prev','next'];
         for(let i=0; i<arr.length; i++){

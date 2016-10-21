@@ -38,7 +38,7 @@ function convertObjectToArray(args){
 }
 
 store.fetchOption = () => {
-  return request.get(`${prefix}/option`)
+  return request.get(`${prefix}/option?select={"key":1,"value":1}`)
     .then((response) => {
       return response.body;
     }, (err) => {
@@ -47,12 +47,18 @@ store.fetchOption = () => {
 }
 
 store.fetchPostByID = (id, conditions, args) => {
+
+  let target = `${blogAPI}/${id}?conditions=${JSON.stringify(conditions)}`
+  if (args.select){
+    target = target + `&select=${JSON.stringify(args.select)}`;
+    delete args.select;
+  }    
   args = convertObjectToArray(args);
+
   return args.reduce((prev, curr)=>{
     prev = prev.query(curr);
     return prev;
-  }, request.get(`${blogAPI}/${id}?conditions=${JSON.stringify(conditions)}`))
-  .then((response) => {
+  }, request.get(target)).then((response) => {
     return response.body;
   }, (err) => {
     console.log(err)
@@ -60,11 +66,18 @@ store.fetchPostByID = (id, conditions, args) => {
 }
 
 store.fetchPost = (conditions, args) =>{
+
+  let target = `${blogAPI}/?conditions=${JSON.stringify(conditions)}`
+  if (args.select){
+    target = target + `&select=${JSON.stringify(args.select)}`;
+    delete args.select;
+  }
   args = convertObjectToArray(args);
+
   return args.reduce((prev, curr)=>{
     prev = prev.query(curr);
     return prev;
-  }, request.get(`${blogAPI}/?conditions=${JSON.stringify(conditions)}`))
+  }, request.get(target))
   .then((response) => {
     return response.body;
   }, (err) => {
