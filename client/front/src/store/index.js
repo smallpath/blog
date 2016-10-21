@@ -36,14 +36,35 @@ const store = new Vuex.Store({
 
         commit('SET_BLOG', { blog })
 
-        let first = api.fetchPostByID(blog._id, { type: 0} , { prev: 1}).then(post=>{
+        let first = api.fetchPost({
+          _id:{ $lt: blog._id }
+        },{
+          sort: 1,
+          limit: 1,
+          select: {
+            title:1,
+            pathName:1,
+            type:1,
+          }
+        }).then(posts=>{
+            let post = posts[0];
             if (post.type == '0'){
               commit('SET_PREV', { post });
             }else{
               commit('SET_PREV', { post: {} });
             }
         });
-        let second = api.fetchPostByID(blog._id, { type: 0 } ,{ next: 1}).then(post=>{
+        let second = api.fetchPost({
+          _id:{ $gt: blog._id }
+        },{
+          limit: 1,
+          select: {
+            title:1,
+            pathName:1,
+            type:1,
+          }
+        }).then(posts=>{
+            let post = posts[0];
             if (post.type == '0'){
               commit('SET_NEXT', { post });
             }else{

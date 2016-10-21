@@ -18,6 +18,10 @@ function fetchAbout(store){
         conditions: { 
             pathName: 'about', 
             type: 1 
+        },
+        select: {
+            content: 1,
+            title: 1,
         }
     });
 }
