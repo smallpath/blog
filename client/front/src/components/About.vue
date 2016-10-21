@@ -13,14 +13,33 @@
 /* eslint-disable */
 import api from '../store/api'
 
+function fetchAbout(store){
+    return store.dispatch("FETCH_ABOUT", { 
+        conditions: { 
+            pathName: 'about', 
+            type: 1 
+        }
+    });
+}
+
 export default {
   data () {
     return {
-      html: api.fetchPost({ title: '关于', type: 1 }).then(html=>{
-          console.log(html.length)
-          this.html = html[0];
-      })
+      
     }
+  },
+  computed:{
+      html() {
+          return this.$store.state.about
+      }
+  },
+  preFetch(store) {
+      return fetchAbout(store);
+  },
+  beforeMount () {
+      if (this.$root._isMounted){
+         fetchAbout(this.$store)
+     }
   },
 
 
