@@ -151,9 +151,7 @@ const store = new Vuex.Store({
     },
 
     SET_ITEMS: (state, { items }) => {
-      items.forEach((item, index) => {
-          Vue.set(state.items, index, item)
-      })
+      Vue.set(state, 'items', items)
     },
     SET_PAGES: (state, { totalPage }) => {
       Vue.set(state, 'totalPage', totalPage)
