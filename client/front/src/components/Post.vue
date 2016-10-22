@@ -11,7 +11,7 @@
                 <div class="entry-content" v-html="article.content">
                 </div>
 
-                <p>本文链接：<a :href="'/post/'+ article.pathName">/post/{{article.pathName}}</a></p>
+                <p>本文链接：<a :href="siteURL+ '/post/'+ article.pathName">{{siteURL}}/post/{{article.pathName}}</a></p>
                 <p>-- <acronym title="End of File">EOF</acronym> --</p>
                 <div class="post-info">
                     <p> 发表于 <i>{{article.createdAt}}</i> ，
@@ -68,6 +68,7 @@ function fetchBlog(store, { path:pathName, params, query}){
                 content: 1,
                 updatedAt: 1,
                 commentNum: 1,
+                pathName: 1,
             } 
         });
 
