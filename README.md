@@ -29,7 +29,7 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [ ] 七牛access_token下发及鉴权
   - [ ] OAuth1升级至OAuth2
 - [x] 部署文档
-- [ ] 前台单页server side rendering部署文档
+- [x] 前台单页server side rendering部署文档
 - [ ] 前台单页首屏优化文档
 - [x] API文档
 - [ ] koa2 unstable => koa2 stable 
@@ -58,19 +58,67 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
 npm install
 pm2 start entry.js
 ```
-## client/front
-博客的前台单页
 
-目前正在开发前台单页的ssr，暂时无法使用最新提交构建，如需部署此单页，请使用这个[commit](https://github.com/Smallpath/Blog/tree/43ec05c6192838d2fe2d96add185ad77d6882db4)的文件
+RESTful服务器在本机3000端口开启
+
+## client/front
+博客的前台单页, 支持服务端渲染
 
 ```
 npm install
 npm run build
+pm2 start production.js
 ```
 
-用nginx代理构建出来的`dist`文件夹即可
+用nginx代理本机8080端口即可, 可以使用如下的模板
 
->部署前, 必须对nginx进行配置, 请查看本页面上的**Nginx配置**
+```
+server{
+    listen 80;                                      #如果是https, 则替换80为443
+    server_name *.smallpath.me smallpath.me;        #替换域名
+    root /alidata/www/Blog/client/front/dist;       #替换路径为构建出来的dist路径
+    set $node_port 3000;
+    set $ssr_port 8080;
+
+    location ^~ / {
+        rewrite ^/proxyPrefix/(.*) /$1 break;
+        proxy_http_version 1.1;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-NginX-Proxy true;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_pass http://127.0.0.1:$ssr_port;
+        proxy_redirect off;
+    }
+
+    location ^~ /proxyPrefix/ {
+        rewrite ^/proxyPrefix/(.*) /$1 break;
+        proxy_http_version 1.1;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-NginX-Proxy true;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_pass http://127.0.0.1:$node_port;
+        proxy_redirect off;
+    }
+
+    location ^~ /dist/ {
+        rewrite ^/dist/(.*) /$1 break;
+        etag         on;
+        expires      max;
+    }
+
+    location ^~ /static/ {
+        etag         on;
+        expires      max;
+    }
+}
+```
+
 
 ## client/back
 博客的后台管理单页
@@ -80,17 +128,12 @@ npm install
 npm run build
 ```
 
-用nginx代理构建出来的`dist`文件夹即可
-
->部署前, 必须对nginx进行配置, 请查看本页面上的**Nginx配置**
-
-## Nginx配置
-两个单页都需要配置相应的nginx代理, 可以使用如下的模板
+用nginx代理构建出来的`dist`文件夹即可, 可以使用如下的模板
 
 ```
 server{
     listen 80;                                      #如果是https, 则替换80为443
-    server_name *.smallpath.me smallpath.me;        #替换域名
+    server_name admin.smallpath.me;        #替换域名
     root /alidata/www/Blog/client/front/dist;       #替换路径为构建出来的dist路径
     set $node_port 3000;
 
@@ -216,26 +259,51 @@ Token有效期为获得后的一小时, 超出时间后请重新请求Token
 
 服务器直接允许对`user`模型外的所有模型的GET请求, 不需要验证Token
 
-### 查询所有文档
+为了直接通过URI来进行mongoDB查询, 后台提供六种关键字的查询:
+```
+conditions,
+select,
+count,
+sort,
+skip,
+limit
+```
+
+### conditions查询
+类型为JSON, 被解析为对象后, 直接将其作为`mongoose.find`的查询条件
+
+#### 查询所有文档
 > GET https://smallpath.me/proxyPrefix/api/post
 
-### 查询文档的数量
-> GET https://smallpath.me/proxyPrefix/api/post?count=1
-
-### 查询title字段为'关于'的文档
+#### 查询title字段为'关于'的文档
 > GET https://smallpath.me/proxyPrefix/api/post?conditions={"title":"关于"}
 
-### 查询所有文档并按时间倒叙
+#### 查询指定id的文档的上一篇文档
+> GET https://smallpath.me/proxyPrefix/api/post/?conditions={"_id":{"$lt":"580b3ff504f59b4cc27845f0"}}&sort=1&limit=1
+
+#### select查询
+类型为JSON, 用以拾取每条数据所需要的属性名, 以过滤输出来加快响应速度
+
+#### 查询title字段为'关于'的文档的建立时间和更新时间
+> GET https://smallpath.me/proxyPrefix/api/post?conditions={"title":"关于"}&select={"createdAt":1,"updatedAt":1}
+
+### count查询
+获得查询结果的数量
+
+#### 查询文档的数量
+> GET https://smallpath.me/proxyPrefix/api/post?conditions={"type":0}&count=1
+
+### sort查询
+为了查询方便, sort=1代表按时间倒序, 不使用sort则代表按时间正序
+
+#### 查询所有文档并按时间倒序
 > GET https://smallpath.me/proxyPrefix/api/post?sort=1
 
-### 查询第2页的文档并按时间倒叙
+### skip查询和limit查询
+
+#### 查询第2页的文档(每页10条)并按时间倒叙
 > GET https://smallpath.me/proxyPrefix/api/post?limit=10&skip=10&sort=1
 
-### 查询指定文档的前一篇文档
-> GET https://smallpath.me/proxyPrefix/api/post/57e7b31fa73182482918b277?prev=1
-
-### 查询指定文档的后一篇文档
-> GET https://smallpath.me/proxyPrefix/api/post/57e7b31fa73182482918b277?next=1
 
 ## 新建
 
@@ -279,9 +347,12 @@ vue-resource会将请求的URL进行格式化, 不允许URL中的JSON查询, 比
 
 > GET https://smallpath.me/proxyPrefix/api/post?conditions={"title":"关于"}
 
-在这种情况下, 请使用`keys`和`values`来替代`conditions`查询, 例如:
+会被`URI TEMPLATE`为:
 
-> GET https://smallpath.me/proxyPrefix/api/post?keys=title&values=关于
+> GET https://smallpath.me/proxyPrefix/api/post?conditions[title]=关于
 
-或者使用其他XmlHttpRequest封装库
+后端会将其`conditions`解析为空对象. 
+
+除此之外, vue-resource目前尚未支持vue2的服务端渲染, 因此不建议使用vue-resource.  
+可以使用同时支持客户端和服务端的superagent作为代替
 
