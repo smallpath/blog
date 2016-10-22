@@ -22,12 +22,11 @@ const html = (() => {
   const style = isProd ? '<link rel=stylesheet href=/dist/styles.css>' : ''
   return {
     head: template.slice(0, i).replace('<link rel=stylesheet href=/dist/styles.css>', style),
-    tail: template.slice(i + '<div id="app"></div>'.length)
+    tail: template.slice(i + '<div id=app></div>'.length)
   }
 })()
 
 // setup the server renderer, depending on dev/prod environment
-
 let renderer
 if (isProd) {
   // create server renderer from real fs
@@ -48,7 +47,12 @@ function createRenderer (bundle) {
   })
 }
 
-app.use('/dist', express.static(resolve('./dist')))
+app.use('/dist', express.static(resolve('./dist'),{
+  fallthrough: false
+}))
+app.use('/static', express.static(resolve('./dist/static'),{
+  fallthrough: false
+}))
 app.use(favicon(resolve('./src/assets/logo.png')))
 
 app.use(bodyParser.json())

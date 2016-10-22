@@ -1,6 +1,7 @@
 var path = require('path')
 var config = require('../config')
 var utils = require('./utils')
+var vueConfig = require('./vue-loader.config')
 var projectRoot = path.resolve(__dirname, '../')
 
 module.exports = {
@@ -13,36 +14,37 @@ module.exports = {
     filename: 'client-bundle.js'
   },
   resolve: {
-    extensions: ['', '.js', '.vue'],
-    fallback: [path.join(__dirname, '../node_modules')],
-    alias: {
-      'src': path.resolve(__dirname, '../src'),
-      'assets': path.resolve(__dirname, '../src/assets'),
-      'components': path.resolve(__dirname, '../src/components')
-    }
+    extensions: ['.js', '.vue'],
+    // fallback: [path.join(__dirname, '../node_modules')],
+    // alias: {
+    //   'src': path.resolve(__dirname, '../src'),
+    //   'assets': path.resolve(__dirname, '../src/assets'),
+    //   'components': path.resolve(__dirname, '../src/components')
+    // }
   },
-  resolveLoader: {
-    fallback: [path.join(__dirname, '../node_modules')]
-  },
+  // resolveLoader: {
+  //   fallback: [path.join(__dirname, '../node_modules')]
+  // },
   module: {
-    preLoaders: [
+    // preLoaders: [
+    //   {
+    //     test: /\.vue$/,
+    //     loader: 'eslint',
+    //     include: projectRoot,
+    //     exclude: /node_modules/
+    //   },
+    //   {
+    //     test: /\.js$/,
+    //     loader: 'eslint',
+    //     include: projectRoot,
+    //     exclude: /node_modules/
+    //   }
+    // ],
+    rules: [
       {
         test: /\.vue$/,
-        loader: 'eslint',
-        include: projectRoot,
-        exclude: /node_modules/
-      },
-      {
-        test: /\.js$/,
-        loader: 'eslint',
-        include: projectRoot,
-        exclude: /node_modules/
-      }
-    ],
-    loaders: [
-      {
-        test: /\.vue$/,
-        loader: 'vue'
+        loader: 'vue',
+        options: vueConfig
       },
       {
         test: /\.js$/,
@@ -61,7 +63,7 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url',
-        query: {
+        options: {
           limit: 10000,
           name: utils.assetsPath('img/[name].[ext]')
         }
@@ -69,17 +71,17 @@ module.exports = {
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url',
-        query: {
+        options: {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[ext]')
         }
       }
     ]
   },
-  eslint: {
-    formatter: require('eslint-friendly-formatter')
-  },
-  vue: {
-    loaders: utils.cssLoaders()
-  }
+  // eslint: {
+  //   formatter: require('eslint-friendly-formatter')
+  // },
+  // vue: {
+  //   loaders: utils.cssLoaders()
+  // }
 }
