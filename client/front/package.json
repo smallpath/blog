@@ -5,7 +5,7 @@
   "author": "Smallpath <smallpath2013@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "node server",
+    "dev": "npm run build && node server",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "start": "cross-env NODE_ENV=production node server",
     "build": "npm run build:client && npm run build:server",

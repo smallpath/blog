@@ -47,11 +47,13 @@ export default {
         const isInitialRender = !this.$root._isMounted
         return {
             items: this.$store.getters.items,
-            page: 1,
             totalPage: 1,
         }
     },
     computed:{
+        page() {
+            return this.$store.state.route.query.page || 1;
+        },
         totalPage() {
             return this.$store.state.totalPage;
         }
