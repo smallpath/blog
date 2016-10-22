@@ -3,21 +3,24 @@ import { EventEmitter } from 'events'
 
 import request from 'superagent'
 
-const host = typeof location === 'undefined' ? 'http://localhost:8080' : '';
+const host = typeof location === 'undefined' ? 
+                process.env.NODE_ENV === 'production' ?
+                  'http://localhost:3000' :
+                'http://localhost:8080/proxyPrefix' : '';
 
-const prefix = `${host}/proxyPrefix/api`;
+const prefix = `${host}/api`;
 
-const blogAPI = `${host}/proxyPrefix/api/post`;
+const blogAPI = `${host}/api/post`;
 
-const tagAPI = `${host}/proxyPrefix/api/tag`;
+const tagAPI = `${host}/api/tag`;
 
-const categoryAPI = `${host}/proxyPrefix/api/category`;
+const categoryAPI = `${host}/api/category`;
 
-const postTagAPI = `${host}/proxyPrefix/api/postTag`;
+const postTagAPI = `${host}/api/postTag`;
 
-const postCateAPI = `${host}/proxyPrefix/api/postCategory`;
+const postCateAPI = `${host}/api/postCategory`;
 
-const aboutAPI = `${host}/proxyPrefix/api/post?title=关于`
+const aboutAPI = `${host}/api/post?title=关于`
 
 const store = new EventEmitter()
 
