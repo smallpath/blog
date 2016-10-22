@@ -54,7 +54,8 @@ export default {
             return this.$store.getters.items;
         },
         page() {
-            return this.$store.state.route.query.page || 1;
+            let page = this.$store.state.route.query.page || 1;
+            return parseInt(page);
         },
         totalPage() {
             return this.$store.state.totalPage;
