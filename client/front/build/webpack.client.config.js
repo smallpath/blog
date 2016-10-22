@@ -114,6 +114,4 @@ const commonConfig = merge(base, {
 //   )
 // }
 
-console.log(commonConfig.module.loaders);
-
 module.exports = commonConfig

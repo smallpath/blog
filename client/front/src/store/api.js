@@ -6,7 +6,7 @@ import request from 'superagent'
 const host = typeof location === 'undefined' ? 
                 process.env.NODE_ENV === 'production' ?
                   'http://localhost:3000' :
-                'http://localhost:8080/proxyPrefix' : '';
+                'http://localhost:8080/proxyPrefix' : '/proxyPrefix';
 
 const prefix = `${host}/api`;
 
