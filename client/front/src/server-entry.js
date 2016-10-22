@@ -10,7 +10,7 @@ const isDev = process.env.NODE_ENV !== 'production'
 // return a Promise that resolves to the app instance.
 export default context => {
   // set router's location
-  router.push(context.path)
+  router.push(context.url)
 
   const s = isDev && Date.now()
 

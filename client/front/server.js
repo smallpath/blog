@@ -63,12 +63,13 @@ let ssr = (req, res) => {
     return res.end('waiting for compilation... refresh in a moment.')
   }
 
-  var s = Date.now()
+  let s = Date.now()
   const context = { 
     path: req.path,
     query: req.query,
     params: req.params,
-  }
+    url: req.url
+  };
   const renderStream = renderer.renderToStream(context)
   let firstChunk = true
 
