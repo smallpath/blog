@@ -28,10 +28,7 @@ exports.cssLoaders = function (options) {
         loader: sourceLoader
       });
     } else {
-      return { 
-        fallbackLoader: 'vue-style-loader', 
-        loader: sourceLoader
-      }
+      return ['vue-style-loader', sourceLoader].join('!')
     }
   }
 

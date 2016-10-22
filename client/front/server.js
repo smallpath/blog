@@ -19,7 +19,8 @@ const html = (() => {
   const template = fs.readFileSync(resolve('./index.html'), 'utf-8')
   const i = template.indexOf('<div id=app></div>')
   // styles are injected dynamically via vue-style-loader in development
-  const style = isProd ? '<link rel=stylesheet href=/dist/styles.css>' : ''
+  const style = isProd ? '<link rel=stylesheet href=/dist/styles.css>' 
+                        : '<link rel=stylesheet href=/dist/styles.css>' 
   return {
     head: template.slice(0, i).replace('<link rel=stylesheet href=/dist/styles.css>', style),
     tail: template.slice(i + '<div id=app></div>'.length)

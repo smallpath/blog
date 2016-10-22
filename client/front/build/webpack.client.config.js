@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const base = require('./webpack.base.config')
 const vueConfig = require('./vue-loader.config')
 const utils = require('./utils')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const commonConfig = Object.assign({}, base, {
   plugins: (base.plugins || []).concat([
@@ -17,10 +18,19 @@ const commonConfig = Object.assign({}, base, {
   ])
 })
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV !== 'production'){
+
+  // vueConfig.loaders = utils.cssLoaders();
+
+  // commonConfig.plugins.push(
+  //   // this is needed in webpack 2 for minifying CSS
+  //   new webpack.LoaderOptionsPlugin({
+  //     minimize: false,
+  //   })
+  // )
+} else {
   // Use ExtractTextPlugin to extract CSS into a single file
   // so it's applied on initial render
-  const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
   // vueConfig is already included in the config via LoaderOptionsPlugin
   // here we overwrite the loader config for <style lang="stylus">
