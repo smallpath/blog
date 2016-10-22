@@ -68,8 +68,8 @@ h1.intro {
 
 @font-face {
     font-family: iconfont;
-    src: url(/theme/firekylin/res/font/iconfont.eot);
-    src: url(/theme/firekylin/res/font/iconfont.eot?#iefix) format("embedded-opentype"), url(/theme/firekylin/res/font/iconfont.ttf?v=b203e.ttf) format("truetype"), url(/theme/firekylin/res/font/iconfont.svg?v=7ed74.svg) format("svg");
+    src: url(../font/iconfont.eot);
+    src: url(../font/iconfont.eot?#iefix) format("embedded-opentype"), url(../font/iconfont.ttf?v=b203e.ttf) format("truetype"), url(../font/iconfont.svg?v=7ed74.svg) format("svg");
 }
 
 .iconfont {

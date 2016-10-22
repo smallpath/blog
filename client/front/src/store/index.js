@@ -47,10 +47,14 @@ const store = new Vuex.Store({
             type:1,
           }
         }).then(posts=>{
-            let post = posts[0];
-            if (post.type == '0'){
-              commit('SET_PREV', { post });
-            }else{
+            try{
+              let post = posts[0];
+              if (post.type == '0'){
+                commit('SET_PREV', { post });
+              }else{
+                commit('SET_PREV', { post: {} });
+              }
+            }catch(err){
               commit('SET_PREV', { post: {} });
             }
         });
@@ -64,10 +68,14 @@ const store = new Vuex.Store({
             type:1,
           }
         }).then(posts=>{
-            let post = posts[0];
-            if (post.type == '0'){
-              commit('SET_NEXT', { post });
-            }else{
+            try{
+              let post = posts[0];
+              if (post.type == '0'){
+                commit('SET_NEXT', { post });
+              }else{
+                commit('SET_NEXT', { post: {} });
+              }
+            }catch(err){
               commit('SET_NEXT', { post: {} });
             }
         });
