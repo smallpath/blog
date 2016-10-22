@@ -13,7 +13,7 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [x] vue1.0升级至vue2.0
   - [x] vuex单向数据流
   - [x] server side rendering
-  - [x] 使用fetch替换vue-resource 
+  - [x] 使用superagent替换vue-resource 
   - [ ] 优化首屏响应时间（进行中）
   - [ ] 侧边栏图片
 - [ ] 后台管理单页

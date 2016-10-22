@@ -43,6 +43,9 @@ Object.keys(models).forEach(value => {
     if (config.defaultAdminPassword === 'admin'){
       log.error('you must change the default passoword at ./conf/config.js');
       log.error('koa2 refused to start because of weak password');
+      setTimeout(function() {
+          process.exit(0);
+      }, 200);
       return;
     }
 
