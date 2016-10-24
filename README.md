@@ -1,7 +1,7 @@
 # Blog
 Not only blog. Based on Vue2, Koa2, MongoDB and Redis
 
-前后端分离的博客系统, 前端SPA + 后端RESTful服务器
+前后端分离 + 服务端渲染的博客系统, 前端SPA + 后端RESTful服务器
 
 # Demo
 [https://smallpath.me](https://smallpath.me)
@@ -13,27 +13,24 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [x] vue1.0升级至vue2.0
   - [x] vuex单向数据流
   - [x] server side rendering
+  - [x] server side rendering部署文档
   - [x] 使用superagent替换vue-resource 
-  - [ ] 优化首屏响应时间（进行中）
   - [ ] 侧边栏图片
 - [ ] 后台管理单页
   - [x] 添加升级模型的管理
-  - [ ] vue 1.0 => vue 2.0
-  - [ ] 使用element ui
+  - [ ] vue 1.0 => vue 2.0 (进行中)
+  - [ ] 使用element ui (进行中)
   - [ ] 支持schema的增删改查
   - [ ] 七牛云图片上传
 - [ ] RESTful服务器
   - [x] RESTful添加select字段过滤
-  - [ ] 标签及分类移至文章中 (进行中)
+  - [ ] 标签及分类移至文章中 
   - [ ] 文章toc
   - [ ] 七牛access_token下发及鉴权
   - [ ] OAuth1升级至OAuth2
+  - [ ] koa2 unstable => koa2 stable 
 - [x] 部署文档
-- [x] 前台单页server side rendering部署文档
-- [ ] 前台单页首屏优化文档
 - [x] API文档
-- [ ] koa2 unstable => koa2 stable 
-
 
 # 构建与部署
 
