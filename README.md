@@ -15,11 +15,14 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [x] server side rendering
   - [x] server side rendering部署文档
   - [x] 使用superagent替换vue-resource 
+  - [ ] 服务端谷歌统计 (进行中)
+  - [ ] 服务端sitemap定时任务
+  - [ ] 组件级缓存
   - [ ] 侧边栏图片
 - [ ] 后台管理单页
   - [x] 添加升级模型的管理
-  - [ ] vue 1.0 => vue 2.0 (进行中)
-  - [ ] 使用element ui (进行中)
+  - [ ] vue 1.0 => vue 2.0 
+  - [ ] 使用element ui
   - [ ] 支持schema的增删改查
   - [ ] 七牛云图片上传
 - [ ] RESTful服务器
@@ -31,6 +34,9 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [ ] koa2 unstable => koa2 stable 
 - [x] 部署文档
 - [x] API文档
+- [ ] Docker
+- [ ] 单元测试， 集成测试和系统测试用例
+- [ ] 前端持续集成测试
 
 # 构建与部署
 
