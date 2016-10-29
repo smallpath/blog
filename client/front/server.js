@@ -92,6 +92,18 @@ let ssr = (req, res) => {
   })
 
   renderStream.on('end', () => {
+
+    if (context.initialState && context.initialState.siteInfo) {
+        let analyze_code = context.initialState.siteInfo.analyze_code;
+        if (analyze_code && analyze_code.value !== '') {
+
+          let endStr = html.tail.replace('client-bundle.js></script>',
+            `client-bundle.js></script><script async src='https://www.google-analytics.com/analytics.js'></script>`);
+          res.end(endStr);
+          console.log(`whole request: ${Date.now() - s}ms`)
+          console.log('---------------')
+        }
+    }
     res.end(html.tail)
     console.log(`whole request: ${Date.now() - s}ms`)
     console.log('---------------')
