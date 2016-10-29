@@ -102,6 +102,7 @@ let ssr = (req, res) => {
           res.end(endStr);
           console.log(`whole request: ${Date.now() - s}ms`)
           console.log('---------------')
+          return;
         }
     }
     res.end(html.tail)
