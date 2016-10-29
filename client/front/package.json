@@ -21,6 +21,7 @@
     "serve-favicon": "^2.3.0",
     "superagent": "^2.3.0",
     "vue": "^2.0.1",
+    "vue-disqus": "^1.0.2",
     "vue-router": "^2.0.0",
     "vue-server-renderer": "^2.0.3",
     "vuex": "^2.0.0",

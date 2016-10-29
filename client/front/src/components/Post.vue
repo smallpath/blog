@@ -42,12 +42,9 @@
                 <router-link v-if="typeof next.pathName !== 'undefined'" 
                     :to="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo;</router-link> 
             </nav>
-                <div v-if="commentName !== ''" id="comments" :data-type="commentType"
-                    :data-thread-key="article.pathName" :data-url="siteURL + '/post/' + article.pathName">
-                    <h1 class="title">Comments</h1>
-                    <div id="disqus_thread" :data-url="siteURL +'/post/' + article.pathName" :data-identifier="article.pathName"
-                    :data-name="commentName"> 评论加载中... <br> <br> 注：如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理。 
-                </div>
+            <div class="comments" v-if="commentName !== ''">
+                <disqus :shortname="commentName" ></disqus>
+            </div>
             </div>
         </div>
         <my-footer></my-footer>
@@ -57,6 +54,9 @@
 <script>
 /* eslint-disable */
 import api from '../store/api'
+import Disqus from 'vue-disqus'
+
+Disqus.mounted = Disqus.ready;
 
 function fetchBlog(store, { path:pathName, params, query}){
         pathName = pathName.replace(/^\/post\//g,"");
@@ -112,6 +112,9 @@ export default {
             tags: [],
         }
     },
+    components: {
+        Disqus
+    },
     computed: {
         article() {
             return this.$store.state.blog;
@@ -142,11 +145,24 @@ export default {
         '$route': 'getPost'
     },
     methods: {
+        reset (dsq) {
+            const self = this;
+            dsq.reset({
+                reload: true,
+                config: function () {
+                    this.page.identifier = (self.$route.path || window.location.pathname)
+                    this.page.url = window.location.href
+                }
+            });
+        },
         getPost (val, oldVal) {
             if (val.name !== 'post')
                 return;
 
-            fetchBlog(this.$store, this.$store.state.route)
+            fetchBlog(this.$store, this.$store.state.route);
+            if (window.DISQUS) {
+                this.reset(window.DISQUS)
+            }
         }
     },
 
