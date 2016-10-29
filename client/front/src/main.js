@@ -104,11 +104,6 @@ const app = new Vue({
     router,
     store,
     ...App,
-    // render: h => h(App)
 })
-
-
-
-// Object.keys(app).map(value=>console.log(value))
 
 export { app, router, store }
