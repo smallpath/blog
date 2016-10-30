@@ -8,8 +8,15 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
 const serialize = require('serialize-javascript')
+const robots = require('./server/robots.js')
+const { request, api, getSitemapFromBody } = require('./server/sitemap.js')
+const { title } = require('./config');
 
-// https://github.com/vuejs/vue/blob/next/packages/vue-server-renderer/README.md#why-use-bundlerenderer
+let sitemap = '';
+request.get(api).then(result=>{
+  sitemap = getSitemapFromBody(result);
+});
+
 const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
 
 const app = express()
@@ -22,7 +29,9 @@ const html = (() => {
   const style = isProd ? '<link rel=stylesheet href=/dist/styles.css>' 
                         : '<link rel=stylesheet href=/dist/styles.css>' 
   return {
-    head: template.slice(0, i).replace('<link rel=stylesheet href=/dist/styles.css>', style),
+    head: template.slice(0, i)
+              .replace('vue_client_side', title)
+              .replace('<link rel=stylesheet href=/dist/styles.css>', style),
     tail: template.slice(i + '<div id=app></div>'.length)
   }
 })()
@@ -58,7 +67,21 @@ app.use(favicon(resolve('./src/assets/logo.png')))
 
 app.use(bodyParser.json())
 
-let ssr = (req, res) => {
+app.get('/robots.txt', (req, res) => {
+  res.end(robots);
+});
+
+
+app.get('/sitemap.xml', (req, res) => {
+  res.end(sitemap);
+});
+
+app.use((req, res, next) => {
+  console.log(`${req.method} ${decodeURIComponent(req.url)}`);
+  return next();
+});
+
+app.get('*',(req, res) => {
   if (!renderer) {
     return res.end('waiting for compilation... refresh in a moment.')
   }
@@ -111,18 +134,9 @@ let ssr = (req, res) => {
   })
 
   renderStream.on('error', err => {
-    //throw err
     console.log(err);
   })
-}
-
-
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  return next();
 });
-
-app.get('*', ssr)
 
 const port = process.env.PORT || 8080
 app.listen(port, () => {
