@@ -11,10 +11,17 @@ const serialize = require('serialize-javascript')
 const robots = require('./server/robots.js')
 const { request, api, getSitemapFromBody } = require('./server/sitemap.js')
 const { title } = require('./config');
+const schedule = require('node-schedule');
 
 let sitemap = '';
 request.get(api).then(result=>{
   sitemap = getSitemapFromBody(result);
+});
+
+let job = schedule.scheduleJob(`30 3 * * * `, function(){
+  request.get(api).then(result=>{
+    sitemap = getSitemapFromBody(result);
+  });
 });
 
 const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
