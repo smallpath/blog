@@ -16,8 +16,9 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [x] server side rendering部署文档
   - [x] 使用superagent替换vue-resource 
   - [x] 谷歌统计 
-  - [ ] 服务端sitemap定时任务 (进行中)
+  - [x] 服务端sitemap定时任务
   - [ ] 组件级缓存
+  - [ ] 服务端谷歌统计
   - [ ] 侧边栏图片
 - [ ] 后台管理单页
   - [x] 添加升级模型的管理
@@ -73,7 +74,9 @@ npm run build
 pm2 start production.js
 ```
 
-用nginx代理本机8080端口即可, 可以使用如下的模板
+请将`logo.png`与`favicon.ico`放至`dist/static`目录中
+
+再用nginx代理本机8080端口即可, 可以使用如下的模板
 
 ```
 server{
