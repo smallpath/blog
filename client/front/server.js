@@ -80,6 +80,7 @@ app.get('/robots.txt', (req, res) => {
 
 
 app.get('/sitemap.xml', (req, res) => {
+  res.header('Content-Type', 'application/xml');
   res.end(sitemap);
 });
 
