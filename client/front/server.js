@@ -26,7 +26,6 @@ schedule.scheduleJob('30 3 * * * ', function () {
   })
 })
 
-console.log(rssApi);
 let rss = ''
 request.get(rssApi).then(result => {
   rss = getRssBodyFromBody(result)

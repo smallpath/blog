@@ -6,7 +6,6 @@ let head = `<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <link>${siteUrl}</link>
     <description>${description}</description>
     <atom:link href="${siteUrl}/rss.html" rel="self"/>
-    <atom:link href="https://imququ.superfeedr.com/" rel="hub"/>
     <language>zh-cn</language>\r\n`
 
 let getUpdatedDate = date => `    <lastBuildDate>${date}</lastBuildDate>\r\n`
