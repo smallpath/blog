@@ -6,7 +6,7 @@
 				<h3>{{ key }} ({{item.length}})</h3>
 				<ul>
 					<li v-for="subItem in item">
-						<router-link :to="{name: 'post', params: { pathName:subItem.pathName  }}" :title="subItem.title">{{subItem.title}}</router-link>&nbsp;
+						<router-link :to="{name: 'post', params: { pathName:subItem.pathName  }}" :title="subItem.title">{{subItem.title}}</router-link>&nbsp
 						<span class=date>{{ subItem.createdAt.split(' ')[0] }}</span>
 					</li>
 				</ul>
@@ -17,45 +17,34 @@
 </template>
 
 <script>
-/* eslint-disable */
-import api from '../store/api'
-
-function fetchAchieves(store){
-    return store.dispatch('FETCH_ACHIEVE', { 
-        conditions: { type: 0 },  
-        select: {
-            title: 1,
-            createdAt: 1,
-            pathName: 1,
-        },
-        sort: 1, 
-    });
+function fetchAchieves (store) {
+  return store.dispatch('FETCH_ACHIEVE', {
+    conditions: { type: 0 },
+    select: {
+      title: 1,
+      createdAt: 1,
+      pathName: 1
+    },
+    sort: 1
+  })
 }
 
 export default {
   data () {
     return {
-      title: "归档",
-      //items: this.$store.getters.achieves,
+      title: '归档'
     }
   },
   computed: {
-      items(){
-          return this.$store.getters.achieves
-      }
+    items () {
+      return this.$store.getters.achieves
+    }
   },
-  /*beforeRouteEnter (to, from, next) {
-      next(vm => {
-          const isMounted = vm.$root._isMounted;
-          isMounted && fetchAchieves(vm.$store);
-      })
-  },*/
   preFetch: fetchAchieves,
   beforeMount () {
-      if (this.$root._isMounted){
-          fetchAchieves(this.$store)
-      }
+    if (this.$root._isMounted) {
+      fetchAchieves(this.$store)
+    }
   }
-
 }
 </script>

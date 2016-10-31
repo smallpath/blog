@@ -1,4 +1,3 @@
-/* eslint-disable */
 // require('es6-promise').polyfill()
 
 import './assets/res/js/base'
@@ -10,21 +9,22 @@ store.replaceState(window.__INITIAL_STATE__)
 app.$mount('#app')
 
 if (window.__INITIAL_STATE__.siteInfo) {
-	let analyze_code = window.__INITIAL_STATE__.siteInfo.analyze_code;
-	if (analyze_code && analyze_code.value !== '') {
-		// init google analytics
-		window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
-		ga('create', analyze_code.value, 'auto');
-		ga('send', 'pageview');
+  let analyzeCode = window.__INITIAL_STATE__.siteInfo.analyze_code
+  if (analyzeCode && analyzeCode.value !== '') {
+    // init google analytics
+    window.ga = window.ga || function () { (window.ga.q = window.ga.q || []).push(arguments) }
+    window.ga.l = +new Date()
+    window.ga('create', analyzeCode.value, 'auto')
+    window.ga('send', 'pageview')
 
-		// send google analytics when routes change
-		router.afterEach((route) => {
-			ga('send', {
-				hitType: 'pageview',
-				page: route.path,
-				location: window.location.origin + route.path,
-				title: route.name || ''
-			});
-		})
-	}
+    // send google analytics when routes change
+    router.afterEach((route) => {
+      window.ga('send', {
+        hitType: 'pageview',
+        page: route.path,
+        location: window.location.origin + route.path,
+        title: route.name || ''
+      })
+    })
+  }
 }

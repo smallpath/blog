@@ -14,38 +14,37 @@
 </template>
 
 <script>
-/* eslint-disable */
 import store from '../store/api'
 
 export default {
   data () {
     return {
-      title: "标签",
-      items: {},
+      title: '标签',
+      items: {}
     }
   },
   mounted () {
-      store.fetchTags().then(items=>{
-          store.fetchPostTags().then(postTags=>{
-              postTags.forEach(value=>{
-                  let tagID = value.tagID;
-                  let targetIndex = 0;
-                  items.forEach((value,index)=>{
-                      if (value._id == tagID){
-                          targetIndex = index;
-                      }
-                  })
+    store.fetchTags().then(items => {
+      store.fetchPostTags().then(postTags => {
+        postTags.forEach(value => {
+          let tagID = value.tagID
+          let targetIndex = 0
+          items.forEach((value, index) => {
+            if (value._id === tagID) {
+              targetIndex = index
+            }
+          })
 
-                  if (typeof items[targetIndex].count === 'undefined'){
-                      items[targetIndex].count = 1;
-                  }else{
-                      items[targetIndex].count ++ ;
-                  }
-              })
-              items.sort((a,b)=>b.count-a.count)
-              this.items = items
-          });
-        });
+          if (typeof items[targetIndex].count === 'undefined') {
+            items[targetIndex].count = 1
+          } else {
+            items[targetIndex].count ++
+          }
+        })
+        items.sort((a, b) => b.count - a.count)
+        this.items = items
+      })
+    })
   }
 
 }

@@ -38,9 +38,9 @@
             </article>
             <nav class=pagination> 
                 <router-link v-if="typeof prev.pathName !== 'undefined'" 
-                    :to="{name:'post', params: {pathName: prev.pathName }}" class="prev">&laquo; {{prev.title }}</router-link> 
+                    :to="{name:'post', params: {pathName: prev.pathName }}" class="prev">&laquo {{prev.title }}</router-link> 
                 <router-link v-if="typeof next.pathName !== 'undefined'" 
-                    :to="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo;</router-link> 
+                    :to="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo</router-link> 
             </nav>
             <div class="comments" v-if="commentName !== ''">
                 <disqus :shortname="commentName" ></disqus>
@@ -52,119 +52,109 @@
 </template>
 
 <script>
-/* eslint-disable */
-import api from '../store/api'
 import Disqus from 'vue-disqus'
 
-Disqus.mounted = Disqus.ready;
+Disqus.mounted = Disqus.ready
 
-function fetchBlog(store, { path:pathName, params, query}){
-        pathName = pathName.replace(/^\/post\//g,"");
-        return store.dispatch('FETCH_BLOG', { 
-            conditions: { pathName },
-            select: {
-                title: 1,
-                createdAt: 1,
-                content: 1,
-                updatedAt: 1,
-                commentNum: 1,
-                pathName: 1,
-            } 
-        });
+function fetchBlog (store, { path: pathName, params, query }) {
+  pathName = pathName.replace(/^\/post\//g, '')
+  return store.dispatch('FETCH_BLOG', {
+    conditions: { pathName },
+    select: {
+      title: 1,
+      createdAt: 1,
+      content: 1,
+      updatedAt: 1,
+      commentNum: 1,
+      pathName: 1
+    }
+  })
 
-        /*store.fetchTagsByPostID({ postID: article._id }).then(postTags=>{
-            store.fetchTags().then(tags=>{
-                let obj = tags.reduce((prev, curr)=>{
-                    prev[curr._id] = curr;
-                    return prev;
-                },{});
-                this.tags = [];
+  /* store.fetchTagsByPostID({ postID: article._id }).then(postTags=>{
+      store.fetchTags().then(tags=>{
+          let obj = tags.reduce((prev, curr)=>{
+              prev[curr._id] = curr
+              return prev
+          },{})
+          this.tags = []
+          postTags.forEach(value=>{
+              this.tags.push(obj[value.tagID])
+          })
+      })
 
-                postTags.forEach(value=>{
-                    this.tags.push(obj[value.tagID]);
-                })
-            })
-
-        });
-        store.fetchCatesByPostID({ postID: article._id }).then(postCates=>{
-            store.fetchCates().then(cates=>{
-                let obj = cates.reduce((prev, curr)=>{
-                    prev[curr._id] = curr;
-                    return prev;
-                },{});
-                this.cates = [];
-                
-                postCates.forEach(value=>{
-                    this.cates.push(obj[value.categoryID]);
-                })
-
-                
-            })
-
-        });*/
-
+  })
+  store.fetchCatesByPostID({ postID: article._id }).then(postCates=>{
+      store.fetchCates().then(cates=>{
+          let obj = cates.reduce((prev, curr)=>{
+              prev[curr._id] = curr
+              return prev
+          },{})
+          this.cates = []
+          postCates.forEach(value=>{
+              this.cates.push(obj[value.categoryID])
+          })
+      })
+  }) */
 }
 
 export default {
-    data () {
-        return {
-            cates: [],
-            tags: [],
+  data () {
+    return {
+      cates: [],
+      tags: []
+    }
+  },
+  components: {
+    Disqus
+  },
+  computed: {
+    article () {
+      return this.$store.state.blog
+    },
+    prev () {
+      return this.$store.state.prev
+    },
+    next () {
+      return this.$store.state.next
+    },
+    commentType () {
+      return JSON.parse(this.$store.state.siteInfo.comment.value).type || 'disqus'
+    },
+    commentName () {
+      return JSON.parse(this.$store.state.siteInfo.comment.value).name || ''
+    },
+    siteURL () {
+      return this.$store.state.siteInfo.site_url.value || 'localhost'
+    }
+  },
+  preFetch: fetchBlog,
+  beforeMount () {
+    if (this.$root._isMounted) {
+      fetchBlog(this.$store, this.$store.state.route)
+    }
+  },
+  watch: {
+    '$route': 'getPost'
+  },
+  methods: {
+    reset (dsq) {
+      const self = this
+      dsq.reset({
+        reload: true,
+        config: function () {
+          this.page.identifier = (self.$route.path || window.location.pathname)
+          this.page.url = window.location.href
         }
+      })
     },
-    components: {
-        Disqus
-    },
-    computed: {
-        article() {
-            return this.$store.state.blog;
-        },
-        prev() {
-            return this.$store.state.prev;
-        },
-        next() {
-            return this.$store.state.next;
-        },
-        commentType() {
-            return JSON.parse(this.$store.state.siteInfo.comment.value).type || 'disqus';
-        },
-        commentName() {
-            return JSON.parse(this.$store.state.siteInfo.comment.value).name || '';
-        },
-        siteURL() {
-            return this.$store.state.siteInfo.site_url.value || 'localhost';
-        }
-    },
-    preFetch: fetchBlog,
-    beforeMount () {
-        if (this.$root._isMounted){
-            fetchBlog(this.$store, this.$store.state.route)
-        }
-    },
-    watch: {
-        '$route': 'getPost'
-    },
-    methods: {
-        reset (dsq) {
-            const self = this;
-            dsq.reset({
-                reload: true,
-                config: function () {
-                    this.page.identifier = (self.$route.path || window.location.pathname)
-                    this.page.url = window.location.href
-                }
-            });
-        },
-        getPost (val, oldVal) {
-            if (val.name !== 'post')
-                return;
+    getPost (val, oldVal) {
+      if (val.name !== 'post') return
 
-            fetchBlog(this.$store, this.$store.state.route);
-            if (window.DISQUS) {
-                this.reset(window.DISQUS)
-            }
-        }
-    },
-
+      fetchBlog(this.$store, this.$store.state.route)
+      if (window.DISQUS) {
+        this.reset(window.DISQUS)
+      }
+    }
+  }
 }
 </script>

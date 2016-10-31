@@ -37,31 +37,25 @@
 </template>
 
 <script>
-/* eslint-disable */
-import api from '../store/api';
-
 export default {
   data () {
-    const isInitialRender = !this.$root._isMounted
     return {
-        //siteInfo: isInitialRender ? this.$store.getters.siteInfo : {}
-        siteInfo: this.$store.getters.siteInfo
+      siteInfo: this.$store.getters.siteInfo
     }
   },
-  preFetch (store, { path, params, query }){
-      return store.dispatch('FETCH_OPTIONS')
+  preFetch (store, { path, params, query }) {
+    return store.dispatch('FETCH_OPTIONS')
   },
-  beforeMount (){
-    if (typeof this.siteInfo.title === 'undefined'){
-        this.$store.dispatch('FETCH_OPTIONS').then(()=>{
-            if(this.siteInfo['title'] && typeof document !== 'undefined'){
-                document.title = this.siteInfo['title'].value;
-            }
-        });
-    }else{
-        document.title = this.siteInfo['title'].value || 'Blog';
+  beforeMount () {
+    if (typeof this.siteInfo.title === 'undefined') {
+      this.$store.dispatch('FETCH_OPTIONS').then(() => {
+        if (this.siteInfo['title'] && typeof document !== 'undefined') {
+          document.title = this.siteInfo['title'].value
+        }
+      })
+    } else {
+      document.title = this.siteInfo['title'].value || 'Blog'
     }
-
   }
 }
 </script>

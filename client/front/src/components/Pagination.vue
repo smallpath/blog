@@ -9,17 +9,13 @@
 </template>
 
 <script>
-/* eslint-disable */
 export default {
-    props: {
-        totalPage: Number,
-        page: Number,
-    },
-
-    data () {
-        return {
-
-        }
-    },
+  props: {
+    totalPage: Number,
+    page: Number
+  },
+  data () {
+    return {}
+  }
 }
 </script>

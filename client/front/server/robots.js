@@ -1,6 +1,6 @@
-let { siteUrl } = require('./config');
+let { siteUrl } = require('./config')
 
-module.exports = 
+module.exports =
 `User-agent: *
 Disallow: /beacon
 Disallow: /search

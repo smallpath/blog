@@ -10,16 +10,11 @@
 </template>
 
 <script>
-/* eslint-disable */
-import store from '../store/api';
-
 export default {
   data () {
-    const isInitialRender = !this.$root._isMounted
     return {
-        siteInfo:  this.$store.getters.siteInfo,
+      siteInfo: this.$store.getters.siteInfo
     }
-  },
-
+  }
 }
 </script>

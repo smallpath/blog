@@ -1,4 +1,3 @@
-/* eslint-disable */
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from './api'
@@ -17,124 +16,122 @@ const store = new Vuex.Store({
     about: {},
     siteInfo: {
       github_url: {
-          value: '',
+        value: ''
       },
       title: {
-          value: '',
+        value: ''
       },
       logo_url: {
-          value: '',
-      },
+        value: ''
+      }
     }
   },
 
   actions: {
 
-    FETCH_BLOG: ({ commit, state}, { conditions, ...args }) => {
-      return api.fetchPost(conditions, args).then(result=>{
+    FETCH_BLOG: ({ commit, state }, { conditions, ...args }) => {
+      return api.fetchPost(conditions, args).then(result => {
         let blog = result[0]
 
         commit('SET_BLOG', { blog })
 
         let first = api.fetchPost({
-          _id:{ $lt: blog._id }
-        },{
+          _id: { $lt: blog._id }
+        }, {
           sort: 1,
           limit: 1,
           select: {
-            title:1,
-            pathName:1,
-            type:1,
+            title: 1,
+            pathName: 1,
+            type: 1
           }
-        }).then(posts=>{
-            try{
-              let post = posts[0];
-              if (post.type == '0'){
-                commit('SET_PREV', { post });
-              }else{
-                commit('SET_PREV', { post: {} });
-              }
-            }catch(err){
-              commit('SET_PREV', { post: {} });
+        }).then(posts => {
+          try {
+            let post = posts[0]
+            if (post.type === '0') {
+              commit('SET_PREV', { post })
+            } else {
+              commit('SET_PREV', { post: {} })
             }
-        });
+          } catch (err) {
+            commit('SET_PREV', { post: {} })
+          }
+        })
+
         let second = api.fetchPost({
-          _id:{ $gt: blog._id }
-        },{
+          _id: { $gt: blog._id }
+        }, {
           limit: 1,
           select: {
-            title:1,
-            pathName:1,
-            type:1,
+            title: 1,
+            pathName: 1,
+            type: 1
           }
-        }).then(posts=>{
-            try{
-              let post = posts[0];
-              if (post.type == '0'){
-                commit('SET_NEXT', { post });
-              }else{
-                commit('SET_NEXT', { post: {} });
-              }
-            }catch(err){
-              commit('SET_NEXT', { post: {} });
+        }).then(posts => {
+          try {
+            let post = posts[0]
+            if (post.type === '0') {
+              commit('SET_NEXT', { post })
+            } else {
+              commit('SET_NEXT', { post: {} })
             }
-        });
+          } catch (err) {
+            commit('SET_NEXT', { post: {} })
+          }
+        })
 
-        return Promise.all([first, second]);
-      });
+        return Promise.all([first, second])
+      })
     },
 
-    FETCH_ABOUT: ({ commit, state}, { conditions, ...args }) => {
-      return api.fetchPost(conditions, args).then(result=>{
+    FETCH_ABOUT: ({ commit, state }, { conditions, ...args }) => {
+      return api.fetchPost(conditions, args).then(result => {
         let blog = result[0]
-
         commit('SET_ABOUT', { blog })
-
-      });
+      })
     },
 
     FETCH_ITEMS: ({ commit, state }, { conditions, ...args }) => {
-        return api.fetchPost(conditions, args).then(items => {
-           commit('SET_ITEMS', { items });
+      return api.fetchPost(conditions, args).then(items => {
+        commit('SET_ITEMS', { items })
 
-           if (state.totalPage === -1){
-            return api.fetchPost({ type: 0 }, { count: 1 })
-            .then(totalPage=>{
-              commit('SET_PAGES', { 
-                totalPage: Math.ceil(totalPage/10) 
+        if (state.totalPage === -1) {
+          return api.fetchPost({ type: 0 }, { count: 1 })
+            .then(totalPage => {
+              commit('SET_PAGES', {
+                totalPage: Math.ceil(totalPage / 10)
               })
             })
-           } else {
-             return '';
-           }
-
-        })
+        } else {
+          return ''
+        }
+      })
     },
 
     FETCH_ACHIEVE: ({ commit, state }, { conditions, ...args }) => {
-        return api.fetchPost(conditions, args).then(items => { 
-          let sortedItem = items.reduce((prev,curr)=>{
-              let time = curr.createdAt.slice(0,7).replace("-","年")+"月";
-              if (typeof prev[time] == 'undefined'){
-                  prev[time] = [curr];
-              }else{
-                  prev[time].push(curr);
-              }
-              return prev;
-          },{});
-          commit('SET_ACHIEVE', { sortedItem }) 
-        })
+      return api.fetchPost(conditions, args).then(items => {
+        let sortedItem = items.reduce((prev, curr) => {
+          let time = curr.createdAt.slice(0, 7).replace('-', '年') + '月'
+          if (typeof prev[time] === 'undefined') {
+            prev[time] = [curr]
+          } else {
+            prev[time].push(curr)
+          }
+          return prev
+        }, {})
+        commit('SET_ACHIEVE', { sortedItem })
+      })
     },
 
     FETCH_OPTIONS: ({ commit, state }) => {
-      return api.fetchOption().then(optionArr=>{
-        let obj = optionArr.reduce((prev,curr)=>{
-          prev[curr.key] = curr;
-          return prev;
-        },{});
-        commit('SET_OPTIONS', { obj });
-      });
-    },
+      return api.fetchOption().then(optionArr => {
+        let obj = optionArr.reduce((prev, curr) => {
+          prev[curr.key] = curr
+          return prev
+        }, {})
+        commit('SET_OPTIONS', { obj })
+      })
+    }
 
   },
 
@@ -162,26 +159,26 @@ const store = new Vuex.Store({
     },
 
     SET_ACHIEVE: (state, { sortedItem }) => {
-      Vue.set(state, 'achieves', sortedItem);
+      Vue.set(state, 'achieves', sortedItem)
     },
 
     SET_OPTIONS: (state, { obj }) => {
-      Vue.set(state, 'siteInfo', obj);
+      Vue.set(state, 'siteInfo', obj)
     }
   },
 
   getters: {
     items (state, getters) {
-       const { items, itemsPerPage } = state
-       return items;
+      const { items } = state
+      return items
     },
     siteInfo (state, getters) {
       const { siteInfo } = state
-      return siteInfo;
+      return siteInfo
     },
     achieves (state, getters) {
       const { achieves } = state
-      return achieves;
+      return achieves
     }
   }
 })
