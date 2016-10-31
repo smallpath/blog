@@ -1,13 +1,13 @@
 /* eslint-disable */
-if (typeof window !== 'undefined'){
-  
-  (function(win, doc){
-    var getById = function(el){
+if (typeof window !== 'undefined') {
+
+  (function (win, doc) {
+    var getById = function (el) {
       return document.getElementById(el);
     };
 
     //from qwrap
-    var getDocRect = function(doc) {
+    var getDocRect = function (doc) {
       doc = doc || document;
       var win = doc.defaultView || doc.parentWindow,
         mode = doc.compatMode,
@@ -41,7 +41,7 @@ if (typeof window !== 'undefined'){
       };
     };
 
-    var getXY = function(node) {
+    var getXY = function (node) {
       var doc = node.ownerDocument,
         docRect = getDocRect(doc),
         scrollLeft = docRect.scrollX,
@@ -58,7 +58,7 @@ if (typeof window !== 'undefined'){
       return xy;
     };
 
-    var getRect = function(el){
+    var getRect = function (el) {
       var p = getXY(el);
       var x = p[0];
       var y = p[1];
@@ -75,12 +75,12 @@ if (typeof window !== 'undefined'){
     };
 
     var utils = {
-      isMob : (function(){
+      isMob: (function () {
         var ua = navigator.userAgent.toLowerCase();
         var agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
         var result = false;
-        for( var i = 0 ; i < agents.length; i++ ){
-          if( ua.indexOf( agents[i].toLowerCase() ) > -1){
+        for (var i = 0; i < agents.length; i++) {
+          if (ua.indexOf(agents[i].toLowerCase()) > -1) {
             result = true;
           }
         }
@@ -89,67 +89,67 @@ if (typeof window !== 'undefined'){
     }
 
 
-    if( utils.isMob ){
+    if (utils.isMob) {
       document.documentElement.className += ' mob';
-    }else{
+    } else {
       document.documentElement.className += ' pc';
     }
 
 
     var Dom = {
-      $sidebar : document.querySelector('#sidebar'),
-      $main : document.querySelector('#main'),
-      $sidebar_mask : document.querySelector('#sidebar-mask'),
-      $body : document.body,
-      $btn_side : document.querySelector('#header .btn-bar'),
-      $article : document.querySelectorAll('.mob #page-index article')
+      $sidebar: document.querySelector('#sidebar'),
+      $main: document.querySelector('#main'),
+      $sidebar_mask: document.querySelector('#sidebar-mask'),
+      $body: document.body,
+      $btn_side: document.querySelector('#header .btn-bar'),
+      $article: document.querySelectorAll('.mob #page-index article')
     };
 
-    Dom.bindEvent = function(){
+    Dom.bindEvent = function () {
 
       var _this = this,
         body_class_name = 'side',
         eventFirst = 'click',
         eventSecond = 'click';
 
-      if( utils.isMob ){
+      if (utils.isMob) {
         eventFirst = 'touchstart';
         eventSecond = 'touchend';
       }
 
-      try{
+      try {
 
-        this.$btn_side.addEventListener( eventSecond ,function(){
+        this.$btn_side.addEventListener(eventSecond, function () {
 
-          if( _this.$body.className.indexOf( body_class_name ) > -1 ){
-            _this.$body.className = _this.$body.className.replace( body_class_name , '');
+          if (_this.$body.className.indexOf(body_class_name) > -1) {
+            _this.$body.className = _this.$body.className.replace(body_class_name, '');
             _this.$sidebar_mask.style.display = 'none';
-          }else{
+          } else {
             _this.$body.className += (' ' + body_class_name);
             _this.$sidebar_mask.style.display = 'block';
           }
 
-        },false);
+        }, false);
 
-      }catch(err){}
+      } catch (err) { }
 
-      try{
+      try {
 
-        this.$sidebar_mask.addEventListener( eventFirst , function( e ){
-          _this.$body.className = _this.$body.className.replace( body_class_name , '');
+        this.$sidebar_mask.addEventListener(eventFirst, function (e) {
+          _this.$body.className = _this.$body.className.replace(body_class_name, '');
           _this.$sidebar_mask.style.display = 'none';
           e.preventDefault();
-        },false);
+        }, false);
 
-      }catch(err){}
+      } catch (err) { }
 
 
-      window.addEventListener('resize',function(){
-        try{
-        _this.$body.className = _this.$body.className.replace( body_class_name , '');
-        _this.$sidebar_mask.style.display = 'none';
-        }catch(err){}
-      },false);
+      window.addEventListener('resize', function () {
+        try {
+          _this.$body.className = _this.$body.className.replace(body_class_name, '');
+          _this.$sidebar_mask.style.display = 'none';
+        } catch (err) { }
+      }, false);
     }
 
     Dom.bindEvent();

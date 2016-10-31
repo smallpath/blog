@@ -11,22 +11,17 @@
 </template>
 
 <script>
-/* eslint-disable */
-
-
 export default {
   props: {
-      article: {
-          type: Object,  
-          required: true 
-      }
+    article: {
+      type: Object,
+      required: true
+    }
   },
 
   data () {
     return {
-      siteName: 'Smallpath的小站',  
-      prefix: 'https://smallpath.me',
-      logoPath: "https://smallpath.me/static/upload/201605/logo.png",
+      siteName: 'Smallpath的小站'
     }
   }
 }
