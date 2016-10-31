@@ -51,10 +51,6 @@
 </template>
 
 <script>
-import Disqus from 'vue-disqus'
-
-Disqus.mounted = Disqus.ready
-
 function fetchBlog (store, { path: pathName, params, query }) {
   pathName = pathName.replace(/^\/post\//g, '')
   return store.dispatch('FETCH_BLOG', {
@@ -102,9 +98,6 @@ export default {
       cates: [],
       tags: []
     }
-  },
-  components: {
-    Disqus
   },
   computed: {
     article () {
