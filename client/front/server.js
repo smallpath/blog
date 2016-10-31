@@ -9,18 +9,31 @@ const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
 const serialize = require('serialize-javascript')
 const robots = require('./server/robots.js')
-const { request, api, getSitemapFromBody } = require('./server/sitemap.js')
+const request = require('superagent');
+const { api:sitemapApi, getSitemapFromBody } = require('./server/sitemap.js')
+const { api:rssApi, getRssBodyFromBody } = require('./server/sitemap.js')
 const { title } = require('./config');
 const schedule = require('node-schedule');
 
 let sitemap = '';
-request.get(api).then(result=>{
+request.get(sitemapApi).then(result=>{
   sitemap = getSitemapFromBody(result);
 });
 
-let job = schedule.scheduleJob(`30 3 * * * `, function(){
-  request.get(api).then(result=>{
+let sitemapJob = schedule.scheduleJob(`30 3 * * * `, function(){
+  request.get(sitemapApi).then(result=>{
     sitemap = getSitemapFromBody(result);
+  });
+});
+
+let rss = '';
+request.get(rssApi).then(result=>{
+  rss = getRssBodyFromBody(result);
+});
+
+let rssJob = schedule.scheduleJob(`30 3 * * * `, function(){
+  request.get(rssApi).then(result=>{
+    rss = getRssBodyFromBody(result);
   });
 });
 
@@ -28,11 +41,10 @@ const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
 
 const app = express()
 
-// parse index.html template
 const html = (() => {
   const template = fs.readFileSync(resolve('./index.html'), 'utf-8')
   const i = template.indexOf('<div id=app></div>')
-  // styles are injected dynamically via vue-style-loader in development
+
   const style = isProd ? '<link rel=stylesheet href=/dist/styles.css>' 
                         : '<link rel=stylesheet href=/dist/styles.css>' 
   return {
@@ -43,10 +55,8 @@ const html = (() => {
   }
 })()
 
-// setup the server renderer, depending on dev/prod environment
 let renderer
 if (isProd) {
-  // create server renderer from real fs
   const bundlePath = resolve('./dist/server-bundle.js')
   renderer = createRenderer(fs.readFileSync(bundlePath, 'utf-8'))
 } else {
@@ -78,6 +88,10 @@ app.get('/robots.txt', (req, res) => {
   res.end(robots);
 });
 
+app.get('/rss.xml', (req, res) => {
+  res.header('Content-Type', 'application/xml');
+  res.end(rss);
+});
 
 app.get('/sitemap.xml', (req, res) => {
   res.header('Content-Type', 'application/xml');
