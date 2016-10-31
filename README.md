@@ -17,8 +17,8 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [x] 使用superagent替换vue-resource 
   - [x] 谷歌统计 
   - [x] 服务端sitemap定时任务
+  - [x] rss
   - [ ] 组件级缓存
-  - [ ] rss
   - [ ] 服务端谷歌统计
   - [ ] 侧边栏图片
 - [ ] 后台管理单页

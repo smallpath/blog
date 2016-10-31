@@ -1,5 +1,5 @@
 <template>
-  <div id="disqus_thread"></div>
+	<div id="disqus_thread"></div>
 </template>
 
 <script>
@@ -30,13 +30,13 @@
       },
       init () {
         const self = this
-        window.disqus_config = function() {
+        window.disqus_config = function () {
           this.page.url = (self.$route.path || window.location.pathname)
           this.page.url = self.$el.baseURI
         }
         setTimeout(() => {
           let d = document
-            , s = d.createElement('script')
+          let s = d.createElement('script')
           s.type = 'text/javascript'
           s.async = true
           s.setAttribute('id', 'embed-disqus')
