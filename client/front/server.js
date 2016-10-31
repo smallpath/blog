@@ -11,8 +11,8 @@ const serialize = require('serialize-javascript')
 const robots = require('./server/robots.js')
 const request = require('superagent')
 const { api: sitemapApi, getSitemapFromBody } = require('./server/sitemap.js')
-const { api: rssApi, getRssBodyFromBody } = require('./server/sitemap.js')
-const { title } = require('./config')
+const { api: rssApi, getRssBodyFromBody } = require('./server/rss.js')
+const { title } = require('./server/config')
 const schedule = require('node-schedule')
 
 let sitemap = ''
@@ -26,6 +26,7 @@ schedule.scheduleJob('30 3 * * * ', function () {
   })
 })
 
+console.log(rssApi);
 let rss = ''
 request.get(rssApi).then(result => {
   rss = getRssBodyFromBody(result)

@@ -16,6 +16,7 @@ import Archive from './components/Archive'
 import Tag from './components/Tag'
 import Post from './components/Post'
 import TagPager from './components/TagPager'
+import Disqus from './components/Disqus'
 
 Vue.component('sidebar', Sidebar)
 Vue.component('about', About)
@@ -28,6 +29,7 @@ Vue.component('archive', Archive)
 Vue.component('blog-tag', Tag)
 Vue.component('blog-post', Post)
 Vue.component('tag-pager', TagPager)
+Vue.component('disqus', Disqus)
 
 import App from './components/App'
 Vue.component('app', App)
