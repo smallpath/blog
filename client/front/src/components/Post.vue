@@ -45,7 +45,6 @@
             <div class="comments" v-if="commentName !== ''">
                 <disqus :shortname="commentName" ></disqus>
             </div>
-            </div>
         </div>
         <my-footer></my-footer>
     </div>

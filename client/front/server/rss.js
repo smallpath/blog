@@ -19,7 +19,7 @@ let api = 'localhost:3000/api/post?conditions={"type":0}&select={"pathName":1,"u
 let getRssBodyFromBody = result => {
   let res = result.body
   let body = res.reduce((prev, curr) => {
-    let date = new Date(curr.updatedAt.slice(0, 10)).toUTCString()()
+    let date = new Date(curr.updatedAt).toUTCString()
     prev += `    <item>\r\n`
     prev += `      <title>${curr.title}<title>\r\n`
     prev += `      <link>${siteUrl}/post/${curr.pathName}</link>\r\n`
@@ -29,7 +29,7 @@ let getRssBodyFromBody = result => {
     prev += `    </item>\r\n`
     return prev
   }, '')
-  return head + getUpdatedDate(new Date().toUTCString()()) + body + tail
+  return head + getUpdatedDate(new Date().toUTCString()) + body + tail
 }
 
 module.exports = {
