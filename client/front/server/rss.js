@@ -13,13 +13,13 @@ let getUpdatedDate = date => `    <lastBuildDate>${date}</lastBuildDate>\r\n`
 let tail = `  </channel>
 </rss>`
 
-let api = 'localhost:3000/api/post?conditions={"type":0}&select={"pathName":1,"updatedAt":1,"markdownContent":1,"title":1}&sort=1&limit=10'
+let api = 'localhost:3000/api/post?conditions={"type":0}&select={"pathName":1,"updatedAt":1,"content":1,"title":1}&sort=1&limit=10'
 
 let getRssBodyFromBody = result => {
   let res = result.body
   let body = res.reduce((prev, curr) => {
     let date = new Date(curr.updatedAt).toUTCString()
-    let content = curr.markdownContent.replace(/&/g, '&amp;')
+    let content = curr.content.replace(/&/g, '&amp;')
                                       .replace(/</g, '&lt;')
                                       .replace(/>/g, '&gt;')
                                       .replace(/"/g, '&quot;')
