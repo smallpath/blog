@@ -13,7 +13,7 @@ const store = new Vuex.Store({
     blog: {},
     prev: {},
     next: {},
-    about: {},
+    page: {},
     siteInfo: {
       github_url: {
         value: ''
@@ -84,10 +84,10 @@ const store = new Vuex.Store({
       })
     },
 
-    FETCH_ABOUT: ({ commit, state }, { conditions, ...args }) => {
+    FETCH_PAGE: ({ commit, state }, { conditions, ...args }) => {
       return api.fetchPost(conditions, args).then(result => {
         let blog = result[0]
-        commit('SET_ABOUT', { blog })
+        commit('SET_PAGE', { blog })
       })
     },
 
@@ -154,8 +154,8 @@ const store = new Vuex.Store({
       Vue.set(state, 'totalPage', totalPage)
     },
 
-    SET_ABOUT: (state, { blog }) => {
-      Vue.set(state, 'about', blog)
+    SET_PAGE: (state, { blog }) => {
+      Vue.set(state, 'page', blog)
     },
 
     SET_ACHIEVE: (state, { sortedItem }) => {

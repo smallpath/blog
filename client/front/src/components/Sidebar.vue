@@ -20,7 +20,7 @@
                     <router-link :to="{name:'tag'}"  title="标签"> <i class="iconfont icon-tags"></i> <span>标签</span></router-link>
                 </li>
                 <li>
-                    <router-link :to="{name:'about'}" title="关于"> <i class="iconfont icon-user"></i> <span>关于</span></router-link>
+                    <router-link :to="{name:'page', params:{ page: 'about' } }" title="关于"> <i class="iconfont icon-user"></i> <span>关于</span></router-link>
                 </li>
                 <!--<li>
                     <a href="/links/" title="友情链接"> <i class="iconfont icon-link"></i> <span>友链</span></a>
@@ -42,6 +42,9 @@ export default {
     return {
       siteInfo: this.$store.getters.siteInfo
     }
+  },
+  serverCacheKey: props => {
+    return 'static-sidebar'
   },
   preFetch (store, { path, params, query }) {
     return store.dispatch('FETCH_OPTIONS')

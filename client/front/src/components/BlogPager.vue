@@ -28,6 +28,7 @@ function fetchItems (serverStore, { path, query, params }) {
       summary: 1,
       commentNum: 1,
       createdAt: 1,
+      updatedAt: 1,
       pathName: 1
     },
     limit: 10,

@@ -5,7 +5,7 @@ import store from './store/index'
 
 Vue.use(VueRouter)
 
-import About from './components/About'
+import PageContainer from './components/PageContainer'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
@@ -17,9 +17,10 @@ import Tag from './components/Tag'
 import Post from './components/Post'
 import TagPager from './components/TagPager'
 import Disqus from './components/Disqus'
+import Pager from './components/Pager'
 
 Vue.component('sidebar', Sidebar)
-Vue.component('about', About)
+Vue.component('page-container', PageContainer)
 Vue.component('my-header', Header)
 Vue.component('my-footer', Footer)
 Vue.component('blog-summary', BlogSummary)
@@ -30,6 +31,7 @@ Vue.component('blog-tag', Tag)
 Vue.component('blog-post', Post)
 Vue.component('tag-pager', TagPager)
 Vue.component('disqus', Disqus)
+Vue.component('pager', Pager)
 
 import App from './components/App'
 Vue.component('app', App)
@@ -70,15 +72,6 @@ let router = new VueRouter({
       }
     },
     {
-      path: '/about',
-      name: 'about',
-      components: {
-        default: About,
-        sidebar: Sidebar,
-        header: Header
-      }
-    },
-    {
       path: '/post/:pathName',
       name: 'post',
       components: {
@@ -92,6 +85,15 @@ let router = new VueRouter({
       name: 'tagPager',
       components: {
         default: TagPager,
+        sidebar: Sidebar,
+        header: Header
+      }
+    },
+    {
+      path: '/:page',
+      name: 'page',
+      components: {
+        default: PageContainer,
         sidebar: Sidebar,
         header: Header
       }

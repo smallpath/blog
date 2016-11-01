@@ -18,11 +18,11 @@ export default {
       required: true
     }
   },
-
   data () {
-    return {
-      siteName: 'Smallpath的小站'
-    }
+    return {}
+  },
+  serverCacheKey: props => {
+    return `${props.article._id}::${props.article.updatedAt}`
   }
 }
 </script>
