@@ -98,7 +98,7 @@ app.get('/sitemap.xml', (req, res) => {
   res.end(sitemap)
 })
 
-app.use((req, res, next) => {
+!isProd && app.use((req, res, next) => {
   console.log(`${req.method} ${decodeURIComponent(req.url)}`)
   return next()
 })
@@ -117,6 +117,8 @@ app.get('*', (req, res) => {
   }
   const renderStream = renderer.renderToStream(context)
   let firstChunk = true
+
+  res.header('Content-Type', 'text/html; charset=utf-8')
 
   res.write(html.head)
 
@@ -143,14 +145,14 @@ app.get('*', (req, res) => {
         let endStr = html.tail.replace('client-bundle.js></script>',
           'client-bundle.js></script><script async src=\'https://www.google-analytics.com/analytics.js\'></script>')
         res.end(endStr)
-        console.log(`whole request: ${Date.now() - s}ms`)
-        console.log('---------------')
+        !isProd && console.log(`whole request: ${Date.now() - s}ms`)
+        !isProd && console.log('---------------')
         return
       }
     }
     res.end(html.tail)
-    console.log(`whole request: ${Date.now() - s}ms`)
-    console.log('---------------')
+    !isProd && console.log(`whole request: ${Date.now() - s}ms`)
+    !isProd && console.log('---------------')
   })
 
   renderStream.on('error', err => {
