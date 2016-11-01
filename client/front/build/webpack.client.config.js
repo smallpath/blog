@@ -11,10 +11,10 @@ const commonConfig = Object.assign({}, base, {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     }),
     // extract vendor chunks for better caching
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'client-vendor-bundle.js'
-    })
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor',
+    //   filename: 'client-vendor-bundle.js'
+    // })
   ])
 })
 
