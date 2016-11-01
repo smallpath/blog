@@ -15,6 +15,9 @@ export default {
     return {
       siteInfo: this.$store.getters.siteInfo
     }
+  },
+  serverCacheKey: props => {
+    return 'static-header'
   }
 }
 </script>
