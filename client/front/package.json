@@ -13,6 +13,8 @@
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules"
   },
   "dependencies": {
+    "babel-loader": "^6.2.5",
+    "babel-preset-latest": "^6.16.0",
     "babel-runtime": "^6.0.0",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
