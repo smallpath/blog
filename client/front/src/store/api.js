@@ -1,5 +1,3 @@
-import { EventEmitter } from 'events'
-
 import request from 'superagent'
 
 const host = typeof location === 'undefined'
@@ -20,7 +18,7 @@ const postTagAPI = `${host}/api/postTag`
 
 // const postCateAPI = `${host}/api/postCategory`
 
-const store = new EventEmitter()
+const store = {}
 
 export default store
 
