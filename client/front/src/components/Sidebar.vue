@@ -64,7 +64,6 @@ export default {
 </script>
  
 <style>
-    @import '../assets/res/css/all.css';
     @import '../assets/res/css/article.css';
     @import '../assets/res/css/base.css';
     @import '../assets/res/css/comment.css';
