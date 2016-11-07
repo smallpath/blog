@@ -13,7 +13,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
 
@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     getOption(){
-      store.fetchOption(this).then(result=>{
+      Api.fetchOption().then(result=>{
         let obj = {};
         result.forEach(value=>{
           obj[value.key] = value;
@@ -51,7 +51,7 @@ export default {
           this.shouldTipShow = false;
       }, 2000);
 
-      store.patchOption(this,this.option['analyze_code']._id,{ value : this.analyze_code }).then(result=>{
+      Api.patchOption(this.option['analyze_code']._id,{ value : this.analyze_code }).then(result=>{
 
       })
 

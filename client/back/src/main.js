@@ -1,27 +1,8 @@
 /* eslint-disable */
 import Vue from 'vue'
 import VueRouter from "vue-router";
-import VueResource from 'vue-resource'
 
 Vue.use(VueRouter)
-Vue.use(VueResource)
-
-Vue.http.interceptors.push((request, next)  => {
-
-
-    const token = localStorage.getItem('token')
-
-    if ( request.method == 'get' && request.url.indexOf('/proxyPrefix/user') == -1 ){
-      next();
-    }
-
-    if (token !== null && token !== 'undefined') {
-      request.headers.set('authorization', token);
-    }
-
-    next();
-
-});
 
 import App from './App'
 import Login from './components/Login';
@@ -41,8 +22,8 @@ import UserList from './components/UserList';
 import OptionGeneral from './components/OptionGeneral';
 import OptionComment from './components/OptionComment';
 import OptionAnalytic from './components/OptionAnalytic';
-import UpdateCreate from './components/UpdateCreate';
-import UpdateList from './components/UpdateList';
+import VersionCreate from './components/VersionCreate';
+import VersionList from './components/VersionList';
 
 Vue.component('sidebar', Sidebar);
 
@@ -179,16 +160,16 @@ router.map({
     auth: true,
     subRoutes: {
       '/list': {
-        component: UpdateList,
+        component: VersionList,
         auth: true,
       },
       '/create': {
-        component: UpdateCreate,
+        component: VersionCreate,
         auth: true,
       },
       '/edit/:id': {
         name: 'editUpdate',
-        component: UpdateCreate,
+        component: VersionCreate,
         auth: true,
       }
     }

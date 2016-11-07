@@ -30,7 +30,7 @@
 <script>
 /* eslint-disable */
 import classnames from 'classnames';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
   props:{
@@ -53,7 +53,7 @@ export default {
     }
   },
   ready () {
-      store.fetchUser(this).then(result=>{
+      Api.fetchUser().then(result=>{
           this.username = result[0].displayName;
       })
   },

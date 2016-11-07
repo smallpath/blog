@@ -23,9 +23,9 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [ ] 侧边栏图片
 - [ ] 后台管理单页
   - [x] 添加升级模型的管理
+  - [x] 使用axios替换vue-resource
   - [ ] vue 1.0 => vue 2.0 
   - [ ] 使用element ui
-  - [ ] 支持schema的增删改查
   - [ ] 七牛云图片上传
 - [ ] RESTful服务器
   - [x] RESTful添加select字段过滤

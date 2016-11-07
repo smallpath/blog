@@ -135,12 +135,12 @@ export default {
     //         </Tab>
     //     </Tabs>,
     //     ()=> {
-    //         if( (this.state.file && this.state.file.length === 0) && !this.state.fileUrl ) {
+    //         if((this.state.file && this.state.file.length === 0) && !this.state.fileUrl ) {
     //         return false;
     //         }
 
     //         var data = new FormData;
-    //         if( this.state.fileUrl ) {
+    //         if(this.state.fileUrl ) {
     //         data.append('fileUrl', this.state.fileUrl);
     //         } else {
     //         data.append('file', this.state.file[0]);
@@ -149,7 +149,7 @@ export default {
     //         return firekylin.upload(data).then(
     //         res => {
     //             res.data = location.origin + res.data;
-    //             if( res.data.match(/\.(?:jpg|jpeg|png|bmp|gif|webp|svg|wmf|tiff|ico)$/i) ) {
+    //             if(res.data.match(/\.(?:jpg|jpeg|png|bmp|gif|webp|svg|wmf|tiff|ico)$/i) ) {
     //             preInputText(`![alt](${res.data})`, 2, 5);
     //             } else {
     //             let text = that.state.fileUrl ? '链接文本' : that.state.file[0].name;

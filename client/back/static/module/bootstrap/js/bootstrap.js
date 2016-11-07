@@ -47,7 +47,7 @@ if (typeof jQuery === 'undefined') {
       }
     }
 
-    return false // explicit for ie8 (  ._.)
+    return false // explicit for ie8 ( ._.)
   }
 
   // http://blog.alexmaccaw.com/css-transitions
@@ -69,7 +69,7 @@ if (typeof jQuery === 'undefined') {
       bindType: $.support.transition.end,
       delegateType: $.support.transition.end,
       handle: function (e) {
-        if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)
+        if ($(e.target).is(this)) return e.handleObj.handler.apply(arguments)
       }
     }
   })
@@ -254,7 +254,7 @@ if (typeof jQuery === 'undefined') {
       var data    = $this.data('bs.button')
       var options = typeof option == 'object' && option
 
-      if (!data) $this.data('bs.button', (data = new Button(this, options)))
+      if (!data) $this.data('bs.button', (data = new Button(options)))
 
       if (option == 'toggle') data.toggle()
       else if (option) data.setState(option)
@@ -474,7 +474,7 @@ if (typeof jQuery === 'undefined') {
       var options = $.extend({}, Carousel.DEFAULTS, $this.data(), typeof option == 'object' && option)
       var action  = typeof option == 'string' ? option : options.slide
 
-      if (!data) $this.data('bs.carousel', (data = new Carousel(this, options)))
+      if (!data) $this.data('bs.carousel', (data = new Carousel(options)))
       if (typeof option == 'number') data.to(option)
       else if (action) data[action]()
       else if (options.interval) data.pause().cycle()
@@ -705,7 +705,7 @@ if (typeof jQuery === 'undefined') {
       var options = $.extend({}, Collapse.DEFAULTS, $this.data(), typeof option == 'object' && option)
 
       if (!data && options.toggle && /show|hide/.test(option)) options.toggle = false
-      if (!data) $this.data('bs.collapse', (data = new Collapse(this, options)))
+      if (!data) $this.data('bs.collapse', (data = new Collapse(options)))
       if (typeof option == 'string') data[option]()
     })
   }
@@ -1203,7 +1203,7 @@ if (typeof jQuery === 'undefined') {
       var data    = $this.data('bs.modal')
       var options = $.extend({}, Modal.DEFAULTS, $this.data(), typeof option == 'object' && option)
 
-      if (!data) $this.data('bs.modal', (data = new Modal(this, options)))
+      if (!data) $this.data('bs.modal', (data = new Modal(options)))
       if (typeof option == 'string') data[option](_relatedTarget)
       else if (options.show) data.show(_relatedTarget)
     })
@@ -1299,7 +1299,7 @@ if (typeof jQuery === 'undefined') {
     this.type      = type
     this.$element  = $(element)
     this.options   = this.getOptions(options)
-    this.$viewport = this.options.viewport && $($.isFunction(this.options.viewport) ? this.options.viewport.call(this, this.$element) : (this.options.viewport.selector || this.options.viewport))
+    this.$viewport = this.options.viewport && $($.isFunction(this.options.viewport) ? this.options.viewport.call(this.$element) : (this.options.viewport.selector || this.options.viewport))
     this.inState   = { click: false, hover: false, focus: false }
 
     if (this.$element[0] instanceof document.constructor && !this.options.selector) {
@@ -1439,7 +1439,7 @@ if (typeof jQuery === 'undefined') {
       if (this.options.animation) $tip.addClass('fade')
 
       var placement = typeof this.options.placement == 'function' ?
-        this.options.placement.call(this, $tip[0], this.$element[0]) :
+        this.options.placement.call($tip[0], this.$element[0]) :
         this.options.placement
 
       var autoToken = /\s?auto?\s?/i
@@ -1740,7 +1740,7 @@ if (typeof jQuery === 'undefined') {
       var options = typeof option == 'object' && option
 
       if (!data && /destroy|hide/.test(option)) return
-      if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
+      if (!data) $this.data('bs.tooltip', (data = new Tooltip(options)))
       if (typeof option == 'string') data[option]()
     })
   }
@@ -1849,7 +1849,7 @@ if (typeof jQuery === 'undefined') {
       var options = typeof option == 'object' && option
 
       if (!data && /destroy|hide/.test(option)) return
-      if (!data) $this.data('bs.popover', (data = new Popover(this, options)))
+      if (!data) $this.data('bs.popover', (data = new Popover(options)))
       if (typeof option == 'string') data[option]()
     })
   }
@@ -2011,7 +2011,7 @@ if (typeof jQuery === 'undefined') {
       var data    = $this.data('bs.scrollspy')
       var options = typeof option == 'object' && option
 
-      if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+      if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(options)))
       if (typeof option == 'string') data[option]()
     })
   }
@@ -2323,7 +2323,7 @@ if (typeof jQuery === 'undefined') {
       var data    = $this.data('bs.affix')
       var options = typeof option == 'object' && option
 
-      if (!data) $this.data('bs.affix', (data = new Affix(this, options)))
+      if (!data) $this.data('bs.affix', (data = new Affix(options)))
       if (typeof option == 'string') data[option]()
     })
   }

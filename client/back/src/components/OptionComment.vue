@@ -42,7 +42,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
 
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     getOption(){
-      store.fetchOption(this).then(result=>{
+      Api.fetchOption().then(result=>{
         let obj = {};
         result.forEach(value=>{
           obj[value.key] = value;
@@ -86,7 +86,7 @@ export default {
       }, 2000);
       
       let value = JSON.stringify({type: this.picked, name: this.name});
-      store.patchOption(this,this.option['comment']._id,{ value }).then(result=>{
+      Api.patchOption(this.option['comment']._id,{ value }).then(result=>{
 
       })
     }

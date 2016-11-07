@@ -75,7 +75,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
 
@@ -97,8 +97,8 @@ export default {
   },
   methods: {
     getUpdates(){
-      store.fetchUpdates(this).then(result=>{
-        this.items = result.body;
+      Api.fetchUpdate().then(result=>{
+        this.items = result.data;
       })
     },
     deleteUpdate(id){
@@ -109,7 +109,7 @@ export default {
             this.shouldTipShow = false;
         }, 2000);
         
-        store.deleteUpdate(this, id).then(result=>{
+        Api.deleteUpdate(id).then(result=>{
             this.items = this.items.filter(value=>value._id !== id);
         })
 

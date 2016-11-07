@@ -75,7 +75,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
 
@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     getTag(){
-      store.fetchTag(this).then(result=>{
+      Api.fetchTag().then(result=>{
         this.tags = result;
       })
     },
@@ -109,15 +109,15 @@ export default {
             this.shouldTipShow = false;
         }, 2000);
         
-        store.deleteTag(this, id).then(result=>{
+        Api.deleteTag(id).then(result=>{
             this.tags = this.tags.filter(value=>value._id !== id);
         })
 
-        store.fetchPostTagsByID(this, {
+        Api.fetchPostTagsByID({
             tagID: id,
         }).then(tags=>{
             tags.forEach(value=>{
-                store.deleteTagsByPostID(this,value._id);
+                Api.deleteTagsByPostID(value._id);
             })
 
         })

@@ -42,7 +42,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
 
@@ -70,7 +70,7 @@ export default {
 
       this.id = to.params.id;
 
-      store.fetchCateById(this, this.id).then(result=>{
+      Api.fetchCateById(this.id).then(result=>{
         this.name = result.name;
       })
     }
@@ -89,11 +89,11 @@ export default {
       }, 2000);
 
       if (this.id == '')
-        store.newCate(this, this.name).then(body=>{
+        Api.newCate(this.name).then(body=>{
           this.isSubmitting = false;
         })
       else
-        store.patchCate(this, this.id ,{ name: this.name }).then(body=>{
+        Api.patchCate(this.id ,{ name: this.name }).then(body=>{
           this.isSubmitting = false;
         })
     }

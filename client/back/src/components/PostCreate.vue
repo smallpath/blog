@@ -75,7 +75,7 @@ import MarkdownEditor from './editor/index';
 import Datepicker from 'vue-datepicker'
 import marked from 'marked'
 import moment from 'moment';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
 
@@ -174,7 +174,7 @@ export default {
 
       let tempResult;
 
-      store.fetchBlogByID(this, this.id).then(result=>{
+      Api.fetchBlogByID(this.id).then(result=>{
         this.post = result;
         this.starttime = this.post.updatedAt || this.post.createdAt;
         this.timeoption.placeholder = this.starttime;
@@ -183,14 +183,14 @@ export default {
         if(this.isPost == false)
             return;
 
-        store.fetchPostTags(this).then(result=>{
+        Api.fetchPostTags().then(result=>{
             let obj = {};
             this.postTagsBackup = result.filter(value=>value.postID == this.id).map(value=>value._id)
             result = result.filter(value=>value.postID == this.id);
             this.postTags = result.map(value=>value.tagID);
         })
 
-        store.fetchPostCate(this).then(result=>{
+        Api.fetchPostCate().then(result=>{
             let obj = {};
             this.postCateBackup = result.filter(value=>value.postID == this.id).map(value=>value._id)
             result = result.filter(value=>value.postID == this.id);
@@ -236,7 +236,7 @@ export default {
             options: '',
         }
 
-        store.newBlog(this, newPost).then(body=>{
+        Api.newBlog(newPost).then(body=>{
           this.isSubmitting = false;
           this.deletePostAndTag(body._id);
         });
@@ -254,7 +254,7 @@ export default {
             isPublic: this.isPublic == '1' ? 1: 0,
         });
 
-        store.patchBlog(this, this.id ,this.post).then(body=>{
+        Api.patchBlog(this.id ,this.post).then(body=>{
           this.isSubmitting = false;
           this.deletePostAndTag(body._id);
         })
@@ -267,17 +267,17 @@ export default {
     deletePostAndTag(id){
         
         this.postTagsBackup.forEach(value=>{
-            store.deletePostTags(this, value)
+            Api.deletePostTags(value)
         })
 
         
         this.postCateBackup.forEach(value=>{
-            store.deletePostCates(this, value)
+            Api.deletePostCates(value)
         })
 
 
         this.postTags.forEach(value=>{
-            store.addPostTags(this,{
+            Api.addPostTags({
                 postID: id,
                 tagID: value ,
             });
@@ -285,7 +285,7 @@ export default {
 
         this.postCate.forEach(value=>{
             
-            store.addPostCates(this,{
+            Api.addPostCates({
                 postID: id,
                 categoryID: value ,
             });
@@ -295,7 +295,7 @@ export default {
   },
   ready(){
 
-      store.fetchOptionByJSON(this,{ key: 'site_url' }).then(result=>{
+      Api.fetchOption({ key: 'site_url' }).then(result=>{
           if(Array.isArray(result) && result[0])
             this.site_url = result[0].value;
       })
@@ -303,10 +303,10 @@ export default {
     if(this.isPost == false)
         return;
     
-      store.fetchCate(this).then(result=>{
+      Api.fetchCate().then(result=>{
         this.cates = result;
       })
-      store.fetchTag(this).then(result=>{
+      Api.fetchTag().then(result=>{
         this.tags = result;
       })
   }
