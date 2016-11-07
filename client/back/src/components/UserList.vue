@@ -75,7 +75,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
 
@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     getUser(){
-      store.fetchUser(this).then(result=>{
+      Api.fetchUser().then(result=>{
         this.user = result[0];
       })
     },
@@ -119,7 +119,7 @@ export default {
           this.shouldTipShow = false;
       }, 2000);
 
-      store.patchUser(this,this.user._id,this.user).then(result=>{
+      Api.patchUser(this.user._id,this.user).then(result=>{
           
       })
 

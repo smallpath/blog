@@ -55,7 +55,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
 
@@ -74,8 +74,7 @@ export default {
     }
   },
   ready(){
-      store.fetchUser(this).then(result=>{
-
+      Api.fetchUser().then(result=>{
         if (!Array.isArray(result)){
             localStorage.removeItem('token');
             localStorage.removeItem('username');

@@ -31,7 +31,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
 
@@ -61,10 +61,10 @@ export default {
 
       this.id = to.params.id;
 
-      this.$http.get(`/proxyPrefix/api/update/${this.id}`).then(result=>{
-        this.name = result.body.name;
-        this.path = result.body.path;
-        this.version = result.body.version;
+      Api.fetchVersionById(this.id).then(result=>{
+        this.name = result.name;
+        this.path = result.path;
+        this.version = result.version;
       })
 
     }
@@ -83,7 +83,7 @@ export default {
       }, 2000);
 
       if (this.id == ''){
-        this.$http.post(`/proxyPrefix/api/update`,{
+        Api.newVersion({
           name: this.name,
           path: this.path,
           version: this.version,
@@ -91,7 +91,7 @@ export default {
           this.isSubmitting = false;
         });
       }else{
-        this.$http.patch(`/proxyPrefix/api/update/${this.id}`,{
+        Api.patchVersion(this.id,{
           name: this.name,
           path: this.path,
           version: this.version,

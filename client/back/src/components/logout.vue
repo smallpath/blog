@@ -1,11 +1,11 @@
 <script>
 /* eslint-disable */
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
   methods: {
     logout(){
-      store.logout(this).then(response=>{
+      Api.logout().then(response => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
         this.$router.go({path: '/admin/login' });

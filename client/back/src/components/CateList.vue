@@ -75,7 +75,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
 
@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     getCate(){
-      store.fetchCate(this).then(result=>{
+      Api.fetchCate().then(result=>{
         this.cates = result;
       })
     },
@@ -109,16 +109,16 @@ export default {
             this.shouldTipShow = false;
         }, 2000);
 
-        store.deleteCate(this, id).then(result=>{
+        Api.deleteCate(id).then(result=>{
             this.cates = this.cates.filter(value=>value._id !== id);
         })
 
 
-        store.fetchPostCateByID(this, {
+        Api.fetchPostCateByID({
             categoryID: id,
         }).then(tags=>{
             tags.forEach(value=>{
-                store.deleteCateByPostID(this,value._id)
+                Api.deleteCateByPostID(value._id)
             })
 
         })

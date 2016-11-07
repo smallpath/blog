@@ -73,7 +73,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
 
@@ -94,7 +94,9 @@ export default {
   },
   methods: {
     getBlogByPage(){
-      store.fetchAllBlog(this).then(result=>{
+      Api.fetchBlog({
+        type: 0
+      }).then(result=>{
         this.posts = result;
       })
     },
@@ -106,24 +108,24 @@ export default {
             this.shouldTipShow = false;
         }, 2000);
         
-        store.deleteBlogByID(this, id).then(result=>{
+        Api.deleteBlogByID(id).then(result=>{
             this.posts = this.posts.filter(value=>value._id !== id);
         });
 
-        store.fetchPostTagsByID(this, {
+        Api.fetchPostTagsByID({
             postID: id,
         }).then(tags=>{
             tags.forEach(value=>{
-                store.deleteTagsByPostID(this,value._id);
+                Api.deleteTagsByPostID(value._id);
             })
 
         })
 
-        store.fetchPostCateByID(this, {
+        Api.fetchPostCateByID({
             postID: id,
         }).then(tags=>{
             tags.forEach(value=>{
-                store.deleteCateByPostID(this,value._id)
+                Api.deleteCateByPostID(value._id)
             })
 
         })

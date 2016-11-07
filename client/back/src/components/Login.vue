@@ -23,7 +23,7 @@
 
 <script>
 /* eslint-disable */
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
   data () {
@@ -35,25 +35,23 @@ export default {
   },
   methods: {
     login(){
-      let json = {
+      Api.login({
         name: this.username,
         password: this.password
-      };
-      store.login(this, json).then(response=>{
-        if (response.body.status == 'fail'){
+      }).then(response=>{
+        if (response.data.status == 'fail'){
           
-        }else if(response.body.status == 'success'){
-          localStorage.setItem('token', response.body.token);
+        }else if(response.data.status == 'success'){
+          localStorage.setItem('token', response.data.token);
           localStorage.setItem('username',this.username);
           this.$router.go({path: '/dashboard' });
         }
-
       });
 
     }
   },
   ready(){
-    store.fetchOptionByJSON(this, { key: 'title' }).then(result=>{
+    Api.fetchOption({ key: 'title' }).then(result=>{
       this.title = result[0].value || '';
     })
   }

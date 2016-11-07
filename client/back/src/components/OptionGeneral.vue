@@ -5,7 +5,7 @@
         <div class="form-group"><label>站点名称</label>
           <div class="form-group"><input name="title" v-model="title" class="form-control form-control" type="text"></div>
         </div>
-        <div class="form-group"><label>LOGO 地址</label><img src="{{site_url}}/static/upload/201605/logo.png?m=1474296766757" alt="logo" style="display:block;margin-bottom:10px;"
+        <div class="form-group"><label>LOGO 地址</label><img :src="site_url + '/static/upload/201605/logo.png?m=1474296766757'" alt="logo" style="display:block;margin-bottom:10px;"
             height="140px" width="140px">
           <div class="form-group"><input name="logo_url" v-model="logo_url" class="form-control form-control" type="text"></div>
           <p class="help-block"><span>尺寸最好为 140x140px。</span><button type="button" class="btn btn-default"><span ></span><span >上传</span></button>
@@ -17,7 +17,7 @@
         <div class="form-group"><label>网站地址</label>
           <div class="form-group"><input name="site_url" v-model="site_url" class="form-control form-control" type="text"></div>
         </div>
-        <div class="form-group"><label>Favicon 地址</label><img src="{{site_url}}/favicon.ico?m=1474296766757" alt="logo" style="display:block;margin-bottom:10px;max-width:128px;max-height:128px;">
+        <div class="form-group"><label>Favicon 地址</label><img :src="site_url + '/favicon.ico?m=1474296766757'" alt="logo" style="display:block;margin-bottom:10px;max-width:128px;max-height:128px;">
           <div class="form-group"><input name="favicon_url" v-model="favicon_url" class="form-control form-control" type="text"></div>
           <p class="help-block"><span>尺寸最好为 128x128px。</span><button type="button" class="btn btn-default"><span></span><span >上传</span></button>
             <input style="display:none;" accept="image/x-icon" type="file"></p>
@@ -43,7 +43,7 @@
 <script>
 /* eslint-disable */
 import Top from './Top';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
 
@@ -88,15 +88,14 @@ export default {
   },
   methods: {
     getOption(){
-      store.fetchOption(this).then(result=>{
-        let obj = {};
-        result.forEach(value=>{
-          obj[value.key] = value;
-          if (typeof this[value.key] != 'undefined'){
-            this[value.key] = value.value;
+      Api.fetchOption().then(result=>{
+        this.option = result.reduce((prev, curr) => {
+          prev[curr.key] = curr;
+          if (typeof this[curr.key] != 'undefined'){
+            this[curr.key] = curr.value;
           }
-        })
-        this.option = obj;
+          return prev;
+        }, {});
       })
     },
     submit(){
@@ -117,7 +116,7 @@ export default {
         if (this[value.key] == value.value)
           return;
 
-        store.patchOption(this,value._id,{ value : this[value.key] }).then(result=>{
+        Api.patchOption(value._id,{ value : this[value.key] }).then(result=>{
           value.value = this[value.key];
         })
 

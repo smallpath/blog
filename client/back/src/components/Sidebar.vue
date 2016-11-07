@@ -29,7 +29,7 @@
 <script>
 /* eslint-disable */
 import classnames from 'classnames';
-import store from '../store/index';
+import Api from '../store/api';
 
 export default {
   props:{
@@ -80,7 +80,7 @@ export default {
       this.currentRoute = this.$route.path;
 
 
-    store.fetchOptionByJSON(this, { key: 'title' }).then(result=>{
+    Api.fetchOption({ key: 'title' }).then(result=>{
       this.title = result[0].value || '';
     })
 
@@ -97,7 +97,7 @@ export default {
       return this.currentRoute.indexOf(routeUrl) > -1;
     },
     getHeight(route, routeUrl){
-      let height = 49*( this.isActive(route.url) ? route.children.length : 0);
+      let height = 49*(this.isActive(route.url) ? route.children.length : 0);
       return height+'px';
     },
     getClassName(icon, routeUrl){
