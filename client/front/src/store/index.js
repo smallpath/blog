@@ -36,7 +36,8 @@ const store = new Vuex.Store({
         commit('SET_BLOG', { blog })
 
         let first = api.fetchPost({
-          _id: { $lt: blog._id }
+          _id: { $lt: blog._id },
+          type: 0
         }, {
           sort: 1,
           limit: 1,
@@ -59,7 +60,8 @@ const store = new Vuex.Store({
         })
 
         let second = api.fetchPost({
-          _id: { $gt: blog._id }
+          _id: { $gt: blog._id },
+          type: 0
         }, {
           limit: 1,
           select: {
