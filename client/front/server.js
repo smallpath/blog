@@ -40,12 +40,12 @@ schedule.scheduleJob('30 3 * * * ', function () {
 const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
 
 const app = express()
-
+const inline = fs.readFileSync(resolve('./dist/styles.css'), 'utf-8')
 const html = (() => {
   const template = fs.readFileSync(resolve('./index.html'), 'utf-8')
   const i = template.indexOf('<div id=app></div>')
 
-  const style = isProd ? '<link rel=stylesheet href=/dist/styles.css>'
+  const style = isProd ? `<style>${inline}</style>`
     : '<link rel=stylesheet href=/dist/styles.css>'
   return {
     head: template.slice(0, i)

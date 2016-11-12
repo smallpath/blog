@@ -5,7 +5,8 @@
                 <a href="/"> 
                     <img 
                         :src="siteInfo.logo_url.value" 
-                        :alt="siteInfo.title.value">
+                        :alt="siteInfo.title.value"
+                        id="logo">
                 </a> 
                 <span>{{siteInfo.title.value}}</span>
             </div>
@@ -59,18 +60,22 @@ export default {
     } else {
       document.title = this.siteInfo['title'].value || 'Blog'
     }
+  },
+  mounted () {
+    let img = document.getElementById('logo')
+    img.onerror = ({ target }) => (img.src = target.currentSrc.replace('.webp', '.png'))
   }
 }
 </script>
  
 <style>
+    @import '../assets/res/css/icon.css';
     @import '../assets/res/css/article.css';
     @import '../assets/res/css/base.css';
     @import '../assets/res/css/comment.css';
     @import '../assets/res/css/footer.css';
     @import '../assets/res/css/header.css';
     @import '../assets/res/css/highlight.css';
-    @import '../assets/res/css/icon.css';
     @import '../assets/res/css/pagination.css';
     @import '../assets/res/css/search.css';
     @import '../assets/res/css/sidebar.css';
