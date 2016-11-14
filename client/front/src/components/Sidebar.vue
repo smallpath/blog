@@ -12,7 +12,7 @@
             </div>
             <ul class="buttons">
                 <li v-for="menu in siteInfo.menu.value">
-                    <router-link :to="{ path: menu.url }" title="menu.label"> <i class="iconfont" :class="'icon-' + menu.option"></i> <span>{{menu.label}}</span></router-link>
+                    <router-link :to="{ path: menu.url }" :title="menu.label"> <i class="iconfont" :class="'icon-' + menu.option"></i> <span>{{menu.label}}</span></router-link>
                 </li>
             </ul>
             <ul class="buttons">
