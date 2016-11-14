@@ -93,6 +93,22 @@ const store = new Vuex.Store({
       })
     },
 
+    FETCH_TAGS: ({ commit, state }, { conditions, ...args }) => {
+      return api.fetchPost(conditions, args).then(result => {
+        let tags = result.reduce((prev, curr) => {
+          curr.tags.forEach(tag => {
+            if (typeof prev[tag] === 'undefined') {
+              prev[tag] = 1
+            } else {
+              prev[tag] = prev[tag] + 1
+            }
+          })
+          return prev
+        }, {})
+        commit('SET_TAGS', { tags })
+      })
+    },
+
     FETCH_ITEMS: ({ commit, state }, { conditions, ...args }) => {
       return api.fetchPost(conditions, args).then(items => {
         commit('SET_ITEMS', { items })
@@ -149,6 +165,9 @@ const store = new Vuex.Store({
       Vue.set(state, 'next', post)
     },
 
+    SET_TAGS: (state, { tags }) => {
+      Vue.set(state, 'tags', tags)
+    },
     SET_ITEMS: (state, { items }) => {
       Vue.set(state, 'items', items)
     },

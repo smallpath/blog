@@ -6,8 +6,36 @@ module.exports = [
     },
     {
         "key": "comment",
-        "value": "{\"type\":\"disqus\",\"name\":\"\"}",
+        "value": {
+            "type": "disqus",
+            "name": ""
+        },
         "desc": "评论类型"
+    },
+    {
+        "key": "menu",
+        "value": [{
+            "label": "首页",
+            "url": "/",
+            "option": "home"
+        },{
+            "label": "归档",
+            "url": "/archive",
+            "option": "archive"
+        },{
+            "label": "标签",
+            "url": "/tag",
+            "option": "tags"
+        },{
+            "label": "关于",
+            "url": "/about",
+            "option": "user"
+        },{
+            "label": "友链",
+            "url": "/link",
+            "option": "link"
+        }],
+        "desc": "导航菜单"
     },
     {
         "key": "description",

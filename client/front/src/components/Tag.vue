@@ -4,8 +4,9 @@
             <h1 class=title>{{title}}</h1>
             <div class="entry-content">
                 <section> 
-                    <router-link v-for="item in items" 
-                        :to="{ name: 'tagPager', params:{ tagName: item.name } }" :data-tag="item.name">{{item.name}}({{item.count}})</router-link> 
+                    <router-link v-for="(item, key, index) in items" 
+                        :to="{ name: 'tagPager', params:{ tagName: key } }"
+                        :data-tag="key">{{key}}({{item}})</router-link> 
                 </section>
             </div>
         </article>
@@ -14,37 +15,31 @@
 </template>
 
 <script>
-import store from '../store/api'
+function fetchTags (store, { path: pathName, params, query }) {
+  return store.dispatch('FETCH_TAGS', {
+    conditions: {},
+    select: {
+      tags: 1
+    }
+  })
+}
 
 export default {
   data () {
     return {
-      title: '标签',
-      items: {}
+      title: '标签'
     }
   },
-  mounted () {
-    store.fetchTags().then(items => {
-      store.fetchPostTags().then(postTags => {
-        postTags.forEach(value => {
-          let tagID = value.tagID
-          let targetIndex = 0
-          items.forEach((value, index) => {
-            if (value._id === tagID) {
-              targetIndex = index
-            }
-          })
-
-          if (typeof items[targetIndex].count === 'undefined') {
-            items[targetIndex].count = 1
-          } else {
-            items[targetIndex].count ++
-          }
-        })
-        items.sort((a, b) => b.count - a.count)
-        this.items = items
-      })
-    })
+  computed: {
+    items () {
+      return this.$store.state.tags
+    }
+  },
+  preFetch: fetchTags,
+  beforeMount () {
+    if (this.$root._isMounted) {
+      fetchTags(this.$store, this.$store.state.route)
+    }
   }
 
 }

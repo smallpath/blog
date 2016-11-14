@@ -32,7 +32,7 @@
                             <ul>
                                 <li v-for="cate in cates">
                                     <label>
-                                        <input name="cate" value="{{cate._id}}" v-model="postCate" type="checkbox">
+                                        <input name="cate" value="{{cate.name}}" v-model="postCate" type="radio">
                                         <span style="font-weight:normal;">{{cate.name}}</span>
                                     </label>
                                 </li>
@@ -42,7 +42,7 @@
                             <ul>
                                 <li v-for="tag in tags">
                                     <label>
-                                        <input name="tag" value="{{tag._id}}" v-model="postTags" type="checkbox">
+                                        <input name="tag" value="{{tag.name}}" v-model="postTags" type="checkbox">
                                         <span style="font-weight:normal;">{{tag.name}}</span>
                                     </label>
                                 </li>
@@ -183,20 +183,8 @@ export default {
         if(this.isPost == false)
             return;
 
-        Api.fetchPostTags().then(result=>{
-            let obj = {};
-            this.postTagsBackup = result.filter(value=>value.postID == this.id).map(value=>value._id)
-            result = result.filter(value=>value.postID == this.id);
-            this.postTags = result.map(value=>value.tagID);
-        })
-
-        Api.fetchPostCate().then(result=>{
-            let obj = {};
-            this.postCateBackup = result.filter(value=>value.postID == this.id).map(value=>value._id)
-            result = result.filter(value=>value.postID == this.id);
-
-            this.postCate = result.map(value=>value.categoryID);
-        })
+        this.postTags = result.tags;
+        this.postCate = result.category;
 
       });
 
@@ -233,12 +221,13 @@ export default {
             allowComment: this.allowComment == true? '1' : '0',
             isPublic: this.isPublic == '1' ? 1: 0,
             commentNum: 0,
-            options: '',
+            options: {},
+            category: this.postCate,
+            tags: this.postTags
         }
 
         Api.newBlog(newPost).then(body=>{
           this.isSubmitting = false;
-          this.deletePostAndTag(body._id);
         });
 
 
@@ -252,45 +241,19 @@ export default {
             content: marked(this.post.markdownContent),
             allowComment: this.allowComment == true? '1' : '0',
             isPublic: this.isPublic == '1' ? 1: 0,
+            category: this.postCate,
+            tags: this.postTags
         });
 
         Api.patchBlog(this.id ,this.post).then(body=>{
           this.isSubmitting = false;
-          this.deletePostAndTag(body._id);
         })
 
 
       }
 
 
-    },
-    deletePostAndTag(id){
-        
-        this.postTagsBackup.forEach(value=>{
-            Api.deletePostTags(value)
-        })
-
-        
-        this.postCateBackup.forEach(value=>{
-            Api.deletePostCates(value)
-        })
-
-
-        this.postTags.forEach(value=>{
-            Api.addPostTags({
-                postID: id,
-                tagID: value ,
-            });
-        });
-
-        this.postCate.forEach(value=>{
-            
-            Api.addPostCates({
-                postID: id,
-                categoryID: value ,
-            });
-        });
-    },
+    }
     
   },
   ready(){

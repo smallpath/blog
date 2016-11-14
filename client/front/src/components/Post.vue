@@ -15,22 +15,21 @@
                 <p>-- <acronym title="End of File">EOF</acronym> --</p>
                 <div class="post-info">
                     <p> 发表于 <i>{{article.createdAt}}</i> ，
-                    <template v-if="cates.length != 0">
+                    <template v-if="article.category">
                         添加在分类「
-                        <a v-for="cate in cates"  
-                             :data-cate="cate.name">
-                            <code class="notebook">{{cate.name}}</code>
+                        <a :data-cate="article.category">
+                            <code class="notebook">{{article.category}}</code>
                         </a> 」
                     </template>
-                    <template v-if="cates.length && tags.length">
+                    <template v-if="article.category">
                      下 ，
                     </template>
-                    <template v-if="tags.length != 0">
+                    <template v-if="article.tags && article.tags.length != 0">
                         并被添加「
-                        <router-link v-for="tag in tags" 
-                            :to="{name:'tagPager', params: { tagName: tag.name }}" 
-                            :data-tag="tag.name"> 
-                            <code class="notebook">{{tag.name}}</code>
+                        <router-link v-for="tag in article.tags" 
+                            :to="{name:'tagPager', params: { tagName: tag }}" 
+                            :data-tag="tag"> 
+                            <code class="notebook">{{tag}}</code>
                         </router-link> 」标签 ，
                     </template>
                         最后修改于 <i>{{article.updatedAt}}</i></p>
@@ -42,7 +41,7 @@
                 <router-link v-if="typeof next.pathName !== 'undefined'" 
                     :to="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo</router-link> 
             </nav>
-            <div class="comments" v-if="commentName !== ''">
+            <div class="comments" v-if="article.allowComment === 1 && commentName !== ''">
                 <disqus :shortname="commentName" ></disqus>
             </div>
         </div>
@@ -61,43 +60,17 @@ function fetchBlog (store, { path: pathName, params, query }) {
       content: 1,
       updatedAt: 1,
       commentNum: 1,
-      pathName: 1
+      pathName: 1,
+      category: 1,
+      allowComment: 1,
+      tags: 1
     }
   })
-
-  /* store.fetchTagsByPostID({ postID: article._id }).then(postTags=>{
-      store.fetchTags().then(tags=>{
-          let obj = tags.reduce((prev, curr)=>{
-              prev[curr._id] = curr
-              return prev
-          },{})
-          this.tags = []
-          postTags.forEach(value=>{
-              this.tags.push(obj[value.tagID])
-          })
-      })
-
-  })
-  store.fetchCatesByPostID({ postID: article._id }).then(postCates=>{
-      store.fetchCates().then(cates=>{
-          let obj = cates.reduce((prev, curr)=>{
-              prev[curr._id] = curr
-              return prev
-          },{})
-          this.cates = []
-          postCates.forEach(value=>{
-              this.cates.push(obj[value.categoryID])
-          })
-      })
-  }) */
 }
 
 export default {
   data () {
-    return {
-      cates: [],
-      tags: []
-    }
+    return {}
   },
   computed: {
     article () {
@@ -110,10 +83,10 @@ export default {
       return this.$store.state.next
     },
     commentType () {
-      return JSON.parse(this.$store.state.siteInfo.comment.value).type || 'disqus'
+      return this.$store.state.siteInfo.comment.value.type || 'disqus'
     },
     commentName () {
-      return JSON.parse(this.$store.state.siteInfo.comment.value).name || ''
+      return this.$store.state.siteInfo.comment.value.name || ''
     },
     siteURL () {
       return this.$store.state.siteInfo.site_url.value || 'localhost'
