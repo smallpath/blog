@@ -29,7 +29,7 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [ ] 七牛云图片上传
 - [ ] RESTful服务器
   - [x] RESTful添加select字段过滤
-  - [ ] 标签及分类移至文章中 
+  - [x] 标签及分类移至文章中 
   - [ ] 文章toc
   - [ ] 七牛access_token下发及鉴权
   - [ ] OAuth1升级至OAuth2
@@ -90,12 +90,6 @@ server{
     location ^~ / {
         rewrite ^/proxyPrefix/(.*) /$1 break;
         proxy_http_version 1.1;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $http_host;
-        proxy_set_header X-NginX-Proxy true;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
         proxy_pass http://127.0.0.1:$ssr_port;
         proxy_redirect off;
     }
@@ -103,12 +97,6 @@ server{
     location ^~ /proxyPrefix/ {
         rewrite ^/proxyPrefix/(.*) /$1 break;
         proxy_http_version 1.1;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $http_host;
-        proxy_set_header X-NginX-Proxy true;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
         proxy_pass http://127.0.0.1:$node_port;
         proxy_redirect off;
     }
@@ -157,12 +145,6 @@ server{
     location ^~ /proxyPrefix/ {
         rewrite ^/proxyPrefix/(.*) /$1 break;
         proxy_http_version 1.1;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $http_host;
-        proxy_set_header X-NginX-Proxy true;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
         proxy_pass http://127.0.0.1:$node_port;
         proxy_redirect off;
     }
@@ -184,17 +166,15 @@ server{
 
 > https://smallpath.me/proxyPrefix/api/:modelName/:id
 
-其中, `:modelName`为模型名, 总计如下8个模型
+其中, `:modelName`为模型名, 总计如下6个模型
 
 ```
 post
+tag
 category
 option
-postCategory
-postTag
-tag
 user
-update
+version
 ```
 
 `:id`为指定的文档ID, 用以对指定文档进行CRUD

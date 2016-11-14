@@ -11,7 +11,7 @@
                 <div class="entry-content" v-html="article.content">
                 </div>
             </article>
-            <div class="comments" v-if="commentName !== ''">
+            <div class="comments" v-if="article.allowComment === 1 && commentName !== ''">
                 <disqus :shortname="commentName" ></disqus>
             </div>
         </div>
@@ -33,10 +33,10 @@ export default {
       return this.page
     },
     commentType () {
-      return JSON.parse(this.$store.state.siteInfo.comment.value).type || 'disqus'
+      return this.$store.state.siteInfo.comment.value.type || 'disqus'
     },
     commentName () {
-      return JSON.parse(this.$store.state.siteInfo.comment.value).name || ''
+      return this.$store.state.siteInfo.comment.value.name || ''
     },
     siteURL () {
       return this.$store.state.siteInfo.site_url.value || 'localhost'

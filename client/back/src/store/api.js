@@ -5,9 +5,7 @@ const blogAPI = `/proxyPrefix/api/post`;
 
 const tagAPI = `/proxyPrefix/api/tag`;
 
-const postTagAPI = `/proxyPrefix/api/postTag`;
-
-const aboutAPI = `/proxyPrefix/api/post/57dbe47c2993f70dc6d6b12c`
+const aboutAPI = `/proxyPrefix/api/post/57dbe47c2993f70dc6d6b12c`;
 
 const root = `/proxyPrefix/api`;
 
@@ -33,7 +31,7 @@ request.interceptors.request.use((config) => {
 
 request.interceptors.response.use((response) => {
   if (response.data && response.data.status && response.data.status === 'fail') {
-    console.error(response.data.description);
+    console.log(response.data.description);
   }
   return response;
 }, (error) => Promise.reject(error));
@@ -302,92 +300,4 @@ store.patchUser = (id, json) => {
     }, (err) => {
       console.log(err)
     })
-}
-
-
-// many to many
-
-store.deleteTagsByPostID = (id) => {
-  return request.delete(postTagAPI + '/' + id).then((response) => {
-    return response.data;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.deleteCateByPostID = (id) => {
-  return request.delete(postCateAPI + '/' + id).then((response) => {
-    return response.data;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-// postTag
-store.fetchPostTags = () => {
-  return request.get(postTagAPI).then((response) => {
-    return response.data;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.fetchPostTagsByID = (conditions) => {
-  return request.get(postTagAPI + `?conditions=${JSON.stringify(conditions)}`)
-  .then((response) => {
-    return response.data;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-// postCate
-
-store.fetchPostCate = () => {
-  return request.get(postCateAPI).then((response) => {
-    return response.data;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.fetchPostCateByID = (conditions) => {
-  return request.get(postCateAPI +  `?conditions=${JSON.stringify(conditions)}`)
-  .then((response) => {
-    return response.data;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.deletePostTags = (id) => {
-  return request.delete(`${postTagAPI}/${id}`).then((response) => {
-    return response;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.addPostTags = (json) => {
-  return request.post(`${postTagAPI}`, json).then((response) => {
-    return response.data;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.deletePostCates = (id) => {
-  return request.delete(`${postCateAPI}/${id}`).then((response) => {
-    return response;
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.addPostCates = (json) => {
-  return request.post(`${postCateAPI}`, json).then((response) => {
-    return response.data;
-  }, (err) => {
-    console.log(err)
-  })
 }

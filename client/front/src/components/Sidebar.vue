@@ -11,21 +11,9 @@
                 <span>{{siteInfo.title.value}}</span>
             </div>
             <ul class="buttons">
-                <li>
-                    <router-link :to="{name:'main'}" title="首页"> <i class="iconfont icon-home"></i> <span>首页</span></router-link>
+                <li v-for="menu in siteInfo.menu.value">
+                    <router-link :to="{ path: menu.url }" title="menu.label"> <i class="iconfont" :class="'icon-' + menu.option"></i> <span>{{menu.label}}</span></router-link>
                 </li>
-                <li>
-                    <router-link :to="{name:'archive'}" title="归档"> <i class="iconfont icon-archive"></i> <span>归档</span></router-link>
-                </li>
-                <li>
-                    <router-link :to="{name:'tag'}"  title="标签"> <i class="iconfont icon-tags"></i> <span>标签</span></router-link>
-                </li>
-                <li>
-                    <router-link :to="{name:'page', params:{ page: 'about' } }" title="关于"> <i class="iconfont icon-user"></i> <span>关于</span></router-link>
-                </li>
-                <!--<li>
-                    <a href="/links/" title="友情链接"> <i class="iconfont icon-link"></i> <span>友链</span></a>
-                </li>-->
             </ul>
             <ul class="buttons">
                 <li>

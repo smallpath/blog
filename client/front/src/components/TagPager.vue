@@ -10,7 +10,7 @@
 </template>
 
 <script>
-// import store from '../store/api'
+import Api from '../store/api'
 
 export default {
   data () {
@@ -27,31 +27,30 @@ export default {
   },
   methods: {
     getItems () {
-      /* store.fetchTags().then(tags=>{
-          let tagID = ''
-          tags.forEach(value=>{
-              if (value.name == this.$route.params.tagName)
-                  tagID = value._id
-          })
-          store.fetchPostTags().then(postTags=>{
-              postTags = postTags.filter((value,index)=>{
-                  return value.tagID == tagID
-              })
-
-              postTags.forEach((value)=>{
-                  store.fetchBlogByID(value.postID).then(item=>{
-                      if(item._id)
-                          this.items.push(item)
-                  })
-              })
-          })
-        store.fetchBlogByPage(this,{ type: 0 } ,this.page -1 ).then(items=>{this.items=items/*window.scrollTo(0, 0)
+      Api.fetchPost({}, {
+        select: {
+          tags: 1,
+          title: 1,
+          summary: 1,
+          commentNum: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          pathName: 1
+        },
+        sort: 1
+      }).then(result => {
+        this.items = []
+        result.forEach(value => {
+          for (let i = 0; i < value.tags.length; i++) {
+            let tag = value.tags[i]
+            if (tag === this.$route.params.tagName) {
+              this.items.push(value)
+              break
+            }
+          }
         })
-      }) */
+      })
     }
-  },
-  mounted () {
-    this.getItems()
   }
 }
 </script>
