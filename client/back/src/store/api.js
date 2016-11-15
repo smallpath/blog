@@ -68,8 +68,15 @@ store.deleteUpdate = (id) => {
 
 // post CRUD
 
-store.fetchBlog = (conditions, args) => {
-  return request.get(blogAPI + `?conditions=${JSON.stringify(conditions)}&sort=1`)
+store.fetchBlog = (conditions = {}, args) => {
+  let target = blogAPI + `?conditions=${JSON.stringify(conditions)}&sort=1`;
+  if (args && args.select) {
+    target = target + `&select=${JSON.stringify(args.select)}`
+    delete args.select
+  }
+  args = convertObjectToArray(args)
+
+  return request.get(target)
   .then((response) => {
     return response.data;
   }, (err) => {

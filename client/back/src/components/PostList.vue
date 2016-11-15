@@ -25,7 +25,7 @@
                     <tr v-else v-for="post in posts">
                         <td>
                             <a v-link='{ name: "editPost", params: { id: post._id} }' title={{post.title}}>{{post.title}}</Link>
-                            <a v-if="post.status == 3" href={/post/${post.pathname}.html} target="_blank">
+                            <a v-if="post.status == 3" href={/post/${post.pathName}.html} target="_blank">
                                 <span class="glyphicon glyphicon-link" style="fontSize: 12, marginLeft: 5, color: '#AAA'"></span>
                             </a>
                         </td>
@@ -96,6 +96,14 @@ export default {
     getBlogByPage(){
       Api.fetchBlog({
         type: 0
+      }, {
+        select: {
+            'title': 1,
+            'createdAt': 1,
+            'updatedAt': 1,
+            'status': 1,
+            'pathName': 1
+        }
       }).then(result=>{
         this.posts = result;
       })
