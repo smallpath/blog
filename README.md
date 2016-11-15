@@ -24,8 +24,8 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
 - [ ] 后台管理单页
   - [x] 添加升级模型的管理
   - [x] 使用axios替换vue-resource
-  - [ ] vue 1.0 => vue 2.0 
-  - [ ] 使用element ui
+  - [ ] vue 1.0 => vue 2.0 (进行中)
+  - [ ] 使用element ui (进行中)
   - [ ] 七牛云图片上传
 - [ ] RESTful服务器
   - [x] RESTful添加select字段过滤
@@ -88,8 +88,8 @@ server{
     set $ssr_port 8080;
 
     location ^~ / {
-        rewrite ^/proxyPrefix/(.*) /$1 break;
         proxy_http_version 1.1;
+        proxy_set_header Connection "upgrade";
         proxy_pass http://127.0.0.1:$ssr_port;
         proxy_redirect off;
     }
@@ -97,6 +97,7 @@ server{
     location ^~ /proxyPrefix/ {
         rewrite ^/proxyPrefix/(.*) /$1 break;
         proxy_http_version 1.1;
+        proxy_set_header Connection "upgrade";
         proxy_pass http://127.0.0.1:$node_port;
         proxy_redirect off;
     }
@@ -145,6 +146,7 @@ server{
     location ^~ /proxyPrefix/ {
         rewrite ^/proxyPrefix/(.*) /$1 break;
         proxy_http_version 1.1;
+        proxy_set_header Connection "upgrade";
         proxy_pass http://127.0.0.1:$node_port;
         proxy_redirect off;
     }
