@@ -73,7 +73,7 @@
 import Top from './Top';
 import MarkdownEditor from './editor/index';
 import Datepicker from 'vue-datepicker'
-import marked from 'marked'
+import marked from '../utils/marked'
 import moment from 'moment';
 import Api from '../store/api';
 

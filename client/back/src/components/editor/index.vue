@@ -59,7 +59,7 @@
 
 <script>
 /* eslint-disable */
-import marked from 'marked'
+import marked from '../../utils/marked'
 
 export default {
   props:{

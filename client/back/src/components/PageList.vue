@@ -94,7 +94,15 @@ export default {
   },
   methods: {
     getPage(){
-      Api.fetchBlog({ type: "1" } ).then(result=>{
+      Api.fetchBlog({ type: 1 }, {
+        select: {
+            'title': 1,
+            'createdAt': 1,
+            'updatedAt': 1,
+            'status': 1,
+            'pathName': 1
+        }
+      }).then(result=>{
         this.pages = result;
       })
     },
