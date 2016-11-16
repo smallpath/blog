@@ -1,27 +1,27 @@
 <template>
   <div id="app">
-    <hello></hello>
+    <keep-alive>
+        <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello';
-
 export default {
-  name: 'app',
-  components: {
-    Hello,
-  },
-};
+  name: 'app'
+}
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0px;
+
+  #app {
+    height: 100%;
+  }
 }
+
 </style>
