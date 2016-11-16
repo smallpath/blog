@@ -6,7 +6,7 @@ const path = require('path')
 const resolve = file => path.resolve(__dirname, file)
 const express = require('express')
 const bodyParser = require('body-parser')
-const favicon = require('serve-favicon')
+// const favicon = require('serve-favicon')
 const serialize = require('serialize-javascript')
 const robots = require('./server/robots.js')
 const request = require('superagent')
@@ -80,7 +80,7 @@ app.use('/dist', express.static(resolve('./dist'), {
 app.use('/static', express.static(resolve('./dist/static'), {
   fallthrough: false
 }))
-app.use(favicon(resolve('./src/assets/logo.png')))
+// app.use(favicon(resolve('./src/assets/logo.png')))
 
 app.use(bodyParser.json())
 

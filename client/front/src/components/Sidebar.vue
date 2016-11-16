@@ -6,7 +6,7 @@
                     <img 
                         :src="siteInfo.logo_url.value" 
                         :alt="siteInfo.title.value"
-                        id="logo">
+                        ref="logo">
                 </a> 
                 <span>{{siteInfo.title.value}}</span>
             </div>
@@ -50,7 +50,7 @@ export default {
     }
   },
   mounted () {
-    let img = document.getElementById('logo')
+    let img = this.$refs.logo
     img.onerror = ({ target }) => (img.src = target.currentSrc.replace('.webp', '.png'))
   }
 }
