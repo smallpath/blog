@@ -2,6 +2,9 @@
   <div class="dashboard">
     <top></top>
     <sidebar></sidebar>
+    <div class="main">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -30,10 +33,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login {
+
+.dashboard {
   height: 100%;
 
-  .row-bg {
+  .main {
+    position: fixed;
+    top: 60px;
+    left: 16.66667%;
+    width: 100%;
     height: 100%;
   }
 }

@@ -1,8 +1,14 @@
 <template>
-  <div class="sidebar">
+  <div class="top">
     <el-row class="tac">
       <el-col :span="24">
-        
+
+        <!--<el-breadcrumb separator="/">
+          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+          <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+        </el-breadcrumb>-->
           
         <el-menu default-active="1" mode="horizontal" class="el-menu-vertical-demo" :unique-opened="true"
                  theme="dark" @select="handleSelect">
@@ -23,7 +29,7 @@
 import Api from '../store/api'
 
 export default {
-  name: 'sidebar',
+  name: 'top',
   data () {
     return {
       title: '',
@@ -47,6 +53,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .el-breadcrumb {
+    position: relative;
+    left: 20px;
+    float: left;
+    z-index: 1;
+    line-height: 60px;
+    font-size: 14px;
+  }
+
   li.el-submenu {
     float: right;
   }
