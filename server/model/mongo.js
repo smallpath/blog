@@ -41,20 +41,12 @@ let post = new Schema({
 
 let category = new Schema({
     name: String,
-    pathName: String,
-    postID: {
-        type: Array,
-        default: []
-    }
+    pathName: String
 });
 
 let tag = new Schema({
     name: String,
-    pathName: String,
-    postID: {
-        type: Array,
-        default: []
-    }
+    pathName: String
 });
 
 let option = new Schema({
