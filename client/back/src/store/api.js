@@ -59,11 +59,11 @@ store.logout = (conditions, args) => {
 }
 
 store.fetchUpdate = (conditions = {}, args) => {
-  return request.get(`/proxyPrefix/api/update?conditions=${JSON.stringify(conditions)}`);
+  return request.get(`/proxyPrefix/api/version?conditions=${JSON.stringify(conditions)}`);
 }
 
 store.deleteUpdate = (id) => {
-  return request.delete(`/proxyPrefix/api/update/${id}`);
+  return request.delete(`/proxyPrefix/api/version/${id}`);
 }
 
 // post CRUD
@@ -225,7 +225,7 @@ store.deleteTag = (id) => {
 
 
 store.fetchVersion = (conditions = {}, args) => {
-  return request.get(`${root}/update?conditions=${JSON.stringify(conditions)}`)
+  return request.get(`${root}/version?conditions=${JSON.stringify(conditions)}`)
     .then((response) => {
       return response.data;
     }, (err) => {
@@ -234,7 +234,7 @@ store.fetchVersion = (conditions = {}, args) => {
 }
 
 store.fetchVersionById = (id) => {
-  return request.get(`${root}/update/${id}`)
+  return request.get(`${root}/version/${id}`)
     .then((response) => {
       return response.data;
     }, (err) => {
@@ -243,7 +243,7 @@ store.fetchVersionById = (id) => {
 }
 
 store.newVersion = (json) => {
-  return request.post(`${root}/update`, json)
+  return request.post(`${root}/version`, json)
   .then((response) => {
     return response.data;
   }, (err) => {
@@ -252,7 +252,7 @@ store.newVersion = (json) => {
 }
 
 store.patchVersion = (id, json) => {
-  return request.patch(`${root}/update/${id}`, json)
+  return request.patch(`${root}/version/${id}`, json)
     .then((response) => {
       return response.data;
     }, (err) => {
@@ -261,7 +261,7 @@ store.patchVersion = (id, json) => {
 }
 
 store.deleteVersion = (id) => {
-  return request.delete(`${root}/update/${id}`)
+  return request.delete(`${root}/version/${id}`)
     .then((response) => {
       return response.data;
     }, (err) => {
