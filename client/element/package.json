@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "axios": "^0.15.2",
-    "element-ui": "^1.0.1",
+    "element-ui": "^1.0.2",
     "highlight.js": "^9.8.0",
     "marked": "^0.3.6",
     "moment": "^2.16.0",

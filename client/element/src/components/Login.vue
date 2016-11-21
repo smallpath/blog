@@ -39,12 +39,16 @@ export default {
     onSubmit () {
       Api.login(this.form).then(response=>{
         if (response.data.status == 'fail'){
-          
+          this.$message({
+            message: '登陆失败，请检查帐号与密码',
+            type: 'success',
+            duration: 2000,
+            type: 'error'
+          });
         }else if(response.data.status == 'success'){
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('username',this.username);
-          this.$notify({
-            title: '成功',
+          this.$message({
             message: '登陆成功',
             type: 'success',
             duration: 2000

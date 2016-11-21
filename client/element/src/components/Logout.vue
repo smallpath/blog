@@ -11,8 +11,7 @@ export default {
       Api.logout().then(response => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
-        this.$notify({
-          title: '成功',
+        this.$message({
           message: '登出成功',
           type: 'success',
           duration: 2000
