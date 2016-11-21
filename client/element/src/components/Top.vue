@@ -42,7 +42,11 @@ export default {
               path: '/admin/logout'
           })
       } else if (index === '1-1') {
-          this.$message('功能实现中');
+          this.$notify.info({
+            title: '提示',
+            message: '功能实现中',
+            duration: 2000
+          });
       }
     }
   },

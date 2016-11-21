@@ -56,8 +56,17 @@ store.deleteUpdate = (id) => {
 
 // post CRUD
 
+store.fetchList = (model, query) => {
+  let target = `${root}/${model}`
+  return request.get(target, { params: query }).then((response) => {
+    return response.data;
+  }, (err) => {
+    console.log(err)
+  })
+}
+
 store.fetchBlog = (conditions = {}, args) => {
-  let target = blogAPI + `?conditions=${JSON.stringify(conditions)}&sort=1`;
+  let target = blogAPI + `?conditions=${JSON.stringify(conditions)}&sort=1`
   if (args && args.select) {
     target = target + `&select=${JSON.stringify(args.select)}`
     delete args.select
