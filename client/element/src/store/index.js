@@ -35,7 +35,6 @@ const store = new Vuex.Store({
         })    
       } else {
         return api.fetchByID(model, id, query).then(obj => {
-          console.log('fetch id',obj)
           commit('SET_CURR', { obj })
         }) 
       }
@@ -69,7 +68,6 @@ const store = new Vuex.Store({
     },
 
     DELETE: ({ commit, state }, { model, id }) => {
-      console.log(model, id)
       return api.deleteByID(model, id)
     },
 
