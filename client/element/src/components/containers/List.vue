@@ -62,7 +62,7 @@ export default {
       if (!this.isPost && !this.isPage) return [];
 
       let obj = this.list.reduce((prev, value)=>{ 
-        value.tags.forEach(tag => prev[tag]={ text: tag, value: tag});
+        Array.isArray(value.tags) && value.tags.forEach(tag => prev[tag]={ text: tag, value: tag});
         return prev;
       }, {});
       return Object.keys(obj).map(value=>{
