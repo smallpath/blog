@@ -1,0 +1,99 @@
+<template>
+<el-form ref="form" :model="form" label-width="120px">
+  <el-form-item v-for="item in options.items" :label="item.label">
+    <el-input v-model="form[item.prop]"></el-input>
+  </el-form-item>
+  <el-form-item>
+    <el-button type="primary" @click.native="onSubmit">提交</el-button>
+  </el-form-item>
+</el-form>
+</template>
+
+<script>
+export default {
+  name: 'list',
+  props: ['options'],
+  data () {
+    let isPost = this.options.name === 'post';
+    let isPage = this.options.name === 'page';
+    let form = this.options.items.reduce((prev, curr)=>{
+      prev[curr.prop] = curr.default;
+      return prev;
+    }, {});
+    return {
+      isPost,
+      isPage,
+      form,
+      isLoading: true
+    }
+  },
+  computed: {
+    list() {
+      return this.$store.state.list
+    }
+  },
+  methods: {
+    onSubmit() {
+      let id = this.$route.params.id;
+      if (typeof id !== 'undefined') {
+        // patch
+        return this.$store.dispatch('PATCH', Object.assign({},{
+          id: this.$route.params.id,
+          form: this.form
+        }, this.options)).then(()=>{
+          
+        })
+      } else {
+        // post
+        return this.$store.dispatch('POST', Object.assign({},{
+          form: this.form,
+        }, this.options)).then(()=>{
+
+        })
+      }
+
+      this.$message({
+        message: '提交成功',
+        duration: 2000,
+        type: 'info'
+      });
+    }
+  },
+  created () {
+    // flatten user and options into obj 
+    if (this.options.isPlain === true) {
+      return this.$store.dispatch('FETCH_CREATE', Object.assign({},{
+        id: -1
+      }, this.options)).then(()=>{
+        this.form = Object.assign({},this.$store.state.curr);
+        this.isLoading = false;
+      })
+    }
+
+    // if params has value , fetch from the model
+    if (typeof this.$route.params.id !== 'undefined') {
+      return this.$store.dispatch('FETCH_CREATE', Object.assign({},{
+        id: this.$route.params.id
+      }, this.options)).then(()=>{
+        this.form = Object.assign({},this.$store.state.curr);
+        console.log(this.$store.state.curr)
+        this.isLoading = false;
+      })
+    } else {
+      // else it's a new page, nothing to do
+    }
+    
+    
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.dashboard .main {
+  width: 50%
+}
+
+  .el-form {
+    width: 40%;
+  }
+</style>

@@ -1,15 +1,17 @@
 module.exports = [
     {
-        "key": "analyze_code",
+        "key": "analyzeCode",
         "value": "",
         "desc": "统计代码，可以添加百度统计、Google 统计等"
     },
     {
-        "key": "comment",
-        "value": {
-            "type": "disqus",
-            "name": ""
-        },
+        "key": "commentType",
+        "value": "disqus",
+        "desc": "评论类型"
+    },
+    {
+        "key": "commentName",
+        "value": "",
         "desc": "评论类型"
     },
     {
@@ -43,22 +45,22 @@ module.exports = [
         "desc": "网站描述"
     },
     {
-        "key": "favicon_url",
+        "key": "faviconUrl",
         "value": "/static/favicon.ico",
         "desc": "favicon"
     },
     {
-        "key": "github_blog",
+        "key": "githubBlog",
         "value": "",
         "desc": "GitHub blog 地址，如果填了则同步到 GitHub 上"
     },
     {
-        "key": "github_url",
+        "key": "githubUrl",
         "value": "",
         "desc": "GitHub 地址"
     },
     {
-        "key": "image_upload",
+        "key": "imageUpload",
         "value": "",
         "desc": "图片存放的位置，默认存在放网站上。也可以选择放在七牛或者又拍云等地方"
     },
@@ -68,7 +70,7 @@ module.exports = [
         "desc": "网站关键字"
     },
     {
-        "key": "logo_url",
+        "key": "logoUrl",
         "value": "/static/logo.png",
         "desc": "logo 地址"
     },
@@ -78,17 +80,17 @@ module.exports = [
         "desc": "网站备案号"
     },
     {
-        "key": "num_per_page",
+        "key": "numPerPage",
         "value": "",
         "desc": "文章一页显示的条数"
     },
     {
-        "key": "password_salt",
+        "key": "passwordSalt",
         "value": "t5xUOyQK2G!@#$%^&*",
         "desc": "密码 salt，网站安装的时候随机生成一个"
     },
     {
-        "key": "site_url",
+        "key": "siteUrl",
         "value": "",
         "desc": "网站地址"
     },
@@ -103,12 +105,12 @@ module.exports = [
         "desc": "网站标题"
     },
     {
-        "key": "twitter_url",
+        "key": "weiboUrl",
         "value": "",
         "desc": "微博地址"
     },
     {
-        "key": "two_factor_auth",
+        "key": "twoFactorAuth",
         "value": "",
         "desc": "是否开启二步验证"
     }

@@ -35,7 +35,7 @@
       width="150">
       <span>
         <el-button @click="handleClick(row)" type="info" size="small">编辑</el-button>
-        <el-button type="danger" size="small">删除</el-button>
+        <el-button @click="handleDelete(row, $index)" type="danger" size="small">删除</el-button>
       </span>
     </el-table-column>
   </el-table>
@@ -74,9 +74,16 @@ export default {
     filterTag(value, row) {
       return row.tags.indexOf(value) !== -1;
     },
-    handleClick(row) {
+    handleClick({ _id }) {
       this.$router.push({
-        path: `/${this.options.name}/create/${row._id}`
+        path: `/${this.options.name}/create/${_id}`
+      })
+    },
+    handleDelete({ _id }, index) {
+      this.$store.dispatch('DELETE', Object.assign({},{
+        id: _id
+      }, this.options)).then(()=>{
+        this.$store.state.list.splice(index, 1)
       })
     }
   },

@@ -2,15 +2,17 @@ module.exports = {
 
     appName: "blog",
 
-    mongoHost: '139.129.132.60',
+    mongoHost: 'localhost',
     mongoDatabase:'blog',
     mongoPort: 27017,
 
-    redisHost: '139.129.132.60',
+    redisHost: 'localhost',
     redisPort: 6390,
 
     tokenSecret: 'test',
     tokenExpiresIn: 3600,
+
+    qiniuToken: '',
 
     defaultAdminName: 'admin',
     defaultAdminPassword: 'admin',

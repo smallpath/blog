@@ -4,7 +4,7 @@
       <el-col :span="6">
         <div class="grid-content bg-purple-light">
           <el-form label-position="right" ref="form" :model="form" label-width="40px">
-            <el-form-item>Blog</el-form-item>
+            <el-form-item>{{title}}</el-form-item>
             <el-form-item label="账号">
               <el-input v-model="form.name"></el-input>
             </el-form-item>
@@ -41,7 +41,6 @@ export default {
         if (response.data.status == 'fail'){
           this.$message({
             message: '登陆失败，请检查帐号与密码',
-            type: 'success',
             duration: 2000,
             type: 'error'
           });
@@ -59,8 +58,8 @@ export default {
     }
   },
   mounted(){
-    Api.fetchOption({ key: 'title' }).then(result=>{
-      this.title = result[0].value || '';
+    this.$store.dispatch('FETCH_OPTIONS').then(()=>{
+      this.title = this.$store.state.siteInfo['title'].value || '';
     })
   }
 }

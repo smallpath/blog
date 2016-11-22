@@ -41,7 +41,7 @@ export default {
     position: fixed;
     top: 60px;
     left: 16.66667%;
-    width: 100%;
+    width: 83.33333%;
     height: 100%;
   }
 }
