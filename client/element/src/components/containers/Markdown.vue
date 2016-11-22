@@ -45,8 +45,8 @@ export default {
   name: 'markdown',
   data () {
     return {
-      input: '# Hello, my markdown editor',
-      mode: 'split' // preview shrink split
+      input: '',
+      mode: 'split' // ['edit', 'split', 'shrink']
     }
   },
   computed: {
