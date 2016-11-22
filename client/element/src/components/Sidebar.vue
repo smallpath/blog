@@ -84,6 +84,11 @@ export default {
   },
   beforeMount(){
     this.fullPath = this.$route.path.split('/').slice(0, 3).join('/')  
+    this.$store.dispatch('FETCH_OPTIONS').then(() => {
+      // if (this.siteInfo['title'] && typeof document !== 'undefined') {
+      //   document.title = this.siteInfo['title'].value
+      // }
+    })
   }
 }
 </script>
