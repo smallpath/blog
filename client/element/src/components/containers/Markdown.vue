@@ -31,8 +31,15 @@
 </template>
 
 <script>
-import marked from '../../utils/marked'
 import _ from 'lodash'
+import marked from 'marked'
+import hljs from 'highlight.js'
+
+marked.setOptions({
+  highlight: function (code) {
+    return hljs.highlightAuto(code).value
+  }
+})
 
 export default {
   name: 'markdown',
