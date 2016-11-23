@@ -30,6 +30,7 @@
     </el-table-column>
     <el-table-column
       inline-template
+      fixed="right"
       :context="_self"
       label="操作"
       width="150">

@@ -12,6 +12,15 @@ const store = new Vuex.Store({
   },
 
   actions: {
+
+    FETCH: ({ commit, state }, { model, query }) => {
+      return api.fetchList(model, query)
+    },
+
+    FETCH_BY_ID: ({ commit, state }, { model, id, query }) => {
+      return api.fetchByID(model, id, query)
+    },
+
     FETCH_LIST: ({ commit, state }, { model, query }) => {
       return api.fetchList(model, query).then(obj => {
         commit('SET_LIST', { obj })
@@ -41,13 +50,17 @@ const store = new Vuex.Store({
     },
 
     POST: ({ commit, state }, { model, form }) => {
-      if (model !== 'option' && model !== 'user') {
+      if (model !== 'post' && model !== 'option' && model !== 'user') {
         return api.post(model, form)
-      } else if (model === 'user') {
+      } else if (model === 'user' || model === 'post') {
         let { _id: id } = form
-        delete form._id
-        delete form.__v
-        return api.patchByID(model, id, form)
+        if (typeof id !== 'undefined') {
+          delete form._id
+          delete form.__v
+          return api.patchByID(model, id, form)
+        } else {
+          return api.post(model, form)
+        }
       } else if (model === 'option') {
         let promiseArr = Object.keys(form).reduce((prev, curr) => {
           if (form[curr] !== state.curr[curr]) {

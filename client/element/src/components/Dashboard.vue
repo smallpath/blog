@@ -43,6 +43,7 @@ export default {
     left: 16.66667%;
     width: 83.33333%;
     height: 100%;
+    overflow: auto;
   }
 }
 </style>

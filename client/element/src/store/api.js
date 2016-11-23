@@ -7,28 +7,9 @@ const store = {};
 
 const perPage = 10;
 
-request.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token')
-
-  if (request.method == 'get' && request.url.indexOf('/proxyPrefix/user') == -1 ){
-    return config;
-  }
-
-  if (token !== null && token !== 'undefined') {
-    config.headers['authorization'] = token;
-  }
-
-  return config;
-}, (error) => Promise.reject(error));
-
-request.interceptors.response.use((response) => {
-  if (response.data && response.data.status && response.data.status === 'fail') {
-    console.log(response.data.description);
-  }
-  return response;
-}, (error) => Promise.reject(error));
-
 export default store;
+
+store.request = request;
 
 store.login = (conditions) => {
   return request.post(`/proxyPrefix/admin/login`, conditions);
