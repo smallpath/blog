@@ -7,16 +7,13 @@
       <el-menu-item index="4">引用</el-menu-item>
       <el-menu-item index="5">代码段</el-menu-item>
       <el-menu-item index="6">图片</el-menu-item>
-      <el-menu-item index="7">有序列表</el-menu-item>
-      <el-menu-item index="8">无序列表</el-menu-item>
-      <el-menu-item index="9">标题</el-menu-item>
-      <el-menu-item index="10">插入标签</el-menu-item>
+      <el-menu-item index="7">插入摘要</el-menu-item>
       <el-submenu index="11">
-        <template slot="title">切换模式</template>
-        <el-menu-item index="11-1">编辑模式</el-menu-item>
-        <el-menu-item index="11-2">分屏模式</el-menu-item>
-        <el-menu-item index="11-3">预览模式</el-menu-item>
-        <el-menu-item index="11-4">全屏模式</el-menu-item>
+        <template slot="title">{{labels[mode]}}</template>
+        <el-menu-item index="11-1">{{labels['edit']}}</el-menu-item>
+        <el-menu-item index="11-2">{{labels['split']}}</el-menu-item>
+        <el-menu-item index="11-3">{{labels['preview']}}</el-menu-item>
+        <el-menu-item index="11-4">{{labels['full']}}</el-menu-item>
       </el-submenu>
     </el-menu>
     <div class="md-editor" :class="{ 
@@ -24,7 +21,7 @@
         'preview': mode=== 'preview',
         'split': mode=== 'split',
     }">
-      <textarea ref="markdown" :value="input" @input="handleInput"></textarea>
+      <textarea ref="markdown" :value="value" @input="handleInput"></textarea>
       <div class="md-preview markdown" v-html="compiledMarkdown"></div>
     </div>
   </div>
@@ -43,15 +40,21 @@ marked.setOptions({
 
 export default {
   name: 'markdown',
+  props: ['value'],
   data () {
     return {
-      input: '',
-      mode: 'split' // ['edit', 'split', 'shrink']
+      labels: {
+        'edit': '编辑模式',
+        'split': '分屏模式',
+        'preview': '预览模式',
+        'full': '全屏模式'
+      },
+      mode: 'split' // ['edit', 'split', 'preview']
     }
   },
   computed: {
     compiledMarkdown() {
-      return marked(this.input, { sanitize: true })
+      return marked(this.value.replace(/<!--more-->/g, '=====> 文章摘要结束'), { sanitize: true })
     }
   },
   methods: {
@@ -64,10 +67,7 @@ export default {
           case '4': this._blockquoteText() ; break;
           case '5': this._codeText() ; break;
           case '6': this._insertMore() ; break;
-          case '7': this._listOlText() ; break;
-          case '8': this._listUlText() ; break;
-          case '9': this._headerText() ; break;
-          case '10': this._insertMore() ; break;
+          case '7': this._insertMore() ; break;
         }
       } else if (keyPath.length === 2) {
         switch (key) {
@@ -80,14 +80,13 @@ export default {
     },
     handleInput: _.debounce(function (e) {
       let value = e.target.value
-      this.input = value
       this.$emit('input', value)
     }, 300),
     _preInputText(text, preStart, preEnd){
       let textControl = this.$refs.markdown;
       const start = textControl.selectionStart
       const end = textControl.selectionEnd
-      const origin = this.input;
+      const origin = this.value;
 
       if (start !== end) {
           const exist = origin.slice(start, end)
@@ -96,10 +95,10 @@ export default {
       }
       let input = origin.slice(0, start) + text + origin.slice(end);
 
-      this.input = input;
+      this.$emit('input', input)
     },
     _insertMore(){
-        this._preInputText("\n<!--more-->", 12, 12);
+        this._preInputText("<!--more-->", 12, 12);
     },
     _boldText () {
         this._preInputText("**加粗文字**", 2, 6)
@@ -115,15 +114,6 @@ export default {
     },
     _codeText () {
         this._preInputText("\n```\ncode block\n```", 5, 15)
-    },
-    _listUlText () {
-        this._preInputText("- 无序列表项0\n- 无序列表项1", 2, 8)
-    },
-    _listOlText () {
-        this._preInputText("1. 有序列表项0\n2. 有序列表项1", 3, 9)
-    },
-    _headerText () {
-        this._preInputText("## 标题", 3, 5)
     }
   }
 }
@@ -141,6 +131,7 @@ export default {
     border: 1px solid #ccc;
     border-radius: 3px;
     font-size: 14px;
+    margin-bottom: 58px;
     overflow: hidden;
 
     .md-editor {
@@ -151,9 +142,9 @@ export default {
       position: relative;
 
       textarea {
+        box-sizing: border-box;
         display: block;
         border-style: none;
-        border-right: 1px solid #ccc;
         resize: none;
         outline: 0;
         height: 100%;
@@ -163,16 +154,19 @@ export default {
       }
 
       .md-preview {
-          position: absolute;
-          width: 50%;
-          height: 100%;
-          left: 100%;
-          top: 0;
-          background-color: #F9FAFC;
-          border-left: 1px solid #ccc;
-          overflow: auto;
-          transition: left .3s, width .3s;
-          padding: 15px 15px 0;
+        box-sizing: border-box;
+        position: absolute;
+        word-wrap: break-word;
+        word-break: normal;
+        width: 50%;
+        height: 100%;
+        left: 100%;
+        top: 0;
+        background-color: #F9FAFC;
+        border-left: 1px solid #ccc;
+        overflow: auto;
+        transition: left .3s, width .3s;
+        padding: 15px 15px 0;
       }
     }  
 
@@ -188,20 +182,20 @@ export default {
       }
 
       .md-preview {
-        left: 49%;
-        width: 51%;
+        left: 50%;
+        width: 50%;
       }
     }
 
     .md-editor.preview {
       textarea {
-        display: none;
         width: 0;
       }
 
       .md-preview {
         left: 0;
         width: 100%;
+        border-left-style: none;
       }
     }
 }
