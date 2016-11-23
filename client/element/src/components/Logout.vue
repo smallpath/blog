@@ -17,7 +17,7 @@ export default {
           duration: 2000
         });
         this.$router.push({ path: '/admin/login' });
-      });
+      }).catch(()=>{});
 
     }
   },

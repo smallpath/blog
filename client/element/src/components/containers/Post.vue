@@ -100,7 +100,7 @@ export default {
           message: '文章已成功提交',
           type: 'success'
         });
-      })
+      }).catch(err => console.error(err))
     },
     handleAddTag(tag) {
       this.form.tags.indexOf(tag) === -1 && this.form.tags.push(tag)
@@ -139,7 +139,7 @@ export default {
     Promise.all([fetchCate, fetchTag]).then(([cates, tags])=>{
       this.cates = cates.map(value => value.name)
       this.tags = tags.map(value => value.name)
-    })
+    }).catch(err => console.error(err))
 
   }
 }

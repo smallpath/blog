@@ -85,16 +85,13 @@ export default {
         id: _id
       }, this.options)).then(()=>{
         this.$store.state.list.splice(index, 1)
-      })
+      }).catch(err => console.error(err))
     }
   },
   created () {
     this.$store.dispatch('FETCH_LIST', this.options).then(()=>{
-      // setTimeout(()=>{
-        this.isLoading = false;
-      // }, 500)
-      
-    })
+      this.isLoading = false;
+    }).catch(err => console.error(err))
   }
 }
 </script>
