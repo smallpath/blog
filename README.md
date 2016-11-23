@@ -19,21 +19,21 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [x] 服务端sitemap定时任务
   - [x] rss
   - [x] 组件级缓存
+  - [ ] Loading组件 #2
   - [ ] 服务端谷歌统计
   - [ ] 侧边栏图片
 - [ ] 后台管理单页
   - [x] 添加升级模型的管理
   - [x] 使用axios替换vue-resource
-  - [ ] vue 1.0 => vue 2.0 (进行中)
-  - [ ] 使用element ui (进行中)
-  - [ ] 七牛云图片上传
+  - [x] vue 1.0 => vue 2.0
+  - [x] 使用element ui
+  - [ ] 七牛云图片上传 (进行中)
 - [ ] RESTful服务器
   - [x] RESTful添加select字段过滤
   - [x] 标签及分类移至文章中 
+  - [ ] 七牛access_token下发及鉴权 (进行中)
   - [ ] 文章toc
-  - [ ] 七牛access_token下发及鉴权
   - [ ] OAuth1升级至OAuth2
-  - [ ] koa2 unstable => koa2 stable 
 - [x] 部署文档
 - [x] API文档
 - [ ] Docker
