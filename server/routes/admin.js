@@ -33,7 +33,7 @@ exports.login = async function (ctx, next) {
     } else {
       return ctx.body = {
           status: 'fail', 
-          description: 'Get token failed. Check name and password' 
+          description: 'Get token failed. Check the password' 
         };
     }
 
@@ -41,7 +41,7 @@ exports.login = async function (ctx, next) {
     error = _error;
     return ctx.body = {
           status: 'fail', 
-          description: error, 
+          description: 'Get token failed. Check the name', 
         };
   }
 
@@ -72,7 +72,7 @@ exports.logout = async function (ctx, next) {
   if (result == false) {
     return ctx.body = {
           status: 'fail', 
-          description: 'Token verify failed '
+          description: 'Token verify failed'
         };
   }else{
     await redis.del('token');

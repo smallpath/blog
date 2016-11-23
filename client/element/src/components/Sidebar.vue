@@ -43,7 +43,7 @@
           <el-menu-item index="/version/create">添加版本</el-menu-item>
         </el-submenu>
         
-        <el-menu-item index="/user"><i class="el-icon-star-off"></i>用户设置</el-menu-item>
+        <el-menu-item index="/user/edit"><i class="el-icon-star-off"></i>用户设置</el-menu-item>
         
         <el-submenu index="8">
           <template slot="title"><i class="el-icon-setting"></i>系统设置</template>
@@ -70,8 +70,8 @@ export default {
     }
   },
   watch: {
-    '$route' : function (val) {
-      // console.log(val)
+    '$route' : function (route) {
+      this.fullPath = route.path.split('/').slice(0, 3).join('/')  
     }
   },
   methods: {
@@ -83,12 +83,7 @@ export default {
     }
   },
   beforeMount(){
-    this.fullPath = this.$route.path.split('/').slice(0, 3).join('/')  
-    this.$store.dispatch('FETCH_OPTIONS').then(() => {
-      // if (this.siteInfo['title'] && typeof document !== 'undefined') {
-      //   document.title = this.siteInfo['title'].value
-      // }
-    })
+    this.fullPath = this.$route.path.split('/').slice(0, 3).join('/')
   }
 }
 </script>

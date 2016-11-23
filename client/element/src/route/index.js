@@ -421,8 +421,8 @@ export default new VueRouter({
       component: Dashboard,
       children: [
         {
-          path: '/',
-          name: 'userList',
+          path: 'edit',
+          name: 'userEdit',
           component: createEditView({
             name: 'user',
             model: 'user',

@@ -40,23 +40,23 @@ export default {
         return this.$store.dispatch('PATCH', Object.assign({},{
           id: this.$route.params.id,
           form: this.form
-        }, this.options)).then(()=>{
-          
-        })
+        }, this.options)).then((data)=>{
+          this.$message({
+            message: '已成功提交',
+            type: 'success'
+          });
+        }).catch(err => console.error(err))
       } else {
         // post
         return this.$store.dispatch('POST', Object.assign({},{
           form: this.form,
-        }, this.options)).then(()=>{
-
-        })
+        }, this.options)).then((data)=>{
+          this.$message({
+            message: '已成功提交',
+            type: 'success'
+          });
+        }).catch(err => console.error(err))
       }
-
-      this.$message({
-        message: '提交成功',
-        duration: 2000,
-        type: 'info'
-      });
     }
   },
   created () {
@@ -67,7 +67,7 @@ export default {
       }, this.options)).then(()=>{
         this.form = Object.assign({},this.$store.state.curr);
         this.isLoading = false;
-      })
+      }).catch(err => console.error(err))
     }
 
     // if params has value , fetch from the model
@@ -77,7 +77,7 @@ export default {
       }, this.options)).then(()=>{
         this.form = Object.assign({},this.$store.state.curr);
         this.isLoading = false;
-      })
+      }).catch(err => console.error(err))
     } else {
       // else it's a new page, nothing to do
     }

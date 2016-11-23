@@ -37,16 +37,14 @@ export default {
   },
   methods: {
     handleSelect (index, indexPath) {
-      if (index === '1-2') {
-          this.$router.push({
-              path: '/admin/logout'
-          })
-      } else if (index === '1-1') {
-          this.$notify.info({
-            title: '提示',
-            message: '功能实现中',
-            duration: 2000
-          });
+      if (index === '1-1') {
+        this.$router.push({
+          name: 'userEdit'
+        })
+      } else if (index === '1-2') {
+        this.$router.push({
+          name: 'logout'
+        })
       }
     }
   },
