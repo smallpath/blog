@@ -9,6 +9,8 @@ const models = require('./model/mongo');
 const redis = require('./model/redis');
 const config = require('./conf/config');
 const option = require('./conf/option');
+const menu = require('./conf/menu');
+const getQiniuTokenFromFileName = require('./service/qiniu')
 const { login, logout, permission } = require('./routes/admin');
 
 
@@ -24,7 +26,12 @@ app.use(async (ctx, next) => {
   log.info(`${ctx.method} ${decodeURIComponent(ctx.url)} - ${ms}ms`);
 });
 
-
+router.post('/qiniu/token', permission, (ctx, next) => {
+  const { filePath } = ctx.request.body
+  ctx.body = {
+    token: getQiniuTokenFromFileName(filePath)
+  }
+})
 router.post('/admin/login', login);
 router.post('/admin/logout', logout);
 
@@ -43,23 +50,20 @@ Object.keys(models).forEach(value => {
     if (config.defaultAdminPassword === 'admin'){
       log.error('you must change the default passoword at ./conf/config.js');
       log.error('koa2 refused to start because of weak password');
-      setTimeout(function() {
-          process.exit(0);
-      }, 200);
-      return;
+      return process.exit(1);
     }
 
     let result = await models.user.create({
       name: config.defaultAdminName,
       password: config.defaultAdminPassword,
       displayName: config.defaultAdminName,
-      email: '',
-      imageToken: config.qiniuToken
+      email: ''
     });
 
     log.info(`account '${result.name}' with passoword '${result.password}' is created`);
 
     await initOption();
+    await initMenu();
 
     app.listen(3000);
 
@@ -81,6 +85,17 @@ async function initOption () {
     if (count == 0){
       await models.option.create(option[i]);
       log.info(`Option ${key} created`);
+    }
+  }
+}
+
+async function initMenu () {
+  for (let i=0, len = menu.length; i< len ; i++){
+    let url = menu[i].url;
+    let count = await models.menu.find({ url }).count().exec();
+    if (count === 0){
+      await models.menu.create(menu[i]);
+      log.info(`Menu ${url} created`);
     }
   }
 }

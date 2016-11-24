@@ -19,6 +19,10 @@ store.logout = (conditions) => {
   return request.post(`/proxyPrefix/admin/logout`, conditions);
 }
 
+store.getImageToken = (body) => {
+  return request.post(`/proxyPrefix/qiniu/token`, body).then(response=>response.data)
+}
+
 // post CRUD
 
 store.fetchList = (model, query) => {

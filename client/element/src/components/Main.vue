@@ -10,8 +10,8 @@
 
 <script>
 import Api from '../store/api'
-import Sidebar from './Sidebar'
-import Top from './Top'
+import Sidebar from './pages/Sidebar'
+import Top from './pages/Top'
 
 export default {
   name: 'dashboard',
@@ -33,7 +33,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .dashboard {
   height: 100%;
 
@@ -45,5 +44,12 @@ export default {
     height: 100%;
     overflow: auto;
   }
+
+  @media all and (max-width: 867px) {
+    .main{
+      left: 145px;
+    }
+  }
 }
+
 </style>

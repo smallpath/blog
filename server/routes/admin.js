@@ -108,7 +108,7 @@ exports.permission =  async function (ctx, next) {
   if (result == false) {
     return ctx.body = {
           status: 'fail', 
-          description: 'Token verify failed '
+          description: 'Token verify failed'
         };
   }
 
@@ -122,7 +122,7 @@ exports.permission =  async function (ctx, next) {
 
     return ctx.body = {
           status: 'fail', 
-          description: 'Token invalid '
+          description: 'Token invalid'
         };
   }
 

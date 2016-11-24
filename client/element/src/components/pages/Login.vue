@@ -4,7 +4,7 @@
       <el-col :span="6">
         <div class="grid-content bg-purple-light">
           <el-form label-position="right" ref="form" :model="form" label-width="40px">
-            <el-form-item>{{title}}</el-form-item>
+            <p class="align-center" label-width="0">{{title}}</p>
             <el-form-item label="账号">
               <el-input v-model="form.name"></el-input>
             </el-form-item>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Api from '../store/api'
+import Api from '../../store/api'
 
 export default {
   name: 'login',
@@ -46,13 +46,19 @@ export default {
           });
         }else if(response.data.status == 'success'){
           localStorage.setItem('token', response.data.token);
-          localStorage.setItem('username',this.username);
+          localStorage.setItem('username',this.form.name);
           this.$message({
             message: '登陆成功',
             type: 'success',
             duration: 2000
           });
-          this.$router.push({ path: '/dashboard' });
+          this.$store.dispatch('FETCH_USER', {
+            model: 'user',
+            query: {},
+            username: this.form.name
+          }).then(()=>{
+            this.$router.push({ path: '/dashboard' });
+          })
         }
       }).catch(err => console.error(err))
     }
@@ -68,6 +74,15 @@ export default {
 <style lang="scss" scoped>
 .login {
   height: 100%;
+
+  .align-center {
+    font-size: 30px;
+    text-align: center;
+  }
+
+  .el-button--primary {
+    width: 100%;
+  }
 
   .row-bg {
     height: 100%;

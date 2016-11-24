@@ -14,6 +14,7 @@ const store = new Vuex.Store({
     prev: {},
     next: {},
     page: {},
+    menu: [],
     siteInfo: {
       github_url: {
         value: ''
@@ -37,7 +38,8 @@ const store = new Vuex.Store({
 
         let first = api.fetchPost({
           _id: { $lt: blog._id },
-          type: 0
+          type: 0,
+          isPublic: true
         }, {
           sort: 1,
           limit: 1,
@@ -61,7 +63,8 @@ const store = new Vuex.Store({
 
         let second = api.fetchPost({
           _id: { $gt: blog._id },
-          type: 0
+          type: 0,
+          isPublic: true
         }, {
           limit: 1,
           select: {
@@ -141,6 +144,12 @@ const store = new Vuex.Store({
       })
     },
 
+    FETCH_MENU: ({ commit, state }) => {
+      return api.fetchMenu().then(obj => {
+        commit('SET_MENU', { obj })
+      })
+    },
+
     FETCH_OPTIONS: ({ commit, state }) => {
       return api.fetchOption().then(optionArr => {
         let obj = optionArr.reduce((prev, curr) => {
@@ -183,6 +192,10 @@ const store = new Vuex.Store({
       Vue.set(state, 'achieves', sortedItem)
     },
 
+    SET_MENU: (state, { obj }) => {
+      Vue.set(state, 'menu', obj)
+    },
+
     SET_OPTIONS: (state, { obj }) => {
       Vue.set(state, 'siteInfo', obj)
     }
@@ -200,6 +213,10 @@ const store = new Vuex.Store({
     achieves (state, getters) {
       const { achieves } = state
       return achieves
+    },
+    menu (state, getters) {
+      const { menu } = state
+      return menu
     }
   }
 })

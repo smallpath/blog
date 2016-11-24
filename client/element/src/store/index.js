@@ -8,7 +8,8 @@ const store = new Vuex.Store({
   state: {
     siteInfo: {},
     list: [],
-    curr: {}
+    curr: {},
+    user: {}
   },
 
   actions: {
@@ -57,7 +58,11 @@ const store = new Vuex.Store({
         if (typeof id !== 'undefined') {
           delete form._id
           delete form.__v
-          return api.patchByID(model, id, form)
+          return api.patchByID(model, id, form).then((result) => {
+            if (model === 'user') {
+              commit('SET_USER', { user: result })
+            }
+          })
         } else {
           return api.post(model, form)
         }
@@ -76,12 +81,29 @@ const store = new Vuex.Store({
       }
     },
 
+    GET_IMAGE_TOKEN: ({ commit, state }, body) => {
+      console.log(body)
+      return api.getImageToken(body)
+    },
+
     PATCH: ({ commit, state }, { model, id, form }) => {
       return api.patchByID(model, id, form)
     },
 
     DELETE: ({ commit, state }, { model, id }) => {
       return api.deleteByID(model, id)
+    },
+
+    FETCH_USER: ({ commit, state }, { model, query, username }) => {
+      return api.fetchList(model, query).then(result => {
+        for (let i = 0, len = result.length; i < len; i++) {
+          let user = result[i]
+          if (user.name === username) {
+            commit('SET_USER', { user })
+            break
+          }
+        }
+      })
     },
 
     FETCH_OPTIONS: ({ commit, state }) => {
@@ -107,6 +129,10 @@ const store = new Vuex.Store({
 
     SET_CURR: (state, { obj }) => {
       Vue.set(state, 'curr', obj)
+    },
+
+    SET_USER: (state, { user }) => {
+      Vue.set(state, 'user', user)
     }
   },
 

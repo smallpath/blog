@@ -12,6 +12,7 @@
     "koa-router": "^7.0.1",
     "log4js": "^0.6.38",
     "mongoose": "^4.5.9",
+    "qiniu": "^6.1.13",
     "redis": "^2.6.2"
   },
   "devDependencies": {
