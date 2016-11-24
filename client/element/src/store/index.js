@@ -82,7 +82,6 @@ const store = new Vuex.Store({
     },
 
     GET_IMAGE_TOKEN: ({ commit, state }, body) => {
-      console.log(body)
       return api.getImageToken(body)
     },
 
