@@ -19,7 +19,7 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [x] 服务端sitemap定时任务
   - [x] rss
   - [x] 组件级缓存
-  - [ ] Loading组件 #2
+  - [ ] Loading组件 #2 (进行中)
   - [ ] 服务端谷歌统计
   - [ ] 侧边栏图片
 - [ ] 后台管理单页
@@ -27,11 +27,11 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [x] 使用axios替换vue-resource
   - [x] vue 1.0 => vue 2.0
   - [x] 使用element ui
-  - [ ] 七牛云图片上传 (进行中)
+  - [x] 七牛云图片上传
 - [ ] RESTful服务器
   - [x] RESTful添加select字段过滤
   - [x] 标签及分类移至文章中 
-  - [ ] 七牛access_token下发及鉴权 (进行中)
+  - [x] 七牛access_token下发及鉴权
   - [ ] 文章toc
   - [ ] OAuth1升级至OAuth2
 - [x] 部署文档
@@ -129,7 +129,7 @@ npm run build
 ```
 server{
     listen 80;                                      #如果是https, 则替换80为443
-    server_name admin.smallpath.me;        #替换域名
+    server_name admin.smallpath.me;                 #替换域名
     root /alidata/www/Blog/client/front/dist;       #替换路径为构建出来的dist路径
     set $node_port 3000;
 
@@ -168,10 +168,11 @@ server{
 
 > https://smallpath.me/proxyPrefix/api/:modelName/:id
 
-其中, `:modelName`为模型名, 总计如下6个模型
+其中, `:modelName`为模型名, 总计如下7个模型
 
 ```
 post
+menu
 tag
 category
 option
