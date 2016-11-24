@@ -31,7 +31,7 @@
         >
         <i class="el-icon-upload"></i>
         <div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+        <div class="el-upload__tip" slot="tip">请确保后台已经将七牛(server/conf/config)相关设置配置完毕</div>
       </el-upload>
     </el-dialog>
 
@@ -127,12 +127,14 @@ export default {
         cancelButtonText: '取消',
         closeOnClickModal: false
       }).then(() => {
+        this.isUploadShow = false;
         this._preInputText(text, 12, 12)
         this.$message({
           type: 'info',
           message: '已插入图片链接'
         });  
       }).catch(() => {
+        this.isUploadShow = false;
         this.$message({
           type: 'info',
           message: '已取消插入图片链接'
@@ -146,7 +148,7 @@ export default {
       let curr = moment().format('YYYYMMDD').toString()
       let prefix = moment(file.lastModified).format('HHmmss').toString()
       let suffix = file.name
-      let key = `/${curr}/${prefix}_${suffix}`;
+      let key = `${curr}/${prefix}_${suffix}`;
       return this.$store.dispatch('GET_IMAGE_TOKEN', {
         key
       }).then(response => {
@@ -190,6 +192,12 @@ export default {
     line-height: 1.5
 }
 
+.el-dialog__wrapper {
+  .el-dialog {
+      width: 31%;
+  }
+}
+
 .md-panel {
     display: block;
     position: relative;
@@ -199,6 +207,8 @@ export default {
     margin-bottom: 58px;
     overflow: hidden;
 
+
+    
     .md-editor {
       width: 100%;
       height: auto;
