@@ -6,11 +6,10 @@ import createListView from '../components/views/CreateListView'
 import createEditView from '../components/views/CreateEditView'
 import createMarkdownView from '../components/views/CreateMarkdownView'
 
-import Login from '../components/Login'
-import Logout from '../components/Logout'
-import Dashboard from '../components/Dashboard'
-import Info from '../components/pages/Info'
-import PageSetting from '../components/pages/PageSetting'
+import Main from '../components/Main'
+import Dashboard from '../components/pages/Dashboard'
+import Login from '../components/pages/Login'
+import Logout from '../components/pages/Logout'
 
 export default new VueRouter({
   mode: 'history',
@@ -34,20 +33,20 @@ export default new VueRouter({
     },
     {
       path: '/dashboard',
-      name: 'dashboard',
-      component: Dashboard,
+      name: 'main',
+      component: Main,
       children: [
         {
           path: '/',
-          name: 'info',
-          component: Info
+          name: 'dashboard',
+          component: Dashboard
         }
       ]
     },
     {
       path: '/post',
       name: 'post',
-      component: Dashboard,
+      component: Main,
       children: [
         {
           path: 'list',
@@ -55,21 +54,17 @@ export default new VueRouter({
           component: createListView({
             name: 'post',
             model: 'post',
+            isButtonFixed: true,
             items: [
               {
                 prop: 'title',
                 label: '标题',
-                width: 250
+                width: 300
               },
               {
-                prop: 'createdAt',
-                label: '创建日期',
-                width: 170
-              },
-              {
-                prop: 'updatedAt',
-                label: '修改日期',
-                width: 170
+                prop: 'pathName',
+                label: '路径',
+                width: 300
               }
             ],
             query: {
@@ -99,7 +94,8 @@ export default new VueRouter({
                 label: '路径',
                 type: 'input',
                 default: '',
-                width: 250
+                width: 250,
+                description: '作为文章的唯一标志在前端路径中显示，例如test-article'
               },
               {
                 prop: 'markdownContent',
@@ -160,13 +156,13 @@ export default new VueRouter({
               }
             }
           })
-        },
+        }
       ]
     },
     {
       path: '/page',
       name: 'page',
-      component: Dashboard,
+      component: Main,
       children: [
         {
           path: 'list',
@@ -179,6 +175,11 @@ export default new VueRouter({
                 prop: 'title',
                 label: '标题',
                 width: 250
+              },
+              {
+                prop: 'pathName',
+                label: '路径',
+                width: 170
               },
               {
                 prop: 'createdAt',
@@ -217,7 +218,8 @@ export default new VueRouter({
                 label: '路径',
                 type: 'input',
                 default: '',
-                width: 250
+                width: 250,
+                description: '作为文章的唯一标志在前端路径中显示，例如test-article'
               },
               {
                 prop: 'markdownContent',
@@ -265,20 +267,72 @@ export default new VueRouter({
               sort: 1
             }
           })
+        }
+      ]
+    },
+    {
+      path: '/menu',
+      name: 'menu',
+      component: Main,
+      children: [
+        {
+          path: 'list',
+          name: 'menuList',
+          component: createListView({
+            name: 'menu',
+            model: 'menu',
+            items: [
+              {
+                prop: 'label',
+                label: '名称',
+                width: 250
+              },
+              {
+                prop: 'url',
+                label: '根路径',
+                width: 170
+              },
+              {
+                prop: 'option',
+                label: '字体名称',
+                width: 170
+              }
+            ],
+            query: {}
+          })
         },
         {
-          path: 'setting',
-          name: 'pageSetting',
-          components: {
-            default: PageSetting
-          }
-        },
+          path: 'create/:id?',
+          name: 'menuSetting',
+          component: createEditView({
+            name: 'menu',
+            model: 'menu',
+            items: [
+              {
+                prop: 'label',
+                label: '名称',
+                width: 250
+              },
+              {
+                prop: 'url',
+                label: '根路径',
+                width: 170
+              },
+              {
+                prop: 'option',
+                label: '字体名称',
+                width: 170
+              }
+            ],
+            query: {}
+          })
+        }
       ]
     },
     {
       path: '/cate',
       name: 'cate',
-      component: Dashboard,
+      component: Main,
       children: [
         {
           path: 'list',
@@ -289,7 +343,7 @@ export default new VueRouter({
             items: [
               {
                 prop: 'name',
-                label: '名称',
+                label: '分类',
                 width: 250
               }
             ],
@@ -305,7 +359,7 @@ export default new VueRouter({
             items: [
               {
                 prop: 'name',
-                label: '名称',
+                label: '分类名称',
                 width: 250
               }
             ],
@@ -317,7 +371,7 @@ export default new VueRouter({
     {
       path: '/tag',
       name: 'tag',
-      component: Dashboard,
+      component: Main,
       children: [
         {
           path: 'list',
@@ -328,7 +382,7 @@ export default new VueRouter({
             items: [
               {
                 prop: 'name',
-                label: '名称',
+                label: '标签',
                 width: 250
               }
             ],
@@ -344,7 +398,7 @@ export default new VueRouter({
             items: [
               {
                 prop: 'name',
-                label: '名称',
+                label: '标签名称',
                 width: 250
               }
             ],
@@ -356,7 +410,7 @@ export default new VueRouter({
     {
       path: '/version',
       name: 'version',
-      component: Dashboard,
+      component: Main,
       children: [
         {
           path: 'list',
@@ -367,12 +421,12 @@ export default new VueRouter({
             items: [
               {
                 prop: 'name',
-                label: '名称',
+                label: '版本名称',
                 width: 250
               },
               {
                 prop: 'version',
-                label: '版本',
+                label: '版本号',
                 width: 170
               },
               {
@@ -393,13 +447,13 @@ export default new VueRouter({
             items: [
               {
                 prop: 'name',
-                label: '名称',
+                label: '版本名称',
                 default: '',
                 width: 250
               },
               {
                 prop: 'version',
-                label: '版本',
+                label: '版本号',
                 default: '',
                 width: 170
               },
@@ -418,7 +472,7 @@ export default new VueRouter({
     {
       path: '/user',
       name: 'user',
-      component: Dashboard,
+      component: Main,
       children: [
         {
           path: 'edit',
@@ -430,7 +484,7 @@ export default new VueRouter({
             items: [
               {
                 prop: 'name',
-                label: '名称',
+                label: '账号',
                 default: '',
                 width: 250
               },
@@ -444,19 +498,15 @@ export default new VueRouter({
                 prop: 'displayName',
                 label: '昵称',
                 default: '',
-                width: 170
+                width: 170,
+                description: '在后台管理的顶部导航栏中显示'
               },
               {
                 prop: 'email',
                 label: '邮箱',
                 default: '',
-                width: 170
-              },
-              {
-                prop: 'imageToken',
-                label: '七牛Token',
-                default: '',
-                width: 170
+                width: 170,
+                description: '在文章被回复时博客需要通知的目标邮箱，空则不通知'
               }
             ],
             query: {}
@@ -467,7 +517,7 @@ export default new VueRouter({
     {
       path: '/option',
       name: 'option',
-      component: Dashboard,
+      component: Main,
       children: [
         {
           path: 'general',
@@ -481,55 +531,64 @@ export default new VueRouter({
                 prop: 'title',
                 label: '网站名称',
                 default: '',
-                width: 250
+                width: 250,
+                description: '网站的名称，作为前后台的标题'
               },
               {
                 prop: 'logoUrl',
                 label: 'logo地址',
                 default: '',
-                width: 170
+                width: 170,
+                description: '前台单页的正方形图标，80x80'
               },
               {
                 prop: 'description',
                 label: '站点描述',
                 default: '',
-                width: 170
+                width: 170,
+                description: '作为前台的侧边栏描述'
               },
               {
                 prop: 'siteUrl',
                 label: '网站地址',
                 default: '',
-                width: 170
+                width: 170,
+                description: '博客前台的域名'
               },
               {
                 prop: 'faviconUrl',
                 label: 'favicon地址',
                 default: '',
-                width: 170
+                width: 170,
+                description: '博客前台的favicon地址，请填写相对前台域名的根路径'
               },
               {
                 prop: 'keywords',
                 label: '关键词',
                 default: '',
-                width: 170
+                width: 170,
+                description: '作为前台单页的meta中的keywords，以供搜索引擎收录'
               },
               {
                 prop: 'githubUrl',
                 label: 'github地址',
                 default: '',
-                width: 170
+                width: 170,
+                description: 'github地址，填写用户昵称即可'
               },
               {
                 prop: 'weiboUrl',
                 label: '微博地址',
                 default: '',
-                width: 170
+                width: 170,
+                description: '微博地址，请填写全部链接'
               },
               {
                 prop: 'miitbeian',
                 label: '网站备案号',
                 default: '',
-                width: 170
+                width: 170,
+                description: '网站的备案号，在前台单页的底部显示'
               }
             ],
             query: {}
@@ -547,13 +606,15 @@ export default new VueRouter({
                 prop: 'commentType',
                 label: '评论类型',
                 default: '',
-                width: 250
+                width: 250,
+                description: '目前仅支持disqus，计划支持duoshuo'
               },
               {
                 prop: 'commentName',
                 label: '评论名称',
                 default: '',
-                width: 250
+                width: 250,
+                description: 'disqus或duoshuo中分配给博客的id'
               }
             ],
             query: {}
@@ -571,7 +632,8 @@ export default new VueRouter({
                 prop: 'analyzeCode',
                 label: '统计代码',
                 default: '',
-                width: 250
+                width: 250,
+                description: '目前仅支持谷歌统计，填入谷歌统计分配给博客的ID即可'
               }
             ],
             query: {}

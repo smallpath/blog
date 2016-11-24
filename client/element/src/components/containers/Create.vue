@@ -1,7 +1,16 @@
 <template>
 <el-form ref="form" :model="form" label-width="120px">
   <el-form-item v-for="item in options.items" :label="item.label">
-    <el-input v-model="form[item.prop]"></el-input>
+    <el-input v-if="typeof item.description === 'undefined'" v-model="form[item.prop]"></el-input>
+    <el-popover
+      v-if="typeof item.description !== 'undefined'"
+      placement="right-start"
+      :title="item.label"
+      width="50%"
+      trigger="hover"
+      :content="item.description">
+      <el-input slot="reference" v-model="form[item.prop]"></el-input>
+    </el-popover>
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click.native="onSubmit">提交</el-button>
@@ -88,11 +97,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dashboard .main {
-  width: 50%
-}
-
   .el-form {
     width: 40%;
+    margin-top: 20px;
+
+    .el-button {
+      width: 100%;
+    }
   }
 </style>

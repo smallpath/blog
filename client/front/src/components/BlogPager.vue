@@ -21,7 +21,8 @@ function fetchItems (serverStore, { path, query, params }) {
 
   return serverStore.dispatch('FETCH_ITEMS', {
     conditions: {
-      type: 0
+      type: 0,
+      isPublic: true
     },
     select: {
       title: 1,

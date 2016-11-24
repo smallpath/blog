@@ -12,11 +12,7 @@ const blogAPI = `${host}/api/post`
 
 const tagAPI = `${host}/api/tag`
 
-const postTagAPI = `${host}/api/postTag`
-
-// const categoryAPI = `${host}/api/category`
-
-// const postCateAPI = `${host}/api/postCategory`
+const menuAPI = `${host}/api/menu`
 
 const store = {}
 
@@ -87,44 +83,10 @@ store.fetchTags = () => {
   })
 }
 
-store.fetchPostTags = () => {
-  return request.get(postTagAPI).then((response) => {
+store.fetchMenu = () => {
+  return request.get(menuAPI).then((response) => {
     return response.body
   }, (err) => {
     console.log(err)
   })
 }
-
-// store.fetchTagsByPostID = (queryJSON) => {
-//   let keys = Object.keys(queryJSON)
-//   let values = Object.keys(queryJSON).map(value=>queryJSON[value])
-//   return vue.resource(postTagAPI+'{?keys,values}').get({
-//       keys,
-//       values,
-//   }).then((response) => {
-//     return response.body
-//   }, (err) => {
-//     console.log(err)
-//   })
-// }
-
-// store.fetchCatesByPostID = (queryJSON) => {
-//   let keys = Object.keys(queryJSON)
-//   let values = Object.keys(queryJSON).map(value=>queryJSON[value])
-//   return vue.resource(postCateAPI+'{?keys,values}').get({
-//       keys,
-//       values,
-//   }).then((response) => {
-//     return response.body
-//   }, (err) => {
-//     console.log(err)
-//   })
-// }
-
-// store.fetchCates = () => {
-//   return vue.http.get(categoryAPI).then((response) => {
-//     return response.body
-//   }, (err) => {
-//     console.log(err)
-//   })
-// }

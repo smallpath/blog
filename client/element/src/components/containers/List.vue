@@ -14,7 +14,7 @@
       v-if="isPost"
       prop="category"
       label="分类"
-      width="150"
+      width="120"
       inline-template>
       <el-tag v-if="row.category" :type="'primary'" close-transition>{{row.category}}</el-tag>
     </el-table-column>
@@ -22,7 +22,7 @@
       v-if="isPost"
       prop="tags"
       label="标签"
-      width="200"
+      width="180"
       :filters="filters"
       :filter-method="filterTag"
       inline-template>
@@ -30,6 +30,18 @@
     </el-table-column>
     <el-table-column
       inline-template
+      v-if="!options.isButtonFixed"
+      :context="_self"
+      label="操作"
+      width="150">
+      <span>
+        <el-button @click="handleClick(row)" type="info" size="small">编辑</el-button>
+        <el-button @click="handleDelete(row, $index)" type="danger" size="small">删除</el-button>
+      </span>
+    </el-table-column>
+    <el-table-column
+      inline-template
+      v-if="options.isButtonFixed"
       fixed="right"
       :context="_self"
       label="操作"

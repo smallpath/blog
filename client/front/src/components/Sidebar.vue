@@ -4,20 +4,20 @@
             <div class=profile>
                 <a href="/"> 
                     <img 
-                        :src="siteInfo.logo_url.value" 
+                        :src="siteInfo.logoUrl.value" 
                         :alt="siteInfo.title.value"
                         ref="logo">
                 </a> 
                 <span>{{siteInfo.title.value}}</span>
             </div>
             <ul class="buttons">
-                <li v-for="menu in siteInfo.menu.value">
+                <li v-for="menu in menus">
                     <router-link :to="{ path: menu.url }" :title="menu.label"> <i class="iconfont" :class="'icon-' + menu.option"></i> <span>{{menu.label}}</span></router-link>
                 </li>
             </ul>
             <ul class="buttons">
                 <li>
-                    <a class="inline" target=_blank :href="'https://'+siteInfo.github_url.value"><i class="iconfont icon-github-v" title="GitHub"></i></a>
+                    <a class="inline" target=_blank :href="'https://'+siteInfo.githubUrl.value"><i class="iconfont icon-github-v" title="GitHub"></i></a>
                     <a class="inline" href="/rss.xml"><i class="iconfont icon-rss-v" title="RSS"></i></a>
                     <a class="inline" href="/search"><i class="iconfont icon-search" title="Search"></i></a>
             </ul>
@@ -29,22 +29,23 @@
 export default {
   data () {
     return {
-      siteInfo: this.$store.getters.siteInfo
+      siteInfo: this.$store.getters.siteInfo,
+      menus: this.$store.getters.menu
     }
   },
   serverCacheKey: props => {
     return 'static-sidebar'
   },
   preFetch (store, { path, params, query }) {
-    return store.dispatch('FETCH_OPTIONS')
+    return Promise.all([store.dispatch('FETCH_OPTIONS'), store.dispatch('FETCH_MENU')])
   },
   beforeMount () {
     if (typeof this.siteInfo.title === 'undefined') {
-      this.$store.dispatch('FETCH_OPTIONS').then(() => {
+      Promise.all([this.$store.dispatch('FETCH_OPTIONS').then(() => {
         if (this.siteInfo['title'] && typeof document !== 'undefined') {
           document.title = this.siteInfo['title'].value
         }
-      })
+      }),this.$store.dispatch('FETCH_MENU')])
     } else {
       document.title = this.siteInfo['title'].value || 'Blog'
     }

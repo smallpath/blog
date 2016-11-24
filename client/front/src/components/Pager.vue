@@ -11,7 +11,7 @@
                 <div class="entry-content" v-html="article.content">
                 </div>
             </article>
-            <div class="comments" v-if="article.allowComment === 1 && commentName !== ''">
+            <div class="comments" v-if="article.allowComment === true && commentName !== ''">
                 <disqus :shortname="commentName" ></disqus>
             </div>
         </div>

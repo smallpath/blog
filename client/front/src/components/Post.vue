@@ -41,7 +41,7 @@
                 <router-link v-if="typeof next.pathName !== 'undefined'" 
                     :to="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo</router-link> 
             </nav>
-            <div class="comments" v-if="article.allowComment === 1 && commentName !== ''">
+            <div class="comments" v-if="article.allowComment === true && commentName !== ''">
                 <disqus :shortname="commentName" ></disqus>
             </div>
         </div>
@@ -83,13 +83,13 @@ export default {
       return this.$store.state.next
     },
     commentType () {
-      return this.$store.state.siteInfo.comment.value.type || 'disqus'
+      return this.$store.state.siteInfo.commentType.value || 'disqus'
     },
     commentName () {
-      return this.$store.state.siteInfo.comment.value.name || ''
+      return this.$store.state.siteInfo.commentName.value || ''
     },
     siteURL () {
-      return this.$store.state.siteInfo.site_url.value || 'localhost'
+      return this.$store.state.siteInfo.siteUrl.value || 'localhost'
     }
   },
   preFetch: fetchBlog,

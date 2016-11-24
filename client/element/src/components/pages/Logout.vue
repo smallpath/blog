@@ -3,7 +3,7 @@
 
 <script>
 /* eslint-disable */
-import Api from '../store/api';
+import Api from '../../store/api';
 
 export default {
   methods: {
