@@ -1,5 +1,6 @@
 let qiniu = require("qiniu")
 let { 
+    qiniuBucketHost: bucketHost,
     qiniuAccessKey,
     qiniuSecretKey,
     qiniuBucketName
@@ -17,12 +18,16 @@ const policy = (name) => {
 }
 
 const getQiniuTokenFromFileName = (fileName) => {
+    let key = `${qiniuBucketName}:${fileName}`
+    let putPolicy = new qiniu.rs.PutPolicy2(policy(key));
 
-    let putPolicy = new qiniu.rs.PutPolicy2(policy(`${qiniuBucketName}:${fileName}`));
+    let upToken = putPolicy.token();
 
-    let token = putPolicy.token();
-
-    return token;
+    return { 
+        upToken,
+        key,
+        bucketHost
+    };
 
 }
 

@@ -12,6 +12,7 @@ module.exports = {
     tokenSecret: 'test',
     tokenExpiresIn: 3600,
 
+    qiniuBucketHost: '',
     qiniuAccessKey: '',
     qiniuSecretKey: '',
     qiniuBucketName: '',

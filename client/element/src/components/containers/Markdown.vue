@@ -22,8 +22,12 @@
         action="https://up.qbox.me/"
         type="drag"
         :thumbnail-mode="true"
-        :data="form"
+        :on-preview="handlePreview"
+        :on-success="handleSuccess"
+        :on-error="handleError"
         :before-upload="beforeUpload"
+        :show-upload-list="true"
+        :data="form"
         >
         <i class="el-icon-upload"></i>
         <div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -61,7 +65,8 @@ export default {
       mode: 'split', // ['edit', 'split', 'preview']
       isUploadShow: false,
       upToken: '',
-      filePath: '',
+      bucketHost: '',
+      key: '',
       form: {}
     }
   },
@@ -110,22 +115,52 @@ export default {
 
       this.$emit('input', input)
     },
-    _uploadImage() {
-      let filePath = '/' + moment().format('YYYYMMDD').toString() + '/' + new Date().getTime();
-      this.$store.dispatch('GET_IMAGE_TOKEN', {
-        filePath
-      }).then(response => {
-        this.upToken = response.token;
-        this.filePath = filePath;
-        this.isUploadShow = true
+    handlePreview(file) {
+      let text = `${this.bucketHost}/${file.response.key}`;
+    },
+    handleSuccess(response, file, fileList) {
+      let key = response.key;
+      let name = file.name;
+      let text = `![${name}](${this.bucketHost}/${key})`;
+      this.$confirm(text, '上传成功，是否插入图片链接?', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        closeOnClickModal: false
+      }).then(() => {
+        this._preInputText(text, 12, 12)
+        this.$message({
+          type: 'info',
+          message: '已插入图片链接'
+        });  
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消插入图片链接'
+        })          
       })
     },
+    handleError(err, response, file) {
+      this.$message.error(JSON.stringify(err)); 
+    },
     beforeUpload(file) {
-      this.form = {
-        token: this.upToken,
-        file: this.filePath,
-      }
-      return true;
+      let curr = moment().format('YYYYMMDD').toString()
+      let prefix = moment(file.lastModified).format('HHmmss').toString()
+      let suffix = file.name
+      let key = `/${curr}/${prefix}_${suffix}`;
+      return this.$store.dispatch('GET_IMAGE_TOKEN', {
+        key
+      }).then(response => {
+        this.upToken = response.upToken;
+        this.key = response.key;
+        this.bucketHost = response.bucketHost;
+        this.form = {
+          key,
+          token: this.upToken,
+        }
+      })
+    },
+    _uploadImage() {
+      this.isUploadShow = true;
     },
     _insertMore(){
         this._preInputText("<!--more-->", 12, 12);
