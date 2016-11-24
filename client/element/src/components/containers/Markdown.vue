@@ -31,7 +31,7 @@
         >
         <i class="el-icon-upload"></i>
         <div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip" slot="tip">请确保后台已经将七牛(server/conf/config)相关设置配置完毕</div>
+        <div class="el-upload__tip" slot="tip">请确保后台已经将七牛(server/conf/config.js)相关设置配置完毕</div>
       </el-upload>
     </el-dialog>
 
@@ -121,7 +121,9 @@ export default {
     handleSuccess(response, file, fileList) {
       let key = response.key;
       let name = file.name;
-      let text = `![${name}](${this.bucketHost}/${key})`;
+      let prefix = key.split('/')[0];
+      let suffix = key.split('/')[1];
+      let text = `![${name}](${this.bucketHost}/${prefix}/${encodeURIComponent(suffix)})`;
       this.$confirm(text, '上传成功，是否插入图片链接?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -142,7 +144,11 @@ export default {
       })
     },
     handleError(err, response, file) {
-      this.$message.error(JSON.stringify(err)); 
+      if (err.status === 401) {
+        this.$message.error('图片上传失败，请求中未附带Token'); 
+      } else {
+        this.$message.error(JSON.stringify(err)); 
+      }
     },
     beforeUpload(file) {
       let curr = moment().format('YYYYMMDD').toString()
@@ -155,6 +161,10 @@ export default {
         this.upToken = response.upToken;
         this.key = response.key;
         this.bucketHost = response.bucketHost;
+        if (this.bucketHost === '') {
+          this.$notify.error('获取七牛Token失败，请确认您已修改后台服务器的七牛配置文件(server/conf/config.js)')
+          return Promise.reject()
+        }
         this.form = {
           key,
           token: this.upToken,
