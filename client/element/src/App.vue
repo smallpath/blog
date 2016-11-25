@@ -12,50 +12,48 @@ import { getChineseDesc } from './utils/error'
 
 export default {
   name: 'app',
-  data() {
+  data () {
     return {}
   },
   computed: {
-    siteInfo() {
-      return this.$store.state.siteInfo;
+    siteInfo () {
+      return this.$store.state.siteInfo
     }
   },
-  beforeMount() {
-
+  beforeMount () {
     this.$store.dispatch('FETCH_OPTIONS').then(() => {
       if (this.siteInfo['title'] && typeof document !== 'undefined') {
         document.title = this.siteInfo['title'].value
       }
     })
 
-    const { request } = api;
+    const { request } = api
 
     request.interceptors.request.use((config) => {
-      const token = localStorage.getItem('token')
+      const token = window.localStorage.getItem('token')
 
-      if (request.method == 'get' && request.url.indexOf('/proxyPrefix/user') == -1 ){
-        return config;
+      if (request.method === 'get' && request.url.indexOf('/proxyPrefix/user') === -1) {
+        return config
       }
 
       if (token !== null && token !== 'undefined') {
-        config.headers['authorization'] = token;
+        config.headers['authorization'] = token
       }
 
-      return config;
-    }, (error) => Promise.reject(error));
+      return config
+    }, (error) => Promise.reject(error))
 
     request.interceptors.response.use((response) => {
       if (this.$store.state.route.name === 'logout') {
-        return response;
+        return response
       }
       if (response.data && response.data.status && response.data.status === 'fail') {
         let desc = getChineseDesc(response.data.description)
         this.$notify.error(desc)
         return Promise.reject(desc)
       }
-      return response;
-    }, (error) => Promise.reject(error));
-
+      return response
+    }, (error) => Promise.reject(error))
   }
 }
 </script>

@@ -22,11 +22,11 @@ export default {
   name: 'top',
   data () {
     return {
-      title: '',
+      title: ''
     }
   },
   computed: {
-    displayName() {
+    displayName () {
       return this.$store.state.user.displayName || -1
     }
   },
@@ -43,9 +43,9 @@ export default {
       }
     }
   },
-  created(){
+  created () {
     if (this.displayName === -1) {
-      let username = localStorage.getItem('username');
+      let username = window.localStorage.getItem('username')
       this.$store.dispatch('FETCH_USER', {
         model: 'user',
         query: {},

@@ -59,8 +59,8 @@ export default {
   name: 'list',
   props: ['options'],
   data () {
-    let isPost = this.options.name === 'post';
-    let isPage = this.options.name === 'page';
+    let isPost = this.options.name === 'post'
+    let isPage = this.options.name === 'page'
     return {
       isPost,
       isPage,
@@ -68,41 +68,46 @@ export default {
     }
   },
   computed: {
-    list() {
+    list () {
       return this.$store.state.list
     },
-    filters() {
-      if (!this.isPost && !this.isPage) return [];
+    filters () {
+      if (!this.isPost && !this.isPage) return []
 
-      let obj = this.list.reduce((prev, value)=>{ 
-        Array.isArray(value.tags) && value.tags.forEach(tag => prev[tag]={ text: tag, value: tag});
-        return prev;
-      }, {});
-      return Object.keys(obj).map(value=>{
+      let obj = this.list.reduce((prev, value) => {
+        Array.isArray(value.tags) && value.tags.forEach(tag => {
+          prev[tag] = {
+            text: tag,
+            value: tag
+          }
+        })
+        return prev
+      }, {})
+      return Object.keys(obj).map(value => {
         return obj[value]
       })
     }
   },
   methods: {
-    filterTag(value, row) {
-      return row.tags.indexOf(value) !== -1;
+    filterTag (value, row) {
+      return row.tags.indexOf(value) !== -1
     },
-    handleClick({ _id }) {
+    handleClick ({ _id }) {
       this.$router.push({
         path: `/${this.options.name}/create/${_id}`
       })
     },
-    handleDelete({ _id }, index) {
-      this.$store.dispatch('DELETE', Object.assign({},{
+    handleDelete ({ _id }, index) {
+      this.$store.dispatch('DELETE', Object.assign({}, {
         id: _id
-      }, this.options)).then(()=>{
+      }, this.options)).then(() => {
         this.$store.state.list.splice(index, 1)
       }).catch(err => console.error(err))
     }
   },
   created () {
-    this.$store.dispatch('FETCH_LIST', this.options).then(()=>{
-      this.isLoading = false;
+    this.$store.dispatch('FETCH_LIST', this.options).then(() => {
+      this.isLoading = false
     }).catch(err => console.error(err))
   }
 }

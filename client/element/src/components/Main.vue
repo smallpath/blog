@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import Api from '../store/api'
 import Sidebar from './pages/Sidebar'
 import Top from './pages/Top'
 
@@ -21,13 +20,8 @@ export default {
     }
   },
   components: {
-    'sidebar': Sidebar,
-    'top': Top
-  },
-  methods: {
-  },
-  mounted(){
-
+    Sidebar,
+    Top
   }
 }
 </script>

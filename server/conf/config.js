@@ -12,12 +12,13 @@ module.exports = {
     tokenSecret: 'test',
     tokenExpiresIn: 3600,
 
-    qiniuBucketHost: '',
-    qiniuAccessKey: '',
-    qiniuSecretKey: '',
-    qiniuBucketName: '',
-
     defaultAdminName: 'admin',
     defaultAdminPassword: 'admin',
+
+    qiniuAccessKey: '',
+    qiniuSecretKey: '',
+    qiniuBucketHost: '',
+    qiniuBucketName: '',
+    qiniuPipeline: ''
 
 }
