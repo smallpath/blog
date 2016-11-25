@@ -73,19 +73,19 @@ export default {
     }
   },
   watch: {
-    '$route' : function (route) {
-      this.fullPath = route.path.split('/').slice(0, 3).join('/')  
+    '$route': function (route) {
+      this.fullPath = route.path.split('/').slice(0, 3).join('/')
     }
   },
   methods: {
-    push(name) {
+    push (name) {
       this.$router.push({ name })
     },
     handleSelect (index, indexPath) {
 
     }
   },
-  beforeMount(){
+  beforeMount () {
     this.fullPath = this.$route.path.split('/').slice(0, 3).join('/')
   }
 }

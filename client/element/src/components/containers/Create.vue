@@ -23,12 +23,12 @@ export default {
   name: 'list',
   props: ['options'],
   data () {
-    let isPost = this.options.name === 'post';
-    let isPage = this.options.name === 'page';
-    let form = this.options.items.reduce((prev, curr)=>{
-      prev[curr.prop] = curr.default;
-      return prev;
-    }, {});
+    let isPost = this.options.name === 'post'
+    let isPage = this.options.name === 'page'
+    let form = this.options.items.reduce((prev, curr) => {
+      prev[curr.prop] = curr.default
+      return prev
+    }, {})
     return {
       isPost,
       isPage,
@@ -37,61 +37,58 @@ export default {
     }
   },
   computed: {
-    list() {
+    list () {
       return this.$store.state.list
     }
   },
   methods: {
-    onSubmit() {
-      let id = this.$route.params.id;
+    onSubmit () {
+      let id = this.$route.params.id
       if (typeof id !== 'undefined') {
         // patch
-        return this.$store.dispatch('PATCH', Object.assign({},{
+        return this.$store.dispatch('PATCH', Object.assign({}, {
           id: this.$route.params.id,
           form: this.form
-        }, this.options)).then((data)=>{
+        }, this.options)).then(data => {
           this.$message({
             message: '已成功提交',
             type: 'success'
-          });
+          })
         }).catch(err => console.error(err))
       } else {
         // post
-        return this.$store.dispatch('POST', Object.assign({},{
-          form: this.form,
-        }, this.options)).then((data)=>{
+        return this.$store.dispatch('POST', Object.assign({}, {
+          form: this.form
+        }, this.options)).then(data => {
           this.$message({
             message: '已成功提交',
             type: 'success'
-          });
+          })
         }).catch(err => console.error(err))
       }
     }
   },
   created () {
-    // flatten user and options into obj 
+    // flatten user and options into obj
     if (this.options.isPlain === true) {
-      return this.$store.dispatch('FETCH_CREATE', Object.assign({},{
+      return this.$store.dispatch('FETCH_CREATE', Object.assign({}, {
         id: -1
-      }, this.options)).then(()=>{
-        this.form = Object.assign({},this.$store.state.curr);
-        this.isLoading = false;
+      }, this.options)).then(() => {
+        this.form = Object.assign({}, this.$store.state.curr)
+        this.isLoading = false
       }).catch(err => console.error(err))
     }
 
     // if params has value , fetch from the model
     if (typeof this.$route.params.id !== 'undefined') {
-      return this.$store.dispatch('FETCH_CREATE', Object.assign({},{
+      return this.$store.dispatch('FETCH_CREATE', Object.assign({}, {
         id: this.$route.params.id
-      }, this.options)).then(()=>{
-        this.form = Object.assign({},this.$store.state.curr);
-        this.isLoading = false;
+      }, this.options)).then(() => {
+        this.form = Object.assign({}, this.$store.state.curr)
+        this.isLoading = false
       }).catch(err => console.error(err))
-    } else {
-      // else it's a new page, nothing to do
     }
-    
-    
+    // else it's a new page, nothing to do
   }
 }
 </script>

@@ -6,10 +6,10 @@
           <el-form label-position="right" ref="form" :model="form" label-width="40px">
             <p class="align-center" label-width="0">{{title}}</p>
             <el-form-item label="账号">
-              <el-input v-model="form.name"></el-input>
+              <el-input auto-complete="on" v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-              <el-input v-model="form.password"></el-input>
+              <el-input type="password" auto-complete="on" v-model="form.password"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit">登陆</el-button>
@@ -37,35 +37,35 @@ export default {
   },
   methods: {
     onSubmit () {
-      Api.login(this.form).then(response=>{
-        if (response.data.status == 'fail'){
+      Api.login(this.form).then(response => {
+        if (response.data.status === 'fail') {
           this.$message({
             message: '登陆失败，请检查帐号与密码',
             duration: 2000,
             type: 'error'
-          });
-        }else if(response.data.status == 'success'){
-          localStorage.setItem('token', response.data.token);
-          localStorage.setItem('username',this.form.name);
+          })
+        } else if (response.data.status === 'success') {
+          window.localStorage.setItem('token', response.data.token)
+          window.localStorage.setItem('username', this.form.name)
           this.$message({
             message: '登陆成功',
             type: 'success',
             duration: 2000
-          });
+          })
           this.$store.dispatch('FETCH_USER', {
             model: 'user',
             query: {},
             username: this.form.name
-          }).then(()=>{
-            this.$router.push({ path: '/dashboard' });
+          }).then(() => {
+            this.$router.push({ path: '/dashboard' })
           })
         }
       }).catch(err => console.error(err))
     }
   },
-  mounted(){
-    this.$store.dispatch('FETCH_OPTIONS').then(()=>{
-      this.title = this.$store.state.siteInfo['title'].value || '';
+  mounted () {
+    this.$store.dispatch('FETCH_OPTIONS').then(() => {
+      this.title = this.$store.state.siteInfo['title'].value || ''
     })
   }
 }

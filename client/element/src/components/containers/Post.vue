@@ -60,14 +60,14 @@ export default {
     let isPost = this.options.name === 'post'
     let isPage = this.options.name === 'page'
     let id = typeof this.$route.params.id === 'undefined' ? -1 : this.$route.params.id
-    let form = this.options.items.reduce((prev, curr)=>{
-      prev[curr.prop] = Array.isArray(curr.default) ? 
-                          curr.default.map(value => value) : 
-                            curr.default;
-      return prev;
-    }, {});
-    let type = typeof form.type === 'undefined' ? isPost ? "0" : "1" : form.type
-    form.type = type;
+    let form = this.options.items.reduce((prev, curr) => {
+      prev[curr.prop] = Array.isArray(curr.default)
+                         ? curr.default.map(value => value)
+                           : curr.default
+      return prev
+    }, {})
+    let type = typeof form.type === 'undefined' ? isPost ? 0 : 1 : form.type
+    form.type = type
     return {
       isPost,
       isPage,
@@ -80,90 +80,86 @@ export default {
     }
   },
   computed: {
-    splitIndex() {
+    splitIndex () {
       return this.options.items.reduce((prev, curr, index) => {
-        if (curr.type === 'split')
+        if (curr.type === 'split') {
           return index
+        }
         return prev
       }, -1)
     },
-    prevItems() {
+    prevItems () {
       return this.options.items.slice(0, this.splitIndex)
     },
-    nextItems() {
+    nextItems () {
       return this.options.items.slice(this.splitIndex)
     }
   },
   methods: {
-    onSave() {
+    onSave () {
 
     },
-    validate() {
+    validate () {
       this.form.content = marked(this.form.markdownContent, { sanitize: true })
       this.form.summary = marked(this.form.markdownContent.split('<!--more-->')[0], { sanitize: true })
       if (this.form.createdAt === '') {
-        this.form.createdAt = moment().format('YYYY-MM-DD HH:mm:ss').toString();
+        this.form.createdAt = moment().format('YYYY-MM-DD HH:mm:ss').toString()
       } else {
-        this.form.createdAt = moment(this.form.createdAt).format('YYYY-MM-DD HH:mm:ss').toString();
+        this.form.createdAt = moment(this.form.createdAt).format('YYYY-MM-DD HH:mm:ss').toString()
       }
 
       if (this.form.updatedAt === '') {
-        this.form.updatedAt = moment().format('YYYY-MM-DD HH:mm:ss').toString();
+        this.form.updatedAt = moment().format('YYYY-MM-DD HH:mm:ss').toString()
       } else {
-        this.form.updatedAt = moment(this.form.updatedAt).format('YYYY-MM-DD HH:mm:ss').toString();
+        this.form.updatedAt = moment(this.form.updatedAt).format('YYYY-MM-DD HH:mm:ss').toString()
       }
     },
-    onSubmit() {
+    onSubmit () {
       this.validate()
       this.$store.dispatch('POST', {
         model: this.options.model,
-        form: this.form,
+        form: this.form
       }).then(response => {
         this.$message({
           message: '文章已成功提交',
           type: 'success'
-        });
+        })
       }).catch(err => console.error(err))
     },
-    handleAddTag(tag) {
+    handleAddTag (tag) {
       this.form.tags.indexOf(tag) === -1 && this.form.tags.push(tag)
     },
-    handleDelete(index) {
-      this.form.tags.splice(index, 1);
+    handleDelete (index) {
+      this.form.tags.splice(index, 1)
     }
   },
   created () {
     if (this.id !== -1) {
       // fetch from post model
-      this.$store.dispatch('FETCH_BY_ID', { 
-        model: this.options.model,
-        id: this.id, 
-        query: {}
-      }).then(post => {
-        this.isLoading = false;
-        this.form = post;
+      this.$store.dispatch('FETCH_BY_ID', Object.assign({}, {
+        id: this.id
+      }, this.options)).then(post => {
+        this.isLoading = false
+        this.form = post
       })
+    }
 
-    } 
+    if (this.isPage) return
 
-
-    if (this.isPage) return;
-
-    let fetchCate = this.$store.dispatch('FETCH', { 
-      model: 'category', 
+    let fetchCate = this.$store.dispatch('FETCH', {
+      model: 'category',
       query: {}
     })
 
-    let fetchTag = this.$store.dispatch('FETCH', { 
-      model: 'tag', 
+    let fetchTag = this.$store.dispatch('FETCH', {
+      model: 'tag',
       query: {}
     })
 
-    Promise.all([fetchCate, fetchTag]).then(([cates, tags])=>{
+    Promise.all([fetchCate, fetchTag]).then(([cates, tags]) => {
       this.cates = cates.map(value => value.name)
       this.tags = tags.map(value => value.name)
     }).catch(err => console.error(err))
-
   }
 }
 </script>

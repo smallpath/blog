@@ -42,11 +42,11 @@ const store = new Vuex.Store({
             return prev
           }, {})
           commit('SET_CURR', { obj })
-        })    
+        })
       } else {
         return api.fetchByID(model, id, query).then(obj => {
           commit('SET_CURR', { obj })
-        }) 
+        })
       }
     },
 

@@ -3,23 +3,26 @@
     <el-menu default-active="1" class="el-menu-demo" mode="horizontal" @select="handleSelect">
       <el-menu-item index="1">加粗</el-menu-item>
       <el-menu-item index="2">斜体</el-menu-item>
-      <el-menu-item index="3">链接</el-menu-item>
-      <el-menu-item index="4">引用</el-menu-item>
-      <el-menu-item index="5">代码段</el-menu-item>
-      <el-menu-item index="6">图片</el-menu-item>
-      <el-menu-item index="7">插入摘要</el-menu-item>
-      <el-submenu index="11">
+      <el-menu-item index="3">引用</el-menu-item>
+      <el-menu-item index="4">代码段</el-menu-item>
+      <el-submenu index="5">
+        <template slot="title">插入图片</template>
+        <el-menu-item index="5-1">上传图片</el-menu-item>
+        <el-menu-item index="5-2">网络图片</el-menu-item>
+      </el-submenu>
+      <el-menu-item index="6">插入摘要</el-menu-item>
+      <el-submenu index="7">
         <template slot="title">{{labels[mode]}}</template>
-        <el-menu-item index="11-1">{{labels['edit']}}</el-menu-item>
-        <el-menu-item index="11-2">{{labels['split']}}</el-menu-item>
-        <el-menu-item index="11-3">{{labels['preview']}}</el-menu-item>
-        <el-menu-item index="11-4">{{labels['full']}}</el-menu-item>
+        <el-menu-item index="7-1">{{labels['edit']}}</el-menu-item>
+        <el-menu-item index="7-2">{{labels['split']}}</el-menu-item>
+        <el-menu-item index="7-3">{{labels['preview']}}</el-menu-item>
+        <el-menu-item index="7-4">{{labels['full']}}</el-menu-item>
       </el-submenu>
     </el-menu>
 
     <el-dialog title="图片上传" v-model="isUploadShow">
       <el-upload
-        action="https://up.qbox.me/"
+        action="//up.qbox.me/"
         type="drag"
         :thumbnail-mode="true"
         :on-preview="handlePreview"
@@ -62,8 +65,9 @@ export default {
         'preview': '预览模式',
         'full': '全屏模式'
       },
-      mode: 'split', // ['edit', 'split', 'preview']
+      mode: 'edit', // ['edit', 'split', 'preview']
       isUploadShow: false,
+      supportWebp: false,
       upToken: '',
       bucketHost: '',
       key: '',
@@ -71,28 +75,50 @@ export default {
     }
   },
   computed: {
-    compiledMarkdown() {
+    compiledMarkdown () {
       return marked(this.value.replace(/<!--more-->/g, ''), { sanitize: true })
     }
   },
   methods: {
-    handleSelect(key, keyPath) {
+    handleSelect (key, keyPath) {
       if (keyPath.length === 1) {
         switch (key) {
-          case '1': this._boldText() ; break;
-          case '2': this._italicText() ; break;
-          case '3': this._linkText() ; break;
-          case '4': this._blockquoteText() ; break;
-          case '5': this._codeText() ; break;
-          case '6': this._uploadImage() ; break;
-          case '7': this._insertMore() ; break;
+          case '1':
+            this._boldText()
+            break
+          case '2':
+            this._italicText()
+            break
+          case '3':
+            this._blockquoteText()
+            break
+          case '4':
+            this._codeText()
+            break
+          case '6':
+            this._insertMore()
+            break
         }
       } else if (keyPath.length === 2) {
         switch (key) {
-          case '11-1': this.mode = 'edit';break;
-          case '11-2': this.mode = 'split';break;
-          case '11-3': this.mode = 'preview';break;
-          case '11-4': this.mode = 'edit';break;
+          case '5-1':
+            this._uploadImage()
+            break
+          case '5-2':
+            this._importImage()
+            break
+          case '7-1':
+            this.mode = 'edit'
+            break
+          case '7-2':
+            this.mode = 'split'
+            break
+          case '7-3':
+            this.mode = 'preview'
+            break
+          case '7-4':
+            this.mode = 'edit'
+            break
         }
       }
     },
@@ -100,97 +126,109 @@ export default {
       let value = e.target.value
       this.$emit('input', value)
     }, 300),
-    _preInputText(text, preStart, preEnd){
-      let textControl = this.$refs.markdown;
+    _preInputText (text, preStart, preEnd) {
+      let textControl = this.$refs.markdown
       const start = textControl.selectionStart
       const end = textControl.selectionEnd
-      const origin = this.value;
+      const origin = this.value
 
       if (start !== end) {
-          const exist = origin.slice(start, end)
-          text = text.slice(0, preStart) + exist + text.slice(preEnd)
-          preEnd = preStart + exist.length
+        const exist = origin.slice(start, end)
+        text = text.slice(0, preStart) + exist + text.slice(preEnd)
+        preEnd = preStart + exist.length
       }
-      let input = origin.slice(0, start) + text + origin.slice(end);
+      let input = origin.slice(0, start) + text + origin.slice(end)
 
       this.$emit('input', input)
     },
-    handlePreview(file) {
-      let text = `${this.bucketHost}/${file.response.key}`;
-    },
-    handleSuccess(response, file, fileList) {
-      let key = response.key;
-      let name = file.name;
-      let prefix = key.split('/')[0];
-      let suffix = key.split('/')[1];
-      let text = `![${name}](${this.bucketHost}/${prefix}/${encodeURIComponent(suffix)})`;
+    handlePreview (file) {},
+    handleSuccess (response, file, fileList) {
+      let key = response.key
+      let name = file.name
+      let prefix = this.supportWebp ? 'webp/' : ''
+      let text = `![${name}](${this.bucketHost}/${prefix}${encodeURI(key)})`
       this.$confirm(text, '上传成功，是否插入图片链接?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false
       }).then(() => {
-        this.isUploadShow = false;
+        this.isUploadShow = false
         this._preInputText(text, 12, 12)
         this.$message({
-          type: 'info',
+          type: 'success',
           message: '已插入图片链接'
-        });  
+        })
       }).catch(() => {
-        this.isUploadShow = false;
+        this.isUploadShow = false
         this.$message({
           type: 'info',
           message: '已取消插入图片链接'
-        })          
+        })
       })
     },
-    handleError(err, response, file) {
+    handleError (err, response, file) {
       if (err.status === 401) {
-        this.$message.error('图片上传失败，请求中未附带Token'); 
+        this.$message.error('图片上传失败，请求中未附带Token')
       } else {
-        this.$message.error(JSON.stringify(err)); 
+        this.$message.error(JSON.stringify(err))
       }
     },
-    beforeUpload(file) {
+    beforeUpload (file) {
       let curr = moment().format('YYYYMMDD').toString()
       let prefix = moment(file.lastModified).format('HHmmss').toString()
       let suffix = file.name
-      let key = `${curr}/${prefix}_${suffix}`;
+      let key = encodeURI(`${curr}/${prefix}_${suffix}`)
       return this.$store.dispatch('GET_IMAGE_TOKEN', {
         key
       }).then(response => {
-        this.upToken = response.upToken;
-        this.key = response.key;
-        this.bucketHost = response.bucketHost;
+        this.upToken = response.upToken
+        this.key = response.key
+        this.bucketHost = response.bucketHost
+        this.supportWebp = response.supportWebp
         if (this.bucketHost === '') {
           this.$notify.error('获取七牛Token失败，请确认您已修改后台服务器的七牛配置文件(server/conf/config.js)')
           return Promise.reject()
         }
         this.form = {
           key,
-          token: this.upToken,
+          token: this.upToken
         }
       })
     },
-    _uploadImage() {
-      this.isUploadShow = true;
+    _uploadImage () {
+      this.isUploadShow = true
     },
-    _insertMore(){
-        this._preInputText("<!--more-->", 12, 12);
+    _importImage () {
+      this.$prompt('请输入图片的链接', '导入图片链接', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        this._preInputText(`![](${value})`, 12, 12)
+        this.$message({
+          type: 'success',
+          message: '已插入图片链接'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消插入图片链接'
+        })
+      })
+    },
+    _insertMore () {
+      this._preInputText('<!--more-->', 12, 12)
     },
     _boldText () {
-        this._preInputText("**加粗文字**", 2, 6)
+      this._preInputText('**加粗文字**', 2, 6)
     },
     _italicText () {
-        this._preInputText("_斜体文字_", 1, 5)
-    },
-    _linkText (url = 'github.com/smallpath/blog', text = '链接文本') {
-        this._preInputText(`[${text}](${url})`, 1, 1+text.length);
+      this._preInputText('_斜体文字_', 1, 5)
     },
     _blockquoteText () {
-        this._preInputText("\n> 引用", 3, 5)
+      this._preInputText('> 引用', 3, 5)
     },
     _codeText () {
-        this._preInputText("\n```\ncode block\n```", 5, 15)
+      this._preInputText('```\ncode block\n```', 5, 15)
     }
   }
 }
@@ -199,7 +237,7 @@ export default {
 <style lang="scss" scoped>
 .md-editor textarea,
 .md-preview {
-    line-height: 1.5
+    line-height: 1.5;
 }
 
 .el-dialog__wrapper {
