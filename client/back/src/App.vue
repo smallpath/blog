@@ -1,50 +1,73 @@
 <template>
   <div id="app">
-      <sidebar :current-route.sync="currentRoute"></sidebar>
-      <top :current-route.sync="currentRoute"></top>
-      <tip :should-tip-show="shouldTipShow" :tip-info="tipInfo" :tip-type="tipType"></tip>
-      <router-view 
-        :current-route.sync="currentRoute" 
-        :should-tip-show.sync="shouldTipShow" 
-        :tip-info.sync="tipInfo"
-        :tip-type.sync="tipType">
-      </router-view>
+    <keep-alive>
+        <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
-import Login from './components/Login'
-import Tip from './components/Tip'
-import Sidebar from './components/Sidebar'
-import Top from './components/Top'
+import api from './store/api'
+import { getChineseDesc } from './utils/error'
 
 export default {
-
-  components: {
-    Login,
-    Tip,
-    Sidebar,
-    Top,
-  },
-
+  name: 'app',
   data () {
-    return {
-      isLogin: true,
-      shouldTipShow: true,
-      tipInfo: '',
-      tipType: 'alert',
-      SystemInfo: {},
-      currentRoute: '/dashboard'
+    return {}
+  },
+  computed: {
+    siteInfo () {
+      return this.$store.state.siteInfo
     }
   },
-  ready(){
+  beforeMount () {
+    this.$store.dispatch('FETCH_OPTIONS').then(() => {
+      if (this.siteInfo['title'] && typeof document !== 'undefined') {
+        document.title = this.siteInfo['title'].value
+      }
+    })
 
+    const { request } = api
+
+    request.interceptors.request.use((config) => {
+      const token = window.localStorage.getItem('token')
+
+      if (request.method === 'get' && request.url.indexOf('/proxyPrefix/user') === -1) {
+        return config
+      }
+
+      if (token !== null && token !== 'undefined') {
+        config.headers['authorization'] = token
+      }
+
+      return config
+    }, (error) => Promise.reject(error))
+
+    request.interceptors.response.use((response) => {
+      if (this.$store.state.route.name === 'logout') {
+        return response
+      }
+      if (response.data && response.data.status && response.data.status === 'fail') {
+        let desc = getChineseDesc(response.data.description)
+        this.$notify.error(desc)
+        return Promise.reject(desc)
+      }
+      return response
+    }, (error) => Promise.reject(error))
   }
-
 }
 </script>
 
-<style>
+<style lang="scss">
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0px;
+
+  #app {
+    height: 100%;
+  }
+}
 
 </style>
