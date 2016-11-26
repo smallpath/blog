@@ -144,7 +144,7 @@ const store = new Vuex.Store({
         commit('SET_ITEMS', { items })
 
         if (state.totalPage === -1) {
-          return api.fetchPost({ type: 0 }, { count: 1 })
+          return api.fetchPost({ type: 'post' }, { count: 1 })
             .then(totalPage => {
               commit('SET_PAGES', {
                 totalPage: Math.ceil(totalPage / 10)
