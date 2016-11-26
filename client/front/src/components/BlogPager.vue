@@ -10,7 +10,6 @@
 
 <script>
 function fetchItems (store, { path, query, params }) {
-
   if (path !== '/') {
     return Promise.resolve()
   }
@@ -68,7 +67,6 @@ export default {
   },
   methods: {
     fetchData: function (val, oldVal) {
-
       if (val.name !== 'main') return
 
       fetchItems(this.$store, this.$store.state.route)

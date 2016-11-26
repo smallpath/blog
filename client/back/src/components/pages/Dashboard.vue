@@ -17,7 +17,7 @@
       </el-col>
     </el-row>
     <el-row :gutter="10" style="margin-top:20px;">
-      <el-col :span="6">
+      <el-col :span="10">
         <div class="recent">
           <el-tree 
               :default-expand-all='true'
@@ -25,7 +25,7 @@
               :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
         </div>
       </el-col>
-      <el-col :offset="7" :span="10">
+      <el-col :offset="4" :span="10">
         <div class="blog">
           <el-alert
             title="博客源码：https://github.com/smallpath/blog"
