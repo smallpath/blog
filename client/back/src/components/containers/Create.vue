@@ -1,21 +1,21 @@
 <template>
-<el-form ref="form" :model="form" label-width="120px">
-  <el-form-item v-for="item in options.items" :label="item.label">
-    <el-input v-if="typeof item.description === 'undefined'" v-model="form[item.prop]"></el-input>
-    <el-popover
-      v-if="typeof item.description !== 'undefined'"
-      placement="right-start"
-      :title="item.label"
-      width="50%"
-      trigger="hover"
-      :content="item.description">
-      <el-input slot="reference" v-model="form[item.prop]"></el-input>
-    </el-popover>
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" @click.native="onSubmit">提交</el-button>
-  </el-form-item>
-</el-form>
+  <el-form ref="form" :model="form" label-width="120px">
+    <el-form-item v-for="item in options.items" :label="item.label">
+      <el-input v-if="typeof item.description === 'undefined'" v-model="form[item.prop]"></el-input>
+      <el-popover
+        v-if="typeof item.description !== 'undefined'"
+        placement="right-start"
+        :title="item.label"
+        width="50%"
+        trigger="hover"
+        :content="item.description">
+        <el-input slot="reference" v-model="form[item.prop]"></el-input>
+      </el-popover>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click.native="onSubmit">提交</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
