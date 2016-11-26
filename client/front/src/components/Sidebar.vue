@@ -17,7 +17,7 @@
             </ul>
             <ul class="buttons">
                 <li>
-                    <a class="inline" target=_blank :href="'https://'+siteInfo.githubUrl.value"><i class="iconfont icon-github-v" title="GitHub"></i></a>
+                    <a class="inline" target=_blank :href="'https://github.com/'+siteInfo.githubUrl.value"><i class="iconfont icon-github-v" title="GitHub"></i></a>
                     <a class="inline" href="/rss.xml"><i class="iconfont icon-rss-v" title="RSS"></i></a>
                     <a class="inline" href="/search"><i class="iconfont icon-search" title="Search"></i></a>
             </ul>

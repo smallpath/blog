@@ -12,7 +12,13 @@ const robots = require('./server/robots.js')
 const request = require('superagent')
 const { api: sitemapApi, getSitemapFromBody } = require('./server/sitemap.js')
 const { api: rssApi, getRssBodyFromBody } = require('./server/rss.js')
-const { title } = require('./server/config')
+let { title } = require('./server/config')
+request.get('localhost:3000/api/option?conditions={"key":"title"}').then(result => {
+  if (Array.isArray(result) && result.length !== 0) {
+    title = result[0].value
+  }
+})
+
 const schedule = require('node-schedule')
 
 let sitemap = ''
@@ -140,7 +146,7 @@ app.get('*', (req, res) => {
 
   renderStream.on('end', () => {
     if (context.initialState && context.initialState.siteInfo) {
-      let analyzeCode = context.initialState.siteInfo.analyze_code
+      let analyzeCode = context.initialState.siteInfo.analyzeCode
       if (analyzeCode && analyzeCode.value !== '') {
         let endStr = html.tail.replace('client-bundle.js></script>',
           'client-bundle.js></script><script async src=\'https://www.google-analytics.com/analytics.js\'></script>')
