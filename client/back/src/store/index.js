@@ -56,8 +56,6 @@ const store = new Vuex.Store({
       } else if (model === 'user' || model === 'post') {
         let { _id: id } = form
         if (typeof id !== 'undefined') {
-          delete form._id
-          delete form.__v
           return api.patchByID(model, id, form).then((result) => {
             if (model === 'user') {
               commit('SET_USER', { user: result })
