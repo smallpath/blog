@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     getItems () {
+      let loadingPromise = this.$store.dispatch('LOOP_LOADING')
       Api.fetchPost({}, {
         select: {
           tags: 1,
@@ -48,6 +49,10 @@ export default {
               break
             }
           }
+        })
+        loadingPromise.then(interval => {
+          clearInterval(interval)
+          this.$store.dispatch('SET_PROGRESS', 100)
         })
       })
     }

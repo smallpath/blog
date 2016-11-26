@@ -13,7 +13,7 @@ let getUpdatedDate = date => `    <lastBuildDate>${date}</lastBuildDate>\r\n`
 let tail = `  </channel>
 </rss>`
 
-let api = 'localhost:3000/api/post?conditions={"type":0}&select={"pathName":1,"updatedAt":1,"content":1,"title":1}&sort=1&limit=10'
+let api = 'localhost:3000/api/post?conditions={"type":"post"}&select={"pathName":1,"updatedAt":1,"content":1,"title":1}&sort=1&limit=10'
 
 let getRssBodyFromBody = result => {
   let res = result.body

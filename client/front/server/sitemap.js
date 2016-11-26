@@ -5,7 +5,7 @@ let head = `<?xml version="1.0" encoding="UTF-8"?>
 
 let tail = '</urlset>'
 
-let api = 'localhost:3000/api/post?conditions={"type":0}&select={"pathName":1,"updatedAt":1}&sort=1'
+let api = 'localhost:3000/api/post?conditions={"type":"post"}&select={"pathName":1,"updatedAt":1}&sort=1'
 
 let getSitemapFromBody = result => {
   let res = result.body

@@ -99,8 +99,8 @@ export default {
 
     },
     validate () {
-      this.form.content = marked(this.form.markdownContent, { sanitize: true })
       this.form.summary = marked(this.form.markdownContent.split('<!--more-->')[0], { sanitize: true })
+      this.form.content = marked(this.form.markdownContent.replace(/<!--more-->/g, ''), { sanitize: true })
       if (this.form.createdAt === '') {
         this.form.createdAt = moment().format('YYYY-MM-DD HH:mm:ss').toString()
       } else {
