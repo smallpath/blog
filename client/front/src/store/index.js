@@ -17,13 +17,13 @@ const store = new Vuex.Store({
     menu: [],
     progress: 0,
     siteInfo: {
-      github_url: {
+      githubUrl: {
         value: ''
       },
       title: {
         value: ''
       },
-      logo_url: {
+      logoUrl: {
         value: ''
       }
     }
