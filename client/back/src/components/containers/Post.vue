@@ -66,8 +66,7 @@ export default {
                            : curr.default
       return prev
     }, {})
-    let type = typeof form.type === 'undefined' ? isPost ? 0 : 1 : form.type
-    form.type = type
+    form.type = this.options.name
     return {
       isPost,
       isPage,
@@ -140,6 +139,7 @@ export default {
         id: this.id
       }, this.options)).then(post => {
         this.isLoading = false
+        post.type = this.options.name
         this.form = post
       })
     }

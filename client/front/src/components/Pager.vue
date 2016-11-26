@@ -33,13 +33,13 @@ export default {
       return this.page
     },
     commentType () {
-      return this.$store.state.siteInfo.comment.value.type || 'disqus'
+      return this.$store.state.siteInfo.commentType || 'disqus'
     },
     commentName () {
-      return this.$store.state.siteInfo.comment.value.name || ''
+      return this.$store.state.siteInfo.commentName || ''
     },
     siteURL () {
-      return this.$store.state.siteInfo.site_url.value || 'localhost'
+      return this.$store.state.siteInfo.siteUrl.value || 'localhost'
     }
   },
   watch: {

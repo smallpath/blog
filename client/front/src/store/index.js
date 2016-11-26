@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     next: {},
     page: {},
     menu: [],
+    progress: 0,
     siteInfo: {
       github_url: {
         value: ''
@@ -29,8 +30,24 @@ const store = new Vuex.Store({
   },
 
   actions: {
+    SET_PROGRESS: ({ commit, state }, progress) => {
+      commit('SET_PROGRESS_VALUE', progress)
+    },
 
-    FETCH_BLOG: ({ commit, state }, { conditions, ...args }) => {
+    LOOP_LOADING: ({ commit, state, dispatch }) => {
+      dispatch('SET_PROGRESS', 30)
+      let interval = setInterval(() => {
+        let progress = state.progress
+        if (progress < 90) {
+          let target = progress + 10
+          dispatch('SET_PROGRESS', target)
+        }
+      }, 400)
+      return interval
+    },
+
+    FETCH_BLOG: ({ commit, state, dispatch }, { conditions, ...args }) => {
+      let loadingPromise = dispatch('LOOP_LOADING')
       return api.fetchPost(conditions, args).then(result => {
         let blog = result[0]
 
@@ -38,7 +55,7 @@ const store = new Vuex.Store({
 
         let first = api.fetchPost({
           _id: { $lt: blog._id },
-          type: 0,
+          type: 'post',
           isPublic: true
         }, {
           sort: 1,
@@ -49,21 +66,17 @@ const store = new Vuex.Store({
             type: 1
           }
         }).then(posts => {
-          try {
-            let post = posts[0]
-            if (post.type === '0') {
-              commit('SET_PREV', { post })
-            } else {
-              commit('SET_PREV', { post: {} })
-            }
-          } catch (err) {
+          let post = posts[0]
+          if (post && post.type === 'post') {
+            commit('SET_PREV', { post })
+          } else {
             commit('SET_PREV', { post: {} })
           }
         })
 
         let second = api.fetchPost({
           _id: { $gt: blog._id },
-          type: 0,
+          type: 'post',
           isPublic: true
         }, {
           limit: 1,
@@ -73,30 +86,38 @@ const store = new Vuex.Store({
             type: 1
           }
         }).then(posts => {
-          try {
-            let post = posts[0]
-            if (post.type === '0') {
-              commit('SET_NEXT', { post })
-            } else {
-              commit('SET_NEXT', { post: {} })
-            }
-          } catch (err) {
+          let post = posts[0]
+          if (post && post.type === 'post') {
+            commit('SET_NEXT', { post })
+          } else {
             commit('SET_NEXT', { post: {} })
           }
         })
 
         return Promise.all([first, second])
+      }).then(prev => {
+        return loadingPromise.then(interval => {
+          clearInterval(interval)
+          dispatch('SET_PROGRESS', 100)
+        }).then(() => prev)
       })
     },
 
-    FETCH_PAGE: ({ commit, state }, { conditions, ...args }) => {
+    FETCH_PAGE: ({ commit, state, dispatch }, { conditions, ...args }) => {
+      let loadingPromise = dispatch('LOOP_LOADING')
       return api.fetchPost(conditions, args).then(result => {
         let blog = result[0]
         commit('SET_PAGE', { blog })
+      }).then(prev => {
+        return loadingPromise.then(interval => {
+          clearInterval(interval)
+          dispatch('SET_PROGRESS', 100)
+        }).then(() => prev)
       })
     },
 
-    FETCH_TAGS: ({ commit, state }, { conditions, ...args }) => {
+    FETCH_TAGS: ({ commit, state, dispatch }, { conditions, ...args }) => {
+      let loadingPromise = dispatch('LOOP_LOADING')
       return api.fetchPost(conditions, args).then(result => {
         let tags = result.reduce((prev, curr) => {
           curr.tags.forEach(tag => {
@@ -109,10 +130,16 @@ const store = new Vuex.Store({
           return prev
         }, {})
         commit('SET_TAGS', { tags })
+      }).then(prev => {
+        return loadingPromise.then(interval => {
+          clearInterval(interval)
+          dispatch('SET_PROGRESS', 100)
+        }).then(() => prev)
       })
     },
 
-    FETCH_ITEMS: ({ commit, state }, { conditions, ...args }) => {
+    FETCH_ITEMS: ({ commit, state, dispatch }, { conditions, ...args }) => {
+      let loadingPromise = dispatch('LOOP_LOADING')
       return api.fetchPost(conditions, args).then(items => {
         commit('SET_ITEMS', { items })
 
@@ -126,10 +153,16 @@ const store = new Vuex.Store({
         } else {
           return ''
         }
+      }).then(prev => {
+        return loadingPromise.then(interval => {
+          clearInterval(interval)
+          dispatch('SET_PROGRESS', 100)
+        }).then(() => prev)
       })
     },
 
-    FETCH_ACHIEVE: ({ commit, state }, { conditions, ...args }) => {
+    FETCH_ACHIEVE: ({ commit, state, dispatch }, { conditions, ...args }) => {
+      let loadingPromise = dispatch('LOOP_LOADING')
       return api.fetchPost(conditions, args).then(items => {
         let sortedItem = items.reduce((prev, curr) => {
           let time = curr.createdAt.slice(0, 7).replace('-', '年') + '月'
@@ -141,6 +174,11 @@ const store = new Vuex.Store({
           return prev
         }, {})
         commit('SET_ACHIEVE', { sortedItem })
+      }).then(prev => {
+        return loadingPromise.then(interval => {
+          clearInterval(interval)
+          dispatch('SET_PROGRESS', 100)
+        }).then(() => prev)
       })
     },
 
@@ -172,6 +210,10 @@ const store = new Vuex.Store({
     },
     SET_NEXT: (state, { post }) => {
       Vue.set(state, 'next', post)
+    },
+
+    SET_PROGRESS_VALUE: (state, progress) => {
+      Vue.set(state, 'progress', progress)
     },
 
     SET_TAGS: (state, { tags }) => {

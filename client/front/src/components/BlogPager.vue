@@ -9,19 +9,20 @@
 </template>
 
 <script>
-function fetchItems (serverStore, { path, query, params }) {
+function fetchItems (store, { path, query, params }) {
+
   if (path !== '/') {
     return Promise.resolve()
   }
 
-  let page = (typeof query.page !== 'undefined') ? parseInt(query.page) : 1
+  let page = query ? (typeof query.page !== 'undefined') ? parseInt(query.page) : 1 : 1
   if (page < 0) {
     page = 1
   }
 
-  return serverStore.dispatch('FETCH_ITEMS', {
+  return store.dispatch('FETCH_ITEMS', {
     conditions: {
-      type: 0,
+      type: 'post',
       isPublic: true
     },
     select: {
@@ -67,6 +68,7 @@ export default {
   },
   methods: {
     fetchData: function (val, oldVal) {
+
       if (val.name !== 'main') return
 
       fetchItems(this.$store, this.$store.state.route)

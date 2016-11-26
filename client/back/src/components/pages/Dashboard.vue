@@ -60,7 +60,7 @@ export default {
     handleNodeClick (data, node, tree) {
       if (data.title !== '最近发布的文章') {
         this.$router.push({
-          name: data.type === 0 ? 'postCreate' : 'pageCreate',
+          name: data.type === 'post' ? 'postCreate' : 'pageCreate',
           params: { id: data._id }
         })
       }

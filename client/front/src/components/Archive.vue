@@ -18,8 +18,9 @@
 
 <script>
 function fetchAchieves (store) {
+
   return store.dispatch('FETCH_ACHIEVE', {
-    conditions: { type: 0 },
+    conditions: { type: 'post' },
     select: {
       title: 1,
       createdAt: 1,

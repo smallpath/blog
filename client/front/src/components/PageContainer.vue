@@ -8,7 +8,7 @@ function fetchPage (store, { path: pathName, params, query }) {
   return store.dispatch('FETCH_PAGE', {
     conditions: {
       pathName,
-      type: 1
+      type: 'page'
     },
     select: {
       title: 1,
