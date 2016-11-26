@@ -41,18 +41,12 @@ export default {
   },
   beforeMount () {
     if (typeof this.siteInfo.title === 'undefined') {
-      Promise.all([this.$store.dispatch('FETCH_OPTIONS').then(() => {
-        if (this.siteInfo['title'] && typeof document !== 'undefined') {
-          document.title = this.siteInfo['title'].value
-        }
-      }), this.$store.dispatch('FETCH_MENU')])
-    } else {
-      document.title = this.siteInfo['title'].value || 'Blog'
+      Promise.all([this.$store.dispatch('FETCH_OPTIONS'), this.$store.dispatch('FETCH_MENU')])
     }
   },
   mounted () {
     let img = this.$refs.logo
-    img.onerror = ({ target }) => (img.src = target.currentSrc.replace('.webp', '.png'))
+    if (img) img.onerror = ({ target }) => (img.src = target.currentSrc.replace('.webp', '.png'))
   }
 }
 </script>
