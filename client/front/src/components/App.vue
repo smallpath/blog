@@ -1,5 +1,9 @@
 <template>
     <div id="app">
+        <loading-bar
+          :on-progress-done="onProgressDone"
+          :progress="progress">
+        </loading-bar>
         <keep-alive>
             <router-view name="sidebar"></router-view>
         </keep-alive>
@@ -13,9 +17,21 @@
 </template>
 
 <script>
-export default {
-  mounted () {
+import LoadingBar from './Loading'
 
+export default {
+  components: {
+    LoadingBar
+  },
+  computed: {
+    progress () {
+      return this.$store.state.progress
+    }
+  },
+  methods: {
+    onProgressDone () {
+      // this.$store.dispatch('SET_PROGRESS', 0)
+    }
   }
 }
 
