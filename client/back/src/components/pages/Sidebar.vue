@@ -1,12 +1,11 @@
 <template>
   <el-row class="sidebar">
     <el-col :span="4" class="full-height">
-      <!--<h5>带 icon</h5>-->
-        
       <el-menu :router="true" :default-active="fullPath" 
                 class="full-height" :unique-opened="true"
                 @select="handleSelect">
-        <el-menu-item index="/dashboard"><i class="el-icon-menu"></i>概述</el-menu-item>
+
+        <el-menu-item index="/dashboard"><i class="el-icon-date"></i>概述</el-menu-item>
 
         <el-submenu index="2">
           <template slot="title"><i class="el-icon-document"></i>文章管理</template>
@@ -16,18 +15,14 @@
 
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-document"></i>页面管理</template>
-          <el-menu-item-group title="页面管理">
-            <el-menu-item index="/page/list">页面列表</el-menu-item>
-            <el-menu-item index="/page/create">添加页面</el-menu-item>
-          </el-menu-item-group>
+          <el-menu-item index="/page/list">页面列表</el-menu-item>
+          <el-menu-item index="/page/create">添加页面</el-menu-item>
         </el-submenu>
 
         <el-submenu index="4">
-          <template slot="title"><i class="el-icon-document"></i>菜单管理</template>
-          <el-menu-item-group title="菜单管理">
-            <el-menu-item index="/menu/list">菜单列表</el-menu-item>
-            <el-menu-item index="/menu/create">添加菜单</el-menu-item>
-          </el-menu-item-group>
+          <template slot="title"><i class="el-icon-menu"></i>菜单管理</template>
+          <el-menu-item index="/menu/list">菜单列表</el-menu-item>
+          <el-menu-item index="/menu/create">添加菜单</el-menu-item>
         </el-submenu>
 
         <el-submenu index="5">
@@ -37,7 +32,7 @@
         </el-submenu>
         
         <el-submenu index="6">
-          <template slot="title"><i class="el-icon-star-on"></i>标签管理</template>
+          <template slot="title"><i class="el-icon-star-off"></i>标签管理</template>
           <el-menu-item index="/tag/list">标签列表</el-menu-item>
           <el-menu-item index="/tag/create">添加标签</el-menu-item>
         </el-submenu>

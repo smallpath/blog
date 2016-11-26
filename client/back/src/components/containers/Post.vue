@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" v-loading="isLoading" :model="form" label-width="80px">
+  <el-form ref="form" v-loading.body="isLoading" :model="form" label-width="80px">
     <el-row :gutter="0">
       <el-col :span="18">
         <el-form-item v-for="(item, index) in prevItems" :label="item.label">

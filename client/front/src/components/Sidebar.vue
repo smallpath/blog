@@ -45,7 +45,7 @@ export default {
         if (this.siteInfo['title'] && typeof document !== 'undefined') {
           document.title = this.siteInfo['title'].value
         }
-      }),this.$store.dispatch('FETCH_MENU')])
+      }), this.$store.dispatch('FETCH_MENU')])
     } else {
       document.title = this.siteInfo['title'].value || 'Blog'
     }

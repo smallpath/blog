@@ -8,10 +8,9 @@
   <div>
 </template>
 
-
 <script>
 export default {
-  name: "LoadingBar",
+  name: 'loading',
   props: {
     progress: {
       type: Number,
@@ -22,88 +21,56 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
-      // To show
       show: true,
-      // binding class when it end
       full: '',
-      // state to animate the width of loading bar
       width: 0,
-      // indicate the loading bar is in 100% ( so, wait it till gone )
       wait: false,
-      // jump to 0 to hide
       isJumpToStartPosition: false
     }
   },
-  watch:{
-    progress(val,old){
-      if(old !== val){
+  watch: {
+    progress (val, old) {
+      if (old !== val) {
         this.width = val
-        this.$nextTick(()=>{
+        this.$nextTick(() => {
           this.isFull()
         })
       }
     }
   },
   methods: {
-    // Check whether the proggress is full
-    isFull() {
-      // Full Indicator
+    isFull () {
       let isFull = this.width === 100
-
-      // When the progress end or full
-      if(isFull){
-        // Prevent new progress change
+      if (isFull) {
         this.wait = true
-
-        // Start animate it
         setTimeout(() => {
-
-          // animate when element removed
           this.full = true
-
           setTimeout(() => {
-            //remove bar element
             this.show = false
-            // New Element is available to create now
             this.isJumpToStartPosition = true
-
             this.width = 0
-
             this.wait = false
-
-            this.$nextTick(()=>{
-              // Show Bar
+            this.$nextTick(() => {
               this.isJumpToStartPosition = false
               this.full = ''
               this.show = true
-
               this.onProgressDone()
             })
-
-          // Duration to Waiting for slick hiding animation
-          }, 400);
-
-        // Duration is depend on css animation-duration of loading-bar
-        }, 400);
+          }, 400)
+        }, 400)
       }
     },
-
-    styling(){
-      // When loading bar still in progress
-      if(!this.wait){
-        return { width: `${this.width}%` };
-      // When loading bar end
-      }else{
-        // Make it stuck at 100 to waiting the animation
-        return { width: `100%` };
+    styling () {
+      if (!this.wait) {
+        return { width: `${this.width}%` }
+      } else {
+        return { width: '100%' }
       }
     }
-  },
-
-
-};
+  }
+}
 </script>
 
 <style scoped>

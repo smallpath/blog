@@ -31,6 +31,8 @@ export default {
   height: 100%;
 
   .main {
+    box-sizing: border-box;
+    padding-bottom: 60px;
     position: fixed;
     top: 60px;
     left: 16.66667%;

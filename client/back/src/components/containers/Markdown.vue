@@ -7,10 +7,10 @@
       <el-menu-item index="4">代码段</el-menu-item>
       <el-submenu index="5">
         <template slot="title">插入图片</template>
-        <el-menu-item index="5-1">上传图片</el-menu-item>
-        <el-menu-item index="5-2">网络图片</el-menu-item>
+        <el-menu-item index="5-1"><i class="el-icon-upload2"></i>上传图片</el-menu-item>
+        <el-menu-item index="5-2"><i class="el-icon-upload"></i>网络图片</el-menu-item>
       </el-submenu>
-      <el-menu-item index="6">插入摘要</el-menu-item>
+      <el-menu-item index="6"><i class="el-icon-more"></i>摘要</el-menu-item>
       <el-submenu index="7">
         <template slot="title">{{labels[mode]}}</template>
         <el-menu-item index="7-1">{{labels['edit']}}</el-menu-item>
@@ -252,11 +252,8 @@ export default {
     border: 1px solid #ccc;
     border-radius: 3px;
     font-size: 14px;
-    margin-bottom: 58px;
     overflow: hidden;
 
-
-    
     .md-editor {
       width: 100%;
       height: auto;

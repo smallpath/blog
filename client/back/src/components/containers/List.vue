@@ -1,7 +1,7 @@
 <template>
   <el-table
     :data="list"
-    v-loading="isLoading"
+    v-loading.body="isLoading"
     border
     style="width: 100%">
     <el-table-column
