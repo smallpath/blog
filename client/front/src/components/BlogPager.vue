@@ -9,7 +9,7 @@
 </template>
 
 <script>
-function fetchItems (store, { path, query, params }) {
+function fetchItems (store, { path, query, params }, callback) {
   if (path !== '/') {
     return Promise.resolve()
   }
@@ -34,7 +34,8 @@ function fetchItems (store, { path, query, params }) {
     },
     limit: 10,
     skip: (page - 1) * 10,
-    sort: 1
+    sort: 1,
+    callback
   })
 }
 
@@ -56,21 +57,6 @@ export default {
       return this.$store.state.totalPage
     }
   },
-  beforeMount () {
-    if (this.$root._isMounted) {
-      fetchItems(this.$store, this.$store.state.route)
-    }
-  },
-  preFetch: fetchItems,
-  watch: {
-    '$route': 'fetchData'
-  },
-  methods: {
-    fetchData: function (val, oldVal) {
-      if (val.name !== 'main') return
-
-      fetchItems(this.$store, this.$store.state.route)
-    }
-  }
+  preFetch: fetchItems
 }
 </script>
