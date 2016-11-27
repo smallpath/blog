@@ -15,12 +15,13 @@
 </template>
 
 <script>
-function fetchTags (store, { path: pathName, params, query }) {
+function fetchTags (store, { path: pathName, params, query }, callback) {
   return store.dispatch('FETCH_TAGS', {
     conditions: {},
     select: {
       tags: 1
-    }
+    },
+    callback
   })
 }
 
@@ -35,12 +36,6 @@ export default {
       return this.$store.state.tags
     }
   },
-  preFetch: fetchTags,
-  beforeMount () {
-    if (this.$root._isMounted) {
-      fetchTags(this.$store, this.$store.state.route)
-    }
-  }
-
+  preFetch: fetchTags
 }
 </script>

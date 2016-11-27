@@ -3,7 +3,7 @@
 </template>
 
 <script>
-function fetchPage (store, { path: pathName, params, query }) {
+function fetchPage (store, { path: pathName, params, query }, callback) {
   pathName = pathName.replace(/^\//g, '')
   return store.dispatch('FETCH_PAGE', {
     conditions: {
@@ -18,7 +18,8 @@ function fetchPage (store, { path: pathName, params, query }) {
       commentNum: 1,
       pathName: 1,
       allowComment: 1
-    }
+    },
+    callback
   })
 }
 
@@ -31,21 +32,6 @@ export default {
       return this.$store.state.page
     }
   },
-  preFetch: fetchPage,
-  beforeMount () {
-    if (this.$root._isMounted) {
-      fetchPage(this.$store, this.$store.state.route)
-    }
-  },
-  watch: {
-    '$route': 'fetchData'
-  },
-  methods: {
-    fetchData: function (val, oldVal) {
-      if (val.name !== 'page') return
-
-      fetchPage(this.$store, this.$store.state.route)
-    }
-  }
+  preFetch: fetchPage
 }
 </script>

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-function fetchAchieves (store) {
+function fetchAchieves (store, to, callback) {
   return store.dispatch('FETCH_ACHIEVE', {
     conditions: { type: 'post' },
     select: {
@@ -25,7 +25,8 @@ function fetchAchieves (store) {
       createdAt: 1,
       pathName: 1
     },
-    sort: 1
+    sort: 1,
+    callback
   })
 }
 
@@ -40,11 +41,6 @@ export default {
       return this.$store.getters.achieves
     }
   },
-  preFetch: fetchAchieves,
-  beforeMount () {
-    if (this.$root._isMounted) {
-      fetchAchieves(this.$store)
-    }
-  }
+  preFetch: fetchAchieves
 }
 </script>

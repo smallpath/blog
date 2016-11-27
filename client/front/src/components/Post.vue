@@ -50,7 +50,7 @@
 </template>
 
 <script>
-function fetchBlog (store, { path: pathName, params, query }) {
+function fetchBlog (store, { path: pathName, params, query }, callback) {
   pathName = pathName.replace(/^\/post\//g, '')
   return store.dispatch('FETCH_BLOG', {
     conditions: { pathName },
@@ -64,7 +64,8 @@ function fetchBlog (store, { path: pathName, params, query }) {
       category: 1,
       allowComment: 1,
       tags: 1
-    }
+    },
+    callback
   })
 }
 
@@ -93,13 +94,8 @@ export default {
     }
   },
   preFetch: fetchBlog,
-  beforeMount () {
-    if (this.$root._isMounted) {
-      fetchBlog(this.$store, this.$store.state.route)
-    }
-  },
   watch: {
-    '$route': 'getPost'
+    '$route': 'resetDisqus'
   },
   methods: {
     reset (dsq) {
@@ -112,10 +108,9 @@ export default {
         }
       })
     },
-    getPost (val, oldVal) {
+    resetDisqus (val, oldVal) {
       if (val.name !== 'post') return
 
-      fetchBlog(this.$store, this.$store.state.route)
       if (window.DISQUS) {
         this.reset(window.DISQUS)
       }
