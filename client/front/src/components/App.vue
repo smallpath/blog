@@ -29,9 +29,7 @@ export default {
     }
   },
   methods: {
-    onProgressDone () {
-      // this.$store.dispatch('SET_PROGRESS', 0)
-    }
+    onProgressDone () {}
   }
 }
 

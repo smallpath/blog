@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="show" class="loading-bar loading-bar--to_right"
-          :class="{ 'loading-bar--full': full, 'loading-bar--jump': isJumpToStartPosition }"
+          :class="{ 'loading-bar--full': full }"
           :style="styling()">
       <div class="loading-bar-glow"></div>
     </div>
@@ -26,8 +26,7 @@ export default {
       show: true,
       full: '',
       width: 0,
-      wait: false,
-      isJumpToStartPosition: false
+      wait: false
     }
   },
   watch: {
@@ -49,11 +48,9 @@ export default {
           this.full = true
           setTimeout(() => {
             this.show = false
-            this.isJumpToStartPosition = true
             this.width = 0
             this.wait = false
             this.$nextTick(() => {
-              this.isJumpToStartPosition = false
               this.full = ''
               this.show = true
               this.onProgressDone()
@@ -82,7 +79,7 @@ export default {
     position: fixed;
     top: 0;
     background: #77b6ff;
-    height: 3px;
+    height: 2px;
     opacity: 1
   }
 
@@ -91,7 +88,7 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    box-shadow: -3px 0 15px 1px rgba(119,182,255,0.7)
+    box-shadow: -2px 0 15px 1px rgba(119,182,255,0.7)
   }
 
   .loading-bar--to_right{
@@ -102,15 +99,6 @@ export default {
   .loading-bar--to_right .loading-bar-glow{
     right: 0;
     z-index: 1000;
-  }
-
-  .loading-bar--jump {
-    transition: all 0 ease;
-    -moz-transition: all 0 ease;
-    -webkit-transition: all 0 ease;
-    -o-transition: all 0 ease;
-    height: 3px;
-    opacity: 1;
   }
 
   .loading-bar--full{
