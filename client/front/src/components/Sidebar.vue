@@ -1,5 +1,10 @@
 <template>
-    <nav id=sidebar class=behavior_1>
+    <nav id=sidebar class=behavior_1 
+            :class="{'sidebar-image': option.sidebarImageUrl !== ''}"
+            :style="{ 
+                'background-image': option.sidebarImageUrl !== '' 
+                ? 'url(' + option.sidebarImageUrl + ')' : '' 
+            }">
         <div class=wrap>
             <div class=profile>
                 <a href="/"> 
@@ -8,18 +13,20 @@
                         :alt="siteInfo.title.value"
                         ref="logo">
                 </a> 
-                <span>{{siteInfo.title.value}}</span>
+                <span :style="{ 'color': option.sidebarFontColor || '' }" >{{siteInfo.title.value}}</span>
             </div>
             <ul class="buttons">
-                <li v-for="menu in menus">
-                    <router-link :to="{ path: menu.url }" :title="menu.label"> <i class="iconfont" :class="'icon-' + menu.option"></i> <span>{{menu.label}}</span></router-link>
+                <li v-for="menu in option.menu">
+                    <router-link 
+                        :style="{ 'color': option.sidebarFontColor || '' }"  
+                        :to="{ path: menu.url }" :title="menu.label"> <i class="iconfont" :class="'icon-' + menu.option"></i> <span>{{menu.label}}</span></router-link>
                 </li>
             </ul>
             <ul class="buttons">
                 <li>
-                    <a class="inline" target=_blank :href="'https://github.com/'+siteInfo.githubUrl.value"><i class="iconfont icon-github-v" title="GitHub"></i></a>
-                    <a class="inline" href="/rss.xml"><i class="iconfont icon-rss-v" title="RSS"></i></a>
-                    <a class="inline" href="/search"><i class="iconfont icon-search" title="Search"></i></a>
+                    <a class="inline" :style="{'color': option.sidebarFontColor || ''}" target=_blank :href="'https://github.com/'+siteInfo.githubUrl.value"><i class="iconfont icon-github-v" title="GitHub"></i></a>
+                    <a class="inline" :style="{'color': option.sidebarFontColor || ''}" href="/rss.xml"><i class="iconfont icon-rss-v" title="RSS"></i></a>
+                    <a class="inline" :style="{'color': option.sidebarFontColor || ''}" href="/search"><i class="iconfont icon-search" title="Search"></i></a>
             </ul>
         </div>
     </nav>
@@ -29,19 +36,23 @@
 export default {
   data () {
     return {
-      siteInfo: this.$store.getters.siteInfo,
-      menus: this.$store.getters.menu
+      siteInfo: this.$store.getters.siteInfo
     }
   },
   serverCacheKey: props => {
     return 'static-sidebar'
   },
+  computed: {
+    option () {
+      return  this.$store.state.theme.option
+    }
+  },
   preFetch (store, { path, params, query }) {
-    return Promise.all([store.dispatch('FETCH_OPTIONS'), store.dispatch('FETCH_MENU')])
+    return Promise.all([store.dispatch('FETCH_OPTIONS'), store.dispatch('FETCH_FIREKYLIN')])
   },
   beforeMount () {
     if (typeof this.siteInfo.title === 'undefined') {
-      Promise.all([this.$store.dispatch('FETCH_OPTIONS'), this.$store.dispatch('FETCH_MENU')])
+      Promise.all([this.$store.dispatch('FETCH_OPTIONS'), this.$store.dispatch('FETCH_FIREKYLIN')])
     }
   },
   mounted () {
@@ -63,4 +74,16 @@ export default {
     @import '../assets/res/css/search.css';
     @import '../assets/res/css/sidebar.css';
     @import '../assets/res/css/responsive.css';
+
+    .sidebar-image {
+        background-position: left center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        overflow: auto;
+        transition: background 2s ease-in-out;
+    }
+
+    .sidebar-image:hover {
+        background-position: right center;
+    }
 </style>

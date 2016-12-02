@@ -15,7 +15,7 @@ const store = new Vuex.Store({
     next: {},
     page: {},
     tagPager: [],
-    menu: [],
+    theme: {},
     progress: 0,
     siteInfo: {
       githubUrl: {
@@ -162,9 +162,11 @@ const store = new Vuex.Store({
       })
     },
 
-    FETCH_MENU: ({ commit, state }) => {
-      return api.fetchMenu().then(obj => {
-        commit('SET_MENU', { obj })
+    FETCH_FIREKYLIN: ({ commit, state }) => {
+      return api.fetchTheme().then(obj => {
+        if (obj[0]) {
+          commit('SET_FIREKYLIN', { obj: obj[0] })
+        }
       })
     },
 
@@ -217,8 +219,8 @@ const store = new Vuex.Store({
       Vue.set(state, 'achieves', sortedItem)
     },
 
-    SET_MENU: (state, { obj }) => {
-      Vue.set(state, 'menu', obj)
+    SET_FIREKYLIN: (state, { obj }) => {
+      Vue.set(state, 'theme', obj)
     },
 
     SET_OPTIONS: (state, { obj }) => {
