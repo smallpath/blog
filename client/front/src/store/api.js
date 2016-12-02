@@ -12,7 +12,7 @@ const blogAPI = `${host}/api/post`
 
 const tagAPI = `${host}/api/tag`
 
-const menuAPI = `${host}/api/menu`
+const themeAPI = `${host}/api/theme?conditions={"name":"firekylin"}`
 
 const store = {}
 
@@ -83,8 +83,8 @@ store.fetchTags = () => {
   })
 }
 
-store.fetchMenu = () => {
-  return request.get(menuAPI).then((response) => {
+store.fetchTheme = () => {
+  return request.get(themeAPI).then((response) => {
     return response.body
   }, (err) => {
     console.log(err)

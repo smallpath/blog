@@ -55,10 +55,10 @@ let option = new Schema({
     desc: String,
 });
 
-let menu = new Schema({
-    label: String,
-    url: String,
-    option: Schema.Types.Mixed,
+let theme = new Schema({
+    name: String,
+    author: String,
+    option: Schema.Types.Mixed
 });
 
 let user = new Schema({
@@ -77,7 +77,7 @@ let version = new Schema({
 post = mongoose.model('post', post),
 category = mongoose.model('category', category),
 option = mongoose.model('option', option),
-menu = mongoose.model('menu', menu);
+theme = mongoose.model('theme', theme);
 tag = mongoose.model('tag', tag),
 user = mongoose.model('user', user);
 version = mongoose.model('version', version);
@@ -90,5 +90,5 @@ module.exports = {
     tag,
     user,
     version,
-    menu
+    theme
 }
