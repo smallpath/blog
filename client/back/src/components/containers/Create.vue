@@ -1,7 +1,7 @@
 <template>
   <el-form ref="form" :model="form" label-width="120px">
     <el-form-item v-for="item in options.items" :label="item.label">
-      <el-input v-if="typeof item.description === 'undefined'" v-model="form[item.prop]"></el-input>
+      <el-input v-if="typeof item.description === 'undefined'" :autosize="{ minRows: 2, maxRows: 16}" :type="item.type || 'text'" v-model="form[item.prop]"></el-input>
       <el-popover
         v-if="typeof item.description !== 'undefined'"
         placement="right-start"
@@ -9,7 +9,7 @@
         width="50%"
         trigger="hover"
         :content="item.description">
-        <el-input slot="reference" v-model="form[item.prop]"></el-input>
+        <el-input slot="reference" :autosize="{ minRows: 2, maxRows: 16}" :type="item.type || 'text'" v-model="form[item.prop]"></el-input>
       </el-popover>
     </el-form-item>
     <el-form-item>
@@ -42,7 +42,30 @@ export default {
     }
   },
   methods: {
+    parseTypeBeforeSubmit () {
+      let isOk = true;
+      this.options.items.forEach(item => {
+        try {
+          if (item.sourceType === 'Object') {
+            this.form[item.prop] = JSON.parse(this.form[item.prop]) 
+          }
+        }catch (err) { 
+          isOk = false;
+        }
+      })
+      return isOk;
+    },
+    parseTypeAfterFetch () {
+      this.options.items.forEach(item => {
+        if (item.sourceType === 'Object') {
+          this.form[item.prop] = JSON.stringify(this.form[item.prop]) 
+        }
+      })
+    },
     onSubmit () {
+      if (this.parseTypeBeforeSubmit() === false) {
+        return this.$message.error('属性验证失败')
+      }
       let id = this.$route.params.id
       if (typeof id !== 'undefined') {
         // patch
@@ -50,6 +73,7 @@ export default {
           id: this.$route.params.id,
           form: this.form
         }, this.options)).then(data => {
+          this.parseTypeAfterFetch()
           this.$message({
             message: '已成功提交',
             type: 'success'
@@ -60,6 +84,7 @@ export default {
         return this.$store.dispatch('POST', Object.assign({}, {
           form: this.form
         }, this.options)).then(data => {
+          this.parseTypeAfterFetch()
           this.$message({
             message: '已成功提交',
             type: 'success'
@@ -85,6 +110,7 @@ export default {
         id: this.$route.params.id
       }, this.options)).then(() => {
         this.form = Object.assign({}, this.$store.state.curr)
+        this.parseTypeAfterFetch()
         this.isLoading = false
       }).catch(err => console.error(err))
     }

@@ -20,9 +20,9 @@
         </el-submenu>
 
         <el-submenu index="4">
-          <template slot="title"><i class="el-icon-menu"></i>菜单管理</template>
-          <el-menu-item index="/menu/list">菜单列表</el-menu-item>
-          <el-menu-item index="/menu/create">添加菜单</el-menu-item>
+          <template slot="title"><i class="el-icon-menu"></i>主题管理</template>
+          <el-menu-item index="/theme/list">主题列表</el-menu-item>
+          <el-menu-item index="/theme/create">编辑主题</el-menu-item>
         </el-submenu>
 
         <el-submenu index="5">
