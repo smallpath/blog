@@ -31,7 +31,7 @@
       init () {
         const self = this
         window.disqus_config = function () {
-          this.page.url = (self.$route.path || window.location.pathname)
+          this.page.identifier = (self.$route.path || window.location.pathname)
           this.page.url = self.$el.baseURI
         }
         setTimeout(() => {
