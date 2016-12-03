@@ -13,11 +13,6 @@ const request = require('superagent')
 const { api: sitemapApi, getSitemapFromBody } = require('./server/sitemap.js')
 const { api: rssApi, getRssBodyFromBody } = require('./server/rss.js')
 let { title } = require('./server/config')
-request.get('localhost:3000/api/option?conditions={"key":"title"}').then(result => {
-  if (Array.isArray(result) && result.length !== 0) {
-    title = result[0].value
-  }
-})
 
 const schedule = require('node-schedule')
 
@@ -47,7 +42,17 @@ const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
 
 const app = express()
 const inline = fs.readFileSync(resolve('./dist/styles.css'), 'utf-8')
-const html = (() => {
+let html = flushHtml()
+
+request.get('localhost:3000/api/option?conditions={"key":"title"}').then(res => {
+  let result = res.body
+  if (Array.isArray(result) && result.length !== 0) {
+    title = result[0].value
+    html = flushHtml()
+  }
+})
+
+function flushHtml () {
   const template = fs.readFileSync(resolve('./index.html'), 'utf-8')
   const i = template.indexOf('<div id=app></div>')
 
@@ -59,7 +64,7 @@ const html = (() => {
       .replace('<link rel=stylesheet href=/dist/styles.css>', style),
     tail: template.slice(i + '<div id=app></div>'.length)
   }
-})()
+}
 
 let renderer
 if (isProd) {
