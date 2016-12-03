@@ -20,8 +20,7 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [x] rss
   - [x] 组件级缓存
   - [x] Loading组件
-  - [ ] 服务端谷歌统计
-  - [ ] 侧边栏图片
+  - [x] 侧边栏图片
 - [ ] 后台管理单页
   - [x] 添加升级模型的管理
   - [x] 使用axios替换vue-resource
