@@ -2,9 +2,9 @@
     <nav id=sidebar class=behavior_1 
             :class="{'sidebar-image': option.sidebarImageUrl !== ''}"
             :style="{ 
-                'background-image': option.sidebarImageUrl 
-                ? 'url(' + option.sidebarImageUrl + ')' : '',
-                'transition': option.sidebarImageUrl ? 'background 2s ease-in-out;': ''
+              'background-image': option.sidebarImageUrl 
+              ? 'url(' + option.sidebarImageUrl + ')' : '',
+              'transition': option.sidebarImageUrl ? 'background 2s ease-in-out;': ''
             }">
         <div class=wrap>
             <div class=profile>
