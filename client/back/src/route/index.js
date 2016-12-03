@@ -304,30 +304,25 @@ export default new VueRouter({
       ]
     },
     {
-      path: '/menu',
-      name: 'menu',
+      path: '/theme',
+      name: 'theme',
       component: Main,
       children: [
         {
           path: 'list',
-          name: 'menuList',
+          name: 'themeList',
           component: createListView({
-            name: 'menu',
-            model: 'menu',
+            name: 'theme',
+            model: 'theme',
             items: [
               {
-                prop: 'label',
-                label: '名称',
+                prop: 'name',
+                label: '主题',
                 width: 250
               },
               {
-                prop: 'url',
-                label: '根路径',
-                width: 170
-              },
-              {
-                prop: 'option',
-                label: '字体名称',
+                prop: 'author',
+                label: '作者',
                 width: 170
               }
             ],
@@ -336,25 +331,28 @@ export default new VueRouter({
         },
         {
           path: 'create/:id?',
-          name: 'menuSetting',
+          name: 'themeEdit',
           component: createEditView({
-            name: 'menu',
-            model: 'menu',
+            name: 'theme',
+            model: 'theme',
             items: [
               {
-                prop: 'label',
-                label: '名称',
+                prop: 'name',
+                label: '主题名称',
                 width: 250
               },
               {
-                prop: 'url',
-                label: '根路径',
+                prop: 'author',
+                label: '作者',
                 width: 170
               },
               {
                 prop: 'option',
-                label: '字体名称',
-                width: 170
+                label: '配置',
+                width: 170,
+                type: 'textarea',
+                sourceType: 'Object',
+                description: '配置内容应为一个JSON对象，不符合JSON格式时提交将被忽略'
               }
             ],
             query: {}

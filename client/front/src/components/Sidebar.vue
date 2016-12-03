@@ -2,8 +2,9 @@
     <nav id=sidebar class=behavior_1 
             :class="{'sidebar-image': option.sidebarImageUrl !== ''}"
             :style="{ 
-                'background-image': option.sidebarImageUrl !== '' 
-                ? 'url(' + option.sidebarImageUrl + ')' : '' 
+                'background-image': option.sidebarImageUrl 
+                ? 'url(' + option.sidebarImageUrl + ')' : '',
+                'transition': option.sidebarImageUrl ? 'background 2s ease-in-out;': ''
             }">
         <div class=wrap>
             <div class=profile>
@@ -76,14 +77,13 @@ export default {
     @import '../assets/res/css/responsive.css';
 
     .sidebar-image {
-        background-position: left center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        overflow: auto;
-        transition: background 2s ease-in-out;
+      background-position: left center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      overflow: auto;
     }
 
     .sidebar-image:hover {
-        background-position: right center;
+      background-position: right center;
     }
 </style>
