@@ -61,6 +61,7 @@ const store = new Vuex.Store({
           sort: 1,
           limit: 1,
           select: {
+            _id: 0,
             title: 1,
             pathName: 1,
             type: 1
@@ -74,6 +75,7 @@ const store = new Vuex.Store({
         }, {
           limit: 1,
           select: {
+            _id: 0,
             title: 1,
             pathName: 1,
             type: 1

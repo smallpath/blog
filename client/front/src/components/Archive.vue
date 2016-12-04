@@ -21,6 +21,7 @@ function fetchAchieves (store, to, callback) {
   return store.dispatch('FETCH_ACHIEVE', {
     conditions: { type: 'post' },
     select: {
+      _id: 0,
       title: 1,
       createdAt: 1,
       pathName: 1

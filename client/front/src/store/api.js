@@ -12,7 +12,7 @@ const blogAPI = `${host}/api/post`
 
 const tagAPI = `${host}/api/tag`
 
-const themeAPI = `${host}/api/theme?conditions={"name":"firekylin"}`
+const themeAPI = `${host}/api/theme?conditions={"name":"firekylin"}&select={"_id":0}`
 
 const store = {}
 
@@ -31,7 +31,7 @@ function convertObjectToArray (args) {
 }
 
 store.fetchOption = () => {
-  return request.get(`${prefix}/option?select={"key":1,"value":1}`)
+  return request.get(`${prefix}/option?select={"_id":0,"key":1,"value":1}`)
     .then((response) => {
       return response.body
     }, (err) => {
@@ -64,7 +64,6 @@ store.fetchPost = (conditions, args) => {
     delete args.select
   }
   args = convertObjectToArray(args)
-
   return args.reduce((prev, curr) => {
     prev = prev.query(curr)
     return prev
