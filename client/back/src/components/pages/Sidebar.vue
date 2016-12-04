@@ -1,6 +1,6 @@
 <template>
   <el-row class="sidebar">
-    <el-col :span="4" class="full-height">
+    <el-col :span="4" class="full-height" style="overflow-y:auto;">
       <el-menu :router="true" :default-active="fullPath" 
                 class="full-height" :unique-opened="true"
                 @select="handleSelect">
@@ -98,7 +98,6 @@ export default {
 }
 
 .full-height {
-  overflow: scroll;
   height: 100%;
   min-width: 145px;
 }
