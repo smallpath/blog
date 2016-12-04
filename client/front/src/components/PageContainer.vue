@@ -16,7 +16,6 @@ function fetchPage (store, { path: pathName, params, query }, callback) {
       createdAt: 1,
       content: 1,
       updatedAt: 1,
-      commentNum: 1,
       pathName: 1,
       allowComment: 1
     },
