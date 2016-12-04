@@ -5,7 +5,6 @@ const fs = require('fs')
 const path = require('path')
 const resolve = file => path.resolve(__dirname, file)
 const express = require('express')
-const bodyParser = require('body-parser')
 // const favicon = require('serve-favicon')
 const serialize = require('serialize-javascript')
 const robots = require('./server/robots.js')
@@ -91,9 +90,6 @@ app.use('/dist', express.static(resolve('./dist'), {
 app.use('/static', express.static(resolve('./dist/static'), {
   fallthrough: false
 }))
-// app.use(favicon(resolve('./src/assets/logo.png')))
-
-app.use(bodyParser.json())
 
 app.get('/robots.txt', (req, res) => {
   res.end(robots)
@@ -121,9 +117,6 @@ app.get('*', (req, res) => {
 
   let s = Date.now()
   const context = {
-    path: req.path,
-    query: req.query,
-    params: req.params,
     url: req.url
   }
   const renderStream = renderer.renderToStream(context)
