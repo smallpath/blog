@@ -89,6 +89,8 @@ export default {
 <style lang="scss" scoped>
 .sidebar {
   height: 100%;
+  box-sizing: border-box;
+  padding-bottom: 60px;
 
   .row-bg {
     height: 100%;
@@ -96,6 +98,7 @@ export default {
 }
 
 .full-height {
+  overflow: scroll;
   height: 100%;
   min-width: 145px;
 }
