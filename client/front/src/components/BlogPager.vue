@@ -28,7 +28,6 @@ function fetchItems (store, { path, query, params }, callback) {
       _id: 0,
       title: 1,
       summary: 1,
-      commentNum: 1,
       createdAt: 1,
       updatedAt: 1,
       pathName: 1

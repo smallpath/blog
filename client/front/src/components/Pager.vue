@@ -4,7 +4,6 @@
             <article class="post detail">
                 <div class="meta">
                     <div class="date">{{ article.createdAt }}</div>
-                    <div class="comment"> <a href="#comments">{{ article.commentNum }} comments</a></div>
                 </div>
                 <h1 class="title">{{ article.title }}</h1>
 
