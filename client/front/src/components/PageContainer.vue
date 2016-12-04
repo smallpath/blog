@@ -11,6 +11,7 @@ function fetchPage (store, { path: pathName, params, query }, callback) {
       type: 'page'
     },
     select: {
+      _id: 0,
       title: 1,
       createdAt: 1,
       content: 1,

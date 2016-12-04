@@ -26,7 +26,7 @@ export default {
     return {}
   },
   serverCacheKey: props => {
-    return `${props.page._id}::${props.page.updatedAt}`
+    return `${props.page.pathName}::${props.page.updatedAt}`
   },
   computed: {
     article () {
