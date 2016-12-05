@@ -5,7 +5,6 @@ const fs = require('fs')
 const path = require('path')
 const resolve = file => path.resolve(__dirname, file)
 const express = require('express')
-// const favicon = require('serve-favicon')
 const serialize = require('serialize-javascript')
 const robots = require('./server/robots.js')
 const request = require('superagent')
@@ -90,16 +89,13 @@ app.use('/dist', express.static(resolve('./dist'), {
 app.use('/static', express.static(resolve('./dist/static'), {
   fallthrough: false
 }))
-
 app.get('/robots.txt', (req, res) => {
   res.end(robots)
 })
-
 app.get('/rss.xml', (req, res) => {
   res.header('Content-Type', 'application/xml')
   res.end(rss)
 })
-
 app.get('/sitemap.xml', (req, res) => {
   res.header('Content-Type', 'application/xml')
   res.end(sitemap)
