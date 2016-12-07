@@ -550,7 +550,7 @@ export default new VueRouter({
                 label: '微博地址',
                 default: '',
                 width: 170,
-                description: '微博地址，请填写全部链接'
+                description: '微博地址，请填写全部链接,包括http/https前缀'
               },
               {
                 prop: 'miitbeian',
