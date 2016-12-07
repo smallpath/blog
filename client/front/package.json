@@ -9,7 +9,7 @@
     "lint": "eslint --ext .js,.vue server server.js src test/unit/specs test/e2e/specs",
     "start": "cross-env NODE_ENV=production node server",
     "build": "npm run build:client && npm run build:server",
-    "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.client.config.js --progress --hide-modules",
+    "build:client": "node build/build-client.js",
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules"
   },
   "dependencies": {
@@ -62,6 +62,8 @@
     "isparta-loader": "^2.0.0",
     "json-loader": "^0.5.4",
     "lolex": "^1.4.0",
+    "ora": "^0.3.0",
+    "shelljs": "^0.7.5",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
     "stylus": "^0.54.5",
@@ -75,5 +77,9 @@
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2",
     "webpack-merge": "^0.8.3"
+  },
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
   }
 }
