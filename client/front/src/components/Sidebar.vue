@@ -27,7 +27,7 @@
                 <li>
                     <a class="inline" :style="{'color': option.sidebarFontColor || ''}" target=_blank :href="'https://github.com/'+siteInfo.githubUrl.value"><i class="iconfont icon-github-v" title="GitHub"></i></a>
                     <a class="inline" :style="{'color': option.sidebarFontColor || ''}" href="/rss.xml"><i class="iconfont icon-rss-v" title="RSS"></i></a>
-                    <a class="inline" :style="{'color': option.sidebarFontColor || ''}" href="/search"><i class="iconfont icon-search" title="Search"></i></a>
+                    <a class="inline" :style="{'color': option.sidebarFontColor || ''}" target=_blank :href="'https://www.google.com/webhp#newwindow=1&safe=strict&q=site:' + siteInfo.siteUrl.value"><i class="iconfont icon-search" title="Search"></i></a>
             </ul>
         </div>
     </nav>

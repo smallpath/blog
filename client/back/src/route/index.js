@@ -584,7 +584,7 @@ export default new VueRouter({
                 label: '网站地址',
                 default: '',
                 width: 170,
-                description: '博客前台的域名'
+                description: '博客前台的域名,建议加上http/https前缀'
               },
               {
                 prop: 'faviconUrl',
