@@ -7,7 +7,7 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
 [https://smallpath.me](https://smallpath.me)
 
 # TODO
-- [ ] 前台单页
+- [x] 前台单页
   - [x] 开启H5模式
   - [x] disqus评论
   - [x] vue1.0升级至vue2.0
@@ -21,24 +21,21 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - [x] 组件级缓存
   - [x] Loading组件
   - [x] 侧边栏图片
-- [ ] 后台管理单页
+- [x] 后台管理单页
   - [x] 添加升级模型的管理
   - [x] 使用axios替换vue-resource
   - [x] vue 1.0 => vue 2.0
   - [x] 使用element ui
   - [x] 七牛云图片上传
-  - [ ] 接入elasticsearch (进行中)
 - [ ] RESTful服务器
   - [x] RESTful添加select字段过滤
   - [x] 标签及分类移至文章中 
   - [x] 七牛access_token下发及鉴权
-  - [ ] 文章toc
-  - [ ] OAuth1升级至OAuth2
+  - [ ] OAuth1升级至OAuth2 (进行中)
 - [x] 部署文档
 - [x] API文档
 - [ ] Docker
-- [ ] 单元测试， 集成测试和系统测试用例
-- [ ] 前端持续集成测试
+- [ ] CI
 
 # 构建与部署
 
@@ -55,9 +52,21 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
 修改 conf/config.js:
 
 - `tokenSecret`
-    - 改为任意字符串
+  - 改为任意字符串
 - `defaultAdminPassword`
-    - 默认密码, 必须修改, 否则服务器将拒绝启动
+  - 默认密码, 必须修改, 否则服务器将拒绝启动
+
+如果需要启用后台管理的七牛图片上传功能，请再修改如下属性:
+- qiniuAccessKey
+  - 七牛账号的公钥
+- qiniuSecretKey
+  - 七牛账号的私钥
+- qiniuBucketHost
+  - 七牛Bucket对应的外链域名
+- qiniuBucketName
+  - 七牛Bucket的名称
+- qiniuPipeline
+  - 七牛多媒体处理队列的名称
 
 ```
 npm install
@@ -168,16 +177,15 @@ server{
 
 > https://smallpath.me/proxyPrefix/api/:modelName/:id
 
-其中, `:modelName`为模型名, 总计如下7个模型
+其中, `:modelName`为模型名, 总计如下6个模型
 
 ```
 post
-menu
+theme
 tag
 category
 option
 user
-version
 ```
 
 `:id`为指定的文档ID, 用以对指定文档进行CRUD
@@ -344,5 +352,5 @@ vue-resource会将请求的URL进行格式化, 不允许URL中的JSON查询, 比
 后端会将其`conditions`解析为空对象. 
 
 除此之外, vue-resource目前尚未支持vue2的服务端渲染, 因此不建议使用vue-resource.  
-可以使用同时支持客户端和服务端的superagent作为代替
+可以使用同时支持客户端和服务端的axios作为代替
 
