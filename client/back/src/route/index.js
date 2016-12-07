@@ -439,68 +439,6 @@ export default new VueRouter({
       ]
     },
     {
-      path: '/version',
-      name: 'version',
-      component: Main,
-      children: [
-        {
-          path: 'list',
-          name: 'versionList',
-          component: createListView({
-            name: 'version',
-            model: 'version',
-            items: [
-              {
-                prop: 'name',
-                label: '版本名称',
-                width: 250
-              },
-              {
-                prop: 'version',
-                label: '版本号',
-                width: 170
-              },
-              {
-                prop: 'path',
-                label: '链接',
-                width: 170
-              }
-            ],
-            query: {}
-          })
-        },
-        {
-          path: 'create/:id?',
-          name: 'versionCreate',
-          component: createEditView({
-            name: 'version',
-            model: 'version',
-            items: [
-              {
-                prop: 'name',
-                label: '版本名称',
-                default: '',
-                width: 250
-              },
-              {
-                prop: 'version',
-                label: '版本号',
-                default: '',
-                width: 170
-              },
-              {
-                prop: 'path',
-                label: '链接',
-                default: '',
-                width: 170
-              }
-            ],
-            query: {}
-          })
-        }
-      ]
-    },
-    {
       path: '/user',
       name: 'user',
       component: Main,
