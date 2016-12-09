@@ -1,11 +1,9 @@
-let { siteUrl } = require('./config')
-
-module.exports =
+module.exports = (config) =>
 `User-agent: *
 Disallow: /beacon
 Disallow: /search
 Allow: /
-Sitemap: ${siteUrl}/sitemap.xml
+Sitemap: ${config.siteUrl}/sitemap.xml
 
 User-agent: YisouSpider
 Disallow: /

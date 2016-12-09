@@ -1,53 +1,43 @@
-process.env.VUE_ENV = 'server'
 const isProd = process.env.NODE_ENV === 'production'
 
 const fs = require('fs')
 const path = require('path')
 const resolve = file => path.resolve(__dirname, file)
 const express = require('express')
+const schedule = require('node-schedule')
+const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
 const serialize = require('serialize-javascript')
-const robots = require('./server/robots.js')
 const request = require('superagent')
+
+const getRobotsFromConfig = require('./server/robots.js')
 const { api: sitemapApi, getSitemapFromBody } = require('./server/sitemap.js')
 const { api: rssApi, getRssBodyFromBody } = require('./server/rss.js')
-let { title } = require('./server/config')
-
-const schedule = require('node-schedule')
-
-let sitemap = ''
-request.get(sitemapApi).then(result => {
-  sitemap = getSitemapFromBody(result)
-})
-
-schedule.scheduleJob('30 3 * * * ', function () {
-  request.get(sitemapApi).then(result => {
-    sitemap = getSitemapFromBody(result)
-  })
-})
-
-let rss = ''
-request.get(rssApi).then(result => {
-  rss = getRssBodyFromBody(result)
-})
-
-schedule.scheduleJob('30 3 * * * ', function () {
-  request.get(rssApi).then(result => {
-    rss = getRssBodyFromBody(result)
-  })
-})
-
-const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
-
-const app = express()
+let config = require('./server/config')
 const inline = fs.readFileSync(resolve('./dist/styles.css'), 'utf-8')
-let html = flushHtml()
 
-request.get('localhost:3000/api/option?conditions={"key":"title"}').then(res => {
-  let result = res.body
-  if (Array.isArray(result) && result.length !== 0) {
-    title = result[0].value
-    html = flushHtml()
-  }
+let html = flushHtml()
+let sitemap = ''
+let rss = ''
+let robots = ''
+
+config.flushOption().then(() => {
+  robots = getRobotsFromConfig(config)
+  html = flushHtml()
+
+  const flushSitemap = () => request.get(sitemapApi).then(result => {
+    sitemap = getSitemapFromBody(result, config)
+  })
+
+  const flushRss = () => request.get(rssApi).then(result => {
+    rss = getRssBodyFromBody(result, config)
+  })
+
+  flushSitemap()
+  flushRss()
+  schedule.scheduleJob('30 3 * * * ', function () {
+    flushRss()
+    flushSitemap()
+  })
 })
 
 function flushHtml () {
@@ -58,12 +48,13 @@ function flushHtml () {
     : '<link rel=stylesheet href=/dist/styles.css>'
   return {
     head: template.slice(0, i)
-      .replace('vue_client_side', title)
+      .replace('vue_client_side', config.title)
       .replace('<link rel=stylesheet href=/dist/styles.css>', style),
     tail: template.slice(i + '<div id=app></div>'.length)
   }
 }
 
+let app = express()
 let renderer
 if (isProd) {
   const bundlePath = resolve('./dist/server-bundle.js')
@@ -83,27 +74,27 @@ function createRenderer (bundle) {
   })
 }
 
+!isProd && app.use((req, res, next) => {
+  console.log(`${req.method} ${decodeURIComponent(req.url)}`)
+  return next()
+})
+
 app.use('/dist', express.static(resolve('./dist'), {
   fallthrough: false
 }))
 app.use('/static', express.static(resolve('./dist/static'), {
   fallthrough: false
 }))
-app.get('/robots.txt', (req, res) => {
-  res.end(robots)
+app.get('/robots.txt', (req, res, next) => {
+  return res.end(robots)
 })
-app.get('/rss.xml', (req, res) => {
+app.get('/rss.xml', (req, res, next) => {
   res.header('Content-Type', 'application/xml')
-  res.end(rss)
+  return res.end(rss)
 })
-app.get('/sitemap.xml', (req, res) => {
+app.get('/sitemap.xml', (req, res, next) => {
   res.header('Content-Type', 'application/xml')
-  res.end(sitemap)
-})
-
-!isProd && app.use((req, res, next) => {
-  console.log(`${req.method} ${decodeURIComponent(req.url)}`)
-  return next()
+  return res.end(sitemap)
 })
 
 app.get('*', (req, res) => {
@@ -124,7 +115,6 @@ app.get('*', (req, res) => {
 
   renderStream.on('data', chunk => {
     if (firstChunk) {
-      // embed initial store state
       if (context.initialState) {
         res.write(
           `<script>window.__INITIAL_STATE__=${
@@ -143,7 +133,8 @@ app.get('*', (req, res) => {
       let analyzeCode = context.initialState.siteInfo.analyzeCode
       if (analyzeCode && analyzeCode.value !== '') {
         let endStr = html.tail.replace('client-bundle.js></script>',
-          'client-bundle.js></script><script async src=\'https://www.google-analytics.com/analytics.js\'></script>')
+          `client-bundle.js></script>
+<script async src=\'https://www.google-analytics.com/analytics.js\'></script>`)
         res.end(endStr)
         !isProd && console.log(`whole request: ${Date.now() - s}ms`)
         !isProd && console.log('---------------')

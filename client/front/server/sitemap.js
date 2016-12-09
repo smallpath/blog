@@ -1,5 +1,3 @@
-let { siteUrl } = require('./config')
-
 let head = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\r\n`
 
@@ -7,11 +5,11 @@ let tail = '</urlset>'
 
 let api = 'localhost:3000/api/post?conditions={"type":"post"}&select={"pathName":1,"updatedAt":1}&sort=1'
 
-let getSitemapFromBody = result => {
+let getSitemapFromBody = (result, config) => {
   let res = result.body
   let body = res.reduce((prev, curr) => {
     prev += `  <url>\r\n`
-    prev += `    <loc>${siteUrl}/post/${curr.pathName}</loc>\r\n`
+    prev += `    <loc>${config.siteUrl}/post/${curr.pathName}</loc>\r\n`
     prev += `    <lastmod>${curr.updatedAt.slice(0, 10)}</lastmod>\r\n`
     prev += `    <priority>0.6</priority>\r\n`
     prev += `  </url>\r\n`

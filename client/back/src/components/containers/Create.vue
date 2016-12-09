@@ -43,22 +43,22 @@ export default {
   },
   methods: {
     parseTypeBeforeSubmit () {
-      let isOk = true;
+      let isOk = true
       this.options.items.forEach(item => {
         try {
           if (item.sourceType === 'Object') {
-            this.form[item.prop] = JSON.parse(this.form[item.prop]) 
+            this.form[item.prop] = JSON.parse(this.form[item.prop])
           }
-        }catch (err) { 
-          isOk = false;
+        } catch (err) {
+          isOk = false
         }
       })
-      return isOk;
+      return isOk
     },
     parseTypeAfterFetch () {
       this.options.items.forEach(item => {
         if (item.sourceType === 'Object') {
-          this.form[item.prop] = JSON.stringify(this.form[item.prop]) 
+          this.form[item.prop] = JSON.stringify(this.form[item.prop])
         }
       })
     },

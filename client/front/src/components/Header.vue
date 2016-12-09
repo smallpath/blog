@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     option () {
-      return  this.$store.state.theme.option
+      return this.$store.state.theme.option
     }
   },
   serverCacheKey: props => {

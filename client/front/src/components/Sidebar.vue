@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     option () {
-      return  this.$store.state.theme.option
+      return this.$store.state.theme.option
     }
   },
   preFetch (store, { path, params, query }) {
