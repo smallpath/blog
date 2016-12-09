@@ -47,9 +47,6 @@ export default {
       siteInfo: this.$store.getters.siteInfo
     }
   },
-  serverCacheKey: props => {
-    return 'static-sidebar'
-  },
   computed: {
     option () {
       return this.$store.state.theme.option

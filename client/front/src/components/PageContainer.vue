@@ -8,7 +8,8 @@ function fetchPage (store, { path: pathName, params, query }, callback) {
   return store.dispatch('FETCH_PAGE', {
     conditions: {
       pathName,
-      type: 'page'
+      type: 'page',
+      isPublic: true
     },
     select: {
       _id: 0,

@@ -13,7 +13,9 @@
 function getItems (store, { path, query, params }, callback) {
   return store.dispatch('FETCH_TAG_PAGER', {
     conditions: {
-      tags: params.tagName
+      tags: params.tagName,
+      type: 'post',
+      isPublic: true
     },
     select: {
       _id: 0,
