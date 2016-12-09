@@ -13,6 +13,8 @@ const option = require('./conf/option');
 const getQiniuTokenFromFileName = require('./service/qiniu')
 const { login, logout, permission } = require('./routes/admin');
 
+const bluebird = require("bluebird");
+global.Promise = bluebird;
 
 const app = new Koa();
 app.use(bodyParser());
@@ -96,15 +98,3 @@ async function initOption () {
     }
   }
 }
-
-// async function initMenu () {
-//   for (let i=0, len = menu.length; i< len ; i++){
-//     let url = menu[i].url;
-//     let count = await models.menu.find({ url }).count().exec();
-//     if (count === 0){
-//       await models.menu.create(menu[i]);
-//       log.info(`Menu ${url} created`);
-//     }
-//   }
-// }
-

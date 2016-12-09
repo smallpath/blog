@@ -4,7 +4,7 @@ let log = require('../utils/log');
 
 mongoose.Promise = require('bluebird');
 
-let mongoUrl = '127.0.0.1:27017/blog';
+let mongoUrl = `${config.mongoHost}:${config.mongoPort}/${config.mongoDatabase}`;
 
 mongoose.connect(mongoUrl);
 

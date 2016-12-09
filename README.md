@@ -41,7 +41,7 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
 
 ## 前置
 
-- Node v4
+- Node v6
 - MongoDB
 - Redis
 
@@ -56,16 +56,23 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
 - `defaultAdminPassword`
   - 默认密码, 必须修改, 否则服务器将拒绝启动
 
-如果需要启用后台管理的七牛图片上传功能，请再修改如下属性:
-- qiniuAccessKey
+如果mongoDB或redis不在本机对应端口，可以修改对应的属性
+- mongoHost
+- mongoDatabase
+- mongoPort
+- redisHost
+- redisPort
+
+如果需要启用后台管理单页的七牛图片上传功能，请再修改如下属性:
+- `qiniuAccessKey`
   - 七牛账号的公钥
-- qiniuSecretKey
+- `qiniuSecretKey`
   - 七牛账号的私钥
-- qiniuBucketHost
+- `qiniuBucketHost`
   - 七牛Bucket对应的外链域名
-- qiniuBucketName
+- `qiniuBucketName`
   - 七牛Bucket的名称
-- qiniuPipeline
+- `qiniuPipeline`
   - 七牛多媒体处理队列的名称
 
 ```
@@ -124,6 +131,7 @@ server{
 }
 ```
 
+开发端口为本机8080
 
 ## client/back
 博客的后台管理单页
@@ -166,6 +174,8 @@ server{
     }
 }
 ```
+
+开发端口为本机8082
 
 # 后端RESTful API
 
