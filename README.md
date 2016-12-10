@@ -1,5 +1,5 @@
 # Blog
-Not only blog. Based on Vue2, Koa2, MongoDB and Redis
+A blog system. Based on Vue2, Koa2, MongoDB and Redis
 
 前后端分离 + 服务端渲染的博客系统, 前端SPA + 后端RESTful服务器
 
@@ -43,6 +43,7 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
 ## 前置
 
 - Node v6
+- pm2
 - MongoDB
 - Redis
 
@@ -58,11 +59,11 @@ Not only blog. Based on Vue2, Koa2, MongoDB and Redis
   - 默认密码, 必须修改, 否则服务器将拒绝启动
 
 如果mongoDB或redis不在本机对应端口，可以修改对应的属性
-- mongoHost
-- mongoDatabase
-- mongoPort
-- redisHost
-- redisPort
+- `mongoHost`
+- `mongoDatabase`
+- `mongoPort`
+- `redisHost`
+- `redisPort`
 
 如果需要启用后台管理单页的七牛图片上传功能，请再修改如下属性:
 - `qiniuAccessKey`
@@ -349,19 +350,3 @@ Body中为用来新建文档的JSON数据
 > DELETE https://smallpath.me/proxyPrefix/api/:modelName/:id
 
 删除指定ID的文档
-
-## vue-resource说明
-
-vue-resource会将请求的URL进行格式化, 不允许URL中的JSON查询, 比如下面这种:
-
-> GET https://smallpath.me/proxyPrefix/api/post?conditions={"title":"关于"}
-
-会被`URI TEMPLATE`为:
-
-> GET https://smallpath.me/proxyPrefix/api/post?conditions[title]=关于
-
-后端会将其`conditions`解析为空对象. 
-
-除此之外, vue-resource目前尚未支持vue2的服务端渲染, 因此不建议使用vue-resource.  
-可以使用同时支持客户端和服务端的axios作为代替
-
