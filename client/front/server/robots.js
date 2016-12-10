@@ -1,7 +1,5 @@
 module.exports = (config) =>
 `User-agent: *
-Disallow: /beacon
-Disallow: /search
 Allow: /
 Sitemap: ${config.siteUrl}/sitemap.xml
 
