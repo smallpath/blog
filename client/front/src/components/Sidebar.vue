@@ -10,7 +10,7 @@
             <div class=profile>
                 <a href="/"> 
                     <img 
-                        :src="siteInfo.logoUrl.value" 
+                        :src="option.logoUrl" 
                         :alt="siteInfo.title.value"
                         ref="logo">
                 </a> 
