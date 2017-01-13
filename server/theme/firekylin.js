@@ -20,16 +20,6 @@ module.exports = {
             "option": "tags",
             "url": "/tag",
             "label": "标签"
-        },
-        {
-            "option": "user",
-            "url": "/about",
-            "label": "关于"
-        },
-        {
-            "option": "link",
-            "url": "/link",
-            "label": "友链"
         }],
     }
 }

@@ -60,7 +60,7 @@ Object.keys(models).forEach(value => {
       email: ''
     });
 
-    log.info(`account '${result.name}' with passoword '${result.password}' is created`);
+    log.info(`account '${result.name}' is created`);
 
     await initOption();
 
@@ -80,7 +80,7 @@ async function installTheme() {
     let fileName = fileArr[i]
     let theme = require(`./theme/${fileName}`)
     let count = await models.theme.find({ name: theme.name }).count().exec();
-    if (count == 0){
+    if (count === 0){
       await models.theme.create(theme);
       log.info(`theme ${theme.name} created`);
     }
@@ -92,7 +92,7 @@ async function initOption () {
     let key = option[i].key;
     let value = option[i].value;
     let count = await models.option.find({ key }).count().exec();
-    if (count == 0){
+    if (count === 0){
       await models.option.create(option[i]);
       log.info(`Option ${key} created`);
     }
