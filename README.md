@@ -5,10 +5,10 @@ A blog system. Based on Vue2, Koa2, MongoDB and Redis
 
 # Demo
 前端：[https://smallpath.me](https://smallpath.me)  
-后端截图：[https://smallpath.me/post/blog-back-v2](https://smallpath.me/post/blog-back-v2)
+后台管理截图：[https://smallpath.me/post/blog-back-v2](https://smallpath.me/post/blog-back-v2)
 
 # TODO
-- [x] 前台单页
+- [ ] 前台单页
   - [x] 开启H5模式
   - [x] disqus评论
   - [x] vue1.0升级至vue2.0
@@ -22,17 +22,17 @@ A blog system. Based on Vue2, Koa2, MongoDB and Redis
   - [x] 组件级缓存
   - [x] Loading组件
   - [x] 侧边栏图片
+  - [ ] 服务端谷歌统计
 - [x] 后台管理单页
   - [x] 添加升级模型的管理
   - [x] 使用axios替换vue-resource
   - [x] vue 1.0 => vue 2.0
   - [x] 使用element ui
   - [x] 七牛云图片上传
-- [ ] RESTful服务器
+- [x] RESTful服务器
   - [x] RESTful添加select字段过滤
   - [x] 标签及分类移至文章中 
   - [x] 七牛access_token下发及鉴权
-  - [ ] OAuth1升级至OAuth2 (进行中)
 - [x] 部署文档
 - [x] API文档
 - [ ] Docker
