@@ -19,7 +19,10 @@
 <script>
 function fetchAchieves (store, to, callback) {
   return store.dispatch('FETCH_ACHIEVE', {
-    conditions: { type: 'post' },
+    conditions: {
+      type: 'post',
+      isPublic: true
+    },
     select: {
       _id: 0,
       title: 1,
