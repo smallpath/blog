@@ -4,9 +4,9 @@
             <h1 class=title>{{title}}</h1>
             <div class="entry-content">
                 <section> 
-                    <router-link v-for="(item, key, index) in items" 
+                    <router-link v-for="key in sortedKeys" 
                         :to="{ name: 'tagPager', params:{ tagName: key } }"
-                        :data-tag="key">{{key}}({{item}})</router-link> 
+                        :data-tag="key">{{key}}({{items[key]}})</router-link> 
                 </section>
             </div>
         </article>
@@ -38,6 +38,10 @@ export default {
   computed: {
     items () {
       return this.$store.state.tags
+    },
+    sortedKeys () {
+      let ref = this.items
+      return Object.keys(ref).sort((a, b) => ref[a] < ref[b])
     }
   },
   preFetch: fetchTags
