@@ -40,7 +40,7 @@ if (window.__INITIAL_STATE__.siteInfo) {
     window.ga.l = +new Date()
     window.ga('create', analyzeCode.value, 'auto')
     window.ga('send', 'pageview')
-    router.beforeEach((route) => {
+    router.afterEach((route) => {
       window.ga('send', {
         hitType: 'pageview',
         page: route.path,
