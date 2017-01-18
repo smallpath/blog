@@ -2,6 +2,7 @@ require('es6-promise').polyfill()
 
 import './assets/res/js/base'
 import { app, router, store } from './main'
+import clientGoogleAnalyse from './utils/clientGoogleAnalyse'
 
 store.replaceState(window.__INITIAL_STATE__)
 
@@ -36,17 +37,8 @@ router.beforeEach((to, from, next) => {
 if (window.__INITIAL_STATE__.siteInfo) {
   let analyzeCode = window.__INITIAL_STATE__.siteInfo.analyzeCode
   if (analyzeCode && analyzeCode.value !== '') {
-    window.ga = window.ga || function () { (window.ga.q = window.ga.q || []).push(arguments) }
-    window.ga.l = +new Date()
-    window.ga('create', analyzeCode.value, 'auto')
-    window.ga('send', 'pageview')
-    router.afterEach((route) => {
-      window.ga('send', {
-        hitType: 'pageview',
-        page: route.path,
-        location: window.location.origin + route.path,
-        title: route.name || ''
-      })
+    router.afterEach(route => {
+      clientGoogleAnalyse(route.path)
     })
   }
 }

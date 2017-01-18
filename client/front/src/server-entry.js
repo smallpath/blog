@@ -4,7 +4,7 @@ const isDev = process.env.NODE_ENV !== 'production'
 
 export default context => {
   router.push(context.url)
-  let current = router.history.current
+  let current = router.currentRoute
   context.path = current.path
   context.query = current.query
   context.params = current.params

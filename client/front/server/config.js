@@ -3,6 +3,29 @@ let request = require('superagent')
 let siteUrl = 'http://localhost:8080'
 let title = 'Blog'
 let description = ''
+let googleTrackID = ''
+let ga = {
+  version: 1,
+  api: 'https://www.google-analytics.com/collect',
+  required: ['dt', 'dr', 'dp', 'z'],
+  spider: [
+    'Baiduspider',
+    'Googlebot',
+    'Sogou web spider',
+    'Sogou spider2',
+    'Sogou blog',
+    'Sogou News Spider',
+    'Sogou Orion spider',
+    'Sogou inst spider',
+    'Yahoo! Slurp',
+    'MSNBot',
+    'YoudaoBot',
+    'JikeSpider',
+    'Sosospider',
+    '360Spider',
+    'iaskspider'
+  ]
+}
 
 function flushOption () {
   return request.get('localhost:3000/api/option').then(res => {
@@ -13,6 +36,7 @@ function flushOption () {
     siteUrl = options['siteUrl']
     title = options['title']
     description = options['description']
+    googleTrackID = options['analyzeCode']
   })
 }
 
@@ -43,9 +67,24 @@ Object.defineProperty(exports, 'description', {
     description = value
   }
 })
+Object.defineProperty(exports, 'googleTrackID', {
+  enumerable: true,
+  get: function () {
+    return googleTrackID
+  },
+  set: function (value) {
+    googleTrackID = value
+  }
+})
 Object.defineProperty(exports, 'flushOption', {
   enumerable: true,
   get: function () {
     return flushOption
+  }
+})
+Object.defineProperty(exports, 'ga', {
+  enumerable: true,
+  get: function () {
+    return ga
   }
 })

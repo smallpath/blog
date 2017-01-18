@@ -1,5 +1,6 @@
 const isProd = process.env.NODE_ENV === 'production'
 
+const log = require('log4js').getLogger('ssr server')
 const fs = require('fs')
 const path = require('path')
 const resolve = file => path.resolve(__dirname, file)
@@ -8,7 +9,7 @@ const schedule = require('node-schedule')
 const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
 const serialize = require('serialize-javascript')
 const request = require('superagent')
-
+const sendGoogleAnalytic = require('./middleware/serverGoogleAnalytic')
 const getRobotsFromConfig = require('./server/robots.js')
 const { api: sitemapApi, getSitemapFromBody } = require('./server/sitemap.js')
 const { api: rssApi, getRssBodyFromBody } = require('./server/rss.js')
@@ -55,6 +56,7 @@ function flushHtml () {
 }
 
 let app = express()
+app.enable('trust proxy')
 let renderer
 if (isProd) {
   const bundlePath = resolve('./dist/server-bundle.js')
@@ -74,8 +76,10 @@ function createRenderer (bundle) {
   })
 }
 
-!isProd && app.use((req, res, next) => {
-  console.log(`${req.method} ${decodeURIComponent(req.url)}`)
+app.use(require('cookie-parser')())
+
+app.use((req, res, next) => {
+  log.debug(`${req.method} ${decodeURIComponent(req.url)}`)
   return next()
 })
 
@@ -85,9 +89,10 @@ app.use('/dist', express.static(resolve('./dist'), {
 app.use('/static', express.static(resolve('./dist/static'), {
   fallthrough: false
 }))
-app.get('/robots.txt', (req, res, next) => {
-  return res.end(robots)
-})
+
+app.get('/favicon.ico', (req, res) => res.status(404).end())
+app.get('/_.gif', (req, res, next) => sendGoogleAnalytic(req, res, next))
+app.get('/robots.txt', (req, res, next) => res.end(robots))
 app.get('/rss.xml', (req, res, next) => {
   res.header('Content-Type', 'application/xml')
   return res.end(rss)
@@ -97,7 +102,7 @@ app.get('/sitemap.xml', (req, res, next) => {
   return res.end(sitemap)
 })
 
-app.get('*', (req, res) => {
+app.get('*', (req, res, next) => {
   if (!renderer) {
     return res.end('waiting for compilation... refresh in a moment.')
   }
@@ -116,6 +121,13 @@ app.get('*', (req, res) => {
   renderStream.on('data', chunk => {
     if (firstChunk) {
       if (context.initialState) {
+        let siteInfo = context.initialState.siteInfo
+        sendGoogleAnalytic(req, res, next, {
+          dt: siteInfo.title.value,
+          dr: req.url,
+          dp: req.url,
+          z: Date.now()
+        })
         res.write(
           `<script>window.__INITIAL_STATE__=${
           serialize(context.initialState, { isJSON: true })
@@ -129,29 +141,16 @@ app.get('*', (req, res) => {
   })
 
   renderStream.on('end', () => {
-    if (context.initialState && context.initialState.siteInfo) {
-      let analyzeCode = context.initialState.siteInfo.analyzeCode
-      if (analyzeCode && analyzeCode.value !== '') {
-        let endStr = html.tail.replace('client-bundle.js></script>',
-          `client-bundle.js></script>
-<script async src=\'https://www.google-analytics.com/analytics.js\'></script>`)
-        res.end(endStr)
-        !isProd && console.log(`whole request: ${Date.now() - s}ms`)
-        !isProd && console.log('---------------')
-        return
-      }
-    }
     res.end(html.tail)
-    !isProd && console.log(`whole request: ${Date.now() - s}ms`)
-    !isProd && console.log('---------------')
+    log.debug(`whole request: ${Date.now() - s}ms`)
   })
 
   renderStream.on('error', err => {
-    console.log(err)
+    log.error(err)
   })
 })
 
 const port = process.env.PORT || 8080
 app.listen(port, () => {
-  console.log(`server started at localhost:${port}`)
+  log.debug(`server started at localhost:${port}`)
 })
