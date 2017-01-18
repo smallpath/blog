@@ -7,7 +7,6 @@ const resolve = file => path.resolve(__dirname, file)
 const express = require('express')
 const schedule = require('node-schedule')
 const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
-const serialize = require('serialize-javascript')
 const request = require('superagent')
 const sendGoogleAnalytic = require('./middleware/serverGoogleAnalytic')
 const getRobotsFromConfig = require('./server/robots.js')
@@ -122,7 +121,6 @@ app.get('*', (req, res, next) => {
   })
 
   res.header('Content-Type', 'text/html; charset=utf-8')
-
   res.write(html.head)
 
   renderStream.on('data', chunk => {
@@ -130,7 +128,7 @@ app.get('*', (req, res, next) => {
       if (context.initialState) {
         res.write(
           `<script>window.__INITIAL_STATE__=${
-          serialize(context.initialState, { isJSON: true })
+          JSON.stringify(context.initialState)
           }</script>`
         )
       }
