@@ -114,6 +114,13 @@ app.get('*', (req, res, next) => {
   const renderStream = renderer.renderToStream(context)
   let firstChunk = true
 
+  sendGoogleAnalytic(req, res, next, {
+    dt: config.title,
+    dr: req.url,
+    dp: req.url,
+    z: Date.now()
+  })
+
   res.header('Content-Type', 'text/html; charset=utf-8')
 
   res.write(html.head)
@@ -121,13 +128,6 @@ app.get('*', (req, res, next) => {
   renderStream.on('data', chunk => {
     if (firstChunk) {
       if (context.initialState) {
-        let siteInfo = context.initialState.siteInfo
-        sendGoogleAnalytic(req, res, next, {
-          dt: siteInfo.title.value,
-          dr: req.url,
-          dp: req.url,
-          z: Date.now()
-        })
         res.write(
           `<script>window.__INITIAL_STATE__=${
           serialize(context.initialState, { isJSON: true })
