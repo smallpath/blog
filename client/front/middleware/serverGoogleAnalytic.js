@@ -12,10 +12,7 @@ const shouldBanSpider = ua => {
   }
 
   ua = ua.toLowerCase().replace(/\s+/g, '')
-  return config.ga.spider.some(item => {
-    item = item.toLowerCase().replace(/\s+/g, '')
-    return ua.indexOf(item) > -1
-  })
+  return config.ga.spider.some(item => ua.indexOf(item) > -1)
 }
 
 const getClientIp = (req) => {

@@ -23,8 +23,9 @@ let ga = {
     'JikeSpider',
     'Sosospider',
     '360Spider',
-    'iaskspider'
-  ]
+    'iaskspider',
+    'YandexBot'
+  ].map(item => item.toLowerCase().replace(/\s+/g, ''))
 }
 
 function flushOption () {
