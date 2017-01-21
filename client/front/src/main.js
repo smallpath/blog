@@ -5,7 +5,6 @@ import store from './store/index'
 
 Vue.use(VueRouter)
 
-import PageContainer from './components/PageContainer'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
@@ -14,13 +13,14 @@ import BlogPager from './components/BlogPager'
 import Pagination from './components/Pagination'
 import Archive from './components/Archive'
 import Tag from './components/Tag'
+import PostContainer from './components/PostContainer'
 import Post from './components/Post'
 import TagPager from './components/TagPager'
 import Disqus from './components/Disqus'
-import Pager from './components/Pager'
+import PageContainer from './components/PageContainer'
+import Page from './components/Page'
 
 Vue.component('sidebar', Sidebar)
-Vue.component('page-container', PageContainer)
 Vue.component('my-header', Header)
 Vue.component('my-footer', Footer)
 Vue.component('blog-summary', BlogSummary)
@@ -29,9 +29,11 @@ Vue.component('pagination', Pagination)
 Vue.component('archive', Archive)
 Vue.component('blog-tag', Tag)
 Vue.component('blog-post', Post)
+Vue.component('post-container', Post)
+Vue.component('page-container', PostContainer)
+Vue.component('pager', Page)
 Vue.component('tag-pager', TagPager)
 Vue.component('disqus', Disqus)
-Vue.component('pager', Pager)
 
 import App from './components/App'
 Vue.component('app', App)
@@ -75,7 +77,7 @@ let router = new VueRouter({
       path: '/post/:pathName',
       name: 'post',
       components: {
-        default: Post,
+        default: PostContainer,
         sidebar: Sidebar,
         header: Header
       }

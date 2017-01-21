@@ -28,7 +28,6 @@ router.beforeEach((to, from, next) => {
         endLoadingCallback
       ).catch(err => {
         console.error(Date.now().toLocaleString(), err)
-        endLoadingCallback('/')
       })
     } else {
       // component's a static page and just navigate to it

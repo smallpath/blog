@@ -19,24 +19,12 @@
 <script>
 export default {
   props: ['page'],
-  data () {
-    return {}
-  },
   serverCacheKey: props => {
     return `${props.page.pathName}::${props.page.updatedAt}`
   },
   computed: {
     article () {
       return this.page
-    },
-    commentType () {
-      return this.$store.state.siteInfo.commentType.value || 'disqus'
-    },
-    commentName () {
-      return this.$store.state.siteInfo.commentName.value || ''
-    },
-    siteURL () {
-      return this.$store.state.siteInfo.siteUrl.value || 'localhost'
     }
   },
   watch: {
