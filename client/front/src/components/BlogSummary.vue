@@ -20,7 +20,6 @@ export default {
     return {}
   },
   serverCacheKey: props => {
-    console.log(`${props.article.pathName}::${props.article.updatedAt}`)
     return `${props.article.pathName}::${props.article.updatedAt}`
   }
 }
