@@ -102,16 +102,11 @@ export default {
       this.form.summary = marked(this.form.markdownContent.split('<!--more-->')[0])
       this.form.content = marked(this.form.markdownContent.replace(/<!--more-->/g, ''))
       if (this.form.createdAt === '') {
-        this.form.createdAt = moment().format('YYYY-MM-DD HH:mm:ss').toString()
+        this.form.createdAt = moment().format('YYYY-MM-DD HH:mm:ss')
       } else {
-        this.form.createdAt = moment(this.form.createdAt).format('YYYY-MM-DD HH:mm:ss').toString()
+        this.form.createdAt = moment(this.form.createdAt).format('YYYY-MM-DD HH:mm:ss')
       }
-
-      if (this.form.updatedAt === '') {
-        this.form.updatedAt = moment().format('YYYY-MM-DD HH:mm:ss').toString()
-      } else {
-        this.form.updatedAt = moment(this.form.updatedAt).format('YYYY-MM-DD HH:mm:ss').toString()
-      }
+      this.form.updatedAt = moment().format('YYYY-MM-DD HH:mm:ss')
     },
     onSubmit () {
       this.validate()
