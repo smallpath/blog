@@ -10,11 +10,11 @@ app.$mount('#app')
 
 router.beforeEach((to, from, next) => {
   let loadingPromise = store.dispatch('START_LOADING')
-  let endLoadingCallback = () => {
+  let endLoadingCallback = (path) => {
     return loadingPromise.then(interval => {
       clearInterval(interval)
       store.dispatch('SET_PROGRESS', 100)
-      next()
+      next(path)
     })
   }
 
@@ -22,14 +22,21 @@ router.beforeEach((to, from, next) => {
     let component = to.matched[0].components.default
     if (component.preFetch) {
       // component need fetching some data before navigating to it
-      return component.preFetch(store, to, endLoadingCallback)
+      return component.preFetch(
+        store,
+        to,
+        endLoadingCallback
+      ).catch(err => {
+        console.error(Date.now().toLocaleString(), err)
+        endLoadingCallback('/')
+      })
     } else {
       // component's a static page and just navigate to it
       endLoadingCallback()
     }
   } else {
-    // TODO: redirect to a global 404 page
-    endLoadingCallback()
+    // redirect to home page
+    endLoadingCallback('/')
   }
 })
 

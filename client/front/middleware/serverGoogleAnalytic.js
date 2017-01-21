@@ -1,4 +1,4 @@
-const log = require('log4js').getLogger('googleAnalytic')
+const log = require('log4js').getLogger('google analytic')
 
 const config = require('../server/config')
 const request = require('superagent')
@@ -73,6 +73,6 @@ module.exports = (req, res, next, query) => {
       log.error(response, form)
       return
     }
-    log.debug('Google Analytics sended', form.cid)
+    log.debug('Google Analytic sended', form.cid, form.ua)
   })
 }

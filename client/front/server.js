@@ -144,6 +144,7 @@ app.get('*', (req, res, next) => {
   })
 
   renderStream.on('error', err => {
+    res.end(html.tail)
     log.error(err)
   })
 })

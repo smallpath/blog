@@ -14,7 +14,9 @@ export default context => {
 
   return Promise.all(router.getMatchedComponents().map(function (component, index) {
     if (component.preFetch) {
-      return component.preFetch(store, context)
+      return component.preFetch(store, context).catch(err => {
+        console.error(Date.now().toLocaleString(), err)
+      })
     }
   })).then((arr) => {
     isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)
