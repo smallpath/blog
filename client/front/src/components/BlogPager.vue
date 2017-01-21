@@ -1,11 +1,11 @@
 <template>
-    <div id='main'>
-        <section id="page-index">
-            <blog-summary v-for="item in items" :article="item"></blog-summary>
-            <pagination :page="page" :total-page="totalPage"></pagination>
-        </section>
-        <my-footer></my-footer>
-    </div>
+  <div id='main'>
+    <section id="page-index">
+      <blog-summary v-for="item in items" :article="item"></blog-summary>
+      <pagination :page="page" :total-page="totalPage"></pagination>
+    </section>
+    <my-footer></my-footer>
+  </div>
 </template>
 
 <script>

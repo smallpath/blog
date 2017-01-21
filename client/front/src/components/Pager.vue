@@ -1,21 +1,19 @@
 <template>
-    <div id='main'>
-        <div id="page-post">
-            <article class="post detail">
-                <div class="meta">
-                    <div class="date">{{ article.createdAt }}</div>
-                </div>
-                <h1 class="title">{{ article.title }}</h1>
-
-                <div class="entry-content" v-html="article.content">
-                </div>
-            </article>
-            <div class="comments" v-if="article.allowComment === true && commentName !== ''">
-                <disqus :shortname="commentName" ></disqus>
-            </div>
+  <div id='main'>
+    <div id="page-post">
+      <article class="post detail">
+        <div class="meta">
+          <div class="date">{{ article.createdAt }}</div>
         </div>
-        <my-footer></my-footer>
+        <h1 class="title">{{ article.title }}</h1>
+        <div class="entry-content" v-html="article.content"></div>
+      </article>
+      <div class="comments" v-if="article.allowComment === true && commentName !== ''">
+        <disqus :shortname="commentName" ></disqus>
+      </div>
     </div>
+    <my-footer></my-footer>
+  </div>
 </template>
 
 <script>

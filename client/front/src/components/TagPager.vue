@@ -1,12 +1,12 @@
 <template>
-    <div id='main'>
-        <section id="page-index">
-            <h1 class="intro">标签<a href="javascript:void(0)">{{$route.params.tagName}}</a>下的文章</h1>
-            <blog-summary v-for="item in items" :article="item" ></blog-summary>
-            <pagination :page="page" :total-page="totalPage" ></pagination>
-        </section>
-        <my-footer></my-footer>
-    </div>
+  <div id='main'>
+    <section id="page-index">
+      <h1 class="intro">标签<a href="javascript:void(0)">{{$route.params.tagName}}</a>下的文章</h1>
+      <blog-summary v-for="item in items" :article="item" ></blog-summary>
+      <pagination :page="page" :total-page="totalPage" ></pagination>
+    </section>
+    <my-footer></my-footer>
+  </div>
 </template>
 
 <script>
