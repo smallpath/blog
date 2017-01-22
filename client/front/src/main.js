@@ -20,23 +20,25 @@ import Disqus from './components/Disqus'
 import PageContainer from './components/PageContainer'
 import Page from './components/Page'
 
-Vue.component('sidebar', Sidebar)
-Vue.component('my-header', Header)
-Vue.component('my-footer', Footer)
-Vue.component('blog-summary', BlogSummary)
-Vue.component('blog-pager', BlogPager)
-Vue.component('pagination', Pagination)
-Vue.component('archive', Archive)
-Vue.component('blog-tag', Tag)
-Vue.component('blog-post', Post)
-Vue.component('post-container', Post)
-Vue.component('page-container', PostContainer)
-Vue.component('pager', Page)
-Vue.component('tag-pager', TagPager)
-Vue.component('disqus', Disqus)
+let register = Vue.component.bind(Vue)
+
+register('sidebar', Sidebar)
+register('my-header', Header)
+register('my-footer', Footer)
+register('blog-summary', BlogSummary)
+register('blog-pager', BlogPager)
+register('pagination', Pagination)
+register('archive', Archive)
+register('blog-tag', Tag)
+register('blog-post', Post)
+register('post-container', Post)
+register('page-container', PostContainer)
+register('pager', Page)
+register('tag-pager', TagPager)
+register('disqus', Disqus)
 
 import App from './components/App'
-Vue.component('app', App)
+register('app', App)
 
 let router = new VueRouter({
   mode: 'history',
@@ -47,58 +49,32 @@ let router = new VueRouter({
     {
       path: '/',
       name: 'main',
-      components: {
-        default: BlogPager,
-        sidebar: Sidebar,
-        header: Header
-      }
+      component: BlogPager
     },
     {
       path: '/archive',
       name: 'archive',
-      components: {
-        default: Archive,
-        sidebar: Sidebar,
-        header: Header
-      }
-
+      component: Archive
     },
     {
       path: '/tag',
       name: 'tag',
-      component: Tag,
-      components: {
-        default: Tag,
-        sidebar: Sidebar,
-        header: Header
-      }
+      component: Tag
     },
     {
       path: '/post/:pathName',
       name: 'post',
-      components: {
-        default: PostContainer,
-        sidebar: Sidebar,
-        header: Header
-      }
+      component: PostContainer
     },
     {
       path: '/tag/:tagName',
       name: 'tagPager',
-      components: {
-        default: TagPager,
-        sidebar: Sidebar,
-        header: Header
-      }
+      component: TagPager
     },
     {
       path: '/:page',
       name: 'page',
-      components: {
-        default: PageContainer,
-        sidebar: Sidebar,
-        header: Header
-      }
+      component: PageContainer
     }
   ]
 })
@@ -111,4 +87,9 @@ const app = new Vue({
   ...App
 })
 
-export { app, router, store }
+let preFetchComponent = [
+  Sidebar,
+  Header
+]
+
+export { app, router, store, preFetchComponent }

@@ -18,24 +18,17 @@ router.beforeEach((to, from, next) => {
     })
   }
 
-  if (to.matched.length !== 0) {
-    let component = to.matched[0].components.default
-    if (component.preFetch) {
-      // component need fetching some data before navigating to it
-      return component.preFetch(
-        store,
-        to,
-        endLoadingCallback
-      ).catch(err => {
-        console.error(Date.now().toLocaleString(), err)
-      })
-    } else {
-      // component's a static page and just navigate to it
-      endLoadingCallback()
-    }
+  let component = router.getMatchedComponents(to.fullPath)[0]
+  // there must be a matched component according
+  // to routes definition
+  if (component.preFetch) {
+    // component need fetching some data before navigating to it
+    return component.preFetch(store, to, endLoadingCallback).catch(err => {
+      console.error(Date.now().toLocaleString(), err)
+    })
   } else {
-    // redirect to home page
-    endLoadingCallback('/')
+    // component's a static page and just navigate to it
+    endLoadingCallback()
   }
 })
 

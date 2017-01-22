@@ -27,9 +27,6 @@ function fetchPage (store, { path: pathName, params, query }, callback) {
 }
 
 export default {
-  data () {
-    return {}
-  },
   computed: {
     page () {
       return this.$store.state.page.pathName

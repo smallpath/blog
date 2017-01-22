@@ -16,9 +16,6 @@ export default {
       required: true
     }
   },
-  data () {
-    return {}
-  },
   serverCacheKey: props => {
     return `${props.article.pathName}::${props.article.updatedAt}`
   }

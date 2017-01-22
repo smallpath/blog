@@ -9,18 +9,16 @@
     <div class=wrap>
       <div class=profile>
         <a href="/"> 
-            <img 
-                :src="option.logoUrl" 
-                :alt="siteInfo.title.value"
-                ref="logo">
+          <img :src="option.logoUrl" 
+            :alt="siteInfo.title.value">
         </a> 
         <span :style="{ 'color': option.sidebarFontColor || '' }" >{{siteInfo.title.value}}</span>
       </div>
       <ul class="buttons">
         <li v-for="menu in option.menu">
           <router-link 
-              :style="{ 'color': option.sidebarFontColor || '' }"  
-              :to="{ path: menu.url }" :title="menu.label"> <i class="iconfont" :class="'icon-' + menu.option"></i> <span>{{menu.label}}</span></router-link>
+            :style="{ 'color': option.sidebarFontColor || '' }"  
+            :to="{ path: menu.url }" :title="menu.label"> <i class="iconfont" :class="'icon-' + menu.option"></i> <span>{{menu.label}}</span></router-link>
         </li>
       </ul>
       <ul class="buttons">
@@ -60,10 +58,6 @@ export default {
     if (typeof this.siteInfo.title === 'undefined') {
       Promise.all([this.$store.dispatch('FETCH_OPTIONS'), this.$store.dispatch('FETCH_FIREKYLIN')])
     }
-  },
-  mounted () {
-    let img = this.$refs.logo
-    if (img) img.onerror = ({ target }) => (img.src = target.currentSrc.replace('.webp', '.png'))
   }
 }
 </script>
