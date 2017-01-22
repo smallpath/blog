@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <loading-bar:progress="progress"></loading-bar>
+    <loading-bar :progress="progress"></loading-bar>
     <sidebar></sidebar>
     <my-header></my-header>
     <keep-alive>
