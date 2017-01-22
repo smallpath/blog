@@ -14,26 +14,18 @@
           <p>-- <acronym title="End of File">EOF</acronym> --</p>
           <div class="post-info">
             <p> 发表于 <i>{{article.createdAt}}</i> ，
-            <template v-if="article.category">
               添加在分类「
               <a :data-cate="article.category">
                   <code class="notebook">{{article.category}}</code>
-              </a> 」
-            </template>
-            <template v-if="article.category">
-            下 ，
-            </template>
-            <template v-if="article.tags && article.tags.length != 0">
-              并被添加「
+              </a> 」下 ，并被添加「
               <router-link v-for="tag in article.tags" 
                   :to="{name:'tagPager', params: { tagName: tag }}" 
                   :data-tag="tag"> 
                   <code class="notebook">{{tag}}</code>
-              </router-link> 」标签 ，
-            </template>
-              最后修改于 <i>{{article.updatedAt}}</i></p>
+              </router-link> 」标签 ，最后修改于 <i>{{article.updatedAt}}</i>
+            </p>
           </div>
-          </template>
+        </template>
       </article>
       <template v-if="shouldShow">
         <nav class=pagination> 
