@@ -13,7 +13,6 @@ export default context => {
   const s = isDev && Date.now()
 
   return Promise.all(preFetchComponent.concat(router.getMatchedComponents()).map((component, index) => {
-    console.log(index, component)
     if (component.preFetch) {
       return component.preFetch(store, context).catch(() => {})
     }
