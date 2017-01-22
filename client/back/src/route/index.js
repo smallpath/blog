@@ -33,7 +33,6 @@ export default new VueRouter({
     },
     {
       path: '/dashboard',
-      name: 'main',
       component: Main,
       children: [
         {
