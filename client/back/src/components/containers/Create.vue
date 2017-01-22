@@ -19,6 +19,8 @@
 </template>
 
 <script>
+const blackModelArr = ['option', 'user']
+
 export default {
   name: 'list',
   props: ['options'],
@@ -62,6 +64,13 @@ export default {
         }
       })
     },
+    setParams (response) {
+      let id = this.$route.params.id
+      if (response._id && typeof id === 'undefined') {
+        this.$router.replace({ params: { id: response._id } })
+        this.form = response
+      }
+    },
     onSubmit () {
       if (this.parseTypeBeforeSubmit() === false) {
         return this.$message.error('属性验证失败')
@@ -72,23 +81,28 @@ export default {
         return this.$store.dispatch('PATCH', Object.assign({}, {
           id: this.$route.params.id,
           form: this.form
-        }, this.options)).then(data => {
+        }, this.options)).then(response => {
           this.parseTypeAfterFetch()
           this.$message({
             message: '已成功提交',
             type: 'success'
           })
+          this.setParams(response)
         }).catch(err => console.error(err))
       } else {
         // post
         return this.$store.dispatch('POST', Object.assign({}, {
           form: this.form
-        }, this.options)).then(data => {
+        }, this.options)).then(response => {
           this.parseTypeAfterFetch()
           this.$message({
             message: '已成功提交',
             type: 'success'
           })
+          let model = this.options.model
+          if (blackModelArr.indexOf(model) === -1) {
+            this.setParams(response)
+          }
         }).catch(err => console.error(err))
       }
     }
