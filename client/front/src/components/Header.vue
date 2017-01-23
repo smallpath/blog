@@ -25,9 +25,6 @@ export default {
     option () {
       return this.$store.state.theme.option
     }
-  },
-  serverCacheKey: props => {
-    return 'static-header'
   }
 }
 </script>
