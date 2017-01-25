@@ -14,7 +14,6 @@ let fops = 'imageMogr2/format/webp'
 
 const policy = (name, fileName) => {
     let encoded = new Buffer(`${qiniuBucketName}:webp/${fileName}`).toString('base64')
-    console.log(`${fops}|saveas/${encoded}`)
     let persist
     if (qiniuPipeline !== '') {
         persist = {
