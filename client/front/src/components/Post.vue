@@ -56,9 +56,6 @@ export default {
     article () {
       return this.post
     },
-    commentType () {
-      return this.siteInfo.commentType.value || 'disqus'
-    },
     commentName () {
       return this.siteInfo.commentName.value || ''
     },

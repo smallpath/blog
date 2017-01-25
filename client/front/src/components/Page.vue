@@ -18,13 +18,16 @@
 
 <script>
 export default {
-  props: ['page'],
+  props: ['page', 'siteInfo'],
   serverCacheKey: props => {
     return `${props.page.pathName}::${props.page.updatedAt}`
   },
   computed: {
     article () {
       return this.page
+    },
+    commentName () {
+      return this.siteInfo.commentName.value || ''
     }
   },
   watch: {

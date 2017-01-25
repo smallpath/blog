@@ -1,5 +1,5 @@
 <template>
-  <pager :page="page"></pager>
+  <pager :page="page" :site-info="siteInfo"></pager>
 </template>
 
 <script>
@@ -32,6 +32,9 @@ export default {
       return this.$store.state.page.pathName
         ? this.$store.state.page
          : mock404
+    },
+    siteInfo () {
+      return this.$store.state.siteInfo
     }
   },
   preFetch: fetchPage
