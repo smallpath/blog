@@ -41,9 +41,9 @@ module.exports = (req, res, next, query) => {
 
   let passParams = config.ga.required.reduce((prev, curr) => {
     if (!realQuery[curr]) {
-      return false
+      prev = false
     }
-    return true
+    return prev
   }, true)
 
   if (passParams === false) return
