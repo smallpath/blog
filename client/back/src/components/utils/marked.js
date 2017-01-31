@@ -11,4 +11,10 @@ marked.setOptions({
   }
 })
 
-export default marked
+const Marked = text => {
+  var tok = marked.lexer(text)
+  text = marked.parser(tok).replace(/<pre>/ig, '<pre class="hljs">')
+  return text
+}
+
+export default Marked
