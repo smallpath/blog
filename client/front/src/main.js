@@ -5,6 +5,7 @@ import store from './store/index'
 
 Vue.use(VueRouter)
 
+import App from './components/App'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
@@ -20,25 +21,28 @@ import Disqus from './components/Disqus'
 import PageContainer from './components/PageContainer'
 import Page from './components/Page'
 
-let register = Vue.component.bind(Vue)
+let register = (name, component) => {
+  Vue.component(name, component)
+  return {
+    then: register
+  }
+}
 
 register('sidebar', Sidebar)
-register('my-header', Header)
-register('my-footer', Footer)
-register('blog-summary', BlogSummary)
-register('blog-pager', BlogPager)
-register('pagination', Pagination)
-register('archive', Archive)
-register('blog-tag', Tag)
-register('blog-post', Post)
-register('post-container', Post)
-register('page-container', PostContainer)
-register('pager', Page)
-register('tag-pager', TagPager)
-register('disqus', Disqus)
-
-import App from './components/App'
-register('app', App)
+  .then('my-header', Header)
+  .then('my-footer', Footer)
+  .then('blog-summary', BlogSummary)
+  .then('blog-pager', BlogPager)
+  .then('pagination', Pagination)
+  .then('archive', Archive)
+  .then('blog-tag', Tag)
+  .then('blog-post', Post)
+  .then('post-container', Post)
+  .then('page-container', PostContainer)
+  .then('pager', Page)
+  .then('tag-pager', TagPager)
+  .then('disqus', Disqus)
+  .then('app', App)
 
 let router = new VueRouter({
   mode: 'history',
