@@ -40,11 +40,6 @@ function fetchItems (store, { path, query, params }, callback) {
 }
 
 export default {
-  data () {
-    return {
-      totalPage: 1
-    }
-  },
   computed: {
     items () {
       return this.$store.getters.items
