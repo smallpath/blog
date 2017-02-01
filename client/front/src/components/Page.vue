@@ -46,7 +46,7 @@ export default {
     },
     resetDisqus (val, oldVal) {
       if (val.name !== 'page') return
-
+      if (val.path === oldVal.path) return
       if (window.DISQUS) {
         this.reset(window.DISQUS)
       }

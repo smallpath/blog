@@ -44,10 +44,20 @@ register('sidebar', Sidebar)
   .then('disqus', Disqus)
   .then('app', App)
 
+import { getElementRealPosition } from './utils/scroll'
+
 let router = new VueRouter({
   mode: 'history',
   scrollBehavior: function (to, from, savedPosition) {
-    return savedPosition || { x: 0, y: 0 }
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      let position = {x: 0, y: 0}
+      if (to.hash) {
+        position = getElementRealPosition(to.hash)
+      }
+      return position
+    }
   },
   routes: [
     {
