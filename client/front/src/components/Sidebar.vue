@@ -66,12 +66,10 @@ export default {
     @import '../assets/css/icon.css';
     @import '../assets/css/article.css';
     @import '../assets/css/base.css';
-    @import '../assets/css/comment.css';
     @import '../assets/css/footer.css';
     @import '../assets/css/header.css';
     @import '../assets/css/highlight.css';
     @import '../assets/css/pagination.css';
-    @import '../assets/css/search.css';
     @import '../assets/css/sidebar.css';
     @import '../assets/css/responsive.css';
 
