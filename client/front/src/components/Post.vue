@@ -7,7 +7,7 @@
         </div>
         <h1 class="title">{{ post.title }}</h1>
 
-        <div class="entry-content" v-html="post.content"></div>
+        <div class="entry-content" v-html="content"></div>
 
         <template v-if="shouldShow">
           <p>本文链接：<a :href="siteURL+ '/post/'+ post.pathName">{{siteURL}}/post/{{post.pathName}}</a></p>
@@ -53,6 +53,10 @@ export default {
     return `${props.post.pathName}::${props.post.updatedAt}`
   },
   computed: {
+    content () {
+      let post = this.post
+      return `<div id="toc" class="toc">${post.toc}</div>${post.content}`
+    },
     shouldShow () {
       return this.post.pathName !== 404
     },

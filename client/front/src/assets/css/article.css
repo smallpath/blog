@@ -1,3 +1,33 @@
+#toc {
+  float: right;
+  border: 1px solid #e2e2e2;
+  font-size: 14px;
+  margin: 0 0 15px 20px;
+  max-width: 260px;
+  min-width: 120px;
+  padding: 6px;
+}
+
+#toc p {
+  margin: 1px;
+}
+
+#toc ul {
+  margin: .5em .5em .5em 1.5em;
+}
+
+#toc strong {
+  border-bottom: 1px solid #e2e2e2;
+  display: block;
+}
+
+a.anchor {
+  display: block;
+  position: relative;
+  top: -50px;
+  visibility: hidden;
+}
+
 article {
   border-bottom: 1px solid #ddd;
   border-top: 1px solid #fff;

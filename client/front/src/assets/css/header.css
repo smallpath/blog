@@ -51,7 +51,7 @@ body.side #header .btn-bar:after {
 #header .btn-bar i,
 #header .btn-bar:after,
 #header .btn-bar:before {
-  background-color: #999;
+  background-color: #fff;
   height: 1px;
   left: 14px;
   position: absolute;

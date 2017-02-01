@@ -6,7 +6,7 @@
           <div class="date">{{ page.createdAt }}</div>
         </div>
         <h1 class="title">{{ page.title }}</h1>
-        <div class="entry-content" v-html="page.content"></div>
+        <div class="entry-content" v-html="content"></div>
       </article>
       <div class="comments" v-if="page.allowComment === true && commentName !== ''">
         <disqus :shortname="commentName" ></disqus>
@@ -26,6 +26,10 @@ export default {
     return `${props.page.pathName}::${props.page.updatedAt}`
   },
   computed: {
+    content () {
+      let page = this.page
+      return `<div id="toc" class="toc">${page.toc}</div>${page.content}`
+    },
     commentName () {
       return this.siteInfo.commentName.value || ''
     }
