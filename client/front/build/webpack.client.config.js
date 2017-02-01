@@ -9,8 +9,9 @@ const commonConfig = Object.assign({}, base, {
     // strip comments in Vue code
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-    }),
+    })
     // extract vendor chunks for better caching
+    // remove because of the conflict with tree-shaking
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: 'vendor',
     //   filename: 'client-vendor-bundle.js'
@@ -18,16 +19,8 @@ const commonConfig = Object.assign({}, base, {
   ])
 })
 
-if (process.env.NODE_ENV !== 'production'){
-
-  // vueConfig.loaders = utils.cssLoaders();
-
-  // commonConfig.plugins.push(
-  //   // this is needed in webpack 2 for minifying CSS
-  //   new webpack.LoaderOptionsPlugin({
-  //     minimize: false,
-  //   })
-  // )
+if (process.env.NODE_ENV !== 'production') {
+  // Nothing to do
 } else {
   // Use ExtractTextPlugin to extract CSS into a single file
   // so it's applied on initial render
@@ -36,8 +29,8 @@ if (process.env.NODE_ENV !== 'production'){
   // here we overwrite the loader config for <style lang="stylus">
   // so they are extracted.
   vueConfig.loaders = utils.cssLoaders({
-    extract: true,
-  });
+    extract: true
+  })
 
   commonConfig.plugins.push(
     new ExtractTextPlugin('styles.css'),
