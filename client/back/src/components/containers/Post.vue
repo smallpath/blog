@@ -103,11 +103,29 @@ export default {
   methods: {
     jump (type) {
       if (this.id === -1) return
+
+      let key = type === 'prev' ? '$lt' : '$gt'
+      let query = Object.assign({}, this.options.query)
+      query.conditions['_id'] = { [key] : this.form._id }
+      query.limit = 1
+      if (type === 'prev') {
+        query.sort = 1
+      }
+      this.$store.dispatch('FETCH', {
+        model: this.options.model,
+        query
+      }).then(item => {
+        if (item.length !== 0) {
+          let id = item[0]._id
+          this.$router.push({ params: { id } })
+          this.id = id
+        }
+      })
     },
     onSaveToc () {
       toc.length = 0
       marked(this.form.markdownContent)
-      let tocMarkdown = this.tocToTree(toc) 
+      let tocMarkdown = this.tocToTree(toc)
       this.form.markdownToc = '**文章目录**\n' + tocMarkdown
     },
     tocToTree (toc) {
@@ -115,11 +133,10 @@ export default {
         let times = (item.level - 1) * 2
         return `${' '.repeat(times)} - [${item.title}](#${item.slug})`
       }).join('\n')
-    }, 
+    },
     validate () {
       this.form.summary = marked(this.form.markdownContent.split('<!--more-->')[0])
       this.form.content = marked(this.form.markdownContent.replace(/<!--more-->/g, ''))
-      this.onSaveToc()
       this.form.toc = marked(this.form.markdownToc)
       if (this.form.createdAt === '') {
         this.form.createdAt = moment().format('YYYY-MM-DD HH:mm:ss')
