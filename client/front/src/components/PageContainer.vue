@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import mock404 from '../utils/404'
 
 function fetchPage (store, { path: pathName, params, query }, callback) {
@@ -28,13 +29,13 @@ function fetchPage (store, { path: pathName, params, query }, callback) {
 
 export default {
   computed: {
+    ...mapGetters([
+      'siteInfo'
+    ]),
     page () {
       return this.$store.state.page.pathName
         ? this.$store.state.page
          : mock404
-    },
-    siteInfo () {
-      return this.$store.state.siteInfo
     }
   },
   preFetch: fetchPage

@@ -40,47 +40,40 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  data () {
-    return {
-      siteInfo: this.$store.getters.siteInfo
-    }
-  },
   computed: {
-    option () {
-      return this.$store.state.theme.option
-    }
+    ...mapGetters([
+      'option',
+      'siteInfo'
+    ])
   },
   preFetch (store, { path, params, query }) {
     return Promise.all([store.dispatch('FETCH_OPTIONS'), store.dispatch('FETCH_FIREKYLIN')])
-  },
-  beforeMount () {
-    if (typeof this.siteInfo.title === 'undefined') {
-      Promise.all([this.$store.dispatch('FETCH_OPTIONS'), this.$store.dispatch('FETCH_FIREKYLIN')])
-    }
   }
 }
 </script>
  
 <style>
-    @import '../assets/css/icon.css';
-    @import '../assets/css/article.css';
-    @import '../assets/css/base.css';
-    @import '../assets/css/footer.css';
-    @import '../assets/css/header.css';
-    @import '../assets/css/highlight.css';
-    @import '../assets/css/pagination.css';
-    @import '../assets/css/sidebar.css';
-    @import '../assets/css/responsive.css';
+@import '../assets/css/icon.css';
+@import '../assets/css/article.css';
+@import '../assets/css/base.css';
+@import '../assets/css/footer.css';
+@import '../assets/css/header.css';
+@import '../assets/css/highlight.css';
+@import '../assets/css/pagination.css';
+@import '../assets/css/sidebar.css';
+@import '../assets/css/responsive.css';
 
-    .sidebar-image {
-      background-position: left center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      overflow: auto;
-    }
+.sidebar-image {
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: auto;
+}
 
-    .sidebar-image:hover {
-      background-position: right center;
-    }
+.sidebar-image:hover {
+  background-position: right center;
+}
 </style>

@@ -6,7 +6,7 @@
         <section> 
           <router-link v-for="key in sortedKeys" 
               :to="{ name: 'tagPager', params:{ tagName: key } }"
-              :data-tag="key">{{key}}({{items[key]}})</router-link> 
+              :data-tag="key">{{key}}({{tags[key]}})</router-link> 
         </section>
       </div>
     </article>
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 function fetchTags (store, { path: pathName, params, query }, callback) {
   return store.dispatch('FETCH_TAGS', {
     conditions: {
@@ -36,11 +38,11 @@ export default {
     }
   },
   computed: {
-    items () {
-      return this.$store.state.tags
-    },
+    ...mapGetters([
+      'tags'
+    ]),
     sortedKeys () {
-      let ref = this.items
+      let ref = this.tags
       return Object.keys(ref).sort((a, b) => ref[b] - ref[a])
     }
   },

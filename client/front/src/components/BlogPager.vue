@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 function fetchItems (store, { path, query, params }, callback) {
   if (path !== '/') {
     return Promise.resolve()
@@ -41,16 +43,11 @@ function fetchItems (store, { path, query, params }, callback) {
 
 export default {
   computed: {
-    items () {
-      return this.$store.getters.items
-    },
-    page () {
-      let page = this.$store.state.route.query.page || 1
-      return parseInt(page)
-    },
-    totalPage () {
-      return this.$store.state.totalPage
-    }
+    ...mapGetters([
+      'items',
+      'page',
+      'totalPage'
+    ])
   },
   preFetch: fetchItems
 }

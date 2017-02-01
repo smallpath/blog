@@ -3,26 +3,26 @@
     <div id="page-post">
       <article class="post detail">
         <div class="meta">
-          <div class="date">{{ article.createdAt }}</div>
+          <div class="date">{{ post.createdAt }}</div>
         </div>
-        <h1 class="title">{{ article.title }}</h1>
+        <h1 class="title">{{ post.title }}</h1>
 
-        <div class="entry-content" v-html="article.content"></div>
+        <div class="entry-content" v-html="post.content"></div>
 
         <template v-if="shouldShow">
-          <p>本文链接：<a :href="siteURL+ '/post/'+ article.pathName">{{siteURL}}/post/{{article.pathName}}</a></p>
+          <p>本文链接：<a :href="siteURL+ '/post/'+ post.pathName">{{siteURL}}/post/{{post.pathName}}</a></p>
           <p>-- <acronym title="End of File">EOF</acronym> --</p>
           <div class="post-info">
-            <p> 发表于 <i>{{article.createdAt}}</i> ，
+            <p> 发表于 <i>{{post.createdAt}}</i> ，
               添加在分类「
-              <a :data-cate="article.category">
-                  <code class="notebook">{{article.category}}</code>
+              <a :data-cate="post.category">
+                  <code class="notebook">{{post.category}}</code>
               </a> 」下 ，并被添加「
-              <router-link v-for="tag in article.tags" 
+              <router-link v-for="tag in post.tags" 
                   :to="{name:'tagPager', params: { tagName: tag }}" 
                   :data-tag="tag"> 
                   <code class="notebook">{{tag}}</code>
-              </router-link> 」标签 ，最后修改于 <i>{{article.updatedAt}}</i>
+              </router-link> 」标签 ，最后修改于 <i>{{post.updatedAt}}</i>
             </p>
           </div>
         </template>
@@ -34,7 +34,7 @@
           <router-link v-if="typeof next.pathName !== 'undefined'" 
             :to="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo</router-link> 
         </nav>
-        <div class="comments" v-if="article.allowComment === true && commentName !== ''">
+        <div class="comments" v-if="post.allowComment === true && commentName !== ''">
           <disqus :shortname="commentName" ></disqus>
         </div>
       </template>
@@ -44,8 +44,11 @@
 </template>
 
 <script>
+import mixin from '../mixin/disqus'
+
 export default {
   props: ['post', 'prev', 'next', 'siteInfo'],
+  mixins: [mixin],
   serverCacheKey: props => {
     return `${props.post.pathName}::${props.post.updatedAt}`
   },
@@ -53,36 +56,11 @@ export default {
     shouldShow () {
       return this.post.pathName !== 404
     },
-    article () {
-      return this.post
-    },
     commentName () {
       return this.siteInfo.commentName.value || ''
     },
     siteURL () {
       return this.siteInfo.siteUrl.value || 'localhost'
-    }
-  },
-  watch: {
-    '$route': 'resetDisqus'
-  },
-  methods: {
-    reset (dsq) {
-      const self = this
-      dsq.reset({
-        reload: true,
-        config: function () {
-          this.page.identifier = (self.$route.path || window.location.pathname)
-          this.page.url = window.location.href
-        }
-      })
-    },
-    resetDisqus (val, oldVal) {
-      if (val.name !== 'post') return
-      if (val.path === oldVal.path) return
-      if (window.DISQUS) {
-        this.reset(window.DISQUS)
-      }
     }
   }
 }

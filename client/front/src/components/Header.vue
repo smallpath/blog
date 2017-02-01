@@ -15,16 +15,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  data () {
-    return {
-      siteInfo: this.$store.getters.siteInfo
-    }
-  },
   computed: {
-    option () {
-      return this.$store.state.theme.option
-    }
+    ...mapGetters([
+      'siteInfo',
+      'option'
+    ])
   }
 }
 </script>

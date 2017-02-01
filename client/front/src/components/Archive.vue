@@ -2,7 +2,7 @@
 	<div id='main'>
 		<article class="post archive">
 			<h1 class=title>{{title}}</h1>
-			<div class="entry-content" v-for="(item, key, index) in items">
+			<div class="entry-content" v-for="(item, key, index) in achieves">
 				<h3>{{ key }} ({{item.length}})</h3>
 				<ul>
 					<li v-for="subItem in item">
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 function fetchAchieves (store, to, callback) {
   return store.dispatch('FETCH_ACHIEVE', {
     conditions: {
@@ -41,9 +43,9 @@ export default {
     }
   },
   computed: {
-    items () {
-      return this.$store.getters.achieves
-    }
+    ...mapGetters([
+      'achieves'
+    ])
   },
   preFetch: fetchAchieves
 }

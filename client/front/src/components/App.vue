@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import LoadingBar from './Loading'
 
 export default {
@@ -17,9 +18,9 @@ export default {
     LoadingBar
   },
   computed: {
-    progress () {
-      return this.$store.state.progress
-    }
+    ...mapGetters([
+      'progress'
+    ])
   }
 }
 

@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import mock404 from '../utils/404'
 
 function fetchBlog (store, { path: pathName, params, query }, callback) {
@@ -29,19 +30,15 @@ function fetchBlog (store, { path: pathName, params, query }, callback) {
 
 export default {
   computed: {
+    ...mapGetters([
+      'prev',
+      'next',
+      'siteInfo'
+    ]),
     post () {
       return this.$store.state.blog.pathName
         ? this.$store.state.blog
          : mock404
-    },
-    prev () {
-      return this.$store.state.prev
-    },
-    next () {
-      return this.$store.state.next
-    },
-    siteInfo () {
-      return this.$store.state.siteInfo
     }
   },
   preFetch: fetchBlog

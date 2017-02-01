@@ -237,21 +237,41 @@ const store = new Vuex.Store({
   },
 
   getters: {
-    items (state, getters) {
-      const { items } = state
-      return items
+    items (state) {
+      return state.items
     },
-    siteInfo (state, getters) {
-      const { siteInfo } = state
-      return siteInfo
+    siteInfo (state) {
+      return state.siteInfo
     },
-    achieves (state, getters) {
-      const { achieves } = state
-      return achieves
+    achieves (state) {
+      return state.achieves
     },
-    menu (state, getters) {
-      const { menu } = state
-      return menu
+    menu (state) {
+      return state.menu
+    },
+    page (state) {
+      return state.route.query.page || 1
+    },
+    totalPage (state) {
+      return state.totalPage
+    },
+    progress (state) {
+      return state.progress
+    },
+    option (state) {
+      return state.theme.option
+    },
+    prev (state) {
+      return state.prev
+    },
+    next (state) {
+      return state.next
+    },
+    tags (state) {
+      return state.tags
+    },
+    tagPager (state) {
+      return state.tagPager
     }
   }
 })

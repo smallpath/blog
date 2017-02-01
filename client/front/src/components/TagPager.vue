@@ -3,13 +3,15 @@
     <section id="page-index">
       <h1 class="intro">标签<a href="javascript:void(0)">{{$route.params.tagName}}</a>下的文章</h1>
       <blog-summary v-for="item in items" :article="item" ></blog-summary>
-      <pagination :page="page" :total-page="totalPage" ></pagination>
+      <pagination :page="1" :total-page="1" ></pagination>
     </section>
     <my-footer></my-footer>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 function getItems (store, { path, query, params }, callback) {
   return store.dispatch('FETCH_TAG_PAGER', {
     conditions: {
@@ -32,16 +34,12 @@ function getItems (store, { path, query, params }, callback) {
 }
 
 export default {
-  data () {
-    return {
-      page: 1,
-      totalPage: 1
-    }
-  },
   computed: {
-    items () {
-      return this.$store.state.tagPager
-    }
+    ...mapGetters([
+      'items',
+      'page',
+      'totalPage'
+    ])
   },
   preFetch: getItems
 }
