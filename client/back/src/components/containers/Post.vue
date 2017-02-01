@@ -106,7 +106,7 @@ export default {
 
       let key = type === 'prev' ? '$lt' : '$gt'
       let query = Object.assign({}, this.options.query)
-      query.conditions['_id'] = { [key] : this.form._id }
+      query.conditions['_id'] = { [key]: this.form._id }
       query.limit = 1
       if (type === 'prev') {
         query.sort = 1
