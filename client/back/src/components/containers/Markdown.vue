@@ -18,6 +18,7 @@
         <el-menu-item index="7-3">{{labels['preview']}}</el-menu-item>
         <el-menu-item index="7-4">{{labels['full']}}</el-menu-item>
       </el-submenu>
+      <el-menu-item index="8"><i class="el-icon-edit"></i>编辑TOC</el-menu-item>
     </el-menu>
 
     <el-dialog title="图片上传" v-model="isUploadShow">
@@ -39,33 +40,36 @@
     </el-dialog>
 
     <div class="md-editor" :class="{ 
-        'edit': mode=== 'edit',
-        'preview': mode=== 'preview',
-        'split': mode=== 'split',
+        'edit': mode === 'edit',
+        'preview': mode === 'preview',
+        'split': mode === 'split',
+        'toc': mode === 'toc'
     }">
       <textarea ref="markdown" :value="value" @input="handleInput"></textarea>
-      <div class="md-preview markdown" v-html="compiledMarkdown"></div>
+      <div v-if="mode !== 'toc'" class="md-preview markdown" v-html="compiledMarkdown"></div>
+      <textarea v-else ref="toc" :value="toc" class="md-preview markdown" @input="handleTocInput"></textarea>
     </div>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
-import marked from '../utils/marked'
+import { marked } from '../utils/marked'
 import moment from 'moment'
 
 export default {
   name: 'markdown',
-  props: ['value'],
+  props: ['value', 'toc'],
   data () {
     return {
       labels: {
         'edit': '编辑模式',
         'split': '分屏模式',
         'preview': '预览模式',
-        'full': '全屏模式'
+        'full': '全屏模式',
+        'toc': 'TOC模式'
       },
-      mode: 'edit', // ['edit', 'split', 'preview']
+      mode: 'edit', // ['edit', 'split', 'preview', 'toc']
       isUploadShow: false,
       supportWebp: false,
       upToken: '',
@@ -98,6 +102,9 @@ export default {
           case '6':
             this._insertMore()
             break
+          case '8':
+            this.mode = 'toc'
+            break
         }
       } else if (keyPath.length === 2) {
         switch (key) {
@@ -125,6 +132,10 @@ export default {
     handleInput: _.debounce(function (e) {
       let value = e.target.value
       this.$emit('input', value)
+    }, 300),
+    handleTocInput: _.debounce(function (e) {
+      let value = e.target.value
+      this.$emit('tocChange', value)
     }, 300),
     _preInputText (text, preStart, preEnd) {
       let textControl = this.$refs.markdown
@@ -297,6 +308,17 @@ export default {
     }    
     
     .md-editor.split {
+      textarea {
+        width: 50%;
+      }
+
+      .md-preview {
+        left: 50%;
+        width: 50%;
+      }
+    }
+
+    .md-editor.toc {
       textarea {
         width: 50%;
       }

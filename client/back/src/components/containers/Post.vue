@@ -4,16 +4,22 @@
       <el-col :span="18">
         <el-form-item v-for="(item, index) in prevItems" :label="item.label">
           <el-input v-if="item.type === 'input'" :placeholder="item.description || ''" v-model="form[item.prop]"></el-input>
-          <markdown v-if="item.type === 'markdown'" v-model="form[item.prop]"></markdown>
+          <markdown v-if="item.type === 'markdown'" v-model="form[item.prop]" :toc="form[item.subProp]" @toc-change="form[item.subProp] = arguments[0]"></markdown>
           <el-radio v-if="item.type === 'radio'" v-model="form[item.prop]" :label="item.label"></el-radio>
         </el-form-item>
       </el-col>
       <el-col :span="6">
-        <el-form-item label-width="20px" style="margin-top:58px">
-          <el-button :class="{ 'margin-left': true }" type="info" @click.native="onSave">保存文章</el-button>
-          <el-button type="success" @click.native="onSubmit">提交文章</el-button>
+        <el-form-item label-width="20px">
+          <el-button :class="{ 'margin-left': true }" type="info" @click.native="jump('prev')"><i class="el-icon-d-arrow-left"></i></el-button>
+          <el-button type="info" @click.native="jump('next')"><i class="el-icon-d-arrow-right"></i></el-button>
+        </el-form-item>
+        <el-form-item label-width="20px">
+          <el-button :class="{ 'margin-left': true }" type="info" @click.native="onSaveToc">生成目录 </el-button>
+          <el-button type="success" @click.native="onSubmit">提交文章 </el-button>
         </el-form-item>
         <el-form-item v-for="(item, index) in nextItems" :label="item.label">
+
+          <markdown v-if="item.type === 'markdown'" v-model="form[item.prop]"></markdown>
 
           <el-date-picker 
               v-if="item.type === 'date-picker'"
@@ -47,7 +53,7 @@
 
 <script>
 import Markdown from './Markdown'
-import marked from '../utils/marked'
+import { marked, toc } from '../utils/marked'
 import moment from 'moment'
 
 export default {
@@ -95,12 +101,26 @@ export default {
     }
   },
   methods: {
-    onSave () {
-
+    jump (type) {
+      if (this.id === -1) return
     },
+    onSaveToc () {
+      toc.length = 0
+      marked(this.form.markdownContent)
+      let tocMarkdown = this.tocToTree(toc) 
+      this.form.markdownToc = '**文章目录**\n' + tocMarkdown
+    },
+    tocToTree (toc) {
+      return toc.map(item => {
+        let times = (item.level - 1) * 2
+        return `${' '.repeat(times)} - [${item.title}](#${item.slug})`
+      }).join('\n')
+    }, 
     validate () {
       this.form.summary = marked(this.form.markdownContent.split('<!--more-->')[0])
       this.form.content = marked(this.form.markdownContent.replace(/<!--more-->/g, ''))
+      this.onSaveToc()
+      this.form.toc = marked(this.form.markdownToc)
       if (this.form.createdAt === '') {
         this.form.createdAt = moment().format('YYYY-MM-DD HH:mm:ss')
       } else {

@@ -35,9 +35,11 @@ export default {
     padding-bottom: 60px;
     position: fixed;
     top: 60px;
-    left: 16.66667%;
-    width: 83.33333%;
+    left: 148px;
     height: 100%;
+    width: -webkit-calc(100% - 148px);
+    width:    -moz-calc(100% - 148px);
+    width:         calc(100% - 148px);
     overflow: auto;
   }
 

@@ -93,6 +93,6 @@ export default {
 
 .full-height {
   height: 100%;
-  min-width: 145px;
+  width: 148px;
 }
 </style>

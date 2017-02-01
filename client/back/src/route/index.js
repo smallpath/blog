@@ -169,7 +169,8 @@ export default new VueRouter({
                 updatedAt: 1,
                 createdAt: 1,
                 markdownContent: 1,
-                type: 1
+                type: 1,
+                markdownToc: 1
               }
             }
           })
@@ -295,7 +296,8 @@ export default new VueRouter({
                 updatedAt: 1,
                 createdAt: 1,
                 markdownContent: 1,
-                type: 1
+                type: 1,
+                markdownToc: 1
               }
             }
           })
