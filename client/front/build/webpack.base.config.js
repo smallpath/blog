@@ -1,8 +1,6 @@
 var path = require('path')
 var config = require('../config')
-var utils = require('./utils')
 var vueConfig = require('./vue-loader.config')
-var projectRoot = path.resolve(__dirname, '../')
 
 module.exports = {
   entry: {
@@ -11,13 +9,13 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
-    filename: 'client-bundle.js'
+    filename: '[name].[chunkhash].js'
   },
   resolve: {
     extensions: ['.js', '.vue']
   },
   module: {
-    noParse: /es6-promise\.js$/,
+    noParse: /es6-promise\.js$/, // avoid webpack shimming process
     rules: [
       {
         test: /\.vue$/,
@@ -27,23 +25,14 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: projectRoot,
         exclude: /node_modules/
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
-      },
-      {
-        test: /\.html$/,
-        loader: 'vue-html-loader'
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('img/[name].[ext]')
+          name: 'static/img/[name].[ext]?[hash]'
         }
       },
       {
@@ -51,9 +40,12 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('fonts/[name].[ext]')
+          name: 'static/fonts/[name].[ext]?[hash]'
         }
       }
     ]
+  },
+  performance: {
+    hints: process.env.NODE_ENV === 'production' ? 'warning' : false
   }
 }

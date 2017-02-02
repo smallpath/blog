@@ -6,22 +6,35 @@ const clientConfig = require('./webpack.client.config')
 const serverConfig = require('./webpack.server.config')
 const proxyMiddleware = require('http-proxy-middleware')
 
-module.exports = function setupDevServer (app, onUpdate) {
-  // setup on the fly compilation + hot-reload
+module.exports = function setupDevServer (app, opts) {
+  // modify client config to work with hot middleware
   clientConfig.entry.app = ['webpack-hot-middleware/client', clientConfig.entry.app]
+  clientConfig.output.filename = '[name].js'
   clientConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   )
 
+  // dev middleware
   const clientCompiler = webpack(clientConfig)
-  app.use(require('webpack-dev-middleware')(clientCompiler, {
+  const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
     stats: {
       colors: true,
       chunks: false
     }
-  }))
+  })
+  app.use(devMiddleware)
+  clientCompiler.plugin('done', () => {
+    const fs = devMiddleware.fileSystem
+    const filePath = path.join(clientConfig.output.path, 'index.html')
+    if (fs.existsSync(filePath)) {
+      const index = fs.readFileSync(filePath, 'utf-8')
+      opts.indexUpdated(index)
+    }
+  })
+
+  // hot middleware
   app.use(require('webpack-hot-middleware')(clientCompiler))
 
   // proxy api requests
@@ -43,6 +56,6 @@ module.exports = function setupDevServer (app, onUpdate) {
     stats = stats.toJson()
     stats.errors.forEach(err => console.error(err))
     stats.warnings.forEach(err => console.warn(err))
-    onUpdate(mfs.readFileSync(outputPath, 'utf-8'))
+    opts.bundleUpdated(mfs.readFileSync(outputPath, 'utf-8'))
   })
 }
