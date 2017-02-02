@@ -4,7 +4,7 @@
       <el-col :span="18">
         <el-form-item v-for="(item, index) in prevItems" :label="item.label">
           <el-input v-if="item.type === 'input'" :placeholder="item.description || ''" v-model="form[item.prop]"></el-input>
-          <markdown v-if="item.type === 'markdown'" v-model="form[item.prop]" :toc="form[item.subProp]" @toc-change="form[item.subProp] = arguments[0]"></markdown>
+          <markdown v-if="item.type === 'markdown'" v-model="form[item.prop]" :toc="form[item.subProp]" @change="form[item.subProp] = arguments[0]"></markdown>
           <el-radio v-if="item.type === 'radio'" v-model="form[item.prop]" :label="item.label"></el-radio>
         </el-form-item>
       </el-col>
