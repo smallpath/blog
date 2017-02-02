@@ -62,10 +62,10 @@ config.flushOption().then(() => {
   }
 
   function flushHtml (template) {
-    const style = isProd ? `<style>${inline}</style>` : ''
+    const style = isProd ? `<style stype="text/css">${inline}</style>` : ''
     const i = template.indexOf('<div id=app></div>')
     return {
-      head: template.slice(0, i).replace('vue_client_side', config.title).replace('<link href="/dist/styles.css" rel="stylesheet">', style),
+      head: template.slice(0, i).replace('vue_client_side', config.title).replace('<link rel=stylesheet href=/dist/styles.css>', style),
       tail: template.slice(i + '<div id=app></div>'.length)
     }
   }
