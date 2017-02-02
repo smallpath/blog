@@ -7,3 +7,4 @@ npm-debug.log
 # OSX
 #
 .DS_Store
+conf/config.js
