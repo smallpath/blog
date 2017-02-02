@@ -53,7 +53,9 @@ A blog system. Based on Vue2, Koa2, MongoDB and Redis
 
 博客的提供RESTful API的后端
 
-修改 conf/config.js:
+复制conf文件夹中的默认配置`config.tpl`, 并命名为`config.js`
+
+有如下属性可以自行配置:
 
 - `tokenSecret`
   - 改为任意字符串
