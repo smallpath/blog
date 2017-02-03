@@ -22,7 +22,8 @@ A blog system. Based on Vue2, Koa2, MongoDB and Redis
   - [x] 侧边栏图片
   - [x] 服务端谷歌统计
   - [x] 全局404页面
-  - [x] 文章toc的显示
+  - [x] 文章toc
+  - [x] 页面meta
 - [x] 后台管理单页
   - [x] 添加升级模型的管理
   - [x] 使用axios替换vue-resource
