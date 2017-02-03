@@ -27,17 +27,15 @@
           </div>
         </template>
       </article>
-      <template v-if="shouldShow">
-        <nav class=pagination> 
-          <router-link v-if="typeof prev.pathName !== 'undefined'" 
-            :to="{name:'post', params: {pathName: prev.pathName }}" class="prev">&laquo {{prev.title }}</router-link> 
-          <router-link v-if="typeof next.pathName !== 'undefined'" 
-            :to="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo</router-link> 
-        </nav>
-        <div class="comments" v-if="post.allowComment === true && commentName !== ''">
-          <disqus :shortname="commentName" ></disqus>
-        </div>
-      </template>
+      <nav v-if="shouldShow" class=pagination> 
+        <router-link v-if="typeof prev.pathName !== 'undefined'" 
+          :to="{name:'post', params: {pathName: prev.pathName }}" class="prev">&laquo {{prev.title }}</router-link> 
+        <router-link v-if="typeof next.pathName !== 'undefined'" 
+          :to="{name:'post', params: {pathName: next.pathName }}" class="next">{{next.title }} &raquo</router-link> 
+      </nav>
+      <div class="comments" v-if="post.allowComment === true && commentName !== ''">
+        <disqus :shortname="commentName" ></disqus>
+      </div>
     </div>
     <my-footer></my-footer>
   </div>
