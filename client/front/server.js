@@ -62,7 +62,7 @@ config.flushOption().then(() => {
   }
 
   function flushHtml (template) {
-    const style = isProd ? `<style stype="text/css">${inline}</style>` : ''
+    const style = isProd ? `<style type="text/css">${inline}</style>` : ''
     const i = template.indexOf('<div id=app></div>')
     return {
       head: template.slice(0, i).replace('<link href="/dist/styles.css" rel="stylesheet">', style),
