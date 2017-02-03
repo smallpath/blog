@@ -6,7 +6,14 @@ Vue.use(VueRouter)
 Vue.use(VueMeta)
 
 import Footer from '../components/Footer'
+import BlogSummary from '../components/BlogSummary'
+import Pagination from '../components/Pagination'
+import Post from '../components/Post'
+
 Vue.component('my-footer', Footer)
+Vue.component('blog-summary', BlogSummary)
+Vue.component('pagination', Pagination)
+Vue.component('blog-post', Post)
 
 const BlogPager = require('../components/BlogPager')
 const Archive = require('../components/Archive')

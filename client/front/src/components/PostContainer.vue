@@ -5,7 +5,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import mock404 from '../utils/404'
-import BlogPost from './Post'
 
 function fetchBlog (store, { path: pathName, params, query }, callback) {
   pathName = pathName.replace(/^\/post\//g, '')
@@ -31,9 +30,6 @@ function fetchBlog (store, { path: pathName, params, query }, callback) {
 }
 
 export default {
-  components: {
-    BlogPost
-  },
   computed: {
     ...mapGetters([
       'prev',
@@ -46,9 +42,6 @@ export default {
          : mock404
     }
   },
-  preFetch: fetchBlog,
-  beforeMount () {
-    this.$root._isMounted && fetchBlog(this.$store, this.$route)
-  }
+  preFetch: fetchBlog
 }
 </script>

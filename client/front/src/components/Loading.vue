@@ -10,7 +10,6 @@
 
 <script>
 export default {
-  name: 'loading',
   props: {
     progress: {
       type: Number,

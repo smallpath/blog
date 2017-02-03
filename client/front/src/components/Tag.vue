@@ -51,9 +51,6 @@ export default {
       return Object.keys(ref).sort((a, b) => ref[b] - ref[a])
     }
   },
-  preFetch: fetchTags,
-  beforeMount () {
-    this.$root._isMounted && fetchTags(this.$store, this.$route)
-  }
+  preFetch: fetchTags
 }
 </script>
