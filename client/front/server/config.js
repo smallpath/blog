@@ -11,7 +11,8 @@ let ga = {
   spider: [
     'spider',
     'bot',
-    'appid' // for google appengine
+    'appid', // for google appengine
+    'go-http-client'
   ].map(item => item.toLowerCase().replace(/\s+/g, ''))
 }
 
