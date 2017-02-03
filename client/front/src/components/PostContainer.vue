@@ -1,5 +1,5 @@
 <template>
-  <blog-post :post="post" :prev="prev" :next="next" :site-info="siteInfo"></blog-post>
+  <blog-post type="post" :post="post" :prev="prev" :next="next" :site-info="siteInfo"></blog-post>
 </template>
 
 <script>

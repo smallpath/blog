@@ -1,5 +1,5 @@
 <template>
-  <pager :page="page" :site-info="siteInfo"></pager>
+  <blog-post type="page" :post="page" :site-info="siteInfo"></blog-post>
 </template>
 
 <script>

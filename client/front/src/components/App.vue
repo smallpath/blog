@@ -9,12 +9,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import LoadingBar from './Loading'
 
 export default {
-  components: {
-    LoadingBar
-  },
   computed: {
     ...mapGetters([
       'progress'

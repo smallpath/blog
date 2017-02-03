@@ -52,7 +52,7 @@ export default {
       title: this.post.title
     }
   },
-  props: ['post', 'prev', 'next', 'siteInfo'],
+  props: ['type', 'post', 'prev', 'next', 'siteInfo'],
   mixins: [mixin],
   serverCacheKey: props => {
     return `${props.post.pathName}::${props.post.updatedAt}`
@@ -60,10 +60,10 @@ export default {
   computed: {
     content () {
       let post = this.post
-      return `<div id="toc" class="toc">${post.toc}</div>${post.content}`
+      return post.toc ? `<div id="toc" class="toc">${post.toc}</div>${post.content}` : post.content
     },
     shouldShow () {
-      return this.post.pathName !== 404
+      return this.post.pathName !== 404 && this.type === 'post'
     },
     commentName () {
       return this.siteInfo.commentName.value || ''
