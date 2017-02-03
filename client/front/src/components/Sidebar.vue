@@ -60,8 +60,8 @@ export default {
         { name: 'viewport', content: 'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' }
       ],
       link: [
-        { ref: 'icon', href: favicon },
-        { ref: 'alternate', type: 'application/rss+xml', title: 'RSS 2.0', href: '/rss.xml' }
+        { rel: 'icon', href: favicon },
+        { rel: 'alternate', type: 'application/rss+xml', title: 'RSS 2.0', href: '/rss.xml' }
       ]
     }
   },
