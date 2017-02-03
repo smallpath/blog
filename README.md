@@ -48,7 +48,6 @@ Table of Contents
   - [x] vue1.0升级至vue2.0
   - [x] vuex单向数据流
   - [x] 服务端渲染
-  - [x] 使用superagent替换vue-resource 
   - [x] 客户端谷歌统计 
   - [x] 服务端sitemap定时任务
   - [x] 服务端rss定时任务
@@ -59,10 +58,9 @@ Table of Contents
   - [x] 全局404页面
   - [x] 文章toc
   - [x] 页面meta
+  - [x] 按需分块加载
 - [x] 后台管理单页
-  - [x] 添加升级模型的管理
-  - [x] 使用axios替换vue-resource
-  - [x] vue 1.0 => vue 2.0
+  - [x] vue1.0升级至vue2.0
   - [x] 使用element ui
   - [x] 七牛云图片上传
   - [x] 文章toc的生成与编辑
