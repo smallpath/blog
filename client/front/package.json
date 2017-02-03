@@ -19,6 +19,7 @@
     "node-schedule": "^1.2.0",
     "superagent": "^2.3.0",
     "vue": "2.1.10",
+    "vue-meta": "0.5.3",
     "vue-router": "^2.0.3",
     "vue-server-renderer": "2.1.10",
     "vuex": "^2.0.0",

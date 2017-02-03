@@ -17,11 +17,11 @@ router.beforeEach((to, from, next) => {
   }
 
   let loadingPromise = store.dispatch('START_LOADING')
-  let endLoadingCallback = (path) => {
+  let endLoadingCallback = () => {
     return loadingPromise.then(interval => {
       clearInterval(interval)
       store.dispatch('SET_PROGRESS', 100)
-      next(path)
+      next()
     })
   }
 

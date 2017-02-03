@@ -37,6 +37,11 @@ function fetchAchieves (store, to, callback) {
 }
 
 export default {
+  metaInfo () {
+    return {
+      title: this.title
+    }
+  },
   data () {
     return {
       title: '归档'

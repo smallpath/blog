@@ -32,6 +32,11 @@ function fetchTags (store, { path: pathName, params, query }, callback) {
 }
 
 export default {
+  metaInfo () {
+    return {
+      title: this.title
+    }
+  },
   data () {
     return {
       title: '标签'

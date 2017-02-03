@@ -20,6 +20,11 @@
 import mixin from '../mixin/disqus'
 
 export default {
+  metaInfo () {
+    return {
+      title: this.page.title
+    }
+  },
   props: ['page', 'siteInfo'],
   mixins: [mixin],
   serverCacheKey: props => {

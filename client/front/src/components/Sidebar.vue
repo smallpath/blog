@@ -43,6 +43,28 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  metaInfo () {
+    const {
+      title: { value: title },
+      description: { value: description },
+      keywords: { value: keywords },
+      faviconUrl: { value: favicon }
+    } = this.siteInfo
+    return {
+      title,
+      titleTemplate: `%s - ${title}`,
+      meta: [
+        { name: 'charset', content: 'UTF-8' },
+        { name: 'description', content: description },
+        { name: 'keywords', content: keywords },
+        { name: 'viewport', content: 'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' }
+      ],
+      link: [
+        { ref: 'icon', href: favicon },
+        { ref: 'alternate', type: 'application/rss+xml', title: 'RSS 2.0', href: '/rss.xml' }
+      ]
+    }
+  },
   computed: {
     ...mapGetters([
       'option',

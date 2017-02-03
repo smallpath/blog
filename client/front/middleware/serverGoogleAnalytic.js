@@ -73,6 +73,6 @@ module.exports = (req, res, next, query) => {
       log.error(response, form)
       return
     }
-    log.debug('Google Analytic sended', form.cid, form.ua)
+    log.info('Google Analytic sended', form.cid, form.ua)
   })
 }

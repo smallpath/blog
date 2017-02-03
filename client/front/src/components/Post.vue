@@ -47,6 +47,11 @@
 import mixin from '../mixin/disqus'
 
 export default {
+  metaInfo () {
+    return {
+      title: this.post.title
+    }
+  },
   props: ['post', 'prev', 'next', 'siteInfo'],
   mixins: [mixin],
   serverCacheKey: props => {

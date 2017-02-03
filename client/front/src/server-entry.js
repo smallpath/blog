@@ -10,6 +10,8 @@ export default context => {
   context.params = current.params
   context.url = current.fullPath
 
+  context.meta = app.$meta()
+
   const s = isDev && Date.now()
 
   return Promise.all(preFetchComponent.concat(router.getMatchedComponents()).map((component, index) => {

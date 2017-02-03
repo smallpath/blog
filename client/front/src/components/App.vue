@@ -3,9 +3,7 @@
     <loading-bar :progress="progress"></loading-bar>
     <sidebar></sidebar>
     <my-header></my-header>
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
+    <router-view></router-view>
   </div>
 </template>
 

@@ -42,11 +42,17 @@ function fetchItems (store, { path, query, params }, callback) {
 }
 
 export default {
+  metaInfo () {
+    return {
+      title: '首页'
+    }
+  },
   computed: {
     ...mapGetters([
       'items',
       'page',
-      'totalPage'
+      'totalPage',
+      'siteInfo'
     ])
   },
   preFetch: fetchItems

@@ -65,7 +65,7 @@ config.flushOption().then(() => {
     const style = isProd ? `<style stype="text/css">${inline}</style>` : ''
     const i = template.indexOf('<div id=app></div>')
     return {
-      head: template.slice(0, i).replace('vue_client_side', config.title).replace('<link rel=stylesheet href=/dist/styles.css>', style),
+      head: template.slice(0, i).replace('<link>', style),
       tail: template.slice(i + '<div id=app></div>'.length)
     }
   }
@@ -113,7 +113,6 @@ config.flushOption().then(() => {
       url: req.url
     }
     const renderStream = renderer.renderToStream(context)
-    let firstChunk = true
 
     sendGoogleAnalytic(req, res, next, {
       dt: config.title,
@@ -124,24 +123,26 @@ config.flushOption().then(() => {
 
     res.header('Content-Type', 'text/html; charset=utf-8')
     res.setHeader('Server', serverInfo)
-    res.write(html.head)
+
+    renderStream.once('data', () => {
+      const { title, link, meta } = context.meta.inject()
+      const metaData = `${title.text()}${meta.text()}${link.text()}`
+      let chunk = html.head.replace('<title></title>', metaData)
+      res.write(chunk)
+    })
 
     renderStream.on('data', chunk => {
-      if (firstChunk) {
-        if (context.initialState) {
-          res.write(
-            `<script>window.__INITIAL_STATE__=${
-            JSON.stringify(context.initialState)
-            }</script>`
-          )
-        }
-        firstChunk = false
-      }
-
       res.write(chunk)
     })
 
     renderStream.on('end', () => {
+      if (context.initialState) {
+        res.write(
+          `<script>window.__INITIAL_STATE__=${
+          JSON.stringify(context.initialState)
+          }</script>`
+        )
+      }
       res.end(html.tail)
       log.debug(`whole request: ${Date.now() - s}ms`)
     })
