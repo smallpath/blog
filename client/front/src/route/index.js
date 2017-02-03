@@ -5,36 +5,29 @@ import VueMeta from 'vue-meta'
 Vue.use(VueRouter)
 Vue.use(VueMeta)
 
-import Header from '../components/Header'
-import Loading from '../components/Loading'
-import Sidebar from '../components/Sidebar'
 import Footer from '../components/Footer'
-import BlogSummary from '../components/BlogSummary'
-import BlogPager from '../components/BlogPager'
-import Pagination from '../components/Pagination'
-import Archive from '../components/Archive'
-import Tag from '../components/Tag'
-import PostContainer from '../components/PostContainer'
-import Post from '../components/Post'
-import TagPager from '../components/TagPager'
-import Disqus from '../components/Disqus'
-import PageContainer from '../components/PageContainer'
+Vue.component('my-footer', Footer)
 
-let register = (name, component) => {
-  Vue.component(name, component)
-  return {
-    then: register
-  }
-}
-
-register('sidebar', Sidebar)
-  .then('my-header', Header)
-  .then('my-footer', Footer)
-  .then('blog-summary', BlogSummary)
-  .then('pagination', Pagination)
-  .then('blog-post', Post)
-  .then('disqus', Disqus)
-  .then('loading-bar', Loading)
+// Can't make a array reduce or the number of chunks will increase twice,
+// because System.import is ES6 module, which requires a static module imports
+const BlogPager = process.BROWSER
+  ? () => System.import('../components/BlogPager')
+  : require('../components/BlogPager')
+const Archive = process.BROWSER
+  ? () => System.import('../components/Archive')
+  : require('../components/Archive')
+const Tag = process.BROWSER
+  ? () => System.import('../components/Tag')
+  : require('../components/Tag')
+const PostContainer = process.BROWSER
+  ? () => System.import('../components/PostContainer')
+  : require('../components/PostContainer')
+const TagPager = process.BROWSER
+  ? () => System.import('../components/TagPager')
+  : require('../components/TagPager')
+const PageContainer = process.BROWSER
+  ? () => System.import('../components/PageContainer')
+  : require('../components/PageContainer')
 
 export default new VueRouter({
   mode: 'history',

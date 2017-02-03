@@ -11,6 +11,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import BlogSummary from './BlogSummary'
+import Pagination from './Pagination'
 
 function getItems (store, { path, query, params }, callback) {
   return store.dispatch('FETCH_TAG_PAGER', {
@@ -34,6 +36,10 @@ function getItems (store, { path, query, params }, callback) {
 }
 
 export default {
+  components: {
+    BlogSummary,
+    Pagination
+  },
   metaInfo () {
     return {
       title: `标签${this.$route.params.tagName}下的文章`
@@ -46,6 +52,9 @@ export default {
       'totalPage'
     ])
   },
-  preFetch: getItems
+  preFetch: getItems,
+  beforeMount () {
+    this.$root._isMounted && getItems(this.$store, this.$route)
+  }
 }
 </script>

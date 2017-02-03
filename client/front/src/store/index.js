@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     next: {},
     page: {},
     tagPager: [],
+    tags: [],
     theme: {},
     progress: 0,
     siteInfo: {

@@ -9,8 +9,16 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Sidebar from './Sidebar'
+import LoadingBar from '../components/Loading'
+import MyHeader from '../components/Header'
 
 export default {
+  components: {
+    LoadingBar,
+    Sidebar,
+    MyHeader
+  },
   computed: {
     ...mapGetters([
       'progress'

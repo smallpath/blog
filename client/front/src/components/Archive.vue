@@ -52,6 +52,9 @@ export default {
       'achieves'
     ])
   },
-  preFetch: fetchAchieves
+  preFetch: fetchAchieves,
+  beforeMount () {
+    this.$root._isMounted && fetchAchieves(this.$store, this.$route)
+  }
 }
 </script>

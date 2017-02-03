@@ -10,6 +10,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import BlogSummary from './BlogSummary'
+import Pagination from './Pagination'
 
 function fetchItems (store, { path, query, params }, callback) {
   if (path !== '/') {
@@ -42,6 +44,10 @@ function fetchItems (store, { path, query, params }, callback) {
 }
 
 export default {
+  components: {
+    BlogSummary,
+    Pagination
+  },
   metaInfo () {
     return {
       title: '首页'
@@ -55,6 +61,9 @@ export default {
       'siteInfo'
     ])
   },
-  preFetch: fetchItems
+  preFetch: fetchItems,
+  beforeMount () {
+    this.$root._isMounted && fetchItems(this.$store, this.$route)
+  }
 }
 </script>

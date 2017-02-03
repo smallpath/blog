@@ -1,6 +1,9 @@
-import { app, router, store, preFetchComponent } from './main'
+import Vue from 'vue'
+import { appOption, router, store, preFetchComponent } from './main'
 
 const isDev = process.env.NODE_ENV !== 'production'
+
+const app = new Vue(appOption)
 
 export default context => {
   router.push(context.url)
