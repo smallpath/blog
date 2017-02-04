@@ -114,20 +114,13 @@ config.flushOption().then(() => {
     }
     const renderStream = renderer.renderToStream(context)
 
-    sendGoogleAnalytic(req, res, next, {
-      dt: config.title,
-      dr: req.url,
-      dp: req.url,
-      z: Date.now()
-    })
-
     res.header('Content-Type', 'text/html; charset=utf-8')
     res.setHeader('Server', serverInfo)
 
     renderStream.once('data', () => {
       const { title, link, meta } = context.meta.inject()
       const metaData = `${title.text()}${meta.text()}${link.text()}`
-      let chunk = html.head.replace('<title></title>', metaData)
+      const chunk = html.head.replace('<title></title>', metaData)
       res.write(chunk)
     })
 
