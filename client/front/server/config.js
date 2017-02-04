@@ -1,9 +1,11 @@
-let request = require('superagent')
+const isProd = process.env.NODE_ENV === 'production'
+const request = require('superagent')
 
 let siteUrl = 'http://localhost:8080'
 let title = 'Blog'
 let description = ''
 let googleTrackID = ''
+let favicon = isProd ? './dist' : '.'
 let ga = {
   version: 1,
   api: 'https://www.google-analytics.com/collect',
@@ -26,6 +28,7 @@ function flushOption () {
     title = options['title']
     description = options['description']
     googleTrackID = options['analyzeCode']
+    favicon += options['faviconUrl']
   })
 }
 
@@ -63,6 +66,15 @@ Object.defineProperty(exports, 'googleTrackID', {
   },
   set: function (value) {
     googleTrackID = value
+  }
+})
+Object.defineProperty(exports, 'favicon', {
+  enumerable: true,
+  get: function () {
+    return favicon
+  },
+  set: function (value) {
+    favicon = value
   }
 })
 Object.defineProperty(exports, 'flushOption', {

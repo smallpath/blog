@@ -8,6 +8,7 @@ const fs = require('fs')
 const path = require('path')
 const resolve = file => path.resolve(__dirname, file)
 const express = require('express')
+const favicon = require('serve-favicon')
 const schedule = require('node-schedule')
 const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
 const request = require('superagent')
@@ -84,6 +85,7 @@ config.flushOption().then(() => {
   }
 
   app.use(require('cookie-parser')())
+  app.use(favicon(config.favicon))
   app.use((req, res, next) => {
     log.debug(`${req.method} ${decodeURIComponent(req.url)}`)
     return next()
