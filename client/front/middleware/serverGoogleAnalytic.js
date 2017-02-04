@@ -2,37 +2,45 @@ const log = require('log4js').getLogger('google analytic')
 
 const config = require('../server/config')
 const request = require('superagent')
-const uuid = require('uuid')
 const EMPTY_GIF = new Buffer('R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==', 'base64')
+const uuid = require('uuid')
 const expires = 3600 * 1000 * 24 * 365 * 2
+const ipReg = /\d+\.\d+\.\d+\.\d+/
+const lowerReg = /\s+/g
 
 const shouldBanSpider = ua => {
   if (!ua) {
     return true
   }
 
-  ua = ua.toLowerCase().replace(/\s+/g, '')
+  ua = ua.toLowerCase().replace(lowerReg, '')
   return config.ga.spider.some(item => ua.indexOf(item) > -1)
 }
 
 const getClientIp = (req) => {
-  let matched = req.ip.match(/\d+\.\d+\.\d+\.\d+/)
+  let matched = req.ip.match(ipReg)
   return matched ? matched[0] : req.ip
 }
 
-module.exports = (req, res, next) => {
-  let clientId = req.cookies.id
-  if (!clientId) {
-    clientId = uuid.v4()
-    res.cookie('id', clientId, {
-      expires: new Date(Date.now() + expires)
-    })
+module.exports = (req, res, next, query) => {
+  let realQuery
+  let clientId
+  if (!query) {
+    clientId = req.cookies.id
+    if (!clientId) {
+      clientId = uuid.v4()
+      res.cookie('id', clientId, {
+        expires: new Date(Date.now() + expires)
+      })
+    }
+    res.setHeader('Content-Type', 'image/gif')
+    res.setHeader('Content-Length', 43)
+    res.end(EMPTY_GIF)
+    realQuery = req.query
+  } else {
+    realQuery = query
+    clientId = realQuery.cid
   }
-
-  let realQuery = req.query
-  res.setHeader('Content-Type', 'image/gif')
-  res.setHeader('Content-Length', 43)
-  res.end(EMPTY_GIF)
 
   let passParams = config.ga.required.reduce((prev, curr) => {
     if (!realQuery[curr]) {
@@ -46,7 +54,7 @@ module.exports = (req, res, next) => {
   let userAgent = req.header('user-agent')
   if (shouldBanSpider(userAgent) === true) return
 
-  let timeStamp = realQuery.z || Date.now()
+  let { z: timeStamp = Date.now() } = realQuery
   let form = Object.assign({}, realQuery, {
     v: config.ga.version,
     tid: config.googleTrackID,

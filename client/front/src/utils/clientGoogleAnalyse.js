@@ -1,14 +1,13 @@
 export default function (fullPath) {
   let screen = window.screen
-  let encode = encodeURIComponent
   let params = {
-    dt: encode(document.title),
-    dr: encode(fullPath),
+    dt: document.title,
+    dr: fullPath,
     ul: navigator.language || navigator.browserLanguage || '',
     sd: screen.colorDepth + '-bit',
     sr: screen.width + 'x' + screen.height,
     dpr: window.devicePixelRatio || window.webkitDevicePixelRatio || window.mozDevicePixelRatio || 1,
-    dp: encode(fullPath),
+    dp: fullPath,
     z: +new Date()
   }
 
