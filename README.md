@@ -301,7 +301,8 @@ DELETE  //删除指定ID的文档
 将`header`中的`authorization`设置为服务器下发的token, 即可撤销此token
 
 ### Token说明
-Token有效期为获得后的一小时, 超出时间后请重新请求Token
+Token默认有效期为获得后的一小时, 超出时间后请重新请求Token  
+如需自定义有效期, 请修改服务端配置文件中的`tokenExpiresIn`字段, 其单位为秒
 
 ## 查询 
 
