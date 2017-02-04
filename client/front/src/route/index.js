@@ -8,18 +8,15 @@ Vue.use(VueMeta)
 import Footer from '../components/Footer'
 import BlogSummary from '../components/BlogSummary'
 import Pagination from '../components/Pagination'
-import Post from '../components/Post'
+import CreatePostView from '../views/CreatePostView'
 
 Vue.component('my-footer', Footer)
 Vue.component('blog-summary', BlogSummary)
 Vue.component('pagination', Pagination)
-Vue.component('blog-post', Post)
 
 const BlogPager = require('../components/BlogPager')
 const Archive = require('../components/Archive')
 const Tag = require('../components/Tag')
-const PostContainer = require('../components/PostContainer')
-const PageContainer = require('../components/PageContainer')
 
 // System.import is of ES6 module, which is designed to be statically analyzable
 // It means that you can't write `let path = './main.js'; System.import(path)`
@@ -60,7 +57,7 @@ export default new VueRouter({
     {
       path: '/post/:pathName',
       name: 'post',
-      component: PostContainer
+      component: CreatePostView('post')
     },
     {
       path: '/tag/:tagName',
@@ -70,7 +67,7 @@ export default new VueRouter({
     {
       path: '/:page*',
       name: 'page',
-      component: PageContainer
+      component: CreatePostView('page')
     }
   ]
 })

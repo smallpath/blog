@@ -46,6 +46,7 @@ import mixin from '../mixin/disqus'
 import Disqus from './Disqus'
 
 export default {
+  name: 'post',
   components: {
     Disqus
   },
