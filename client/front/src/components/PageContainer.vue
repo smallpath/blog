@@ -29,6 +29,11 @@ function fetchPage (store, { path: pathName, params, query }, callback) {
 }
 
 export default {
+  metaInfo () {
+    return {
+      title: this.page.title
+    }
+  },
   computed: {
     ...mapGetters([
       'siteInfo'

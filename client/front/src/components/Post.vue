@@ -49,11 +49,6 @@ export default {
   components: {
     Disqus
   },
-  metaInfo () {
-    return {
-      title: this.post.title
-    }
-  },
   props: ['type', 'post', 'prev', 'next', 'siteInfo'],
   mixins: [mixin],
   serverCacheKey: props => {

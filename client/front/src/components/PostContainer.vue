@@ -30,6 +30,11 @@ function fetchBlog (store, { path: pathName, params, query }, callback) {
 }
 
 export default {
+  metaInfo () {
+    return {
+      title: this.post.title
+    }
+  },
   computed: {
     ...mapGetters([
       'prev',
