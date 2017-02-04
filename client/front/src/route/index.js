@@ -68,7 +68,7 @@ export default new VueRouter({
       component: TagPager
     },
     {
-      path: '/:page',
+      path: '/:page*',
       name: 'page',
       component: PageContainer
     }
