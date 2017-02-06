@@ -7,6 +7,12 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const SWPrecachePlugin = require('sw-precache-webpack-plugin')
 
 const config = Object.assign({}, base, {
+  resolve: {
+    alias: Object.assign({}, base.resolve.alias, {
+      'create-api': './create-api-client.js'
+    }),
+    extensions: base.resolve.extensions
+  },
   plugins: (base.plugins || []).concat([
     // strip comments in Vue code
     new webpack.DefinePlugin({

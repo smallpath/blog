@@ -1,20 +1,24 @@
 import axios from 'axios'
+import api from 'create-api'
 
-const host = typeof location === 'undefined'
-  ? process.env.NODE_ENV === 'production'
-    ? 'http://localhost:3000'
-    : 'http://localhost:8080/proxyPrefix'
-  : '/proxyPrefix'
-
-const prefix = `${host}/api`
+const prefix = `${api.host}/api`
 
 const store = {}
+// should cache the response on the server side
+const shouldCache = api.onServer
 
 export default store
 
 store.fetch = (model, query) => {
-  let target = `${prefix}/${model}`
+  const target = `${prefix}/${model}`
+  const key = target + JSON.stringify(query)
+  if (shouldCache && api.cache.has(key)) {
+    return Promise.resolve(api.cache.get(key))
+  }
   return axios.get(target, { params: query }).then((response) => {
-    return response.data
-  }).catch(err => console.error(err))
+    const result = response.data
+    if (shouldCache) api.cache.set(key, result)
+    return result
+  })
 }
+
