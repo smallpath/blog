@@ -7,14 +7,13 @@ import clientGoogleAnalyse from './utils/clientGoogleAnalyse'
 const path = window.__INITIAL_STATE__.route.fullPath
 const resolveComponents = flatMapComponents(router.match(path), (Component, _, match, key, index) => {
   if (typeof Component === 'function' && !Component.options) {
-    return new Promise(function (resolve, reject) {
-      const _resolve = (Component) => {
-        match.components[key] = Component
-        resolve(Component)
-      }
-      let res = Component(_resolve, reject)
+    return new Promise((resolve, reject) => {
+      const res = Component()
       if (res && res.then) {
-        res.then(_resolve).catch(reject)
+        res.then(RealComponent => {
+          match.components[key] = RealComponent
+          resolve(RealComponent)
+        }).catch(reject)
       }
     })
   }
