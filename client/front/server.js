@@ -1,7 +1,4 @@
 const isProd = process.env.NODE_ENV === 'production'
-const serverInfo =
-  `express/${require('express/package.json').version} ` +
-  `vue-server-renderer/${require('vue-server-renderer/package.json').version}`
 
 const log = require('log4js').getLogger('ssr server')
 const fs = require('fs')
@@ -11,7 +8,7 @@ const express = require('express')
 const favicon = require('serve-favicon')
 const schedule = require('node-schedule')
 const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
-const request = require('superagent')
+const request = require('axios')
 const uuid = require('uuid')
 
 const sendGoogleAnalytic = require('./middleware/serverGoogleAnalytic')
@@ -121,7 +118,6 @@ config.flushOption().then(() => {
     const renderStream = renderer.renderToStream(context)
 
     res.header('Content-Type', 'text/html; charset=utf-8')
-    res.setHeader('Server', serverInfo)
 
     renderStream.once('data', () => {
       const { title, link, meta } = context.meta.inject()
@@ -172,5 +168,5 @@ config.flushOption().then(() => {
   app.listen(port, () => {
     log.debug(`server started at localhost:${port}`)
   })
-})
+}).catch(err => log.error(err))
 

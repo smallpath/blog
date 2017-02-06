@@ -1,5 +1,5 @@
 const isProd = process.env.NODE_ENV === 'production'
-const request = require('superagent')
+const request = require('axios')
 
 let siteUrl = 'http://localhost:8080'
 let title = 'Blog'
@@ -14,13 +14,14 @@ let ga = {
     'spider',
     'bot',
     'appid', // for google appengine
-    'go-http-client'
+    'go-http-client',
+    'loadtest' // for load test
   ].map(item => item.toLowerCase().replace(/\s+/g, ''))
 }
 
 function flushOption () {
-  return request.get('localhost:3000/api/option').then(res => {
-    let options = res.body.reduce((prev, curr) => {
+  return request.get('http://localhost:3000/api/option').then(res => {
+    let options = res.data.reduce((prev, curr) => {
       prev[curr.key] = curr.value
       return prev
     }, {})

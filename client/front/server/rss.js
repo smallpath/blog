@@ -2,7 +2,7 @@ let getUpdatedDate = date => `    <lastBuildDate>${date}</lastBuildDate>\r\n`
 let tail = `  </channel>
 </rss>`
 
-let api = 'localhost:3000/api/post?conditions={"type":"post","isPublic":true}&select={"pathName":1,"updatedAt":1,"content":1,"title":1}&sort=1&limit=10'
+let api = 'http://localhost:3000/api/post?conditions={"type":"post","isPublic":true}&select={"pathName":1,"updatedAt":1,"content":1,"title":1}&sort=1&limit=10'
 
 let getRssBodyFromBody = (result, config) => {
   let head = `<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
@@ -12,7 +12,7 @@ let getRssBodyFromBody = (result, config) => {
     <description>${config.description}</description>
     <atom:link href="${config.siteUrl}/rss.xml" rel="self"/>
     <language>zh-cn</language>\r\n`
-  let body = result.body.reduce((prev, curr) => {
+  let body = result.data.reduce((prev, curr) => {
     let date = new Date(curr.updatedAt).toUTCString()
     let content = curr.content.replace(/&/g, '&amp;')
                                       .replace(/</g, '&lt;')

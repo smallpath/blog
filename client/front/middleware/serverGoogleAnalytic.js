@@ -1,7 +1,7 @@
 const log = require('log4js').getLogger('google analytic')
 
 const config = require('../server/config')
-const request = require('superagent')
+const request = require('axios')
 const EMPTY_GIF = new Buffer('R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==', 'base64')
 const uuid = require('uuid')
 const expires = 3600 * 1000 * 24 * 365 * 2
@@ -67,15 +67,13 @@ module.exports = (req, res, next, query) => {
     an: config.title,
     dh: config.siteUrl
   })
-  request.get(config.ga.api).query(form).end((err, response) => {
-    if (err) {
-      log.error(err, form)
-      return
-    }
-    if (response.statusCode !== 200) {
+  request.get(config.ga.api, {
+    params: form
+  }).then(response => {
+    if (response.status !== 200) {
       log.error(response, form)
       return
     }
     log.info('Google Analytic sended', form.cid, form.ua)
-  })
+  }).catch(err => log.error(err, form))
 }
