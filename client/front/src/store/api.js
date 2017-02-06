@@ -1,91 +1,20 @@
-import request from 'superagent'
+import axios from 'axios'
 
 const host = typeof location === 'undefined'
   ? process.env.NODE_ENV === 'production'
     ? 'http://localhost:3000'
-      : 'http://localhost:8080/proxyPrefix'
+    : 'http://localhost:8080/proxyPrefix'
   : '/proxyPrefix'
 
 const prefix = `${host}/api`
-
-const blogAPI = `${host}/api/post`
-
-const tagAPI = `${host}/api/tag`
-
-const themeAPI = `${host}/api/theme?conditions={"name":"firekylin"}&select={"_id":0}`
 
 const store = {}
 
 export default store
 
-function isObject (obj) {
-  return Object.prototype.toString.call(obj).slice(8, -1) === 'Object'
-}
-
-function convertObjectToArray (args) {
-  return isObject(args) ? Object.keys(args).map((value, index) => {
-    let temp = {}
-    temp[value] = args[value]
-    return temp
-  }) : []
-}
-
-store.fetchOption = () => {
-  return request.get(`${prefix}/option?select={"_id":0,"key":1,"value":1}`)
-    .then((response) => {
-      return response.body
-    }, (err) => {
-      console.log(err)
-    })
-}
-
-store.fetchPostByID = (id, conditions, args) => {
-  let target = `${blogAPI}/${id}?conditions=${JSON.stringify(conditions)}`
-  if (args.select) {
-    target = target + `&select=${JSON.stringify(args.select)}`
-    delete args.select
-  }
-  args = convertObjectToArray(args)
-
-  return args.reduce((prev, curr) => {
-    prev = prev.query(curr)
-    return prev
-  }, request.get(target)).then((response) => {
-    return response.body
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.fetchPost = (conditions, args) => {
-  let target = `${blogAPI}/?conditions=${JSON.stringify(conditions)}`
-  if (args.select) {
-    target = target + `&select=${JSON.stringify(args.select)}`
-    delete args.select
-  }
-  args = convertObjectToArray(args)
-  return args.reduce((prev, curr) => {
-    prev = prev.query(curr)
-    return prev
-  }, request.get(target)).then((response) => {
-    return response.body
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.fetchTags = () => {
-  return request.get(tagAPI).then((response) => {
-    return response.body
-  }, (err) => {
-    console.log(err)
-  })
-}
-
-store.fetchTheme = () => {
-  return request.get(themeAPI).then((response) => {
-    return response.body
-  }, (err) => {
-    console.log(err)
-  })
+store.fetch = (model, query) => {
+  let target = `${prefix}/${model}`
+  return axios.get(target, { params: query }).then((response) => {
+    return response.data
+  }).catch(err => console.error(err))
 }

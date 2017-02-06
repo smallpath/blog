@@ -13,11 +13,11 @@
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "es6-promise": "^4.0.5",
     "express": "^4.14.0",
     "lru-cache": "^4.0.1",
     "node-schedule": "^1.2.0",
-    "superagent": "^2.3.0",
     "vue": "2.1.10",
     "vue-meta": "0.5.3",
     "vue-router": "^2.0.3",

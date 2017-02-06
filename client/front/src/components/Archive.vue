@@ -21,17 +21,20 @@ import { mapGetters } from 'vuex'
 
 function fetchAchieves (store, to, callback) {
   return store.dispatch('FETCH_ACHIEVE', {
-    conditions: {
-      type: 'post',
-      isPublic: true
+    model: 'post',
+    query: {
+      conditions: {
+        type: 'post',
+        isPublic: true
+      },
+      select: {
+        _id: 0,
+        title: 1,
+        createdAt: 1,
+        pathName: 1
+      },
+      sort: 1
     },
-    select: {
-      _id: 0,
-      title: 1,
-      createdAt: 1,
-      pathName: 1
-    },
-    sort: 1,
     callback
   })
 }

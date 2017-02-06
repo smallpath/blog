@@ -22,21 +22,24 @@ function fetchItems (store, { path, query, params }, callback) {
   }
 
   return store.dispatch('FETCH_ITEMS', {
-    conditions: {
-      type: 'post',
-      isPublic: true
+    model: 'post',
+    query: {
+      conditions: {
+        type: 'post',
+        isPublic: true
+      },
+      select: {
+        _id: 0,
+        title: 1,
+        summary: 1,
+        createdAt: 1,
+        updatedAt: 1,
+        pathName: 1
+      },
+      limit: 10,
+      skip: (page - 1) * 10,
+      sort: 1
     },
-    select: {
-      _id: 0,
-      title: 1,
-      summary: 1,
-      createdAt: 1,
-      updatedAt: 1,
-      pathName: 1
-    },
-    limit: 10,
-    skip: (page - 1) * 10,
-    sort: 1,
     callback
   })
 }
