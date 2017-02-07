@@ -6,24 +6,49 @@ Vue.use(VueRouter)
 Vue.use(VueMeta)
 
 import Footer from '../components/Footer'
-import BlogSummary from '../components/BlogSummary'
 import Pagination from '../components/Pagination'
-import CreatePostView from '../views/CreatePostView'
 
 Vue.component('my-footer', Footer)
-Vue.component('blog-summary', BlogSummary)
 Vue.component('pagination', Pagination)
-
-const BlogPager = require('../components/BlogPager')
-const Archive = require('../components/Archive')
-const Tag = require('../components/Tag')
 
 // System.import is of ES6 module, which is designed to be statically analyzable
 // It means that you can't write `let path = './main.js'; System.import(path)`
 // Must use it by `System.import('./main.js')`
+const CreatePostView = process.BROWSER ? type => resolve => {
+  System.import('../views/CreatePostView').then(component => {
+    const target = component(type)
+    resolve(target)
+  })
+} : require('../views/CreatePostView')
 const TagPager = process.BROWSER
   ? () => System.import('../components/TagPager')
   : require('../components/TagPager')
+const Tag = process.BROWSER
+  ? () => System.import('../components/Tag')
+  : require('../components/Tag')
+const BlogPager = process.BROWSER
+  ? () => System.import('../components/BlogPager')
+  : require('../components/BlogPager')
+const Archive = process.BROWSER
+  ? () => System.import('../components/Archive')
+  : require('../components/Archive')
+
+const Post = CreatePostView('post')
+const Page = CreatePostView('page')
+
+// How to get the chunk number in server-bundle ?
+if (!process.BROWSER) {
+  Post.chunkNumber = Page.chunkNumber = 0
+  TagPager.chunkNumber = 1
+  Tag.chunkNumber = 3
+  BlogPager.chunkNumber = 2
+  Archive.chunkNumber = 4
+}
+// console.log(CreatePostView)
+// console.log(TagPager)
+// console.log(Tag)
+// console.log(BlogPager)
+// console.log(Archive)
 
 export default new VueRouter({
   mode: 'history',
@@ -57,7 +82,7 @@ export default new VueRouter({
     {
       path: '/post/:pathName',
       name: 'post',
-      component: CreatePostView('post')
+      component: Post
     },
     {
       path: '/tag/:tagName',
@@ -67,7 +92,7 @@ export default new VueRouter({
     {
       path: '/:page*',
       name: 'page',
-      component: CreatePostView('page')
+      component: Page
     }
   ]
 })

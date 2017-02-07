@@ -20,6 +20,19 @@ const config = require('./server/config')
 const titleReg = /<.*?>(.+?)<.*?>/
 const expires = 3600 * 1000 * 24 * 365 * 2
 
+const chunkObj = {}
+if (isProd) {
+  const fileArr = fs.readdirSync('./dist')
+  for (let i = 0, len = fileArr.length; i < len; i++) {
+    const fileName = fileArr[i]
+    const arr = fileName.split('.')
+    if (arr.length === 3 && arr[0] !== 'app') {
+      const input = fs.readFileSync(`./dist/${fileName}`, 'utf-8')
+      chunkObj[fileName] = input
+    }
+  }
+}
+
 let sitemap = ''
 let rss = ''
 let robots = ''
@@ -154,7 +167,17 @@ config.flushOption().then(() => {
           }</script>`
         )
       }
-      res.end(html.tail)
+      let tail = html.tail
+      if (isProd && typeof context.chunkNumber === 'number') {
+        for (let key in chunkObj) {
+          if (key.split('.')[0] === context.chunkNumber.toString()) {
+            const chunk = `<script type="text/javascript" charset="utf-8">${chunkObj[key]}</script></body>`
+            tail = tail.replace('</body>', chunk)
+            break
+          }
+        }
+      }
+      res.end(tail)
       log.debug(`whole request: ${Date.now() - s}ms`)
     })
 

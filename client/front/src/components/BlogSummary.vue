@@ -10,6 +10,7 @@
 
 <script>
 export default {
+  name: 'blog-summary',
   props: {
     article: {
       type: Object,

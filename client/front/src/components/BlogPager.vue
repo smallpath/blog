@@ -10,6 +10,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import BlogSummary from './BlogSummary'
 
 function fetchItems (store, { path, query, params }, callback) {
   if (path !== '/') {
@@ -45,19 +46,27 @@ function fetchItems (store, { path, query, params }, callback) {
 }
 
 export default {
+  name: 'blog-pager',
   metaInfo () {
     return {
       title: '首页'
     }
+  },
+  components: {
+    BlogSummary
   },
   computed: {
     ...mapGetters([
       'items',
       'page',
       'totalPage',
-      'siteInfo'
+      'siteInfo',
+      'isLoadingAsyncComponent'
     ])
   },
-  preFetch: fetchItems
+  preFetch: fetchItems,
+  beforeMount () {
+    this.isLoadingAsyncComponent && this.$root._isMounted && fetchItems(this.$store, this.$route)
+  }
 }
 </script>

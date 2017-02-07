@@ -47,13 +47,17 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'tags'
+      'tags',
+      'isLoadingAsyncComponent'
     ]),
     sortedKeys () {
       let ref = this.tags
       return Object.keys(ref).sort((a, b) => ref[b] - ref[a])
     }
   },
-  preFetch: fetchTags
+  preFetch: fetchTags,
+  beforeMount () {
+    this.isLoadingAsyncComponent && this.$root._isMounted && fetchTags(this.$store, this.$route)
+  }
 }
 </script>

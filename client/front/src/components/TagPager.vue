@@ -11,6 +11,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import BlogSummary from './BlogSummary'
 
 function getItems (store, { path, query, params }, callback) {
   return store.dispatch('FETCH_TAG_PAGER', {
@@ -42,16 +43,20 @@ export default {
       title: `标签${this.$route.params.tagName}下的文章`
     }
   },
+  components: {
+    BlogSummary
+  },
   computed: {
     ...mapGetters([
       'tagPager',
       'page',
-      'totalPage'
+      'totalPage',
+      'isLoadingAsyncComponent'
     ])
   },
   preFetch: getItems,
   beforeMount () {
-    this.$root._isMounted && getItems(this.$store, this.$route)
+    this.isLoadingAsyncComponent && this.$root._isMounted && getItems(this.$store, this.$route)
   }
 }
 </script>

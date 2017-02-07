@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import { appOption, router, store, preFetchComponent } from './main'
+import { app, appOption, router, store, preFetchComponent, isProd } from './main'
 
 const isDev = process.env.NODE_ENV !== 'production'
 
-const app = new Vue(appOption)
+let realApp = isProd ? new Vue(appOption) : app
 
 export default context => {
   router.push(context.url)
@@ -13,11 +13,15 @@ export default context => {
   context.params = current.params
   context.url = current.fullPath
 
-  context.meta = app.$meta()
+  context.meta = realApp.$meta()
 
   const s = isDev && Date.now()
 
   return Promise.all(preFetchComponent.concat(router.getMatchedComponents()).map((component, index) => {
+    const number = component.chunkNumber
+    if (typeof number === 'number') {
+      context.chunkNumber = number
+    }
     if (component.preFetch) {
       return component.preFetch(store, context).catch(() => {})
     }
@@ -25,6 +29,6 @@ export default context => {
     isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)
 
     context.initialState = store.state
-    return app
+    return realApp
   })
 }

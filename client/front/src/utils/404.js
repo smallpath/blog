@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   pathName: 404,
   createdAt: '2017-01-01 00:00:00',
   updatedAt: '2017-01-01 00:00:00',

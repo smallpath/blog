@@ -52,9 +52,13 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'achieves'
+      'achieves',
+      'isLoadingAsyncComponent'
     ])
   },
-  preFetch: fetchAchieves
+  preFetch: fetchAchieves,
+  beforeMount () {
+    this.isLoadingAsyncComponent && this.$root._isMounted && fetchAchieves(this.$store, this.$route)
+  }
 }
 </script>

@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    isLoadingAsyncComponent: false,
     itemsPerPage: 10,
     totalPage: -1,
     items: [],
@@ -293,6 +294,9 @@ const store = new Vuex.Store({
     },
     tagPager (state) {
       return state.tagPager
+    },
+    isLoadingAsyncComponent (state) {
+      return state.isLoadingAsyncComponent
     }
   }
 })
