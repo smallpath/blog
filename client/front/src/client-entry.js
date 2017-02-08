@@ -19,6 +19,11 @@ callback(() => {
   store.replaceState(window.__INITIAL_STATE__)
   realApp.$mount('#app')
 
+  // service worker
+  if (isProd && 'serviceWorker' in navigator && window.location.protocol === 'https:') {
+    navigator.serviceWorker.register('/service-worker.js')
+  }
+
   router.beforeEach((to, from, next) => {
     // required by a new hash, just navigate to it
     if (to.path === from.path && to.hash !== from.hash) {
