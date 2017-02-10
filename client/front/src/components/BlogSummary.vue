@@ -4,7 +4,7 @@
       <div class="date">{{ article.createdAt }}</div>
     </div>
     <h1 class="title"> <router-link :to="{ name:'post', params:{ pathName: article.pathName } }" >{{ article.title }}</router-link></h1>
-    <div class="entry-content" v-html="article.summary"></div>
+    <div class="entry-content" v-html="filterWebp(article.summary)"></div>
   </article>
 </template>
 
@@ -15,10 +15,17 @@ export default {
     article: {
       type: Object,
       required: true
-    }
+    },
+    supportWebp: Boolean
   },
   serverCacheKey: props => {
     return `${props.article.pathName}::${props.article.updatedAt}`
+  },
+  methods: {
+    filterWebp (content) {
+      if (!this.supportWebp) return content.replace(/\/webp/g, '')
+      return content
+    }
   }
 }
 </script>

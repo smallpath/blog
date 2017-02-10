@@ -1,7 +1,7 @@
 <template>
   <div id='main'>
     <section id="page-index">
-      <blog-summary v-for="item in items" :article="item"></blog-summary>
+      <blog-summary v-for="item in items" :support-webp="supportWebp" :article="item"></blog-summary>
       <pagination :page="page" :total-page="totalPage"></pagination>
     </section>
     <my-footer></my-footer>
@@ -61,7 +61,8 @@ export default {
       'page',
       'totalPage',
       'siteInfo',
-      'isLoadingAsyncComponent'
+      'isLoadingAsyncComponent',
+      'supportWebp'
     ])
   },
   preFetch: fetchItems,

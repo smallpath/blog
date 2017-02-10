@@ -15,6 +15,8 @@ export default context => {
 
   context.meta = realApp.$meta()
 
+  store.state.supportWebp = context.supportWebp
+
   const s = isDev && Date.now()
 
   return Promise.all(preFetchComponent.concat(router.getMatchedComponents()).map((component, index) => {

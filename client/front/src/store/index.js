@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    supportWebp: false,
     isLoadingAsyncComponent: false,
     itemsPerPage: 10,
     totalPage: -1,
@@ -297,6 +298,9 @@ const store = new Vuex.Store({
     },
     isLoadingAsyncComponent (state) {
       return state.isLoadingAsyncComponent
+    },
+    supportWebp (state) {
+      return state.supportWebp
     }
   }
 })

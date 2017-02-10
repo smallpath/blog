@@ -50,15 +50,16 @@ export default {
   components: {
     Disqus
   },
-  props: ['type', 'post', 'prev', 'next', 'siteInfo'],
+  props: ['type', 'post', 'prev', 'next', 'siteInfo', 'supportWebp'],
   mixins: [mixin],
   serverCacheKey: props => {
     return `${props.post.pathName}::${props.post.updatedAt}`
   },
   computed: {
     content () {
-      let post = this.post
-      return post.toc ? `<div id="toc" class="toc">${post.toc}</div>${post.content}` : post.content
+      const post = this.post
+      const result = post.toc ? `<div id="toc" class="toc">${post.toc}</div>${post.content}` : post.content
+      return this.filterWebp(result)
     },
     shouldShow () {
       return this.post.pathName !== 404 && this.type === 'post'
@@ -68,6 +69,12 @@ export default {
     },
     siteURL () {
       return this.siteInfo.siteUrl.value || 'localhost'
+    }
+  },
+  methods: {
+    filterWebp (content) {
+      if (!this.supportWebp) return content.replace(/\/webp/g, '')
+      return content
     }
   }
 }

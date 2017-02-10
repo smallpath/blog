@@ -43,7 +43,8 @@ module.exports = function (type) {
         'prev',
         'next',
         'siteInfo',
-        'isLoadingAsyncComponent'
+        'isLoadingAsyncComponent',
+        'supportWebp'
       ]),
       post () {
         const target = isPost ? this.$store.state.blog : this.$store.state.page
@@ -61,7 +62,8 @@ module.exports = function (type) {
           post: this.post,
           prev: this.prev,
           next: this.next,
-          siteInfo: this.siteInfo
+          siteInfo: this.siteInfo,
+          supportWebp: this.supportWebp
         }
       })
     }

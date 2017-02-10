@@ -1,15 +1,15 @@
 <template>
   <nav id=sidebar class=behavior_1 
-          :class="{'sidebar-image': option.sidebarImageUrl !== ''}"
+          :class="{'sidebar-image': sidebarUrl !== ''}"
           :style="{ 
-            'background-image': option.sidebarImageUrl 
-            ? 'url(' + option.sidebarImageUrl + ')' : '',
-            'transition': option.sidebarImageUrl ? 'background 2s ease-in-out;': ''
+            'background-image': sidebarUrl 
+            ? 'url(' + sidebarUrl + ')' : '',
+            'transition': sidebarUrl ? option.sidebarMoveCss: ''
           }">
     <div class=wrap>
       <div class=profile>
         <a href="/"> 
-          <img :src="option.logoUrl" 
+          <img :src="logoUrl" 
             :alt="siteInfo.title.value">
         </a> 
         <span :style="{ 'color': option.sidebarFontColor || '' }" >{{siteInfo.title.value}}</span>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import mixin from '../mixin/image'
 
 export default {
   metaInfo () {
@@ -65,12 +65,7 @@ export default {
       ]
     }
   },
-  computed: {
-    ...mapGetters([
-      'option',
-      'siteInfo'
-    ])
-  },
+  mixins: [mixin],
   preFetch (store, { path, params, query }) {
     return Promise.all([store.dispatch('FETCH_OPTIONS'), store.dispatch('FETCH_FIREKYLIN')])
   }

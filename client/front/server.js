@@ -124,9 +124,12 @@ config.flushOption().then(() => {
       return res.end('waiting for compilation... refresh in a moment.')
     }
 
+    const supportWebp = !!req.accepts('image/webp')
+
     let s = Date.now()
     const context = {
-      url: req.url
+      url: req.url,
+      supportWebp
     }
     const renderStream = renderer.renderToStream(context)
 
@@ -161,6 +164,7 @@ config.flushOption().then(() => {
 
     renderStream.on('end', () => {
       if (context.initialState) {
+        context.initialState.supportWebp = supportWebp
         res.write(
           `<script>window.__INITIAL_STATE__=${
           JSON.stringify(context.initialState)
