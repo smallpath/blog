@@ -124,7 +124,7 @@ config.flushOption().then(() => {
       return res.end('waiting for compilation... refresh in a moment.')
     }
 
-    const supportWebp = !!req.accepts('image/webp')
+    const supportWebp = req.header('accept').includes('image/webp')
 
     let s = Date.now()
     const context = {

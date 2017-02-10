@@ -53,7 +53,7 @@ export default {
   props: ['type', 'post', 'prev', 'next', 'siteInfo', 'supportWebp'],
   mixins: [mixin],
   serverCacheKey: props => {
-    return `${props.post.pathName}::${props.post.updatedAt}`
+    return `${props.post.pathName}::${props.post.updatedAt}::webp::${props.supportWebp}`
   },
   computed: {
     content () {
@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     filterWebp (content) {
-      if (!this.supportWebp) return content.replace(/\/webp/g, '')
+      if (!this.supportWebp) return content.replace(/\/webp/gm, '')
       return content
     }
   }
