@@ -68,7 +68,7 @@
     "sinon-chai": "^2.8.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.3.1",
-    "sw-precache-webpack-plugin": "^0.8.0",
+    "sw-precache-webpack-plugin": "^0.9.0",
     "url-loader": "^0.5.7",
     "uuid": "^3.0.1",
     "vue-hot-reload-api": "^1.2.0",

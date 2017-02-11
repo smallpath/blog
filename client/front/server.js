@@ -107,7 +107,6 @@ config.flushOption().then(() => {
   app.use('/service-worker.js', serve('./dist/service-worker.js'))
   app.use('/dist', serve('./dist'))
   app.use('/static', serve('./static'))
-  app.get('/favicon.ico', (req, res) => res.status(404).end())
   app.get('/_.gif', (req, res, next) => sendGoogleAnalytic(req, res, next))
   app.get('/robots.txt', (req, res, next) => res.end(robots))
   app.get('/rss.xml', (req, res, next) => {

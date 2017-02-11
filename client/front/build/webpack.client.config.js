@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const base = require('./webpack.base.config')
 const vueConfig = require('./vue-loader.config')
 const utils = require('./utils')
+const path = require('path')
 const HTMLPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const SWPrecachePlugin = require('sw-precache-webpack-plugin')
@@ -52,8 +53,22 @@ if (process.env.NODE_ENV === 'production') {
     new SWPrecachePlugin({
       cacheId: 'blog',
       filename: 'service-worker.js',
+      minify: true,
+      mergeStaticsConfig: true,
+      staticFileGlobs: [
+        path.join(__dirname, '../dist/static/*.*')
+      ],
+      stripPrefixMulti: {
+        [path.join(__dirname, '../dist/static')]: '/static'
+      },
       dontCacheBustUrlsMatching: /./,
-      staticFileGlobsIgnorePatterns: [/index\.html$/, /\.map$/, /\.css$/]
+      staticFileGlobsIgnorePatterns: [
+        /index\.html$/,
+        /\.map$/,
+        /\.css$/,
+        /\.svg$/,
+        /\.eot$/
+      ]
     })
   )
 }
