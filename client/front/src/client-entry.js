@@ -2,6 +2,7 @@ import './assets/js/base'
 import Vue from 'vue'
 import { app, appOption, router, store, isProd } from './main'
 import clientGoogleAnalyse from './utils/clientGoogleAnalyse'
+import registerServiceWorker from './utils/serviceWorker'
 
 const callback = isProd ? setTimeout : router.onReady.bind(router)
 if (isProd) {
@@ -20,9 +21,7 @@ callback(() => {
   realApp.$mount('#app')
 
   // service worker
-  if (isProd && 'serviceWorker' in navigator && window.location.protocol === 'https:') {
-    navigator.serviceWorker.register('/service-worker.js')
-  }
+  if (isProd) registerServiceWorker(store.state)
 
   router.beforeEach((to, from, next) => {
     // required by a new hash, just navigate to it

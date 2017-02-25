@@ -21,6 +21,7 @@ const titleReg = /<.*?>(.+?)<.*?>/
 const expires = 3600 * 1000 * 24 * 365 * 2
 
 const chunkObj = {}
+let appHash = ''
 if (isProd) {
   const fileArr = fs.readdirSync('./dist')
   for (let i = 0, len = fileArr.length; i < len; i++) {
@@ -29,6 +30,8 @@ if (isProd) {
     if (arr.length === 3 && arr[0] !== 'app') {
       const input = fs.readFileSync(`./dist/${fileName}`, 'utf-8')
       chunkObj[fileName] = input
+    } else if (arr[0] === 'app') {
+      appHash = arr[1]
     }
   }
 }
@@ -164,6 +167,7 @@ config.flushOption().then(() => {
     renderStream.on('end', () => {
       if (context.initialState) {
         context.initialState.supportWebp = supportWebp
+        context.initialState.appHash = appHash
         res.write(
           `<script>window.__INITIAL_STATE__=${
           JSON.stringify(context.initialState)
