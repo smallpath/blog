@@ -3,10 +3,13 @@ A blog system. Based on Vue2, Koa2, MongoDB and Redis
 
 前后端分离 + 服务端渲染的博客系统, 前端SPA + 后端RESTful服务器
 
+# Demo
+前端：[https://smallpath.me](https://smallpath.me)  
+后台管理截图：[https://smallpath.me/post/blog-back-v2](https://smallpath.me/post/blog-back-v2)
+
 Table of Contents
 =================
 
-* [Demo](#demo)
 * [TODO](#todo)
 * [构建与部署](#构建与部署)
   * [前置](#前置)
@@ -21,26 +24,10 @@ Table of Contents
       * [撤销Token](#撤销token)
       * [Token说明](#token说明)
   * [查询](#查询)
-      * [conditions查询](#conditions查询)
-        * [查询所有文档](#查询所有文档)
-        * [查询title字段为'关于'的文档](#查询title字段为关于的文档)
-        * [查询指定id的文档的上一篇文档](#查询指定id的文档的上一篇文档)
-        * [select查询](#select查询)
-        * [查询title字段为'关于'的文档的建立时间和更新时间](#查询title字段为关于的文>档的建立时间和更新时间)
-      * [count查询](#count查询)
-        * [查询文档的数量](#查询文档的数量)
-      * [sort查询](#sort查询)
-        * [查询所有文档并按时间倒序](#查询所有文档并按时间倒序)
-      * [skip查询和limit查询](#skip查询和limit查询)
-        * [查询第2页的文档(每页10条)并按时间倒叙](#查询第2页的文档每页10条并按时间倒>叙)
   * [新建](#新建)
   * [替换](#替换)
   * [更新](#更新)
   * [删除](#删除)
-
-# Demo
-前端：[https://smallpath.me](https://smallpath.me)  
-后台管理截图：[https://smallpath.me/post/blog-back-v2](https://smallpath.me/post/blog-back-v2)
 
 # TODO
 - [x] 前台单页
@@ -59,16 +46,24 @@ Table of Contents
   - [x] 文章toc
   - [x] 页面meta
   - [x] 按需分块加载
+  - [ ] SSR去除API缓存
+  - [ ] SW仅在hash不同时注册
+  - [ ] 允许favicon不存在
+  - [ ] 爬虫列表ban掉feed关键字
+  - [ ] 乞丐版vuex
 - [x] 后台管理单页
   - [x] vue1.0升级至vue2.0
   - [x] 使用element ui
   - [x] 七牛云图片上传
   - [x] 文章toc的生成与编辑
   - [ ] 优化编辑器
+  - [ ] 上传图片后指定img标签的高度以避免闪烁
+  - [ ] 扫描所有文章，指定img高度
 - [x] RESTful服务器
   - [x] RESTful添加select字段过滤
   - [x] 标签及分类移至文章中 
   - [x] 七牛access_token下发及鉴权
+  - [ ] lint
 - [x] 部署文档
 - [x] API文档
 - [ ] Docker
@@ -362,7 +357,7 @@ limit
 
 Body中为用来新建文档的JSON数据
 
-每个模型的具体字段, 可以查看该模型的[Schema定义](https://github.com/smallpath/blog/blob/develop/server/model/mongo.js#L24)来获得
+每个模型的具体字段, 可以查看该模型的[Schema定义](https://github.com/smallpath/blog/blob/master/server/model/mongo.js#L24)来获得
 
 ## 替换
 
