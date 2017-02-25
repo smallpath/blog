@@ -21,16 +21,14 @@
       <el-menu-item index="8"><i class="el-icon-edit"></i>编辑TOC</el-menu-item>
     </el-menu>
 
-    <el-dialog title="图片上传" v-model="isUploadShow">
+    <el-dialog title="图片上传" v-model="isUploadShow" :modal="false">
       <el-upload
         action="//up.qbox.me/"
-        type="drag"
-        :thumbnail-mode="true"
-        :on-preview="handlePreview"
+        drag
         :on-success="handleSuccess"
         :on-error="handleError"
         :before-upload="beforeUpload"
-        :show-upload-list="true"
+        :show-file-list="true"
         :data="form"
         >
         <i class="el-icon-upload"></i>
@@ -157,25 +155,31 @@ export default {
       let key = response.key
       let name = file.name
       let prefix = this.supportWebp ? 'webp/' : ''
-      let text = `![${name}](${this.bucketHost}/${prefix}${encodeURI(key)})`
-      this.$confirm(text, '上传成功，是否插入图片链接?', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        closeOnClickModal: false
-      }).then(() => {
-        this.isUploadShow = false
-        this._preInputText(text, 12, 12)
-        this.$message({
-          type: 'success',
-          message: '已插入图片链接'
-        })
-      }).catch(() => {
-        this.isUploadShow = false
-        this.$message({
-          type: 'info',
-          message: '已取消插入图片链接'
+      const url = `${this.bucketHost}/${prefix}${encodeURI(key)}`
+      this.$store.dispatch('GET_IMAGE_HEIGHT', {
+        url
+      }).then(height => {
+        const target = `<img height="${height}" src="${url}"/>`
+        this.$confirm(target, '上传成功，是否插入图片链接?', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          closeOnClickModal: false
+        }).then(() => {
+          this.isUploadShow = false
+          this._preInputText(target, 12, 12)
+          this.$message({
+            type: 'success',
+            message: '已插入图片链接'
+          })
+        }).catch(() => {
+          this.isUploadShow = false
+          this.$message({
+            type: 'info',
+            message: '已取消插入图片链接'
+          })
         })
       })
+
     },
     handleError (err, response, file) {
       if (err.status === 401) {

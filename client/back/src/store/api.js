@@ -16,6 +16,10 @@ store.logout = (conditions) => {
   return request.post(`/proxyPrefix/admin/logout`, conditions)
 }
 
+store.getImageHeight = url => {
+  return request.get(`${url}?imageInfo`).then(response => response.data)
+}
+
 store.getImageToken = (body) => {
   return request.post(`/proxyPrefix/admin/qiniu`, body).then(response => response.data)
 }

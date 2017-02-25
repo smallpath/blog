@@ -14,6 +14,10 @@ const store = new Vuex.Store({
 
   actions: {
 
+    GET_IMAGE_HEIGHT: ({ commit, state }, { url }) => {
+      return api.getImageHeight(url).then(data => data.height || 100)
+    },
+
     FETCH: ({ commit, state }, { model, query }) => {
       return api.fetchList(model, query)
     },

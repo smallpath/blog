@@ -46,10 +46,10 @@ Table of Contents
   - [x] 文章toc
   - [x] 页面meta
   - [x] 按需分块加载
-  - [ ] SSR去除API缓存
-  - [ ] SW仅在hash不同时注册
-  - [ ] 允许favicon不存在
-  - [ ] 爬虫列表ban掉feed关键字
+  - [x] SSR去除API缓存
+  - [x] SW仅在hash不同时注册
+  - [x] 允许favicon不存在
+  - [x] 爬虫列表ban掉feed关键字
   - [ ] 乞丐版vuex
 - [x] 后台管理单页
   - [x] vue1.0升级至vue2.0
