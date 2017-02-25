@@ -28,6 +28,11 @@ a.anchor {
   visibility: hidden;
 }
 
+article img {
+  height: auto;
+  max-width: 910px;
+}
+
 article {
   border-bottom: 1px solid #ddd;
   border-top: 1px solid #fff;
