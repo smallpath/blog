@@ -15,7 +15,8 @@ let ga = {
     'bot',
     'appid', // for google appengine
     'go-http-client',
-    'loadtest' // for load test
+    'loadtest', // for load test
+    'feed'
   ].map(item => item.toLowerCase().replace(/\s+/g, ''))
 }
 
