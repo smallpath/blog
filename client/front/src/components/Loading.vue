@@ -1,11 +1,12 @@
 <template>
   <div>
-    <div v-if="show" class="loading-bar loading-bar--to_right"
-          :class="{ 'loading-bar--full': full }"
-          :style="styling()">
-      <div class="loading-bar-glow"></div>
+      <div v-if="show" class="loading-bar loading-bar--to_right"
+            :class="{ 'loading-bar--full': full }"
+            :style="styling()">
+        <div class="loading-bar-glow"></div>
+      </div>
     </div>
-  <div>
+  </div>
 </template>
 
 <script>
