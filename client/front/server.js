@@ -10,15 +10,14 @@ const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
 const request = require('axios')
 
 const sendGoogleAnalytic = require('./middleware/serverGoogleAnalytic')
+const favicon = require('./middleware/favicon')
 const getRobotsFromConfig = require('./server/robots.js')
 const { api: sitemapApi, getSitemapFromBody } = require('./server/sitemap.js')
 const { api: rssApi, getRssBodyFromBody } = require('./server/rss.js')
 const inline = isProd ? fs.readFileSync(resolve('./dist/styles.css'), 'utf-8') : ''
 const config = require('./server/config')
-const favicon = require('./server/favicon')
 
 const chunkObj = {}
-let appHash = ''
 if (isProd) {
   const fileArr = fs.readdirSync('./dist')
   for (let i = 0, len = fileArr.length; i < len; i++) {
@@ -27,8 +26,6 @@ if (isProd) {
     if (arr.length === 3 && arr[0] !== 'app') {
       const input = fs.readFileSync(`./dist/${fileName}`, 'utf-8')
       chunkObj[fileName] = input
-    } else if (arr[0] === 'app') {
-      appHash = arr[1]
     }
   }
 }
@@ -149,7 +146,6 @@ config.flushOption().then(() => {
     renderStream.on('end', () => {
       if (context.initialState) {
         context.initialState.supportWebp = supportWebp
-        context.initialState.appHash = appHash
         res.write(
           `<script>window.__INITIAL_STATE__=${
           JSON.stringify(context.initialState)
