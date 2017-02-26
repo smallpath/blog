@@ -159,7 +159,7 @@ export default {
       this.$store.dispatch('GET_IMAGE_HEIGHT', {
         url
       }).then(height => {
-        const target = `<img height="${height}" src="${url}"/>`
+        const target = `<img height="${height}" src="${url}">`
         this.$confirm(target, '上传成功，是否插入图片链接?', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
