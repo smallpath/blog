@@ -24,6 +24,8 @@ callback(() => {
     navigator.serviceWorker.register('/service-worker.js').then(() => {
       clientGoogleAnalyse(store.state.route.path || '/')
     })
+  } else {
+    clientGoogleAnalyse(store.state.route.path || '/')
   }
 
   router.beforeEach((to, from, next) => {
@@ -76,7 +78,7 @@ callback(() => {
   }
 
   // send user info if google analytics code is provided.
-  if (isProd && window.__INITIAL_STATE__.siteInfo) {
+  if (window.__INITIAL_STATE__.siteInfo) {
     let analyzeCode = window.__INITIAL_STATE__.siteInfo.analyzeCode
     if (analyzeCode && analyzeCode.value !== '') {
       router.afterEach((to, from) => {
