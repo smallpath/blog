@@ -43,7 +43,7 @@
         'split': mode === 'split',
         'toc': mode === 'toc'
     }">
-      <textarea ref="markdown" :value="value" @input="handleInput"></textarea>
+      <textarea ref="markdown" :value="value" @input="handleInput" @keydown.tab="handleTab"></textarea>
       <div v-if="mode !== 'toc'" class="md-preview markdown" v-html="compiledMarkdown"></div>
       <textarea v-else ref="toc" :value="toc" class="md-preview markdown" @input="handleTocInput"></textarea>
     </div>
@@ -126,6 +126,10 @@ export default {
             break
         }
       }
+    },
+    handleTab: function (e) {
+      this._preInputText('\t')
+      e.preventDefault()
     },
     handleInput: _.debounce(function (e) {
       let value = e.target.value
