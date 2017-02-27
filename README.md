@@ -126,7 +126,7 @@ npm run build
 pm2 start production.js
 ```
 
-请将`logo.png`与`favicon.ico`放至`static`目录中
+请将`logo.png`与`favicon.png`放至`static`目录中
 
 再用nginx代理本机8080端口即可, 可以使用如下的模板
 
