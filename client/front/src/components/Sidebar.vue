@@ -61,6 +61,7 @@ export default {
       ],
       link: [
         { rel: 'icon', href: favicon },
+        { rel: 'apple-touch-icon', href: favicon},
         { rel: 'alternate', type: 'application/rss+xml', title: 'RSS 2.0', href: '/rss.xml' }
       ]
     }
