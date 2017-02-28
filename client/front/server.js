@@ -17,6 +17,8 @@ const { api: rssApi, getRssBodyFromBody } = require('./server/rss.js')
 const inline = isProd ? fs.readFileSync(resolve('./dist/styles.css'), 'utf-8') : ''
 const config = require('./server/config')
 
+require('./server/server-axios')
+
 const chunkObj = {}
 if (isProd) {
   const fileArr = fs.readdirSync('./dist')

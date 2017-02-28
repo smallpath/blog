@@ -1,3 +1,4 @@
 export default {
-  host: '/proxyPrefix'
+  host: '/proxyPrefix',
+  axios: require('axios')
 }

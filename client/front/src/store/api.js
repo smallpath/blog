@@ -1,4 +1,3 @@
-import axios from 'axios'
 import api from 'create-api'
 
 const prefix = `${api.host}/api`
@@ -9,8 +8,7 @@ export default store
 
 store.fetch = (model, query) => {
   const target = `${prefix}/${model}`
-
-  return axios.get(target, { params: query }).then((response) => {
+  return api.axios.get(target, { params: query }).then((response) => {
     const result = response.data
     return result
   })

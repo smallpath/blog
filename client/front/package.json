@@ -60,6 +60,7 @@
     "json-loader": "^0.5.4",
     "log4js": "^1.1.0",
     "lolex": "^1.4.0",
+    "mongoose": "^4.8.5",
     "ora": "^0.3.0",
     "rimraf": "^2.5.4",
     "serve-favicon": "^2.3.2",
