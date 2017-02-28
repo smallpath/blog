@@ -46,17 +46,16 @@ Table of Contents
   - [x] 文章toc
   - [x] 页面meta
   - [x] 按需分块加载
-  - [x] SSR去除API缓存
-  - [x] SW仅在hash不同时注册
-  - [x] 允许favicon不存在
-  - [x] 爬虫列表ban掉feed关键字
-  - [ ] 乞丐版vuex
+  - [x] service worker缓存所有资源
+  - [x] SSR服务端直连mongo
+  - [ ] 乞丐版vuex以减小打包大小
+  - [ ] LocalStorage替换service worker
 - [x] 后台管理单页
   - [x] vue1.0升级至vue2.0
   - [x] 使用element ui
   - [x] 七牛云图片上传
   - [x] 文章toc的生成与编辑
-  - [ ] 优化编辑器
+  - [x] 草稿的自动生成与手动恢复
   - [x] 上传图片后指定img标签的高度以避免闪烁
   - [x] 扫描所有文章，指定img高度
 - [x] RESTful服务器
