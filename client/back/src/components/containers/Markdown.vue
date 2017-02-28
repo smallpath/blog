@@ -157,7 +157,6 @@ export default {
     handlePreview (file) {},
     handleSuccess (response, file, fileList) {
       let key = response.key
-      let name = file.name
       let prefix = this.supportWebp ? 'webp/' : ''
       const url = `${this.bucketHost}/${prefix}${encodeURI(key)}`
       this.$store.dispatch('GET_IMAGE_HEIGHT', {
@@ -183,7 +182,6 @@ export default {
           })
         })
       })
-
     },
     handleError (err, response, file) {
       if (err.status === 401) {

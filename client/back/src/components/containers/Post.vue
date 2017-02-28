@@ -81,7 +81,8 @@ export default {
       form,
       id,
       test: '',
-      isLoading: id !== -1
+      isLoading: id !== -1,
+      markdownChecked: false
     }
   },
   computed: {
@@ -98,6 +99,32 @@ export default {
     },
     nextItems () {
       return this.options.items.slice(this.splitIndex)
+    }
+  },
+  watch: {
+    'form.markdownContent': {
+      immediate: true,
+      handler: function (val, oldVal) {
+        if (!val || !this.form.updatedAt) return
+        const url = this.$store.state.siteInfo.siteUrl.value
+        const path = this.form.pathName
+        const key = `${url}|${path}`
+        const temp = this.getLS(key) || ''
+
+        const realVal = temp.replace(/\|\d+$/gm, '')
+        const matched = temp.match(/\d+$/gm)
+        const hitoryTimestamp = parseInt(matched ? matched.slice(-1) : Date.now())
+        const currentTimestamp = new Date(this.form.updatedAt).valueOf()
+        if (temp !== '' && val !== realVal &&
+              this.markdownChecked === false &&
+              hitoryTimestamp >= currentTimestamp) {
+          this.restore(key, realVal)
+        } else if (this.markdownChecked === true) {
+          const targetVal = val + `|${Date.now()}`
+          this.saveLS(key, targetVal)
+        }
+        this.markdownChecked = true
+      }
     }
   },
   methods: {
@@ -121,6 +148,30 @@ export default {
           this.id = id
         }
       })
+    },
+    restore (key, val) {
+      this.$confirm('', '发现草稿，是否恢复?', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        closeOnClickModal: false
+      }).then(() => {
+        this.form.markdownContent = val
+        this.$message({
+          type: 'success',
+          message: '已恢复草稿'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消恢复，提交文章后将清理草稿'
+        })
+      })
+    },
+    saveLS (key, value) {
+      window.localStorage.setItem(key, value)
+    },
+    getLS (key) {
+      return window.localStorage.getItem(key)
     },
     onSaveToc () {
       toc.length = 0
@@ -152,6 +203,11 @@ export default {
         model: this.options.model,
         form: this.form
       }).then(response => {
+        const url = this.$store.state.siteInfo.siteUrl.value
+        const path = this.form.pathName
+        const timestamp = new Date(this.form.updatedAt).valueOf()
+        const key = `${url}|${path}`
+        this.saveLS(key, this.form.markdownContent + `|${timestamp}`)
         this.$message({
           message: '文章已成功提交',
           type: 'success'
