@@ -76,6 +76,7 @@
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.0.0",
     "vue-loader": "^10.0.0",
+    "vue-ssr-webpack-plugin": "^1.0.2",
     "vue-style-loader": "^1.0.0",
     "vue-template-compiler": "2.2.0",
     "webpack": "^2.1.0-beta.27",
