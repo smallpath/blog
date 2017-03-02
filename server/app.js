@@ -3,7 +3,6 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const koaRouter = require('koa-router');
 const fs = require('fs')
-const path = (name) => require('path').join(__dirname, 'theme', name)
 const koa2RestMongoose = require('./mongo_rest/index');
 const tokenService = require('./service/token');
 const models = require('./model/mongo');
@@ -14,6 +13,8 @@ const getQiniuTokenFromFileName = require('./service/qiniu')
 const { login, logout, permission } = require('./routes/admin');
 const restc = require('restc');
 const bluebird = require("bluebird");
+const path = require('path')
+const resolve = file => path.resolve(__dirname, file)
 global.Promise = bluebird;
 
 const app = new Koa();
@@ -77,7 +78,7 @@ Object.keys(models).forEach(value => {
 })();
 
 async function installTheme() {
-  let fileArr = fs.readdirSync('./theme');
+  let fileArr = fs.readdirSync(resolve('./theme'));
   for (let i=0, len = fileArr.length; i<len; i++) {
     let fileName = fileArr[i]
     let theme = require(`./theme/${fileName}`)

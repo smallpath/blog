@@ -21,12 +21,12 @@ require('./server/server-axios')
 
 const chunkObj = {}
 if (isProd) {
-  const fileArr = fs.readdirSync('./dist')
+  const fileArr = fs.readdirSync(resolve('./dist'))
   for (let i = 0, len = fileArr.length; i < len; i++) {
     const fileName = fileArr[i]
     const arr = fileName.split('.')
     if (arr.length === 3 && arr[0] !== 'app') {
-      const input = fs.readFileSync(`./dist/${fileName}`, 'utf-8')
+      const input = fs.readFileSync(resolve(`./dist/${fileName}`), 'utf-8')
       chunkObj[fileName] = input
     }
   }
