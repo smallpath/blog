@@ -1,14 +1,19 @@
-const models = require('./mongo')
+const config = require('./mongo')
 
-module.exports = process.__API__ = {
-  get: function (target, { params: query }) {
-    const modelName = target.split('/').slice(-1)
-    const model = models[modelName]
-    return new Promise((resolve, reject) => {
-      queryModel(model, query).then(data => {
-        resolve({ data })
-      }) // mongoose uses mpromise who doesn't have a reject method here
-    })
+if (config.enableRestfulRequest) {
+  process.__API__ = require('axios')
+} else {
+  const models = require('./model')
+  process.__API__ = {
+    get: function (target, { params: query }) {
+      const modelName = target.split('/').slice(-1)
+      const model = models[modelName]
+      return new Promise((resolve, reject) => {
+        queryModel(model, query).then(data => {
+          resolve({ data })
+        }) // mongoose uses mpromise who doesn't have a reject method here
+      })
+    }
   }
 }
 

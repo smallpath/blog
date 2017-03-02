@@ -48,6 +48,7 @@ Table of Contents
   - [x] 按需分块加载
   - [x] service worker缓存所有资源
   - [x] SSR服务端直连mongo
+  - [x] 乞丐版axios以减小打包大小
   - [ ] 乞丐版vuex以减小打包大小
   - [ ] LocalStorage替换service worker
 - [x] 后台管理单页
@@ -116,8 +117,16 @@ pm2 start entry.js
 
 RESTful服务器在本机3000端口开启
 
-## client/front
+## front
 博客的前台单页, 支持服务端渲染
+
+复制server文件夹中的默认配置`mongo.tpl`, 并命名为`mongo.js`
+
+如果mongoDB不在本机对应端口，请自行配置`mongo.js`中的属性:
+
+- `mongoHost`
+- `mongoDatabase`
+- `mongoPort`
 
 ```
 npm install
@@ -133,7 +142,7 @@ pm2 start production.js
 server{
     listen 80;                                      #如果是https, 则替换80为443
     server_name *.smallpath.me smallpath.me;        #替换域名
-    root /alidata/www/Blog/client/front/dist;       #替换路径为构建出来的dist路径
+    root /alidata/www/Blog/front/dist;       #替换路径为构建出来的dist路径
     set $node_port 3000;
     set $ssr_port 8080;
 
@@ -167,7 +176,7 @@ server{
 
 开发端口为本机8080
 
-## client/back
+## admin
 博客的后台管理单页
 
 ```
@@ -179,9 +188,9 @@ npm run build
 
 ```
 server{
-    listen 80;                                      #如果是https, 则替换80为443
-    server_name admin.smallpath.me;                 #替换域名
-    root /alidata/www/Blog/client/front/dist;       #替换路径为构建出来的dist路径
+    listen 80;                                     #如果是https, 则替换80为443
+    server_name admin.smallpath.me;                #替换域名
+    root /alidata/www/Blog/admin/dist;       #替换路径为构建出来的dist路径
     set $node_port 3000;
 
     index index.js index.html index.htm;
