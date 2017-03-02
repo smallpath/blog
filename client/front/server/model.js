@@ -1,8 +1,5 @@
-const config = {
-  mongoHost: '127.0.0.1',
-  mongoDatabase: 'blog',
-  mongoPort: 27017
-}
+const config = require('./mongo.js')
+
 const mongoose = require('mongoose')
 const log = require('log4js').getLogger('ssr axios')
 
@@ -66,25 +63,16 @@ let theme = new Schema({
   option: Schema.Types.Mixed
 })
 
-let user = new Schema({
-  name: String,
-  displayName: String,
-  password: String,
-  email: String
-})
-
 post = mongoose.model('post', post)
 category = mongoose.model('category', category)
 option = mongoose.model('option', option)
 theme = mongoose.model('theme', theme)
 tag = mongoose.model('tag', tag)
-user = mongoose.model('user', user)
 
 module.exports = {
   post,
   category,
   option,
   tag,
-  user,
   theme
 }
