@@ -1,6 +1,6 @@
-# back
+# admin
 
-> back spa for blog
+> admin spa for blog
 
 ## Build Setup
 

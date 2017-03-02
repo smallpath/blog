@@ -1,7 +1,7 @@
 {
-  "name": "back",
+  "name": "admin",
   "version": "1.0.0",
-  "description": "back spa for blog",
+  "description": "admin spa for blog",
   "author": "Smallpath <smallpath2013@gmail.com>",
   "private": true,
   "scripts": {
