@@ -7,17 +7,15 @@ const resolve = file => path.resolve(__dirname, file)
 const express = require('express')
 const schedule = require('node-schedule')
 const createBundleRenderer = require('vue-server-renderer').createBundleRenderer
-const request = require('axios')
 
 const sendGoogleAnalytic = require('./middleware/serverGoogleAnalytic')
 const favicon = require('./middleware/favicon')
 const getRobotsFromConfig = require('./server/robots.js')
-const { api: sitemapApi, getSitemapFromBody } = require('./server/sitemap.js')
-const { api: rssApi, getRssBodyFromBody } = require('./server/rss.js')
+const { api: sitemapApi, params: sitemapParams, getSitemapFromBody } = require('./server/sitemap.js')
+const { api: rssApi, params: rssParams, getRssBodyFromBody } = require('./server/rss.js')
 const inline = isProd ? fs.readFileSync(resolve('./dist/styles.css'), 'utf-8') : ''
 const config = require('./server/config')
-
-require('./server/server-axios')
+const request = require('./server/server-axios')
 
 const chunkObj = {}
 if (isProd) {
@@ -39,11 +37,11 @@ let robots = ''
 config.flushOption().then(() => {
   robots = getRobotsFromConfig(config)
 
-  const flushSitemap = () => request.get(sitemapApi).then(result => {
+  const flushSitemap = () => request.get(sitemapApi, sitemapParams).then(result => {
     sitemap = getSitemapFromBody(result, config)
   })
 
-  const flushRss = () => request.get(rssApi).then(result => {
+  const flushRss = () => request.get(rssApi, rssParams).then(result => {
     rss = getRssBodyFromBody(result, config)
   })
 

@@ -1,5 +1,5 @@
 const isProd = process.env.NODE_ENV === 'production'
-const request = require('axios')
+const request = require('./server-axios')
 
 let siteUrl = 'http://localhost:8080'
 let title = 'Blog'
