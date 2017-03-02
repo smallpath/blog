@@ -48,6 +48,7 @@ Table of Contents
   - [x] 按需分块加载
   - [x] service worker缓存所有资源
   - [x] SSR服务端直连mongo
+  - [x] 乞丐版axios以减小打包大小
   - [ ] 乞丐版vuex以减小打包大小
   - [ ] LocalStorage替换service worker
 - [x] 后台管理单页
@@ -179,9 +180,9 @@ npm run build
 
 ```
 server{
-    listen 80;                                      #如果是https, 则替换80为443
-    server_name admin.smallpath.me;                 #替换域名
-    root /alidata/www/Blog/client/front/dist;       #替换路径为构建出来的dist路径
+    listen 80;                                     #如果是https, 则替换80为443
+    server_name admin.smallpath.me;                #替换域名
+    root /alidata/www/Blog/client/back/dist;       #替换路径为构建出来的dist路径
     set $node_port 3000;
 
     index index.js index.html index.htm;
