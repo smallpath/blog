@@ -1,0 +1,30 @@
+{
+  "apps": [{
+    "name": "backend",
+    "script": "server/entry.js",
+    "cwd": "",
+    "exec_mode": "cluster",
+    "instances": 0,
+    "max_memory_restart": "256M",
+    "autorestart": true,
+    "node_args": [],
+    "args": [],
+    "env": {
+      
+    }
+  },
+  {
+    "name": "frontend",
+    "script": "front/production.js",
+    "cwd": "",
+    "exec_mode": "cluster",
+    "instances": 0,
+    "max_memory_restart": "256M",
+    "autorestart": true,
+    "node_args": [],
+    "args": [],
+    "env": {
+      
+    }
+  }]
+}
