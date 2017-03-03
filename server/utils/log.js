@@ -8,6 +8,6 @@ const config = require('../conf/config');
 //   replaceConsole: true
 // });
 
-let log = log4js.getLogger(config.appName);
+let log = log4js.getLogger(config.mongoDatabase);
 
 module.exports = log;

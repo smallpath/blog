@@ -1,5 +1,6 @@
 const isProd = process.env.NODE_ENV === 'production'
 const request = require('./server-axios')
+const { ssrPort } = require('./mongo')
 
 let siteUrl = 'http://localhost:8080'
 let title = 'Blog'
@@ -33,6 +34,8 @@ function flushOption () {
     favicon += options['faviconUrl']
   })
 }
+
+exports.ssrPort = ssrPort
 
 Object.defineProperty(exports, 'title', {
   enumerable: true,

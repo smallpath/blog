@@ -171,7 +171,7 @@ config.flushOption().then(() => {
     })
   })
 
-  const port = process.env.PORT || 8080
+  const port = config.ssrPort
   app.listen(port, () => {
     log.debug(`server started at localhost:${port}`)
   })

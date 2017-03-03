@@ -1,7 +1,14 @@
-module.exports = {
-  enableRestfulRequest: false,
+const {
+  mongoHost,
+  mongoDatabase,
+  mongoPort,
+  ssrPort
+} = process.env
 
-  mongoHost: '127.0.0.1',
-  mongoDatabase: 'blog',
-  mongoPort: 27017
+module.exports = {
+  ssrPort: ssrPort || 8080,
+
+  mongoHost: mongoHost || '127.0.0.1',
+  mongoDatabase: mongoDatabase || 'blog',
+  mongoPort: mongoPort || 27017
 }
