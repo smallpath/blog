@@ -64,10 +64,10 @@ Table of Contents
   - [x] RESTful添加select字段过滤
   - [x] 标签及分类移至文章中 
   - [x] 七牛access_token下发及鉴权
-  - [ ] lint
+  - [x] lint
 - [x] 部署文档
 - [x] API文档
-- [ ] Docker
+- [x] Docker
 - [ ] CI
 
 # 构建与部署
