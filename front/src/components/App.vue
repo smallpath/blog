@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from '../store/vuex'
 import Sidebar from './Sidebar'
 import LoadingBar from '../components/Loading'
 import MyHeader from '../components/Header'

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from '../store/vuex'
 
 function fetchAchieves(store, to, callback) {
   return store.dispatch('FETCH_ACHIEVE', {

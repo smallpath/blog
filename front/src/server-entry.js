@@ -18,7 +18,6 @@ export default context => {
   store.state.supportWebp = context.supportWebp
 
   const s = isDev && Date.now()
-
   return Promise.all(preFetchComponent.concat(router.getMatchedComponents()).map((component, index) => {
     const number = component.chunkNumber
     if (typeof number === 'number') {

@@ -7,16 +7,20 @@ const callback = isProd ? setTimeout : router.onReady.bind(router)
 if (isProd) {
   store.state.isLoadingAsyncComponent = true
 }
+
 // setTimeout to make the following chunks loaded to webpack modules,
 // therefore webpackJsonp won't create script to head to send a request
 callback(() => {
   if (isProd) store.state.isLoadingAsyncComponent = false
   let realApp = isProd ? new Vue(appOption) : app
+
   // SSR can not render hash since browsers even don't send it
   // therefore we must hydrate the hash for the client side vue-router,
   // which is important for hash anchor jump especially for Table Of Contents(toc)
-  window.__INITIAL_STATE__.route.hash = window.location.hash
-  store.replaceState(window.__INITIAL_STATE__)
+  if (window.__INITIAL_STATE__) {
+    window.__INITIAL_STATE__.route.hash = window.location.hash
+    store.replaceState(window.__INITIAL_STATE__)
+  }
   realApp.$mount('#app')
 
   // service worker

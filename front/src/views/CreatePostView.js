@@ -1,4 +1,4 @@
-const vuex = require('vuex')
+const vuex = require('../store/vuex')
 const { mapGetters } = vuex
 const Post = require('../components/Post')
 const mock404 = require('../utils/404')

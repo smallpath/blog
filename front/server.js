@@ -77,7 +77,8 @@ config.flushOption().then(() => {
     const i = template.indexOf('<div id=app></div>')
     return {
       head: template.slice(0, i).replace('<link href="/dist/styles.css" rel="stylesheet">', style),
-      tail: template.slice(i + '<div id=app></div>'.length)
+      tail: template.slice(i + '<div id=app></div>'.length),
+      origin: template
     }
   }
 
@@ -166,7 +167,7 @@ config.flushOption().then(() => {
     })
 
     renderStream.on('error', err => {
-      res.end(html.tail)
+      res.end(html.origin)
       log.error(err)
     })
   })

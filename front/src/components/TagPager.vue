@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from '../store/vuex'
 import BlogSummary from './BlogSummary'
 
 function getItems(store, { path, query, params }, callback) {

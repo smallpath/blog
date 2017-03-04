@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from '../store/vuex'
 
 function fetchTags(store, { path: pathName, params, query }, callback) {
   return store.dispatch('FETCH_TAGS', {
