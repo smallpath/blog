@@ -53,7 +53,7 @@ if (process.env.NODE_ENV === 'production') {
     new SWPrecachePlugin({
       cacheId: 'blog',
       filename: 'service-worker.js',
-      minify: true,
+      minify: false,
       mergeStaticsConfig: true,
       staticFileGlobs: [
         path.join(__dirname, '../dist/static/*.*')
@@ -61,7 +61,8 @@ if (process.env.NODE_ENV === 'production') {
       stripPrefixMulti: {
         [path.join(__dirname, '../dist/static')]: '/static'
       },
-      dontCacheBustUrlsMatching: /./,
+      // add hash to path
+      dontCacheBustUrlsMatching: false,
       staticFileGlobsIgnorePatterns: [
         /index\.html$/,
         /\.map$/,
