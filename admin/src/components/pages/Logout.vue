@@ -6,7 +6,7 @@ import Api from '../../store/api'
 
 export default {
   methods: {
-    logout () {
+    logout() {
       Api.logout().then(response => {
         window.localStorage.removeItem('token')
         window.localStorage.removeItem('username')
@@ -20,13 +20,13 @@ export default {
     }
   },
   watch: {
-    '$route': function (route) {
+    '$route': function(route) {
       if (route.name === 'logout') {
         this.logout()
       }
     }
   },
-  created () {
+  created() {
     this.logout()
   }
 }

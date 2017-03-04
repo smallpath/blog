@@ -14,7 +14,7 @@ import Top from './pages/Top'
 
 export default {
   name: 'dashboard',
-  data () {
+  data() {
     return {
       title: ''
     }

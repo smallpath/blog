@@ -20,18 +20,18 @@
 <script>
 export default {
   name: 'top',
-  data () {
+  data() {
     return {
       title: ''
     }
   },
   computed: {
-    displayName () {
+    displayName() {
       return this.$store.state.user.displayName || -1
     }
   },
   methods: {
-    handleSelect (index, indexPath) {
+    handleSelect(index, indexPath) {
       if (index === '1-1') {
         this.$router.push({
           name: 'userEdit'
@@ -43,7 +43,7 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     if (this.displayName === -1) {
       let username = window.localStorage.getItem('username')
       this.$store.dispatch('FETCH_USER', {

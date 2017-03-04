@@ -24,7 +24,7 @@ const blackModelArr = ['option', 'user']
 export default {
   name: 'list',
   props: ['options'],
-  data () {
+  data() {
     let isPost = this.options.name === 'post'
     let isPage = this.options.name === 'page'
     let form = this.options.items.reduce((prev, curr) => {
@@ -39,12 +39,12 @@ export default {
     }
   },
   computed: {
-    list () {
+    list() {
       return this.$store.state.list
     }
   },
   methods: {
-    parseTypeBeforeSubmit () {
+    parseTypeBeforeSubmit() {
       let isOk = true
       this.options.items.forEach(item => {
         try {
@@ -57,21 +57,21 @@ export default {
       })
       return isOk
     },
-    parseTypeAfterFetch () {
+    parseTypeAfterFetch() {
       this.options.items.forEach(item => {
         if (item.sourceType === 'Object') {
           this.form[item.prop] = JSON.stringify(this.form[item.prop], null, 2)
         }
       })
     },
-    setParams (response) {
+    setParams(response) {
       let id = this.$route.params.id
       if (response._id && typeof id === 'undefined') {
         this.$router.replace({ params: { id: response._id } })
         this.form = response
       }
     },
-    onSubmit () {
+    onSubmit() {
       if (this.parseTypeBeforeSubmit() === false) {
         return this.$message.error('属性验证失败')
       }
@@ -107,7 +107,7 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     // flatten user and options into obj
     if (this.options.isPlain === true) {
       return this.$store.dispatch('FETCH_CREATE', Object.assign({}, {

@@ -26,7 +26,7 @@ import Api from '../../store/api'
 
 export default {
   name: 'login',
-  data () {
+  data() {
     return {
       title: '',
       form: {
@@ -36,7 +36,7 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       Api.login(this.form).then(response => {
         if (response.data.status === 'fail') {
           this.$message({
@@ -63,7 +63,7 @@ export default {
       }).catch(err => console.error(err))
     }
   },
-  mounted () {
+  mounted() {
     this.$store.dispatch('FETCH_OPTIONS').then(() => {
       this.title = this.$store.state.siteInfo['title'].value || ''
     })

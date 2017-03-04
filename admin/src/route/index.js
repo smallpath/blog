@@ -13,7 +13,7 @@ import Logout from '../components/pages/Logout'
 
 export default new VueRouter({
   mode: 'history',
-  scrollBehavior: function (to, from, savedPosition) {
+  scrollBehavior: function(to, from, savedPosition) {
     return savedPosition || { x: 0, y: 0 }
   },
   routes: [

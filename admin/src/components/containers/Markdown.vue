@@ -58,7 +58,7 @@ import moment from 'moment'
 export default {
   name: 'markdown',
   props: ['value', 'toc'],
-  data () {
+  data() {
     return {
       labels: {
         'edit': '编辑模式',
@@ -77,12 +77,12 @@ export default {
     }
   },
   computed: {
-    compiledMarkdown () {
+    compiledMarkdown() {
       return marked(this.value.replace(/<!--more-->/g, ''))
     }
   },
   methods: {
-    handleSelect (key, keyPath) {
+    handleSelect(key, keyPath) {
       if (keyPath.length === 1) {
         switch (key) {
           case '1':
@@ -127,19 +127,19 @@ export default {
         }
       }
     },
-    handleTab: function (e) {
+    handleTab: function(e) {
       this._preInputText('\t')
       e.preventDefault()
     },
-    handleInput: _.debounce(function (e) {
+    handleInput: _.debounce(function(e) {
       let value = e.target.value
       this.$emit('input', value)
     }, 300),
-    handleTocInput: _.debounce(function (e) {
+    handleTocInput: _.debounce(function(e) {
       let value = e.target.value
       this.$emit('change', value)
     }, 300),
-    _preInputText (text, preStart, preEnd) {
+    _preInputText(text, preStart, preEnd) {
       let textControl = this.$refs.markdown
       const start = textControl.selectionStart
       const end = textControl.selectionEnd
@@ -154,8 +154,8 @@ export default {
 
       this.$emit('input', input)
     },
-    handlePreview (file) {},
-    handleSuccess (response, file, fileList) {
+    handlePreview(file) {},
+    handleSuccess(response, file, fileList) {
       let key = response.key
       let prefix = this.supportWebp ? 'webp/' : ''
       const preUrl = `${this.bucketHost}/${encodeURI(key)}`
@@ -184,14 +184,14 @@ export default {
         })
       })
     },
-    handleError (err, response, file) {
+    handleError(err, response, file) {
       if (err.status === 401) {
         this.$message.error('图片上传失败，请求中未附带Token')
       } else {
         this.$message.error(JSON.stringify(err))
       }
     },
-    beforeUpload (file) {
+    beforeUpload(file) {
       let curr = moment().format('YYYYMMDD').toString()
       let prefix = moment(file.lastModified).format('HHmmss').toString()
       let suffix = file.name
@@ -213,10 +213,10 @@ export default {
         }
       })
     },
-    _uploadImage () {
+    _uploadImage() {
       this.isUploadShow = true
     },
-    _importImage () {
+    _importImage() {
       this.$prompt('请输入图片的链接', '导入图片链接', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
@@ -233,19 +233,19 @@ export default {
         })
       })
     },
-    _insertMore () {
+    _insertMore() {
       this._preInputText('<!--more-->', 12, 12)
     },
-    _boldText () {
+    _boldText() {
       this._preInputText('**加粗文字**', 2, 6)
     },
-    _italicText () {
+    _italicText() {
       this._preInputText('_斜体文字_', 1, 5)
     },
-    _blockquoteText () {
+    _blockquoteText() {
       this._preInputText('> 引用', 3, 5)
     },
-    _codeText () {
+    _codeText() {
       this._preInputText('```\ncode block\n```', 5, 15)
     }
   }

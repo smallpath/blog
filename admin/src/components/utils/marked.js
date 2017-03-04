@@ -4,7 +4,7 @@ import hljs from 'highlight.js'
 const renderer = new Marked.Renderer()
 export const toc = []
 
-renderer.heading = function (text, level) {
+renderer.heading = function(text, level) {
   var slug = text.toLowerCase().replace(/\s+/g, '-')
   toc.push({
     level: level,
@@ -15,7 +15,7 @@ renderer.heading = function (text, level) {
 }
 
 Marked.setOptions({
-  highlight: function (code, lang) {
+  highlight: function(code, lang) {
     if (hljs.getLanguage(lang)) {
       return hljs.highlight(lang, code).value
     } else {

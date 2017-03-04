@@ -58,7 +58,7 @@
 export default {
   name: 'list',
   props: ['options'],
-  data () {
+  data() {
     let isPost = this.options.name === 'post'
     let isPage = this.options.name === 'page'
     return {
@@ -68,10 +68,10 @@ export default {
     }
   },
   computed: {
-    list () {
+    list() {
       return this.$store.state.list
     },
-    filters () {
+    filters() {
       if (!this.isPost && !this.isPage) return []
 
       let obj = this.list.reduce((prev, value) => {
@@ -89,15 +89,15 @@ export default {
     }
   },
   methods: {
-    filterTag (value, row) {
+    filterTag(value, row) {
       return row.tags.indexOf(value) !== -1
     },
-    handleClick ({ _id }) {
+    handleClick({ _id }) {
       this.$router.push({
         path: `/${this.options.name}/create/${_id}`
       })
     },
-    handleDelete ({ _id }, index) {
+    handleDelete({ _id }, index) {
       this.$store.dispatch('DELETE', Object.assign({}, {
         id: _id
       }, this.options)).then(() => {
@@ -105,7 +105,7 @@ export default {
       }).catch(err => console.error(err))
     }
   },
-  created () {
+  created() {
     this.$store.dispatch('FETCH_LIST', this.options).then(() => {
       this.isLoading = false
     }).catch(err => console.error(err))

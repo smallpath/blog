@@ -55,26 +55,26 @@
 <script>
 export default {
   name: 'sidebar',
-  data () {
+  data() {
     return {
       title: '',
       fullPath: ''
     }
   },
   watch: {
-    '$route': function (route) {
+    '$route': function(route) {
       this.fullPath = route.path.split('/').slice(0, 3).join('/')
     }
   },
   methods: {
-    push (name) {
+    push(name) {
       this.$router.push({ name })
     },
-    handleSelect (index, indexPath) {
+    handleSelect(index, indexPath) {
 
     }
   },
-  beforeMount () {
+  beforeMount() {
     this.fullPath = this.$route.path.split('/').slice(0, 3).join('/')
   }
 }

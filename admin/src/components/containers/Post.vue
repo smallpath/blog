@@ -62,7 +62,7 @@ export default {
   components: {
     Markdown
   },
-  data () {
+  data() {
     let isPost = this.options.name === 'post'
     let isPage = this.options.name === 'page'
     let id = typeof this.$route.params.id === 'undefined' ? -1 : this.$route.params.id
@@ -86,7 +86,7 @@ export default {
     }
   },
   computed: {
-    splitIndex () {
+    splitIndex() {
       return this.options.items.reduce((prev, curr, index) => {
         if (curr.type === 'split') {
           return index
@@ -94,17 +94,17 @@ export default {
         return prev
       }, -1)
     },
-    prevItems () {
+    prevItems() {
       return this.options.items.slice(0, this.splitIndex)
     },
-    nextItems () {
+    nextItems() {
       return this.options.items.slice(this.splitIndex)
     }
   },
   watch: {
     'form.markdownContent': {
       immediate: true,
-      handler: function (val, oldVal) {
+      handler: function(val, oldVal) {
         if (!val || !this.form.updatedAt) return
         const url = this.$store.state.siteInfo.siteUrl.value
         const path = this.form.pathName
@@ -128,7 +128,7 @@ export default {
     }
   },
   methods: {
-    jump (type) {
+    jump(type) {
       if (this.id === -1) return
 
       let key = type === 'prev' ? '$lt' : '$gt'
@@ -149,7 +149,7 @@ export default {
         }
       })
     },
-    restore (key, val) {
+    restore(key, val) {
       this.$confirm('', '发现草稿，是否恢复?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -167,25 +167,25 @@ export default {
         })
       })
     },
-    saveLS (key, value) {
+    saveLS(key, value) {
       window.localStorage.setItem(key, value)
     },
-    getLS (key) {
+    getLS(key) {
       return window.localStorage.getItem(key)
     },
-    onSaveToc () {
+    onSaveToc() {
       toc.length = 0
       marked(this.form.markdownContent)
       let tocMarkdown = this.tocToTree(toc)
       this.form.markdownToc = '**文章目录**\n' + tocMarkdown
     },
-    tocToTree (toc) {
+    tocToTree(toc) {
       return toc.map(item => {
         let times = (item.level - 1) * 2
         return `${' '.repeat(times)} - [${item.title}](#${item.slug})`
       }).join('\n')
     },
-    validate () {
+    validate() {
       this.form.summary = marked(this.form.markdownContent.split('<!--more-->')[0])
       this.form.content = marked(this.form.markdownContent.replace(/<!--more-->/g, ''))
       this.form.markdownToc = this.form.markdownToc || ''
@@ -197,7 +197,7 @@ export default {
       }
       this.form.updatedAt = moment().format('YYYY-MM-DD HH:mm:ss')
     },
-    onSubmit () {
+    onSubmit() {
       this.validate()
       this.$store.dispatch('POST', {
         model: this.options.model,
@@ -219,14 +219,14 @@ export default {
         }
       }).catch(err => console.error(err))
     },
-    handleAddTag (tag) {
+    handleAddTag(tag) {
       this.form.tags.indexOf(tag) === -1 && this.form.tags.push(tag)
     },
-    handleDelete (index) {
+    handleDelete(index) {
       this.form.tags.splice(index, 1)
     }
   },
-  created () {
+  created() {
     if (this.id !== -1) {
       // fetch from post model
       this.$store.dispatch('FETCH_BY_ID', Object.assign({}, {

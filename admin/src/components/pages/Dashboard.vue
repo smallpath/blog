@@ -49,7 +49,7 @@
 <script>
 export default {
   name: 'info',
-  data () {
+  data() {
     return {
       sliderValue: 100,
       data: [],
@@ -61,7 +61,7 @@ export default {
     }
   },
   methods: {
-    handleNodeClick (data, node, tree) {
+    handleNodeClick(data, node, tree) {
       if (data.title !== '最近发布的文章') {
         this.$router.push({
           name: data.type === 'post' ? 'postCreate' : 'pageCreate',
@@ -70,7 +70,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.$store.dispatch('FETCH', {
       model: 'post',
       query: {

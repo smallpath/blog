@@ -12,15 +12,15 @@ import { getChineseDesc } from './utils/error'
 
 export default {
   name: 'app',
-  data () {
+  data() {
     return {}
   },
   computed: {
-    siteInfo () {
+    siteInfo() {
       return this.$store.state.siteInfo
     }
   },
-  beforeMount () {
+  beforeMount() {
     this.$store.dispatch('FETCH_OPTIONS').then(() => {
       if (this.siteInfo['title'] && typeof document !== 'undefined') {
         document.title = this.siteInfo['title'].value
