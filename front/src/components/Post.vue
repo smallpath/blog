@@ -56,23 +56,23 @@ export default {
     return `${props.post.pathName}::${props.post.updatedAt}::webp::${props.supportWebp}`
   },
   computed: {
-    content () {
+    content() {
       const post = this.post
       const result = post.toc ? `<div id="toc" class="toc">${post.toc}</div>${post.content}` : post.content
       return this.filterWebp(result)
     },
-    shouldShow () {
+    shouldShow() {
       return this.post.pathName !== 404 && this.type === 'post'
     },
-    commentName () {
+    commentName() {
       return this.siteInfo.commentName.value || ''
     },
-    siteURL () {
+    siteURL() {
       return this.siteInfo.siteUrl.value || 'localhost'
     }
   },
   methods: {
-    filterWebp (content) {
+    filterWebp(content) {
       if (!this.supportWebp) return content.replace(/\/webp/gm, '')
       return content
     }

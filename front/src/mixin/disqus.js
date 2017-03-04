@@ -5,17 +5,17 @@ export default {
     '$route': 'resetDisqus'
   },
   methods: {
-    reset (dsq) {
+    reset(dsq) {
       const self = this
       dsq.reset({
         reload: true,
-        config: function () {
+        config: function() {
           this.page.identifier = (self.$route.path || window.location.pathname)
           this.page.url = window.location.href
         }
       })
     },
-    resetDisqus (val, oldVal) {
+    resetDisqus(val, oldVal) {
       if (TYPES.indexOf(val.name) === -1) return
       if (val.path === oldVal.path) return
       if (window.DISQUS) {

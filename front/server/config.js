@@ -21,7 +21,7 @@ let ga = {
   ].map(item => item.toLowerCase().replace(/\s+/g, ''))
 }
 
-function flushOption () {
+function flushOption() {
   return request.get('http://localhost:3000/api/option').then(res => {
     let options = res.data.reduce((prev, curr) => {
       prev[curr.key] = curr.value
@@ -39,58 +39,58 @@ exports.ssrPort = ssrPort
 
 Object.defineProperty(exports, 'title', {
   enumerable: true,
-  get: function () {
+  get: function() {
     return title
   },
-  set: function (value) {
+  set: function(value) {
     title = value
   }
 })
 Object.defineProperty(exports, 'siteUrl', {
   enumerable: true,
-  get: function () {
+  get: function() {
     return siteUrl
   },
-  set: function (value) {
+  set: function(value) {
     siteUrl = value
   }
 })
 Object.defineProperty(exports, 'description', {
   enumerable: true,
-  get: function () {
+  get: function() {
     return description
   },
-  set: function (value) {
+  set: function(value) {
     description = value
   }
 })
 Object.defineProperty(exports, 'googleTrackID', {
   enumerable: true,
-  get: function () {
+  get: function() {
     return googleTrackID
   },
-  set: function (value) {
+  set: function(value) {
     googleTrackID = value
   }
 })
 Object.defineProperty(exports, 'favicon', {
   enumerable: true,
-  get: function () {
+  get: function() {
     return favicon
   },
-  set: function (value) {
+  set: function(value) {
     favicon = value
   }
 })
 Object.defineProperty(exports, 'flushOption', {
   enumerable: true,
-  get: function () {
+  get: function() {
     return flushOption
   }
 })
 Object.defineProperty(exports, 'ga', {
   enumerable: true,
-  get: function () {
+  get: function() {
     return ga
   }
 })

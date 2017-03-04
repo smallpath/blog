@@ -1,4 +1,4 @@
-export default function (fullPath) {
+export default function(fullPath) {
   let screen = window.screen
   let params = {
     dt: document.title,

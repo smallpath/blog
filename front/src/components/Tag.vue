@@ -17,7 +17,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-function fetchTags (store, { path: pathName, params, query }, callback) {
+function fetchTags(store, { path: pathName, params, query }, callback) {
   return store.dispatch('FETCH_TAGS', {
     model: 'post',
     query: {
@@ -35,12 +35,12 @@ function fetchTags (store, { path: pathName, params, query }, callback) {
 }
 
 export default {
-  metaInfo () {
+  metaInfo() {
     return {
       title: this.title
     }
   },
-  data () {
+  data() {
     return {
       title: '标签'
     }
@@ -50,13 +50,13 @@ export default {
       'tags',
       'isLoadingAsyncComponent'
     ]),
-    sortedKeys () {
+    sortedKeys() {
       let ref = this.tags
       return Object.keys(ref).sort((a, b) => ref[b] - ref[a])
     }
   },
   preFetch: fetchTags,
-  beforeMount () {
+  beforeMount() {
     this.isLoadingAsyncComponent && this.$root._isMounted && fetchTags(this.$store, this.$route)
   }
 }

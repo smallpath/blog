@@ -1,4 +1,4 @@
-function get (url, cb) {
+function get(url, cb) {
   let requestTimeout, xhr
   try {
     xhr = new window.XMLHttpRequest()
@@ -10,7 +10,7 @@ function get (url, cb) {
     }
   }
 
-  xhr.onreadystatechange = function () {
+  xhr.onreadystatechange = function() {
     if (xhr.readyState !== 4) return
     clearTimeout(requestTimeout)
     cb(xhr.status !== 200 ? new Error('XHR: server response status is ' + xhr.status) : false, xhr.responseText)

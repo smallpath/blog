@@ -43,7 +43,7 @@
 import mixin from '../mixin/image'
 
 export default {
-  metaInfo () {
+  metaInfo() {
     const {
       title: { value: title },
       description: { value: description },
@@ -68,7 +68,7 @@ export default {
     }
   },
   mixins: [mixin],
-  preFetch (store, { path, params, query }) {
+  preFetch(store, { path, params, query }) {
     return Promise.all([store.dispatch('FETCH_OPTIONS'), store.dispatch('FETCH_FIREKYLIN')])
   }
 }

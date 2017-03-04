@@ -13,7 +13,7 @@
 import { mapGetters } from 'vuex'
 import BlogSummary from './BlogSummary'
 
-function getItems (store, { path, query, params }, callback) {
+function getItems(store, { path, query, params }, callback) {
   return store.dispatch('FETCH_TAG_PAGER', {
     model: 'post',
     query: {
@@ -38,7 +38,7 @@ function getItems (store, { path, query, params }, callback) {
 }
 
 export default {
-  metaInfo () {
+  metaInfo() {
     return {
       title: `标签${this.$route.params.tagName}下的文章`
     }
@@ -56,7 +56,7 @@ export default {
     ])
   },
   preFetch: getItems,
-  beforeMount () {
+  beforeMount() {
     this.isLoadingAsyncComponent && this.$root._isMounted && getItems(this.$store, this.$route)
   }
 }

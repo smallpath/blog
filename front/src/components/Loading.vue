@@ -17,7 +17,7 @@ export default {
       default: 0
     }
   },
-  data () {
+  data() {
     return {
       show: true,
       full: '',
@@ -26,7 +26,7 @@ export default {
     }
   },
   watch: {
-    progress (val, old) {
+    progress(val, old) {
       if (old !== val) {
         this.width = val
         this.$nextTick(() => {
@@ -36,7 +36,7 @@ export default {
     }
   },
   methods: {
-    isFull () {
+    isFull() {
       let isFull = this.width === 100
       if (isFull) {
         this.wait = true
@@ -54,7 +54,7 @@ export default {
         }, 400)
       }
     },
-    styling () {
+    styling() {
       if (!this.wait) {
         return { width: `${this.width}%` }
       } else {

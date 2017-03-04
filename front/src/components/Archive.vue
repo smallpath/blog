@@ -19,7 +19,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-function fetchAchieves (store, to, callback) {
+function fetchAchieves(store, to, callback) {
   return store.dispatch('FETCH_ACHIEVE', {
     model: 'post',
     query: {
@@ -40,12 +40,12 @@ function fetchAchieves (store, to, callback) {
 }
 
 export default {
-  metaInfo () {
+  metaInfo() {
     return {
       title: this.title
     }
   },
-  data () {
+  data() {
     return {
       title: '归档'
     }
@@ -57,7 +57,7 @@ export default {
     ])
   },
   preFetch: fetchAchieves,
-  beforeMount () {
+  beforeMount() {
     this.isLoadingAsyncComponent && this.$root._isMounted && fetchAchieves(this.$store, this.$route)
   }
 }

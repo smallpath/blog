@@ -47,7 +47,7 @@ config.flushOption().then(() => {
 
   flushSitemap()
   flushRss()
-  schedule.scheduleJob('30 3 * * * ', function () {
+  schedule.scheduleJob('30 3 * * * ', function() {
     flushRss()
     flushSitemap()
   })
@@ -72,7 +72,7 @@ config.flushOption().then(() => {
     })
   }
 
-  function flushHtml (template) {
+  function flushHtml(template) {
     const style = isProd ? `<style type="text/css">${inline}</style>` : ''
     const i = template.indexOf('<div id=app></div>')
     return {
@@ -81,7 +81,7 @@ config.flushOption().then(() => {
     }
   }
 
-  function createRenderer (bundle) {
+  function createRenderer(bundle) {
     return createBundleRenderer(bundle, {
       cache: require('lru-cache')({
         max: 1000,

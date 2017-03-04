@@ -7,15 +7,15 @@ export default {
       'siteInfo',
       'supportWebp'
     ]),
-    logoUrl () {
+    logoUrl() {
       return this.getValidImageUrl(this.option.logoUrl)
     },
-    sidebarUrl () {
+    sidebarUrl() {
       return this.getValidImageUrl(this.option.sidebarImageUrl)
     }
   },
   methods: {
-    getValidImageUrl (url) {
+    getValidImageUrl(url) {
       if (!this.supportWebp) return url.replace(/.webp$/, '.png').replace('/webp', '')
       return url
     }

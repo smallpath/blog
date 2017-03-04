@@ -65,7 +65,7 @@ callback(() => {
     letsGo(component, store, to, endLoadingCallback)
   })
 
-  function letsGo (component, store, to, endLoadingCallback) {
+  function letsGo(component, store, to, endLoadingCallback) {
     if (component && component.preFetch) {
       // component need fetching some data before navigating to it
       return component.preFetch(store, to, endLoadingCallback).catch(err => {

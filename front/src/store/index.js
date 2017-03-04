@@ -260,46 +260,46 @@ const store = new Vuex.Store({
   },
 
   getters: {
-    items (state) {
+    items(state) {
       return state.items
     },
-    siteInfo (state) {
+    siteInfo(state) {
       return state.siteInfo
     },
-    achieves (state) {
+    achieves(state) {
       return state.achieves
     },
-    menu (state) {
+    menu(state) {
       return state.menu
     },
-    page (state) {
+    page(state) {
       return state.route.query.page || 1
     },
-    totalPage (state) {
+    totalPage(state) {
       return state.totalPage
     },
-    progress (state) {
+    progress(state) {
       return state.progress
     },
-    option (state) {
+    option(state) {
       return state.theme.option
     },
-    prev (state) {
+    prev(state) {
       return state.prev
     },
-    next (state) {
+    next(state) {
       return state.next
     },
-    tags (state) {
+    tags(state) {
       return state.tags
     },
-    tagPager (state) {
+    tagPager(state) {
       return state.tagPager
     },
-    isLoadingAsyncComponent (state) {
+    isLoadingAsyncComponent(state) {
       return state.isLoadingAsyncComponent
     },
-    supportWebp (state) {
+    supportWebp(state) {
       return state.supportWebp
     }
   }

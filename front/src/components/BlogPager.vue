@@ -12,7 +12,7 @@
 import { mapGetters } from 'vuex'
 import BlogSummary from './BlogSummary'
 
-function fetchItems (store, { path, query, params }, callback) {
+function fetchItems(store, { path, query, params }, callback) {
   if (path !== '/') {
     return Promise.resolve()
   }
@@ -47,7 +47,7 @@ function fetchItems (store, { path, query, params }, callback) {
 
 export default {
   name: 'blog-pager',
-  metaInfo () {
+  metaInfo() {
     return {
       title: '首页'
     }
@@ -66,7 +66,7 @@ export default {
     ])
   },
   preFetch: fetchItems,
-  beforeMount () {
+  beforeMount() {
     this.isLoadingAsyncComponent && this.$root._isMounted && fetchItems(this.$store, this.$route)
   }
 }

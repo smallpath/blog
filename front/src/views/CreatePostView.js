@@ -3,12 +3,12 @@ const { mapGetters } = vuex
 const Post = require('../components/Post')
 const mock404 = require('../utils/404')
 
-module.exports = function (type) {
+module.exports = function(type) {
   const isPost = type === 'post'
   const action = isPost ? 'FETCH_BLOG' : 'FETCH_PAGE'
   const regExp = isPost ? /^\/post\//g : /^\//g
   const select = isPost ? { tags: 1, category: 1 } : {}
-  const preFetch = function (store, { path: pathName, params, query }, callback) {
+  const preFetch = function(store, { path: pathName, params, query }, callback) {
     pathName = pathName.replace(regExp, '')
     return store.dispatch(action, {
       model: 'post',
@@ -32,7 +32,7 @@ module.exports = function (type) {
     })
   }
   return {
-    metaInfo () {
+    metaInfo() {
       return {
         title: this.post.title
       }
@@ -46,16 +46,16 @@ module.exports = function (type) {
         'isLoadingAsyncComponent',
         'supportWebp'
       ]),
-      post () {
+      post() {
         const target = isPost ? this.$store.state.blog : this.$store.state.page
         return target.pathName ? target : mock404
       }
     },
     preFetch,
-    beforeMount () {
+    beforeMount() {
       this.isLoadingAsyncComponent && this.$root._isMounted && preFetch(this.$store, this.$route)
     },
-    render (h) {
+    render(h) {
       return h(Post, {
         props: {
           type,

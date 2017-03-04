@@ -10,7 +10,7 @@
         required: true
       }
     },
-    mounted () {
+    mounted() {
       if (window.DISQUS) {
         this.reset(window.DISQUS)
         return
@@ -18,19 +18,19 @@
       this.init()
     },
     methods: {
-      reset (dsq) {
+      reset(dsq) {
         const self = this
         dsq.reset({
           reload: true,
-          config: function () {
+          config: function() {
             this.page.identifier = (self.$route.path || window.location.pathname)
             this.page.url = self.$el.baseURI
           }
         })
       },
-      init () {
+      init() {
         const self = this
-        window.disqus_config = function () {
+        window.disqus_config = function() {
           this.page.identifier = (self.$route.path || window.location.pathname)
           this.page.url = self.$el.baseURI
         }

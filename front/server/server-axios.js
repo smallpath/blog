@@ -1,6 +1,6 @@
 const models = require('./model')
 module.exports = process.__API__ = {
-  get: function (target, options = {}) {
+  get: function(target, options = {}) {
     const modelName = target.split('/').slice(-1)
     const query = options.params || {}
     const model = models[modelName]
@@ -12,7 +12,7 @@ module.exports = process.__API__ = {
   }
 }
 
-function queryModel (model, query) {
+function queryModel(model, query) {
   let conditions = {}
   let select = {}
   if (query.conditions) {

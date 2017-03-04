@@ -22,7 +22,7 @@ export default {
     return `${props.article.pathName}::${props.article.updatedAt}::webp::${props.supportWebp}`
   },
   methods: {
-    filterWebp (content) {
+    filterWebp(content) {
       if (!this.supportWebp) return content.replace(/\/webp/gm, '')
       return content
     }

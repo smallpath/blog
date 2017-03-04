@@ -52,7 +52,7 @@ if (!process.BROWSER) {
 
 export default new VueRouter({
   mode: 'history',
-  scrollBehavior: function (to, from, savedPosition) {
+  scrollBehavior: function(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
     } else {
