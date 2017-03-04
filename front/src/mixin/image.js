@@ -8,10 +8,10 @@ export default {
       'supportWebp'
     ]),
     logoUrl() {
-      return this.getValidImageUrl(this.option.logoUrl)
+      return this.getValidImageUrl(this.option ? this.option.logoUrl || '' : '')
     },
     sidebarUrl() {
-      return this.getValidImageUrl(this.option.sidebarImageUrl)
+      return this.getValidImageUrl(this.option ? this.option.sidebarImageUrl || '' : '')
     }
   },
   methods: {

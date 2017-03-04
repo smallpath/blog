@@ -5,7 +5,7 @@
         ? 'url(' + sidebarUrl + ')' : ''
       }">
       <div class="btn-bar"><i></i></div>
-      <h1><a :style="{'color': option.sidebarFontColor || ''}" href="/">{{ siteInfo.title.value }}</a></h1>
+      <h1><a :style="{'color': option ? option.sidebarFontColor || '' : ''}" href="/">{{ siteInfo.title.value }}</a></h1>
       <a class=me href="/about">
         <img :src="logoUrl" :alt="siteInfo.title.value">
       </a>

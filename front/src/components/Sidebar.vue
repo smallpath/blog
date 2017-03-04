@@ -1,36 +1,30 @@
 <template>
   <nav id=sidebar class=behavior_1 
           :class="{'sidebar-image': sidebarUrl !== ''}"
-          :style="{ 
-            'background-image': sidebarUrl 
-            ? 'url(' + sidebarUrl + ')' : '',
-            'transition': sidebarUrl ? option.sidebarMoveCss: ''
-          }">
+          :style="imageStyle">
     <div class=wrap>
       <div class=profile>
         <a href="/"> 
           <img :src="logoUrl" 
             :alt="siteInfo.title.value">
         </a> 
-        <span :style="{ 'color': option.sidebarFontColor || '' }" >{{siteInfo.title.value}}</span>
+        <span :style="{ 'color': sidebarUrl ? option.sidebarFontColor : '' }" >{{siteInfo.title.value}}</span>
       </div>
-      <ul class="buttons">
+      <ul class="buttons" v-if="option && option.menu">
         <li v-for="menu in option.menu">
           <router-link 
-            :style="{ 'color': option.sidebarFontColor || '' }"  
+            :style="buttonColor"  
             :to="{ path: menu.url }" :title="menu.label"> <i class="iconfont" :class="'icon-' + menu.option"></i> <span>{{menu.label}}</span></router-link>
         </li>
       </ul>
-      <ul class="buttons">
+      <ul class="buttons" v-if="siteInfo && siteInfo.weiboUrl">
         <li>
-          <a class="inline" :style="{'color': option.sidebarFontColor || ''}" 
-            v-if="siteInfo.githubUrl.value"
+          <a class="inline" :style="buttonColor" v-if="siteInfo.githubUrl.value"
             rel="nofollow" target="_blank" :href="'https://github.com/'+siteInfo.githubUrl.value"><i class="iconfont icon-github-v" title="GitHub"></i></a>
-          <a class="inline" :style="{'color': option.sidebarFontColor || ''}" 
-            v-if="siteInfo.weiboUrl.value" 
+          <a class="inline" :style="buttonColor" v-if="siteInfo.weiboUrl.value" 
             rel="nofollow" target="_blank" :href="siteInfo.weiboUrl.value"><i class="iconfont icon-twitter-v" title="Twitter"></i></a>
-          <a class="inline" :style="{'color': option.sidebarFontColor || ''}" href="/rss.xml"><i class="iconfont icon-rss-v" title="RSS"></i></a>
-          <a class="inline" :style="{'color': option.sidebarFontColor || ''}" 
+          <a class="inline" :style="buttonColor" href="/rss.xml"><i class="iconfont icon-rss-v" title="RSS"></i></a>
+          <a class="inline" :style="buttonColor" 
             v-if="siteInfo.siteUrl.value"
             target=_blank :href="'https://www.google.com/webhp#newwindow=1&safe=strict&q=site:' + siteInfo.siteUrl.value"><i class="iconfont icon-search" title="Search"></i></a>
         </li>
@@ -41,6 +35,10 @@
 
 <script>
 import mixin from '../mixin/image'
+
+function fetchInfo(store, { path, params, query }) {
+  return Promise.all([store.dispatch('FETCH_OPTIONS'), store.dispatch('FETCH_FIREKYLIN')])
+}
 
 export default {
   metaInfo() {
@@ -68,8 +66,20 @@ export default {
     }
   },
   mixins: [mixin],
-  preFetch(store, { path, params, query }) {
-    return Promise.all([store.dispatch('FETCH_OPTIONS'), store.dispatch('FETCH_FIREKYLIN')])
+  preFetch: fetchInfo,
+  computed: {
+    buttonColor() {
+      return { 'color': this.sidebarUrl ? this.option.sidebarFontColor : '' }
+    },
+    imageStyle() {
+      const sidebarUrl = this.sidebarUrl
+      const sidebarMoveCss = sidebarUrl ? this.option.sidebarMoveCss: ''
+      const result = { 
+        'background-image': sidebarUrl ? 'url(' + sidebarUrl + ')' : '',
+        'transition': sidebarMoveCss
+      }
+      return result
+    }
   }
 }
 </script>

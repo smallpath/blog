@@ -29,6 +29,15 @@ const store = new Vuex.Store({
       },
       logoUrl: {
         value: ''
+      },
+      description: {
+        value: ''
+      },
+      keywords: {
+        value: ''
+      },
+      faviconUrl: {
+        value: ''
       }
     }
   },
