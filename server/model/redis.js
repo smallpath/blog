@@ -1,22 +1,22 @@
-const config = require('../conf/config');
-const redis = require('redis');
-const bluebird = require("bluebird");
-const log = require('../utils/log');
+const config = require('../conf/config')
+const redis = require('redis')
+const bluebird = require('bluebird')
+const log = require('../utils/log')
 
-bluebird.promisifyAll(redis.RedisClient.prototype);
-bluebird.promisifyAll(redis.Multi.prototype);
+bluebird.promisifyAll(redis.RedisClient.prototype)
+bluebird.promisifyAll(redis.Multi.prototype)
 
 let client = redis.createClient({
-    host: config.redisHost,
-    port: config.redisPort
-});
+  host: config.redisHost,
+  port: config.redisPort
+})
 
-client.on("error", function (err) {
-    log.error("Redis Error " + err);
-});
+client.on('error', function(err) {
+  log.error('Redis Error ' + err)
+})
 
-client.on('connect', function () {
-    log.debug('Redis is ready');
-});
+client.on('connect', function() {
+  log.debug('Redis is ready')
+})
 
-module.exports = client;
+module.exports = client

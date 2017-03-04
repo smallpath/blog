@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "node entry.js"
+    "start": "node entry.js",
+    "lint": "eslint --ext .js *.js */*.js"
   },
   "dependencies": {
     "babel-plugin-transform-async-to-generator": "^6.8.0",
@@ -17,6 +18,14 @@
     "restc": "^0.0.4"
   },
   "devDependencies": {
-    "babel-plugin-transform-runtime": "^6.15.0"
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "eslint": "^3.17.0",
+    "eslint-config-standard": "^7.0.0",
+    "eslint-friendly-formatter": "^2.0.7",
+    "eslint-loader": "^1.6.3",
+    "eslint-plugin-html": "^2.0.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^2.1.1"
   }
 }
