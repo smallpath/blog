@@ -48,8 +48,9 @@ Table of Contents
   - [x] 按需分块加载
   - [x] service worker缓存所有资源
   - [x] SSR服务端直连mongo
-  - [x] 乞丐版axios以减小打包大小
-  - [ ] 乞丐版vuex以减小打包大小
+  - [x] 自制axios以减小打包大小
+  - [x] 自制vuex以减小打包大小
+  - [x] SSR服务端不可用时进行降级
   - [ ] LocalStorage替换service worker
 - [x] 后台管理单页
   - [x] vue1.0升级至vue2.0
