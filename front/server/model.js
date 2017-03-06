@@ -3,7 +3,7 @@ const config = require('./mongo.js')
 const mongoose = require('mongoose')
 const log = require('log4js').getLogger('ssr axios')
 
-mongoose.Promise = require('bluebird')
+mongoose.Promise = global.Promise = require('bluebird')
 
 const mongoUrl = `${config.mongoHost}:${config.mongoPort}/${config.mongoDatabase}`
 
