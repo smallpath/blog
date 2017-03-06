@@ -77,6 +77,8 @@ class Store {
 }
 
 function install(_Vue) {
+  if (Vue || _Vue.isInstalled === true) return
+  _Vue.isInstalled = true
   Vue = _Vue
   Vue.mixin({ beforeCreate: vuexInit })
 }
