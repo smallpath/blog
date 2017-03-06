@@ -73,8 +73,8 @@ export default {
     },
     imageStyle() {
       const sidebarUrl = this.sidebarUrl
-      const sidebarMoveCss = sidebarUrl ? this.option.sidebarMoveCss: ''
-      const result = { 
+      const sidebarMoveCss = sidebarUrl ? this.option.sidebarMoveCss : ''
+      const result = {
         'background-image': sidebarUrl ? 'url(' + sidebarUrl + ')' : '',
         'transition': sidebarMoveCss
       }

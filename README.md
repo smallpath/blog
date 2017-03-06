@@ -51,7 +51,6 @@ Table of Contents
   - [x] 自制axios以减小打包大小
   - [x] 自制vuex以减小打包大小
   - [x] SSR服务端不可用时进行降级
-  - [ ] LocalStorage替换service worker
 - [x] 后台管理单页
   - [x] vue1.0升级至vue2.0
   - [x] 使用element ui
