@@ -1,4 +1,4 @@
-let Vue
+const global = typeof window !== 'undefined' ? window : process
 
 class Store {
   constructor({
@@ -10,7 +10,7 @@ class Store {
     this.actions = actions
     this.mutations = mutations
     this.getters = {}
-    this._watcherVM = new Vue()
+    this._watcherVM = new global.Vue()
     const store = this
     const computed = {}
 
@@ -26,7 +26,7 @@ class Store {
         enumerable: true
       })
     })
-    store._vm = new Vue({
+    store._vm = new global.Vue({
       data: {
         $$state: state
       },
@@ -44,7 +44,7 @@ class Store {
 
   commit(mutation, options) {
     if (mutation === 'router/ROUTE_CHANGED') {
-      return Vue.set(this.state, 'route', options)
+      return global.Vue.set(this.state, 'route', options)
     }
     return this.mutations[mutation].call(null, this.state, options)
   }
@@ -77,10 +77,10 @@ class Store {
 }
 
 function install(_Vue) {
-  if (Vue || _Vue.isInstalled === true) return
+  if (global.Vue || _Vue.isInstalled === true) return
   _Vue.isInstalled = true
-  Vue = _Vue
-  Vue.mixin({ beforeCreate: vuexInit })
+  global.Vue = _Vue
+  global.Vue.mixin({ beforeCreate: vuexInit })
 }
 
 const mapGetters = (getters) => {
