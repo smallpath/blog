@@ -8,7 +8,7 @@
     "dev": "node server",
     "lint": "eslint --ext .js,.vue middleware server server.js src test/unit/specs test/e2e/specs",
     "start": "cross-env NODE_ENV=production node server",
-    "build": "rimraf dist && npm run build:client && npm run build:server",
+    "build": "npm run build:client && npm run build:server",
     "build:client": "node build/build-client.js",
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules"
   },
