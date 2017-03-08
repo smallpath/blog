@@ -14,7 +14,6 @@ RUN cnpm i -g pm2
 # install dependences
 RUN cd /app/server && cp conf/config.tpl conf/config.js && cnpm install
 RUN cd /app/front && cp server/mongo.tpl server/mongo.js && cnpm install && npm run build
-RUN cd /app/admin && cnpm install && npm run build
 
 # clean cache
 RUN npm cache clean
