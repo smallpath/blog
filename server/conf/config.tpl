@@ -9,6 +9,7 @@ module.exports = {
 
   redisHost: env.redisHost || '127.0.0.1',
   redisPort: env.redisPort || 6379,
+  redisPassword: env.redisPassword || '',
 
   tokenSecret: env.tokenSecret || 'test',
   tokenExpiresIn: env.tokenExpiresIn || 3600,
