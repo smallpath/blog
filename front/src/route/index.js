@@ -14,41 +14,52 @@ Vue.component('pagination', Pagination)
 // System.import is of ES6 module, which is designed to be statically analyzable
 // It means that you can't write `let path = './main.js'; System.import(path)`
 // Must use it by `System.import('./main.js')`
+
+// require.ensure can set the name of chunk, while import can't
 const CreatePostView = process.BROWSER ? type => resolve => {
-  System.import('../views/CreatePostView').then(component => {
-    const target = component(type)
-    resolve(target)
-  })
+  require.ensure(['../views/CreatePostView'], (modules) => {
+    return resolve(require('../views/CreatePostView')(type))
+  }, 'CreatePostView')
 } : require('../views/CreatePostView')
 const TagPager = process.BROWSER
-  ? () => System.import('../components/TagPager')
+  ? () => new Promise((resolve) =>
+    require.ensure(['../components/TagPager'], (modules) => {
+      return resolve(require('../components/TagPager'))
+    }, 'TagPager')
+  )
   : require('../components/TagPager')
 const Tag = process.BROWSER
-  ? () => System.import('../components/Tag')
+  ? () => new Promise((resolve) =>
+    require.ensure(['../components/Tag'], (modules) => {
+      return resolve(require('../components/Tag'))
+    }, 'Tag')
+  )
   : require('../components/Tag')
 const BlogPager = process.BROWSER
-  ? () => System.import('../components/BlogPager')
+  ? () => new Promise((resolve) =>
+    require.ensure(['../components/BlogPager'], (modules) => {
+      return resolve(require('../components/BlogPager'))
+    }, 'BlogPager')
+  )
   : require('../components/BlogPager')
 const Archive = process.BROWSER
-  ? () => System.import('../components/Archive')
+  ? () => new Promise((resolve) =>
+    require.ensure(['../components/Archive'], (modules) => {
+      return resolve(require('../components/Archive'))
+    }, 'Archive')
+  )
   : require('../components/Archive')
 
 const Post = CreatePostView('post')
 const Page = CreatePostView('page')
 
-// How to get the chunk number in server-bundle ?
 if (!process.BROWSER) {
-  Post.chunkNumber = Page.chunkNumber = 0
-  TagPager.chunkNumber = 1
-  Tag.chunkNumber = 3
-  BlogPager.chunkNumber = 2
-  Archive.chunkNumber = 4
+  Post.chunkName = Page.chunkName = 'CreatePostView'
+  TagPager.chunkName = 'TagPager'
+  Tag.chunkName = 'Tag'
+  BlogPager.chunkName = 'BlogPager'
+  Archive.chunkName = 'Archive'
 }
-// console.log(CreatePostView)
-// console.log(TagPager)
-// console.log(Tag)
-// console.log(BlogPager)
-// console.log(Archive)
 
 export default new VueRouter({
   mode: 'history',

@@ -19,9 +19,9 @@ export default context => {
 
   const s = isDev && Date.now()
   return Promise.all(preFetchComponent.concat(router.getMatchedComponents()).map((component, index) => {
-    const number = component.chunkNumber
-    if (typeof number === 'number') {
-      context.chunkNumber = number
+    const chunkName = component.chunkName
+    if (typeof chunkName === 'string') {
+      context.chunkName = chunkName
     }
     if (component.preFetch) {
       return component.preFetch(store, context).catch(() => {})

@@ -153,9 +153,9 @@ config.flushOption().then(() => {
         )
       }
       let tail = html.tail
-      if (isProd && typeof context.chunkNumber === 'number') {
+      if (isProd && typeof context.chunkName === 'string') {
         for (let key in chunkObj) {
-          if (key.split('.')[0] === context.chunkNumber.toString()) {
+          if (key.split('.')[0] === context.chunkName) {
             const chunk = `<script type="text/javascript" charset="utf-8">${chunkObj[key]}</script></body>`
             tail = tail.replace('</body>', chunk)
             break
