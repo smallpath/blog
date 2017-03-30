@@ -51,6 +51,7 @@ Table of Contents
   - [x] 自制axios以减小打包大小
   - [x] 自制vuex以减小打包大小
   - [x] SSR服务端不可用时进行降级
+  - [ ] SSR数据获取采用RPC形式
 - [x] 后台管理单页
   - [x] vue1.0升级至vue2.0
   - [x] 使用element ui
@@ -64,6 +65,7 @@ Table of Contents
   - [x] 标签及分类移至文章中 
   - [x] 七牛access_token下发及鉴权
   - [x] lint
+  - [ ] 配合redis提供RPC服务
 - [x] 部署文档
 - [x] API文档
 - [x] Docker
