@@ -16,6 +16,7 @@ const { api: rssApi, params: rssParams, getRssBodyFromBody } = require('./server
 const inline = isProd ? fs.readFileSync(resolve('./dist/styles.css'), 'utf-8') : ''
 const config = require('./server/config')
 const request = require('./server/server-axios')
+const proxyRequest = require('request')
 
 const chunkObj = {}
 if (isProd) {
@@ -93,10 +94,24 @@ config.flushOption().then(() => {
 
   app.use(require('cookie-parser')())
   app.get('/favicon.ico', favicon(config.favicon))
+
+  const prefix = '/proxyPrefix/'
   app.use((req, res, next) => {
-    log.debug(`${req.method} ${decodeURIComponent(req.url)}`)
-    return next()
+    const url = decodeURIComponent(req.url)
+    log.debug(`${req.method} ${url}`)
+    if (!isProd) return next()
+    // proxy with node in production
+    if (url.startsWith(prefix)) {
+      const rewriteUrl = `http://localhost:${config.serverPort}/${url.replace(prefix, '')}`
+      console.log(rewriteUrl)
+      proxyRequest.get(rewriteUrl).on('error', function(err) {
+        res.end(err)
+      }).pipe(res)
+    } else {
+      return next()
+    }
   })
+
   const serve = (path, cache) => express.static(resolve(path), {
     maxAge: cache && isProd ? 60 * 60 * 24 * 30 : 0,
     fallthrough: false

@@ -63,6 +63,7 @@
     "lolex": "^1.4.0",
     "mongoose": "^4.8.5",
     "ora": "^0.3.0",
+    "request": "^2.81.0",
     "rimraf": "^2.5.4",
     "serve-favicon": "^2.3.2",
     "shelljs": "^0.7.5",
