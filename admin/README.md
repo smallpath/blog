@@ -1,27 +1,53 @@
 # admin
 
-> admin spa for blog
+> 博客的后台管理单页
 
-## Build Setup
+## 开发测试环境
 
 ``` bash
-# install dependencies
 npm install
-
-# serve with hot reload at localhost:8080
 npm run dev
+```
+开发端口为本机8082
 
-# build for production with minification
+
+## 生产环境
+
+``` bash
+npm install
 npm run build
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+用nginx代理构建出来的`dist`文件夹即可, 可以使用如下的模板
+
+```
+server{
+    listen 80;                                     #如果是https, 则替换80为443
+    server_name admin.smallpath.me;                #替换域名
+    root /alidata/www/Blog/admin/dist;       #替换路径为构建出来的dist路径
+    set $node_port 3000;
+
+    index index.js index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ @rewrites;
+    }
+
+    location @rewrites {
+        rewrite ^(.*)$ / last;
+    }
+
+    location ^~ /proxyPrefix/ {
+        rewrite ^/proxyPrefix/(.*) /$1 break;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "upgrade";
+        proxy_pass http://127.0.0.1:$node_port;
+        proxy_redirect off;
+    }
+
+    location ^~ /static/ {
+        etag         on;
+        expires      max;
+    }
+}
+```

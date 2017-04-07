@@ -1,7 +1,7 @@
 # Blog
 A blog system. Based on Vue2, Koa2, MongoDB and Redis
 
-前后端分离 + 服务端渲染的博客系统, 前端SPA + 后端RESTful服务器
+前后端分离 + 服务端渲染的博客系统, 前端 SPA + 后端 RESTful 服务器
 
 # Demo
 前端：[https://smallpath.me](https://smallpath.me)  
@@ -75,165 +75,57 @@ Table of Contents
   - [ ] 按天备份
 - [x] 部署文档
 - [x] API文档
-- [x] Docker
+- [ ] Docker
 - [ ] CI
+
+# 运行本项目必备软件
+
+运行本项目代码之前请确保安装以下软件:
+
+- Node.js v6 +
+- MongoDB
+- Redis
+- pm2
+
+本说明以 *macos* 为例
+
+## Node.js
+
+官网下载安装包直接安装
+
+## Mongodb
+
+```bash
+# 安装
+brew install mongodb
+# 启动
+mongod -dbpath=your/path
+```
+
+## Redis
+
+```bash
+# 安装
+brew install redies
+# 启动
+redis-server /usr/local/etc/redis.conf
+```
 
 # 构建与部署
 
-## 前置
+本项目服务核心分为三大部分:
 
-- Node v6
-- pm2
-- MongoDB
-- Redis
+1. server : 提供 api 服务,也是博客的核心服务
+2. fornt : 前端显示界面,可以自己进行定制
+3. admin : 博客管理模块
 
-## server
+相关说明请点击对应文件夹或者直接点击 wiki 页面,安装过程中如果遇到困难欢迎去提交 issue.
 
-博客的提供RESTful API的后端
-
-复制conf文件夹中的默认配置`config.tpl`, 并命名为`config.js`
-
-有如下属性可以自行配置:
-
-- `tokenSecret`
-  - 改为任意字符串
-- `defaultAdminPassword`
-  - 默认密码, 必须修改, 否则服务器将拒绝启动
-
-如果mongoDB或redis不在本机对应端口，可以修改对应的属性
-- `mongoHost`
-- `mongoDatabase`
-- `mongoPort`
-- `redisHost`
-- `redisPort`
-
-如果需要启用后台管理单页的七牛图片上传功能，请再修改如下属性:
-- `qiniuAccessKey`
-  - 七牛账号的公钥
-- `qiniuSecretKey`
-  - 七牛账号的私钥
-- `qiniuBucketHost`
-  - 七牛Bucket对应的外链域名
-- `qiniuBucketName`
-  - 七牛Bucket的名称
-- `qiniuPipeline`
-  - 七牛多媒体处理队列的名称
-
-```
-npm install
-pm2 start entry.js
-```
-
-RESTful服务器在本机3000端口开启
-
-## front
-博客的前台单页, 支持服务端渲染
-
-复制server文件夹中的默认配置`mongo.tpl`, 并命名为`mongo.js`
-
-如果mongoDB不在本机对应端口，请自行配置`mongo.js`中的属性:
-
-- `mongoHost`
-- `mongoDatabase`
-- `mongoPort`
-
-```
-npm install
-npm run build
-pm2 start production.js
-```
-
-请将`logo.png`与`favicon.ico`放至`static`目录中
-
-再用nginx代理本机8080端口即可, 可以使用如下的模板
-
-```
-server{
-    listen 80;                                      #如果是https, 则替换80为443
-    server_name *.smallpath.me smallpath.me;        #替换域名
-    root /alidata/www/Blog/front/dist;       #替换路径为构建出来的dist路径
-    set $node_port 3000;
-    set $ssr_port 8080;
-
-    location ^~ / {
-        proxy_http_version 1.1;
-        proxy_set_header Connection "upgrade";
-        proxy_pass http://127.0.0.1:$ssr_port;
-        proxy_redirect off;
-    }
-
-    location ^~ /proxyPrefix/ {
-        rewrite ^/proxyPrefix/(.*) /$1 break;
-        proxy_http_version 1.1;
-        proxy_set_header Connection "upgrade";
-        proxy_pass http://127.0.0.1:$node_port;
-        proxy_redirect off;
-    }
-
-    location ^~ /dist/ {
-        rewrite ^/dist/(.*) /$1 break;
-        etag         on;
-        expires      max;
-    }
-
-    location ^~ /static/ {
-        etag         on;
-        expires      max;
-    }
-}
-```
-
-开发端口为本机8080
-
-## admin
-博客的后台管理单页
-
-```
-npm install
-npm run build
-```
-
-用nginx代理构建出来的`dist`文件夹即可, 可以使用如下的模板
-
-```
-server{
-    listen 80;                                     #如果是https, 则替换80为443
-    server_name admin.smallpath.me;                #替换域名
-    root /alidata/www/Blog/admin/dist;       #替换路径为构建出来的dist路径
-    set $node_port 3000;
-
-    index index.js index.html index.htm;
-
-    location / {
-        try_files $uri $uri/ @rewrites;
-    }
-
-    location @rewrites {
-        rewrite ^(.*)$ / last;
-    }
-
-    location ^~ /proxyPrefix/ {
-        rewrite ^/proxyPrefix/(.*) /$1 break;
-        proxy_http_version 1.1;
-        proxy_set_header Connection "upgrade";
-        proxy_pass http://127.0.0.1:$node_port;
-        proxy_redirect off;
-    }
-
-    location ^~ /static/ {
-        etag         on;
-        expires      max;
-    }
-}
-```
-
-开发端口为本机8082
-
-# 后端RESTful API
+# 后端 RESTful API
 
 ## 说明
 
-后端服务器默认开启在3000端口, 如不愿意暴露IP, 可以自行设置nginx代理, 或者直接使用前端两个单页的代理前缀`/proxyPrefix`
+后端服务器默认开启在 3000 端口, 如不愿意暴露 IP, 可以自行设置 nginx 代理, 或者直接使用前端两个单页的代理前缀`/proxyPrefix`
 
 例如, demo的API根目录如下:
 
@@ -250,13 +142,13 @@ option
 user
 ```
 
-`:id`为指定的文档ID, 用以对指定文档进行CRUD
+`:id`为指定的文档ID, 用以对指定文档进行 CRUD
 
-## HTTP动词
+## HTTP 动词
 
 支持如下五种:
 
-```
+``` bash
 GET     //查询
 POST    //新建
 PUT     //替换
@@ -267,17 +159,17 @@ DELETE  //删除指定ID的文档
 有如下两个规定:
 
 - 对所有请求
-  - header中必须将`Content-Type`设置为`application/json`, 需要`body`的则`body`必须是合法JSON格式
+  - header中必须将 `Content-Type` 设置为 `application/json` , 需要 `body` 的则 `body` 必须是合法 JSON格式
 - 对所有回应
-  - header中的`Content-Type`均为`application/json`, 且返回的数据也是JSON格式
+  - header中的`Content-Type`均为`application/json`, 且返回的数据也是 JSON格式
 
 ## 权限验证
 
 服务器直接允许对`user`模型外的所有模型的GET请求
 
-`user`表的所有请求, 以及其他表的非GET请求, 都必须将header中的`authorization`设置为服务器下发的Token, 服务器验证通过后才会继续执行CRUD操作
+`user`表的所有请求, 以及其他表的非 GET 请求, 都必须将 header 中的`authorization`设置为服务器下发的 Token, 服务器验证通过后才会继续执行 CRUD 操作
 
-### 获得Token
+### 获得 Token
 > POST https://smallpath.me/proxyPrefix/admin/login
 
 `body`格式如下:
@@ -289,7 +181,7 @@ DELETE  //删除指定ID的文档
 }
 ```
 
-成功, 则返回带有`token`字段的JSON数据
+成功, 则返回带有`token`字段的 JSON 数据
 ```
 {
   "status": "success",
@@ -297,7 +189,7 @@ DELETE  //删除指定ID的文档
 }
 ```
 
-失败, 则返回如下格式的JSON数据:
+失败, 则返回如下格式的 JSON 数据:
 ```
 {
   "status": "fail",
@@ -305,22 +197,22 @@ DELETE  //删除指定ID的文档
 }
 ```
 
-获取到`token`后, 在上述需要token验证的请求中, 请将header中的`authorization`设置为服务器下发的Token, 否则请求将被服务器拒绝
+获取到`token`后, 在上述需要 token 验证的请求中, 请将 header 中的`authorization`设置为服务器下发的 Token, 否则请求将被服务器拒绝
 
-### 撤销Token
+### 撤销 Token
 > POST https://smallpath.me/proxyPrefix/admin/logout
 
-将`header`中的`authorization`设置为服务器下发的token, 即可撤销此token
+将`header`中的`authorization`设置为服务器下发的 token, 即可撤销此 token
 
 ### Token说明
-Token默认有效期为获得后的一小时, 超出时间后请重新请求Token  
+Token 默认有效期为获得后的一小时, 超出时间后请重新请求 Token  
 如需自定义有效期, 请修改服务端配置文件中的`tokenExpiresIn`字段, 其单位为秒
 
 ## 查询 
 
-服务器直接允许对`user`模型外的所有模型的GET请求, 不需要验证Token
+服务器直接允许对`user`模型外的所有模型的 GET 请求, 不需要验证 Token
 
-为了直接通过URI来进行mongoDB查询, 后台提供六种关键字的查询:
+为了直接通过 URI 来进行 mongoDB 查询, 后台提供六种关键字的查询:
 ```
 conditions,
 select,
@@ -330,7 +222,7 @@ skip,
 limit
 ```
 
-### conditions查询
+### 条件(conditions)查询
 类型为JSON, 被解析为对象后, 直接将其作为`mongoose.find`的查询条件
 
 #### 查询所有文档
@@ -360,7 +252,7 @@ limit
 #### 查询所有文档并按时间倒序
 > GET https://smallpath.me/proxyPrefix/api/post?sort=1
 
-### skip查询和limit查询
+### skip 查询和 limit 查询
 
 #### 查询第2页的文档(每页10条)并按时间倒叙
 > GET https://smallpath.me/proxyPrefix/api/post?limit=10&skip=10&sort=1
@@ -396,8 +288,8 @@ Body中为用来新建文档的JSON数据
 
 ## 删除
 
-需要验证Token
+需要验证 Token
 
 > DELETE https://smallpath.me/proxyPrefix/api/:modelName/:id
 
-删除指定ID的文档
+删除指定 ID 的文档
