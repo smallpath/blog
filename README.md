@@ -121,6 +121,20 @@ redis-server /usr/local/etc/redis.conf
 
 相关说明请点击对应文件夹或者直接点击 wiki 页面,安装过程中如果遇到困难欢迎去提交 issue.
 
+# Docker 方式体验
+
+```bash
+# 克隆项目
+git clone https://github.com/Smallpath/Blog.git
+# 进入项目目录
+cd Blog
+# 打包docker 镜像文件
+docker build -t blog .
+# 运行 镜像
+docker run -it --rm -p 3000:3000 -p 8080:8080 blog
+```
+
+
 # 后端 RESTful API
 
 ## 说明
