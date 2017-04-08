@@ -133,7 +133,7 @@ docker build -t blog .
 # 运行 镜像
 docker run -it --rm -p 3000:3000 -p 8080:8080 blog
 ```
-
+默认用户名密码 `coucou`
 
 # 后端 RESTful API
 
