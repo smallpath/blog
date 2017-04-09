@@ -39,6 +39,13 @@
         
         <el-menu-item index="/user/edit"><i class="el-icon-star-off"></i>用户设置</el-menu-item>
         
+        <el-submenu index="7">
+          <template slot="title"><i class="el-icon-search"></i>全文搜索</template>
+          <el-menu-item index="/search/general">基本设置</el-menu-item>
+          <el-menu-item index="/search/es">ES设置</el-menu-item>
+          <el-menu-item index="/search/algolia">Algolia设置</el-menu-item>
+        </el-submenu>
+
         <el-submenu index="8">
           <template slot="title"><i class="el-icon-setting"></i>系统设置</template>
           <el-menu-item index="/option/general">基本设置</el-menu-item>

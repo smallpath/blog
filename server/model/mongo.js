@@ -21,19 +21,52 @@ db.once('open', () => {
 const Schema = mongoose.Schema
 
 let post = new Schema({
-  type: { type: String, default: '' },
-  status: { type: Number, default: 0 },
+  type: {
+    type: String,
+    default: ''
+  },
+  status: {
+    type: Number,
+    default: 0
+  },
   title: String,
-  pathName: { type: String, default: '' },
-  summary: { type: String },
-  markdownContent: { type: String },
-  content: { type: String },
-  markdownToc: { type: String, default: '' },
-  toc: { type: String, default: '' },
-  allowComment: { type: Boolean, default: true },
-  createdAt: { type: String, default: '' },
-  updatedAt: { type: String, default: '' },
-  isPublic: { type: Boolean, default: true },
+  pathName: {
+    type: String,
+    default: ''
+  },
+  summary: {
+    type: String
+  },
+  markdownContent: {
+    type: String
+  },
+  content: {
+    type: String
+  },
+  markdownToc: {
+    type: String,
+    default: ''
+  },
+  toc: {
+    type: String,
+    default: ''
+  },
+  allowComment: {
+    type: Boolean,
+    default: true
+  },
+  createdAt: {
+    type: String,
+    default: ''
+  },
+  updatedAt: {
+    type: String,
+    default: ''
+  },
+  isPublic: {
+    type: Boolean,
+    default: true
+  },
   commentNum: Number,
   options: Object,
   category: String,
@@ -69,12 +102,18 @@ let user = new Schema({
   email: String
 })
 
+let search = new Schema({
+  url: String,
+  port: String
+})
+
 post = mongoose.model('post', post)
 category = mongoose.model('category', category)
 option = mongoose.model('option', option)
 theme = mongoose.model('theme', theme)
 tag = mongoose.model('tag', tag)
 user = mongoose.model('user', user)
+search = mongoose.model('search', search)
 
 module.exports = {
   post,
@@ -82,5 +121,6 @@ module.exports = {
   option,
   tag,
   user,
-  theme
+  theme,
+  search
 }
