@@ -19,7 +19,8 @@
                   <code class="notebook">{{post.category}}</code>
               </a> 」下 ，并被添加「
               <router-link v-for="tag in post.tags" 
-                  :to="{name:'tagPager', params: { tagName: tag }}" 
+                  :to="{name:'tagPager', params: { tagName: tag }}"
+                  :key="tag"
                   :data-tag="tag"> 
                   <code class="notebook">{{tag}}</code>
               </router-link> 」标签 ，最后修改于 <i>{{post.updatedAt}}</i>

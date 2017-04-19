@@ -4,8 +4,9 @@
       <h1 class=title>{{title}}</h1>
       <div class="entry-content">
         <section> 
-          <router-link v-for="key in sortedKeys" 
+          <router-link v-for="(key, index) in sortedKeys" 
               :to="{ name: 'tagPager', params:{ tagName: key } }"
+              :key="index"
               :data-tag="key">{{key}}({{tags[key]}})</router-link> 
         </section>
       </div>
