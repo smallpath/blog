@@ -88,7 +88,7 @@ Table of Contents
 ## server
 
 <details>
-<summary>博客的提供RESTful API的后端<summary>
+<summary>博客的提供RESTful API的后端</summary>
 
 复制conf文件夹中的默认配置`config.tpl`, 并命名为`config.js`
 
@@ -193,7 +193,7 @@ server{
 ## admin
 
 <details>
-<summary>博客的后台管理单页<summary>
+<summary>博客的后台管理单页</summary>
 
 ```
 npm install
@@ -378,10 +378,9 @@ limit
 > GET https://smallpath.me/proxyPrefix/api/post?conditions={"type":0}&count=1
 
 ### sort查询
-为了查询方便, sort=1代表按时间倒序, 不使用sort则代表按时间正序
 
-#### 查询所有文档并按时间倒序
-> GET https://smallpath.me/proxyPrefix/api/post?sort=1
+#### 查询所有文档并按id倒序
+> GET https://smallpath.me/proxyPrefix/api/post?sort={"_id": "desc"}
 
 ### skip 查询和 limit 查询
 
