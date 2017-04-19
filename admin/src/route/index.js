@@ -76,7 +76,9 @@ export default new VueRouter({
                 tags: 1,
                 category: 1
               },
-              sort: 1
+              sort: {
+                updatedAt: -1
+              }
             }
           })
         },
