@@ -9,7 +9,7 @@ module.exports = function(type) {
   const regExp = isPost ? /^\/post\//g : /^\//g
   const select = isPost ? { tags: 1, category: 1 } : {}
   const preFetch = function(store, { path: pathName, params, query }, callback) {
-    pathName = pathName.replace(regExp, '')
+    pathName = decodeURIComponent(pathName.replace(regExp, ''))
     return store.dispatch(action, {
       model: 'post',
       query: {
