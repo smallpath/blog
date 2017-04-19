@@ -10,7 +10,8 @@ const SWPrecachePlugin = require('sw-precache-webpack-plugin')
 const config = Object.assign({}, base, {
   resolve: {
     alias: Object.assign({}, base.resolve.alias, {
-      'create-api': './create-api-client.js'
+      'create-api': './create-api-client.js',
+      'create-route': './create-route-client.js'
     }),
     extensions: base.resolve.extensions
   },

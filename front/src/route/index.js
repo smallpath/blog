@@ -11,47 +11,14 @@ import Pagination from '../components/Pagination'
 Vue.component('my-footer', Footer)
 Vue.component('pagination', Pagination)
 
-// System.import is of ES6 module, which is designed to be statically analyzable
-// It means that you can't write `let path = './main.js'; System.import(path)`
-// Must use it by `System.import('./main.js')`
-
-// require.ensure can set the name of chunk, while import can't
-const CreatePostView = process.BROWSER ? type => resolve => {
-  require.ensure(['../views/CreatePostView'], (modules) => {
-    return resolve(require('../views/CreatePostView')(type))
-  }, 'CreatePostView')
-} : require('../views/CreatePostView')
-const TagPager = process.BROWSER
-  ? () => new Promise((resolve) =>
-    require.ensure(['../components/TagPager'], (modules) => {
-      return resolve(require('../components/TagPager'))
-    }, 'TagPager')
-  )
-  : require('../components/TagPager')
-const Tag = process.BROWSER
-  ? () => new Promise((resolve) =>
-    require.ensure(['../components/Tag'], (modules) => {
-      return resolve(require('../components/Tag'))
-    }, 'Tag')
-  )
-  : require('../components/Tag')
-const BlogPager = process.BROWSER
-  ? () => new Promise((resolve) =>
-    require.ensure(['../components/BlogPager'], (modules) => {
-      return resolve(require('../components/BlogPager'))
-    }, 'BlogPager')
-  )
-  : require('../components/BlogPager')
-const Archive = process.BROWSER
-  ? () => new Promise((resolve) =>
-    require.ensure(['../components/Archive'], (modules) => {
-      return resolve(require('../components/Archive'))
-    }, 'Archive')
-  )
-  : require('../components/Archive')
-
-const Post = CreatePostView('post')
-const Page = CreatePostView('page')
+import {
+  Post,
+  Page,
+  TagPager,
+  Tag,
+  BlogPager,
+  Archive
+} from 'create-route'
 
 if (!process.BROWSER) {
   Post.chunkName = Page.chunkName = 'CreatePostView'
