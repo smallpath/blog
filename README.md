@@ -30,52 +30,9 @@ Table of Contents
   * [删除](#删除)
 
 # TODO
-- [x] 前台单页
-  - [x] disqus评论
-  - [x] vue1.0升级至vue2.0
-  - [x] vuex单向数据流
-  - [x] 服务端渲染
-  - [x] 客户端谷歌统计 
-  - [x] 服务端sitemap定时任务
-  - [x] 服务端rss定时任务
-  - [x] 组件级缓存
-  - [x] Loading组件
-  - [x] 侧边栏图片
-  - [x] 服务端谷歌统计
-  - [x] 全局404页面
-  - [x] 文章toc
-  - [x] 页面meta
-  - [x] 按需分块加载
-  - [x] service worker缓存所有资源
-  - [x] SSR服务端直连mongo
-  - [x] 自制axios以减小打包大小
-  - [x] 自制vuex以减小打包大小
-  - [x] SSR服务端不可用时进行降级
-  - [ ] blogPager增加查看更多链接
-  - [ ] footer显示备案号
-  - [ ] 修改倒序查询条件
-- [x] 后台管理单页
-  - [x] vue1.0升级至vue2.0
-  - [x] 使用element ui
-  - [x] 七牛云图片上传
-  - [x] 文章toc的生成与编辑
-  - [x] 草稿的自动生成与手动恢复
-  - [x] 上传图片后指定img标签的高度以避免闪烁
-  - [x] 扫描所有文章，指定img高度
-  - [ ] 文章增加标题图片的编辑功能
-  - [ ] 修改倒序查询条件
-- [x] RESTful服务器
-  - [x] RESTful添加select字段过滤
-  - [x] 标签及分类移至文章中 
-  - [x] 七牛access_token下发及鉴权
-  - [x] lint
-  - [ ] 配合redis提供RPC服务
-  - [ ] RESTful的排序自定义
-  - [ ] 按天备份
-- [x] 部署文档
-- [x] API文档
-- [ ] Docker
-- [ ] CI
+
+> [TODO](https://github.com/smallpath/blog/issues/14)
+
 # 构建与部署
 
 ## 前置
@@ -238,20 +195,6 @@ server{
 
 </details>
 
-## Docker 方式体验
-
-```bash
-# 克隆项目
-git clone https://github.com/Smallpath/Blog.git
-# 进入项目目录
-cd Blog
-# 打包docker 镜像文件
-docker build -t blog .
-# 运行 镜像
-docker run -it --rm -p 3000:3000 -p 8080:8080 blog
-```
-默认用户名密码 `coucou`
-
 # 后端 RESTful API
 
 ## 说明
@@ -380,13 +323,15 @@ limit
 ### sort查询
 
 #### 查询所有文档并按id倒序
-> GET https://smallpath.me/proxyPrefix/api/post?sort={"_id": "desc"}
+> GET https://smallpath.me/proxyPrefix/api/post?sort={"_id":-1}
+
+#### 查询所有文档并按更新时间倒序
+> GET https://smallpath.me/proxyPrefix/api/post?sort={"updatedAt":-1}
 
 ### skip 查询和 limit 查询
 
 #### 查询第2页的文档(每页10条)并按时间倒叙
 > GET https://smallpath.me/proxyPrefix/api/post?limit=10&skip=10&sort=1
-
 
 ## 新建
 

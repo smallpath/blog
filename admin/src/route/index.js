@@ -222,6 +222,9 @@ export default new VueRouter({
                 pathName: 1,
                 createdAt: 1,
                 updatedAt: 1
+              },
+              sort: {
+                updatedAt: -1
               }
             }
           })
