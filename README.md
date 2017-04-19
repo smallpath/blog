@@ -51,7 +51,6 @@ Table of Contents
   - [x] 自制axios以减小打包大小
   - [x] 自制vuex以减小打包大小
   - [x] SSR服务端不可用时进行降级
-  - [ ] SSR数据获取增加RPC形式
   - [ ] blogPager增加查看更多链接
   - [ ] footer显示备案号
   - [ ] 修改倒序查询条件
@@ -77,51 +76,169 @@ Table of Contents
 - [x] API文档
 - [ ] Docker
 - [ ] CI
-
-# 运行本项目必备软件
-
-运行本项目代码之前请确保安装以下软件:
-
-- Node.js v6 +
-- MongoDB
-- Redis
-- pm2
-
-本说明以 *macos* 为例
-
-## Node.js
-
-官网下载安装包直接安装
-
-## Mongodb
-
-```bash
-# 安装
-brew install mongodb
-# 启动
-mongod -dbpath=your/path
-```
-
-## Redis
-
-```bash
-# 安装
-brew install redies
-# 启动
-redis-server /usr/local/etc/redis.conf
-```
-
 # 构建与部署
 
-本项目服务核心分为三大部分:
+## 前置
 
-1. server : 提供 api 服务,也是博客的核心服务
-2. fornt : 前端显示界面,可以自己进行定制
-3. admin : 博客管理模块
+- Node v6
+- pm2
+- MongoDB
+- Redis
 
-相关说明请点击对应文件夹或者直接点击 wiki 页面,安装过程中如果遇到困难欢迎去提交 issue.
+## server
 
-# Docker 方式体验
+<details>
+<summary>博客的提供RESTful API的后端<summary>
+
+复制conf文件夹中的默认配置`config.tpl`, 并命名为`config.js`
+
+有如下属性可以自行配置:
+
+- `tokenSecret`
+  - 改为任意字符串
+- `defaultAdminPassword`
+  - 默认密码, 必须修改, 否则服务器将拒绝启动
+
+如果mongoDB或redis不在本机对应端口，可以修改对应的属性
+- `mongoHost`
+- `mongoDatabase`
+- `mongoPort`
+- `redisHost`
+- `redisPort`
+
+如果需要启用后台管理单页的七牛图片上传功能，请再修改如下属性:
+- `qiniuAccessKey`
+  - 七牛账号的公钥
+- `qiniuSecretKey`
+  - 七牛账号的私钥
+- `qiniuBucketHost`
+  - 七牛Bucket对应的外链域名
+- `qiniuBucketName`
+  - 七牛Bucket的名称
+- `qiniuPipeline`
+  - 七牛多媒体处理队列的名称
+
+```
+npm install
+pm2 start entry.js
+```
+
+RESTful服务器在本机3000端口开启
+
+</details>
+
+## front
+
+<details>
+<summary>博客的前台单页, 支持服务端渲染</summary>
+
+复制server文件夹中的默认配置`mongo.tpl`, 并命名为`mongo.js`
+
+如果mongoDB不在本机对应端口，请自行配置`mongo.js`中的属性:
+
+- `mongoHost`
+- `mongoDatabase`
+- `mongoPort`
+
+```
+npm install
+npm run build
+pm2 start production.js
+```
+
+请将`logo.png`与`favicon.ico`放至`static`目录中
+
+再用nginx代理本机8080端口即可, 可以使用如下的模板
+
+```
+server{
+    listen 80;                                      #如果是https, 则替换80为443
+    server_name *.smallpath.me smallpath.me;        #替换域名
+    root /alidata/www/Blog/front/dist;       #替换路径为构建出来的dist路径
+    set $node_port 3000;
+    set $ssr_port 8080;
+
+    location ^~ / {
+        proxy_http_version 1.1;
+        proxy_set_header Connection "upgrade";
+        proxy_pass http://127.0.0.1:$ssr_port;
+        proxy_redirect off;
+    }
+
+    location ^~ /proxyPrefix/ {
+        rewrite ^/proxyPrefix/(.*) /$1 break;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "upgrade";
+        proxy_pass http://127.0.0.1:$node_port;
+        proxy_redirect off;
+    }
+
+    location ^~ /dist/ {
+        rewrite ^/dist/(.*) /$1 break;
+        etag         on;
+        expires      max;
+    }
+
+    location ^~ /static/ {
+        etag         on;
+        expires      max;
+    }
+}
+```
+
+开发端口为本机8080
+
+</details>
+
+## admin
+
+<details>
+<summary>博客的后台管理单页<summary>
+
+```
+npm install
+npm run build
+```
+
+用nginx代理构建出来的`dist`文件夹即可, 可以使用如下的模板
+
+```
+server{
+    listen 80;                                     #如果是https, 则替换80为443
+    server_name admin.smallpath.me;                #替换域名
+    root /alidata/www/Blog/admin/dist;       #替换路径为构建出来的dist路径
+    set $node_port 3000;
+
+    index index.js index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ @rewrites;
+    }
+
+    location @rewrites {
+        rewrite ^(.*)$ / last;
+    }
+
+    location ^~ /proxyPrefix/ {
+        rewrite ^/proxyPrefix/(.*) /$1 break;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "upgrade";
+        proxy_pass http://127.0.0.1:$node_port;
+        proxy_redirect off;
+    }
+
+    location ^~ /static/ {
+        etag         on;
+        expires      max;
+    }
+}
+```
+
+开发端口为本机8082
+
+</details>
+
+## Docker 方式体验
 
 ```bash
 # 克隆项目
