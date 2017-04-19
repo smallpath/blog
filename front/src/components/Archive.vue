@@ -7,7 +7,7 @@
 				<ul>
 					<li v-for="subItem in item">
 						<router-link :to="{name: 'post', params: { pathName:subItem.pathName  }}" :title="subItem.title">{{subItem.title}}</router-link>&nbsp
-						<span class=date>{{ subItem.createdAt.split(' ')[0] }}</span>
+						<span class=date>{{ subItem.updatedAt.split(' ')[0] }}</span>
 					</li>
 				</ul>
 			</div>
@@ -30,10 +30,12 @@ function fetchAchieves(store, to, callback) {
       select: {
         _id: 0,
         title: 1,
-        createdAt: 1,
+        updatedAt: 1,
         pathName: 1
       },
-      sort: 1
+      sort: {
+        updatedAt: -1
+      }
     },
     callback
   })

@@ -14,7 +14,9 @@ let params = {
     content: 1,
     title: 1
   },
-  sort: 1,
+  sort: {
+    updatedAt: -1
+  },
   limit: 10
 }
 

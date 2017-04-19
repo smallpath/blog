@@ -31,8 +31,9 @@ function queryModel(model, query) {
         arg = parseInt(arg)
       }
       if (key === 'sort') {
-        arg = { '_id': 'desc' }
+        arg = query[key]
       }
+      console.log(key, query[key])
       if (key !== 'count') builder[key](arg)
       else builder[key]()
     }

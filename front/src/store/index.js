@@ -38,6 +38,9 @@ const store = new Vuex.Store({
       },
       faviconUrl: {
         value: ''
+      },
+      miitbeian: {
+        value: ''
       }
     }
   },
@@ -81,7 +84,9 @@ const store = new Vuex.Store({
             pathName: 1,
             type: 1
           },
-          sort: 1,
+          sort: {
+            updatedAt: -1
+          },
           limit: 1
         })
 
@@ -176,7 +181,7 @@ const store = new Vuex.Store({
     FETCH_ACHIEVE: ({ commit, state, dispatch }, { model, query, callback }) => {
       return api.fetch(model, query).then(items => {
         let sortedItem = items.reduce((prev, curr) => {
-          let time = curr.createdAt.slice(0, 7).replace('-', '年') + '月'
+          let time = curr.updatedAt.slice(0, 7).replace('-', '年') + '月'
           if (typeof prev[time] === 'undefined') {
             prev[time] = [curr]
           } else {

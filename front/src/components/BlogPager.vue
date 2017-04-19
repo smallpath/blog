@@ -39,7 +39,9 @@ function fetchItems(store, { path, query, params }, callback) {
       },
       limit: 10,
       skip: (page - 1) * 10,
-      sort: 1
+      sort: {
+        updatedAt: -1
+      }
     },
     callback
   })
