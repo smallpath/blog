@@ -63,16 +63,23 @@ let theme = new Schema({
   option: Schema.Types.Mixed
 })
 
+let search = new Schema({
+  url: String,
+  port: String
+})
+
 post = mongoose.model('post', post)
 category = mongoose.model('category', category)
 option = mongoose.model('option', option)
 theme = mongoose.model('theme', theme)
 tag = mongoose.model('tag', tag)
+search = mongoose.model('search', search)
 
 module.exports = {
   post,
   category,
   option,
   tag,
-  theme
+  theme,
+  search
 }

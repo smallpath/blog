@@ -252,6 +252,20 @@ docker run -it --rm -p 3000:3000 -p 8080:8080 blog
 ```
 默认用户名密码 `coucou`
 
+# Docker 方式体验
+
+```bash
+# 克隆项目
+git clone https://github.com/Smallpath/Blog.git
+# 进入项目目录
+cd Blog
+# 打包docker 镜像文件
+docker build -t blog .
+# 运行 镜像
+docker run -it --rm -p 3000:3000 -p 8080:8080 blog
+```
+默认用户名密码 `coucou`
+
 # 后端 RESTful API
 
 ## 说明
