@@ -85,7 +85,7 @@ const store = new Vuex.Store({
             type: 1
           },
           sort: {
-            updatedAt: -1
+            createdAt: -1
           },
           limit: 1
         })
