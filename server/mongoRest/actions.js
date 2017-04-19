@@ -15,20 +15,19 @@ module.exports = function generateActions(model) {
           builder = builder.select(select)
         }
 
-        ['limit', 'skip', 'sort', 'count'].forEach(function(key) {
+        ['limit', 'skip', 'sort', 'count'].forEach(key => {
           if (query[key]) {
             let arg = query[key]
             if (key === 'limit' || key === 'skip') {
               arg = parseInt(arg)
             }
-            if (key === 'sort') {
-              arg = query[key]
+            if (key === 'sort' && typeof arg === 'string') {
+              arg = JSON.parse(arg)
             }
             if (key !== 'count') builder[key](arg)
             else builder[key]()
           }
         })
-
         const result = await builder.exec()
         return ctx.body = result
       } catch (error) {
