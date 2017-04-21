@@ -26,6 +26,7 @@
     "eslint-loader": "^1.6.3",
     "eslint-plugin-html": "^2.0.1",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^2.1.1"
+    "eslint-plugin-standard": "^2.1.1",
+    "koa-ratelimit": "^4.0.0"
   }
 }

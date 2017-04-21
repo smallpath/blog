@@ -26,7 +26,6 @@ const policy = (name, fileName) => {
   return Object.assign({}, persist, {
     scope: name,
     deadline: new Date().getTime() + 600
-    // insertOnly: 1,
   })
 }
 
