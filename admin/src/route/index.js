@@ -77,7 +77,7 @@ export default new VueRouter({
                 category: 1
               },
               sort: {
-                updatedAt: -1
+                createdAt: -1
               }
             }
           })
@@ -224,7 +224,7 @@ export default new VueRouter({
                 updatedAt: 1
               },
               sort: {
-                updatedAt: -1
+                createdAt: -1
               }
             }
           })
