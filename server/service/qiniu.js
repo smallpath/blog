@@ -26,7 +26,7 @@ const policy = (name, fileName) => {
   return Object.assign({}, persist, {
     scope: name,
     deadline: new Date().getTime() + 600
-      // insertOnly: 1,
+    // insertOnly: 1,
   })
 }
 
@@ -44,4 +44,6 @@ const getQiniuTokenFromFileName = (fileName) => {
   }
 }
 
-module.exports = getQiniuTokenFromFileName
+module.exports = ({ request, response }, next) => {
+  return response.body = getQiniuTokenFromFileName(request.body.key)
+}

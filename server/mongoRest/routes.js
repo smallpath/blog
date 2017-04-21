@@ -1,19 +1,13 @@
+module.exports = (router, modelName, actions, prefix, ...permission) => {
+  const modelUrl = `${prefix}/${modelName}`
+  const itemUrl = `${prefix}/${modelName}/:id`
 
-module.exports = function generateRoutes(app, router, modelName, actions, prefix, permission) {
-  if (modelName !== 'user') {
-    router.get(prefix + ('/' + modelName), actions.findAll)
-    router.get(prefix + ('/' + modelName + '/:id'), actions.findById)
-  } else {
-    router.get(prefix + ('/' + modelName), permission, actions.findAll)
-    router.get(prefix + ('/' + modelName + '/:id'), permission, actions.findById)
-  }
-
-  router.post(prefix + ('/' + modelName), permission, actions.create)
-  router.post(prefix + ('/' + modelName + '/:id'), permission, actions.updateById)
-  router.del(prefix + ('/' + modelName + '/:id'), permission, actions.deleteById)
-  router.put(prefix + ('/' + modelName), permission, actions.create)
-  router.put(prefix + ('/' + modelName + '/:id'), permission, actions.replaceById)
-  router.patch(prefix + ('/' + modelName + '/:id'), permission, actions.updateById)
-
-  app.use(router.routes())
+  router.get(modelUrl, ...permission, actions.findAll)
+  router.get(itemUrl, ...permission, actions.findById)
+  router.post(modelUrl, ...permission, actions.create)
+  router.post(itemUrl, ...permission, actions.updateById)
+  router.del(itemUrl, ...permission, actions.deleteById)
+  router.put(modelUrl, ...permission, actions.create)
+  router.put(itemUrl, ...permission, actions.replaceById)
+  router.patch(itemUrl, ...permission, actions.updateById)
 }
