@@ -25,14 +25,21 @@ const CheckAuthPlugin = require('../plugins/beforeRestful/checkAuth')
 
 config.plugins.push(
   // beforeUseRoutes
-  new RatelimitPlugin(),
+  new RatelimitPlugin({
+    duration: 1000,
+    errorMessage: 'Slow Down Your Request.',
+    id: ctx => ctx.ip,
+    max: 10
+  }),
   new BodyParserPlugin(),
   new LogTimePlugin(),
   new RestcPlugin(),
+
   // beforeServerStart
   new InitUserPlugin(),
   new InstallThemePlugin(),
   new InitOptionPlugin(),
+
   // beforeRestful
   new CheckAuthPlugin()
 )

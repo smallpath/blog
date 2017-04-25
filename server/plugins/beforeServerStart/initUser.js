@@ -3,8 +3,6 @@ const config = require('../../conf/config')
 const models = require('../../model/mongo')
 
 module.exports = class {
-  constructor() {}
-
   async beforeServerStart() {
     const count = await models.user.find().count().exec()
     if (count !== 0) return

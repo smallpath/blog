@@ -3,8 +3,6 @@ const options = require('../../conf/option')
 const models = require('../../model/mongo')
 
 module.exports = class {
-  constructor() {}
-
   async beforeServerStart() {
     for (const option of options) {
       let key = option.key

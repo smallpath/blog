@@ -5,8 +5,6 @@ const resolve = file => path.resolve(__dirname, file)
 const models = require('../../model/mongo')
 
 module.exports = class {
-  constructor() {}
-
   async beforeServerStart() {
     const prefix = '../../theme'
     let fileArr = fs.readdirSync(resolve(prefix))
