@@ -9,10 +9,11 @@ const redis = require('./model/redis')
 const config = require('./conf/config')
 
 const configName = process.env.NODE_ENV === '"development"' ? 'dev' : 'prod'
-const devConfig = require(`./build/blogpack.${configName}.config`)
-
+const blogpackConfig = require(`./build/blogpack.${configName}.config`)
+blogpackConfig.models = models
+blogpackConfig.redis = redis
 const Blogpack = require('./blogpack')
-const lifecycle = new Blogpack(devConfig)
+const lifecycle = global.lifecycle = new Blogpack(blogpackConfig)
 
 const app = new Koa()
 const router = koaRouter()

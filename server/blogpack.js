@@ -3,6 +3,8 @@ class blogpack {
   constructor(options) {
     this.config = options.config || {}
     this.plugins = options.plugins || []
+    this.models = options.models
+    this.redis = options.redis
   }
 
   async beforeUseRoutes(...args) {
