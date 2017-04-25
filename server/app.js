@@ -8,7 +8,9 @@ const models = require('./model/mongo')
 const redis = require('./model/redis')
 const config = require('./conf/config')
 
-const devConfig = require('./build/blogpack.prod.config')
+const configName = process.env.NODE_ENV === '"development"' ? 'dev' : 'prod'
+const devConfig = require(`./build/blogpack.${configName}.config`)
+
 const Blogpack = require('./blogpack')
 const lifecycle = new Blogpack(devConfig)
 
