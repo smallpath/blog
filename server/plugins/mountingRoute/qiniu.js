@@ -5,7 +5,7 @@ let {
     qiniuSecretKey,
     qiniuBucketName,
     qiniuPipeline
-} = require('../conf/config')
+} = require('../../conf/config')
 
 qiniu.conf.ACCESS_KEY = qiniuAccessKey
 qiniu.conf.SECRET_KEY = qiniuSecretKey
@@ -43,6 +43,18 @@ const getQiniuTokenFromFileName = (fileName) => {
   }
 }
 
-module.exports = ({ request, response }, next) => {
-  return response.body = getQiniuTokenFromFileName(request.body.key)
+module.exports = class {
+  mountingRoute() {
+    return {
+      method: 'post',
+      path: '/admin/qiniu',
+      needBeforeRoutes: true,
+      middleware: [
+        function({ request, response }, next) {
+          return response.body = getQiniuTokenFromFileName(request.body.key)
+        }
+      ],
+      needAfterRoutes: false
+    }
+  }
 }

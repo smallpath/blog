@@ -18,7 +18,7 @@ client.on('error', function(err) {
 })
 
 client.on('connect', function() {
-  log.debug('Redis is ready')
+  log.info('Redis is ready')
 })
 
 module.exports = client

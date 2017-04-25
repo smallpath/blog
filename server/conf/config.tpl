@@ -15,11 +15,5 @@ module.exports = {
   tokenExpiresIn: env.tokenExpiresIn || 3600,
 
   defaultAdminName: env.defaultAdminName || 'admin',
-  defaultAdminPassword: env.defaultAdminPassword || 'admin',
-
-  qiniuAccessKey: env.qiniuAccessKey || '',
-  qiniuSecretKey: env.qiniuSecretKey || '',
-  qiniuBucketHost: env.qiniuBucketHost || '',
-  qiniuBucketName: env.qiniuBucketName || '',
-  qiniuPipeline: env.qiniuPipeline || ''
+  defaultAdminPassword: env.defaultAdminPassword || 'admin'
 }

@@ -17,22 +17,33 @@ class blogpack {
     }
   }
 
+  getMiddlewareRoutes(...args) {
+    return this.plugins
+            .filter(plugin => plugin['mountingRoute'])
+            .map(plugin => {
+              return Object.assign({}, plugin.mountingRoute(), {
+                needBeforeRoutes: plugin.needBeforeRoutes || false,
+                needAfterRoutes: plugin.needAfterRoutes || false
+              })
+            })
+  }
+
   getBeforeRestfulRoutes() {
     return this.plugins
-                .filter(plugin => plugin['beforeRestful'])
-                .map(plugin => plugin['beforeRestful'])
+            .filter(plugin => plugin['beforeRestful'])
+            .map(plugin => plugin['beforeRestful'])
   }
 
   getAfterRestfulRoutes() {
     return this.plugins
-                .filter(plugin => plugin['afterRestful'])
-                .map(plugin => plugin['afterRestful'])
+            .filter(plugin => plugin['afterRestful'])
+            .map(plugin => plugin['afterRestful'])
   }
 
   getBeforeServerStartFuncs() {
     return this.plugins
-                .filter(plugin => plugin['beforeServerStart'])
-                .map(plugin => plugin['beforeServerStart'])
+            .filter(plugin => plugin['beforeServerStart'])
+            .map(plugin => plugin['beforeServerStart'])
   }
 }
 

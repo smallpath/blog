@@ -15,7 +15,7 @@ db.on('error', (err) => {
 })
 
 db.once('open', () => {
-  log.debug('MongoDB is ready')
+  log.info('MongoDB is ready')
 })
 
 const Schema = mongoose.Schema

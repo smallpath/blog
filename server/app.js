@@ -27,14 +27,15 @@ const router = koaRouter()
   const beforeRestfulRoutes = lifecycle.getBeforeRestfulRoutes()
   const afterRestfulRoutes = lifecycle.getAfterRestfulRoutes()
 
-  router.post(
-    '/admin/qiniu',
-    ...beforeRestfulRoutes,
-    require('./service/qiniu'),
-    ...afterRestfulRoutes
-  )
-  router.post('/admin/login', require('./auth/login'))
-  router.post('/admin/logout', require('./auth/logout'))
+  const middlewareRoutes = lifecycle.getMiddlewareRoutes()
+
+  for (const item of middlewareRoutes) {
+    const middlewares = [...item.middleware]
+    item.needBeforeRoutes && middlewares.unshift(...beforeRestfulRoutes)
+    item.needAfterRoutes && middlewares.push(...afterRestfulRoutes)
+
+    router[item.method](item.path, ...middlewares)
+  }
 
   Object.keys(models).map(name => models[name]).forEach(model => {
     mongoRest(router, model, '/api', {
@@ -53,7 +54,7 @@ const router = koaRouter()
     }
 
     app.listen(config.serverPort, () => {
-      log.debug(`koa2 is running at ${config.serverPort}`)
+      log.info(`Koa2 is running at ${config.serverPort}`)
     })
   } catch (err) {
     log.error(err)

@@ -1,7 +1,17 @@
-const redis = require('../model/redis')
-const tokenService = require('../service/token')
+const redis = require('../../model/redis')
+const tokenService = require('../../service/token')
 
-module.exports = async function(ctx, next) {
+module.exports = class {
+  mountingRoute() {
+    return {
+      method: 'post',
+      path: '/admin/logout',
+      middleware: [middleware]
+    }
+  }
+}
+
+async function middleware(ctx, next) {
   const headers = ctx.request.headers
   let token
   try {

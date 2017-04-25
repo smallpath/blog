@@ -1,8 +1,18 @@
-const redis = require('../model/redis')
-const tokenService = require('../service/token')
-const { user: model } = require('../model/mongo')
+const redis = require('../../model/redis')
+const tokenService = require('../../service/token')
+const { user: model } = require('../../model/mongo')
 
-module.exports = async function(ctx, next) {
+module.exports = class {
+  mountingRoute() {
+    return {
+      method: 'post',
+      path: '/admin/login',
+      middleware: [middleware]
+    }
+  }
+}
+
+async function middleware(ctx, next) {
   let users, user
 
   try {
