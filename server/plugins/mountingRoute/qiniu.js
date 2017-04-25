@@ -1,27 +1,13 @@
-let qiniu = require('qiniu')
-let {
-    qiniuBucketHost: bucketHost,
-    qiniuAccessKey,
-    qiniuSecretKey,
-    qiniuBucketName,
-    qiniuPipeline
-} = require('../../conf/config')
+const qiniu = require('qiniu')
 
-qiniu.conf.ACCESS_KEY = qiniuAccessKey
-qiniu.conf.SECRET_KEY = qiniuSecretKey
+const fops = 'imageMogr2/format/webp'
 
-let fops = 'imageMogr2/format/webp'
-
-const policy = (name, fileName) => {
+const policy = (name, fileName, { qiniuBucketName, qiniuPipeline }) => {
   let encoded = new Buffer(`${qiniuBucketName}:webp/${fileName}`).toString('base64')
-  let persist
+  const persist = {}
   if (qiniuPipeline !== '') {
-    persist = {
-      persistentOps: `${fops}|saveas/${encoded}`,
-      persistentPipeline: qiniuPipeline
-    }
-  } else {
-    persist = {}
+    persist.persistentOps = `${fops}|saveas/${encoded}`
+    persist.persistentPipeline = qiniuPipeline
   }
   return Object.assign({}, persist, {
     scope: name,
@@ -29,21 +15,38 @@ const policy = (name, fileName) => {
   })
 }
 
-const getQiniuTokenFromFileName = (fileName) => {
-  let key = `${qiniuBucketName}:${fileName}`
-  let putPolicy = new qiniu.rs.PutPolicy2(policy(key, fileName))
+const getQiniuTokenFromFileName = (fileName, {
+  qiniuBucketName,
+  qiniuPipeline,
+  qiniuBucketHost
+}) => {
+  const key = `${qiniuBucketName}:${fileName}`
+  const putPolicy = new qiniu.rs.PutPolicy2(policy(key, fileName, {
+    qiniuPipeline,
+    qiniuBucketName
+  }))
 
-  let upToken = putPolicy.token()
+  const upToken = putPolicy.token()
 
   return {
     upToken,
     key,
-    bucketHost,
+    bucketHost: qiniuBucketHost,
     supportWebp: qiniuPipeline !== ''
   }
 }
 
 module.exports = class {
+  constructor(options) {
+    this.options = options
+    this.initQiniuUpload()
+  }
+
+  initQiniuUpload() {
+    qiniu.conf.ACCESS_KEY = this.options.qiniuAccessKey
+    qiniu.conf.SECRET_KEY = this.options.qiniuSecretKey
+  }
+
   mountingRoute() {
     return {
       method: 'post',
@@ -51,7 +54,10 @@ module.exports = class {
       needBeforeRoutes: true,
       middleware: [
         function({ request, response }, next) {
-          return response.body = getQiniuTokenFromFileName(request.body.key)
+          return response.body = getQiniuTokenFromFileName({
+            key: request.body.key,
+            options: this.options
+          })
         }
       ],
       needAfterRoutes: false
