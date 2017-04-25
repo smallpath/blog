@@ -1,13 +1,16 @@
-module.exports = (router, modelName, actions, prefix, ...permission) => {
+module.exports = (router, modelName, actions, prefix, {
+  beforeRestfulRoutes,
+  afterRestfulRoutes
+}) => {
   const modelUrl = `${prefix}/${modelName}`
   const itemUrl = `${prefix}/${modelName}/:id`
 
-  router.get(modelUrl, ...permission, actions.findAll)
-  router.get(itemUrl, ...permission, actions.findById)
-  router.post(modelUrl, ...permission, actions.create)
-  router.post(itemUrl, ...permission, actions.updateById)
-  router.del(itemUrl, ...permission, actions.deleteById)
-  router.put(modelUrl, ...permission, actions.create)
-  router.put(itemUrl, ...permission, actions.replaceById)
-  router.patch(itemUrl, ...permission, actions.updateById)
+  router.get(modelUrl, ...beforeRestfulRoutes, actions.findAll, ...afterRestfulRoutes)
+  router.get(itemUrl, ...beforeRestfulRoutes, actions.findById, ...afterRestfulRoutes)
+  router.post(modelUrl, ...beforeRestfulRoutes, actions.create, ...afterRestfulRoutes)
+  router.post(itemUrl, ...beforeRestfulRoutes, actions.updateById, ...afterRestfulRoutes)
+  router.del(itemUrl, ...beforeRestfulRoutes, actions.deleteById, ...afterRestfulRoutes)
+  router.put(modelUrl, ...beforeRestfulRoutes, actions.create, ...afterRestfulRoutes)
+  router.put(itemUrl, ...beforeRestfulRoutes, actions.replaceById, ...afterRestfulRoutes)
+  router.patch(itemUrl, ...beforeRestfulRoutes, actions.updateById, ...afterRestfulRoutes)
 }
