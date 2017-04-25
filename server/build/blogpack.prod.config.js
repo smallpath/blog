@@ -1,16 +1,7 @@
-const blogpack = require('../blogpack')
 const devConfig = require('./blogpack.dev.config')
 const useRoutesPrefix = '../plugins/beforeUseRoutes'
 
-const config = Object.assign({}, devConfig, {
-  plugins: devConfig.plugins.concat([
-    new blogpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      'process.env.VUE_ENV': '"client"',
-      'process.BROWSER': true
-    })
-  ])
-})
+const config = Object.assign({}, devConfig)
 
 const RatelimitPlugin = require(`${useRoutesPrefix}/ratelimit`)
 

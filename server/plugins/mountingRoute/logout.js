@@ -2,7 +2,7 @@ const redis = require('../../model/redis')
 const tokenService = require('../../service/token')
 
 module.exports = class {
-  mountingRoute() {
+  async mountingRoute() {
     return {
       method: 'post',
       path: '/admin/logout',

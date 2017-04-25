@@ -1,18 +1,9 @@
-const blogpack = require('../blogpack')
 const base = require('./blogpack.base.config')
 const useRoutesPrefix = '../plugins/beforeUseRoutes'
 const serverStartPrefix = '../plugins/beforeServerStart'
 const env = process.env
 
-const config = Object.assign({}, base, {
-  plugins: base.plugins.concat([
-    new blogpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      'process.env.VUE_ENV': '"client"',
-      'process.BROWSER': true
-    })
-  ])
-})
+const config = Object.assign({}, base)
 
 const BodyParserPlugin = require(`${useRoutesPrefix}/bodyParser`)
 const LogTimePlugin = require(`${useRoutesPrefix}/logTime`)

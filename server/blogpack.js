@@ -5,27 +5,23 @@ class blogpack {
     this.plugins = options.plugins || []
   }
 
-  run() {
-    for (const plugin of this.plugins) {
-      plugin.apply()
-    }
-  }
-
   async beforeUseRoutes(...args) {
     for (const plugin of this.plugins) {
       plugin.beforeUseRoutes && await plugin.beforeUseRoutes(...args)
     }
   }
 
-  getMiddlewareRoutes(...args) {
-    return this.plugins
-            .filter(plugin => plugin['mountingRoute'])
-            .map(plugin => {
-              return Object.assign({}, plugin.mountingRoute(), {
-                needBeforeRoutes: plugin.needBeforeRoutes || false,
-                needAfterRoutes: plugin.needAfterRoutes || false
-              })
-            })
+  async getMiddlewareRoutes(...args) {
+    const plugins = this.plugins.filter(plugin => plugin['mountingRoute'])
+    const result = []
+    for (const plugin of plugins) {
+      const routeObj = await plugin.mountingRoute()
+      result.push(Object.assign({}, routeObj, {
+        needBeforeRoutes: plugin.needBeforeRoutes || false,
+        needAfterRoutes: plugin.needAfterRoutes || false
+      }))
+    }
+    return result
   }
 
   getBeforeRestfulRoutes() {
@@ -46,19 +42,5 @@ class blogpack {
             .map(plugin => plugin['beforeServerStart'])
   }
 }
-
-class DefinePlugin {
-  constructor(options) {
-    this.options = options
-  }
-
-  apply() {
-    for (const i in this.options) {
-      console.log(i, this.options[i])
-    }
-  }
-}
-
-blogpack.DefinePlugin = DefinePlugin
 
 module.exports = blogpack

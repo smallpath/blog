@@ -18,39 +18,39 @@ const app = new Koa()
 const router = koaRouter()
 
 ;(async () => {
-  await lifecycle.beforeUseRoutes({
-    config: lifecycle.config,
-    app,
-    router,
-    models,
-    redis
-  })
-
-  const beforeRestfulRoutes = lifecycle.getBeforeRestfulRoutes()
-  const afterRestfulRoutes = lifecycle.getAfterRestfulRoutes()
-
-  const middlewareRoutes = lifecycle.getMiddlewareRoutes()
-
-  for (const item of middlewareRoutes) {
-    const middlewares = [...item.middleware]
-    item.needBeforeRoutes && middlewares.unshift(...beforeRestfulRoutes)
-    item.needAfterRoutes && middlewares.push(...afterRestfulRoutes)
-
-    router[item.method](item.path, ...middlewares)
-  }
-
-  Object.keys(models).map(name => models[name]).forEach(model => {
-    mongoRest(router, model, '/api', {
-      beforeRestfulRoutes,
-      afterRestfulRoutes
-    })
-  })
-
-  app.use(router.routes())
-
-  const beforeServerStartArr = lifecycle.getBeforeServerStartFuncs()
-
   try {
+    await lifecycle.beforeUseRoutes({
+      config: lifecycle.config,
+      app,
+      router,
+      models,
+      redis
+    })
+
+    const beforeRestfulRoutes = lifecycle.getBeforeRestfulRoutes()
+    const afterRestfulRoutes = lifecycle.getAfterRestfulRoutes()
+
+    const middlewareRoutes = await lifecycle.getMiddlewareRoutes()
+
+    for (const item of middlewareRoutes) {
+      const middlewares = [...item.middleware]
+      item.needBeforeRoutes && middlewares.unshift(...beforeRestfulRoutes)
+      item.needAfterRoutes && middlewares.push(...afterRestfulRoutes)
+
+      router[item.method](item.path, ...middlewares)
+    }
+
+    Object.keys(models).map(name => models[name]).forEach(model => {
+      mongoRest(router, model, '/api', {
+        beforeRestfulRoutes,
+        afterRestfulRoutes
+      })
+    })
+
+    app.use(router.routes())
+
+    const beforeServerStartArr = lifecycle.getBeforeServerStartFuncs()
+
     for (const middleware of beforeServerStartArr) {
       await middleware()
     }

@@ -3,7 +3,7 @@ const tokenService = require('../../service/token')
 const { user: model } = require('../../model/mongo')
 
 module.exports = class {
-  mountingRoute() {
+  async mountingRoute() {
     return {
       method: 'post',
       path: '/admin/login',

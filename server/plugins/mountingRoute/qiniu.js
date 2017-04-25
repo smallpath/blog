@@ -39,15 +39,11 @@ const getQiniuTokenFromFileName = (fileName, {
 module.exports = class {
   constructor(options) {
     this.options = options
-    this.initQiniuUpload()
-  }
-
-  initQiniuUpload() {
     qiniu.conf.ACCESS_KEY = this.options.qiniuAccessKey
     qiniu.conf.SECRET_KEY = this.options.qiniuSecretKey
   }
 
-  mountingRoute() {
+  async mountingRoute() {
     return {
       method: 'post',
       path: '/admin/qiniu',
