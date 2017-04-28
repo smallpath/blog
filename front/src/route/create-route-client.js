@@ -11,3 +11,9 @@ export const TagPager = () => import(/* webpackChunkName: "TagPager" */ '../comp
 export const Tag = () => import(/* webpackChunkName: "Tag" */ '../components/Tag')
 export const BlogPager = () => import(/* webpackChunkName: "BlogPager" */ '../components/BlogPager')
 export const Archive = () => import(/* webpackChunkName: "Archive" */ '../components/Archive')
+
+Post.chunkName = Page.chunkName = 'CreatePostView'
+TagPager.chunkName = 'TagPager'
+Tag.chunkName = 'Tag'
+BlogPager.chunkName = 'BlogPager'
+Archive.chunkName = 'Archive'

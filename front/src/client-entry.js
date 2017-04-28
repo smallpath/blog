@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import { app, appOption, router, store, isProd, preFetchComponent } from './main'
+import createApp from './main'
+const { app, appOption, router, store, isProd, preFetchComponent } = createApp()
 import clientGoogleAnalyse from './utils/clientGoogleAnalyse'
 import makeResponsive from './assets/js/base'
 

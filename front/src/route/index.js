@@ -20,57 +20,51 @@ import {
   Archive
 } from 'create-route'
 
-if (!process.BROWSER) {
-  Post.chunkName = Page.chunkName = 'CreatePostView'
-  TagPager.chunkName = 'TagPager'
-  Tag.chunkName = 'Tag'
-  BlogPager.chunkName = 'BlogPager'
-  Archive.chunkName = 'Archive'
-}
-
-export default new VueRouter({
-  mode: 'history',
-  scrollBehavior: function(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      let position = {x: 0, y: 0}
-      if (to.hash) {
-        position = { selector: to.hash }
+export default function createRouter() {
+  return new VueRouter({
+    mode: 'history',
+    scrollBehavior: function(to, from, savedPosition) {
+      if (savedPosition) {
+        return savedPosition
+      } else {
+        let position = {x: 0, y: 0}
+        if (to.hash) {
+          position = { selector: to.hash }
+        }
+        return position
       }
-      return position
-    }
-  },
-  routes: [
-    {
-      path: '/',
-      name: 'main',
-      component: BlogPager
     },
-    {
-      path: '/archive',
-      name: 'archive',
-      component: Archive
-    },
-    {
-      path: '/tag',
-      name: 'tag',
-      component: Tag
-    },
-    {
-      path: '/post/:pathName',
-      name: 'post',
-      component: Post
-    },
-    {
-      path: '/tag/:tagName',
-      name: 'tagPager',
-      component: TagPager
-    },
-    {
-      path: '/:page*',
-      name: 'page',
-      component: Page
-    }
-  ]
-})
+    routes: [
+      {
+        path: '/',
+        name: 'main',
+        component: BlogPager
+      },
+      {
+        path: '/archive',
+        name: 'archive',
+        component: Archive
+      },
+      {
+        path: '/tag',
+        name: 'tag',
+        component: Tag
+      },
+      {
+        path: '/post/:pathName',
+        name: 'post',
+        component: Post
+      },
+      {
+        path: '/tag/:tagName',
+        name: 'tagPager',
+        component: TagPager
+      },
+      {
+        path: '/:page*',
+        name: 'page',
+        component: Page
+      }
+    ]
+  })
+}

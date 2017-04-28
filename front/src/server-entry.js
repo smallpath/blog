@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import { app, appOption, router, store, preFetchComponent, isProd } from './main'
-
-const isDev = process.env.NODE_ENV !== 'production'
-
-let realApp = isProd ? new Vue(appOption) : app
+import createApp from './main'
 
 export default context => {
+  const { app, appOption, router, store, isProd, preFetchComponent } = createApp()
+
+  const realApp = isProd ? new Vue(appOption) : app
+
   router.push(context.url)
   let current = router.currentRoute
   context.path = current.path
@@ -17,7 +17,7 @@ export default context => {
 
   store.state.supportWebp = context.supportWebp
 
-  const s = isDev && Date.now()
+  const s = !isProd && Date.now()
   return Promise.all(preFetchComponent.concat(router.getMatchedComponents()).map((component, index) => {
     const chunkName = component.chunkName
     if (typeof chunkName === 'string') {
@@ -27,7 +27,7 @@ export default context => {
       return component.preFetch(store, context).catch(() => {})
     }
   })).then((arr) => {
-    isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)
+    !isProd && console.log(`data pre-fetch: ${Date.now() - s}ms`)
 
     context.initialState = store.state
     return realApp
