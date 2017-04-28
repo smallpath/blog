@@ -62,7 +62,7 @@ if (process.env.NODE_ENV === 'production') {
       stripPrefixMulti: {
         [path.join(__dirname, '../dist/static')]: '/static'
       },
-      // add hash to path
+      // add hash to path to force updated
       dontCacheBustUrlsMatching: false,
       staticFileGlobsIgnorePatterns: [
         /index\.html$/,
@@ -70,6 +70,29 @@ if (process.env.NODE_ENV === 'production') {
         /\.css$/,
         /\.svg$/,
         /\.eot$/
+      ],
+      // runtime caching for offline pwa
+      runtimeCaching: [
+        {
+          urlPattern: /(.+\/[^\.]*$)/,
+          handler: 'networkFirst',
+          options: {
+            cache: {
+              maxEntries: 10,
+              name: 'blog-runtime-cache'
+            }
+          }
+        },
+        {
+          urlPattern: /\.(png|jpg|webp)/,
+          handler: 'cacheFirst',
+          options: {
+            cache: {
+              maxEntries: 20,
+              name: 'blog-picture-cache'
+            }
+          }
+        }
       ]
     })
   )
