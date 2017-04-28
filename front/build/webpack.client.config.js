@@ -74,6 +74,11 @@ if (process.env.NODE_ENV === 'production') {
       // runtime caching for offline pwa
       runtimeCaching: [
         {
+          // never cache service worker
+          urlPattern: /service-worker.js/,
+          handler: 'networkOnly'
+        },
+        {
           // note that this pattern will cache ajax request
           urlPattern: /(.+\/[^\.]*$)/,
           handler: 'networkFirst',
