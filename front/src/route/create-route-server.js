@@ -6,3 +6,9 @@ export const Archive = require('../components/Archive')
 
 export const Post = CreatePostView('post')
 export const Page = CreatePostView('page')
+
+Post.chunkName = Page.chunkName = 'CreatePostView'
+TagPager.chunkName = 'TagPager'
+Tag.chunkName = 'Tag'
+BlogPager.chunkName = 'BlogPager'
+Archive.chunkName = 'Archive'
