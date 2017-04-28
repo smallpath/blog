@@ -74,11 +74,12 @@ if (process.env.NODE_ENV === 'production') {
       // runtime caching for offline pwa
       runtimeCaching: [
         {
+          // note that this pattern will cache ajax request
           urlPattern: /(.+\/[^\.]*$)/,
           handler: 'networkFirst',
           options: {
             cache: {
-              maxEntries: 10,
+              maxEntries: 30,
               name: 'blog-runtime-cache'
             }
           }
