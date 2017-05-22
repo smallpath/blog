@@ -8,7 +8,7 @@ module.exports = class {
     if (count !== 0) return
 
     if (config.defaultAdminPassword === 'admin') {
-      log.error('you must change the default passoword at ./conf/config.js')
+      log.error('you must change the default password at ./conf/config.js')
       log.error('koa2 refused to start because of weak password')
       return process.exit(1)
     }
