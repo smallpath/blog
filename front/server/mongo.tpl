@@ -8,7 +8,7 @@ module.exports = {
   mongoPort: env.mongoPort || 27017,
 
   serverPort: env.serverPort || 3000,
-  isRpc: env.isRpc || false,
+  enableServerSideGA: env.enableServerSideGA || false,
   redisHost: env.redisHost || '127.0.0.1',
   redisPort: env.redisPort || 6379,
   redisPassword: env.redisPassword || ''

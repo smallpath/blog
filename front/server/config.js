@@ -1,6 +1,6 @@
 const isProd = process.env.NODE_ENV === 'production'
 const request = require('./server-axios')
-const { ssrPort, serverPort } = require('./mongo')
+const { ssrPort, serverPort, enableServerSideGA } = require('./mongo')
 
 let siteUrl = 'http://localhost:8080'
 let title = 'Blog'
@@ -37,6 +37,7 @@ function flushOption() {
 
 exports.ssrPort = ssrPort
 exports.serverPort = serverPort
+exports.enableServerSideGA = enableServerSideGA
 
 Object.defineProperty(exports, 'title', {
   enumerable: true,

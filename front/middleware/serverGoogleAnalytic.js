@@ -23,17 +23,24 @@ const getClientIp = (req) => {
 }
 
 module.exports = (req, res, next, query) => {
-  let realQuery = req.query
-  let clientId = req.cookies.id
-  if (!clientId) {
-    clientId = uuid.v4()
-    res.cookie('id', clientId, {
-      expires: new Date(Date.now() + expires)
-    })
+  let realQuery
+  let clientId
+  if (!query) {
+    clientId = req.cookies.id
+    if (!clientId) {
+      clientId = uuid.v4()
+      res.cookie('id', clientId, {
+        expires: new Date(Date.now() + expires)
+      })
+    }
+    res.setHeader('Content-Type', 'image/gif')
+    res.setHeader('Content-Length', 43)
+    res.end(EMPTY_GIF)
+    realQuery = req.query
+  } else {
+    realQuery = query
+    clientId = realQuery.cid
   }
-  res.setHeader('Content-Type', 'image/gif')
-  res.setHeader('Content-Length', 43)
-  res.end(EMPTY_GIF)
 
   let passParams = config.ga.required.reduce((prev, curr) => {
     if (!realQuery[curr]) {

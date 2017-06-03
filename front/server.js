@@ -18,6 +18,10 @@ const config = require('./server/config')
 const request = require('./server/server-axios')
 const proxyRequest = require('request')
 
+const uuid = require('uuid')
+const titleReg = /<.*?>(.+?)<.*?>/
+const expires = 3600 * 1000 * 24 * 365 * 2
+
 const chunkObj = {}
 if (isProd) {
   const fileArr = fs.readdirSync(resolve('./dist'))
@@ -151,8 +155,23 @@ config.flushOption().then(() => {
       const { title, link, meta } = context.meta.inject()
       const titleText = title.text()
       const metaData = `${titleText}${meta.text()}${link.text()}`
+      const matched = titleText.match(titleReg)
+      let clientId = req.cookies.id
+      if (!clientId) {
+        clientId = uuid.v4()
+        res.cookie('id', clientId, {
+          expires: new Date(Date.now() + expires)
+        })
+      }
       const chunk = html.head.replace('<title></title>', metaData)
       res.write(chunk)
+      sendGoogleAnalytic(req, res, next, {
+        dt: matched ? matched[1] : config.title,
+        dr: req.url,
+        dp: req.url,
+        z: +Date.now(),
+        cid: clientId
+      })
     })
 
     renderStream.on('data', chunk => {

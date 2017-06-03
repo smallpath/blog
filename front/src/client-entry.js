@@ -27,11 +27,7 @@ callback(() => {
 
   // service worker
   if (isProd && 'serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').then(() => {
-      clientGoogleAnalyse(store.state.route.path || '/')
-    })
-  } else {
-    clientGoogleAnalyse(store.state.route.path || '/')
+    navigator.serviceWorker.register('/service-worker.js')
   }
 
   const beforeEachHook = (to, from, next) => {
