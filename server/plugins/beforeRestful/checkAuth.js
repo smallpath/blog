@@ -4,8 +4,9 @@ const tokenService = require('../../service/token')
 module.exports = class {
   async beforeRestful(ctx, next) {
     const isGettingUser = ctx.url.startsWith('/api/user')
+    const isGettingAdmin = ctx.url.startsWith('/admin/')
     const isNotGet = ctx.url.startsWith('/api/') && ctx.method !== 'GET'
-    if (!isGettingUser && !isNotGet) {
+    if (!isGettingAdmin && !isGettingUser && !isNotGet) {
       return next()
     }
 

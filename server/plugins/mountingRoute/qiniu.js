@@ -49,11 +49,11 @@ module.exports = class {
       path: '/admin/qiniu',
       needBeforeRoutes: true,
       middleware: [
-        function({ request, response }, next) {
-          return response.body = getQiniuTokenFromFileName({
-            key: request.body.key,
-            options: this.options
-          })
+        ({ request, response }, next) => {
+          return response.body = getQiniuTokenFromFileName(
+            request.body.key,
+            this.options
+          )
         }
       ],
       needAfterRoutes: false

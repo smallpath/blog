@@ -19,8 +19,8 @@ class blogpack {
     for (const plugin of plugins) {
       const routeObj = await plugin.mountingRoute()
       result.push(Object.assign({}, routeObj, {
-        needBeforeRoutes: plugin.needBeforeRoutes || false,
-        needAfterRoutes: plugin.needAfterRoutes || false
+        needBeforeRoutes: routeObj.needBeforeRoutes || false,
+        needAfterRoutes: routeObj.needAfterRoutes || false
       }))
     }
     return result
