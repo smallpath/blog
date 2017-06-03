@@ -1,21 +1,29 @@
 {
   "scripts": {
     "start": "node entry.js",
-    "lint": "eslint --ext .js *.js */*.js"
+    "lint": "eslint --ext .js *.js */*.js",
+    "test": "cross-env NODE_ENV=TEST node ./node_modules/mocha/bin/mocha --compilers js:babel-core/register --recursive"
   },
   "dependencies": {
+    "axios": "^0.16.1",
     "babel-plugin-transform-async-to-generator": "^6.8.0",
     "babel-register": "^6.11.6",
     "bluebird": "^3.4.6",
+    "chai": "^4.0.1",
+    "chai-as-promised": "^6.0.0",
+    "cross-env": "^5.0.0",
+    "istanbul": "^0.4.5",
     "jsonwebtoken": "^7.1.9",
     "koa": "^2.0.0-alpha.5",
     "koa-bodyparser": "^3.2.0",
     "koa-router": "^7.0.1",
     "log4js": "^0.6.38",
+    "mocha": "^3.4.2",
     "mongoose": "^4.5.9",
     "qiniu": "^6.1.13",
     "redis": "^2.6.2",
-    "restc": "^0.0.4"
+    "restc": "^0.0.4",
+    "should": "^11.2.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
@@ -27,6 +35,9 @@
     "eslint-plugin-html": "^2.0.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^2.1.1",
-    "koa-ratelimit": "^4.0.0"
+    "install": "^0.10.1",
+    "it-each": "^0.3.1",
+    "koa-ratelimit": "^4.0.0",
+    "npm": "^5.0.2"
   }
 }

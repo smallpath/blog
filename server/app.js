@@ -18,7 +18,7 @@ const lifecycle = global.lifecycle = new Blogpack(blogpackConfig)
 const app = new Koa()
 const router = koaRouter()
 
-;(async () => {
+module.exports = (async () => {
   try {
     await lifecycle.beforeUseRoutes({
       config: lifecycle.config,
@@ -37,7 +37,6 @@ const router = koaRouter()
       const middlewares = [...item.middleware]
       item.needBeforeRoutes && middlewares.unshift(...beforeRestfulRoutes)
       item.needAfterRoutes && middlewares.push(...afterRestfulRoutes)
-
       router[item.method](item.path, ...middlewares)
     }
 

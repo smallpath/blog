@@ -1,11 +1,11 @@
 const devConfig = require('./blogpack.dev.config')
 const useRoutesPrefix = '../plugins/beforeUseRoutes'
-
+const isTest = process.env.NODE_ENV === 'TEST'
 const config = Object.assign({}, devConfig)
 
 const RatelimitPlugin = require(`${useRoutesPrefix}/ratelimit`)
 
-config.plugins.unshift(
+!isTest && config.plugins.unshift(
   // beforeUseRoutes
   new RatelimitPlugin({
     duration: 1000,
