@@ -90,7 +90,7 @@ if (process.env.NODE_ENV === 'production') {
           }
         },
         {
-          urlPattern: /\.(png|jpg|webp)/,
+          urlPattern: /\.(png|jpg|webp|gif)/,
           handler: 'cacheFirst',
           options: {
             cache: {
